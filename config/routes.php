@@ -62,6 +62,9 @@ return function (RouteBuilder $routes): void {
          */
         $builder->connect('/pages/*', 'Pages::display');
 
+        //Contact Form Route
+        $builder->connect('/contact', ['controller' => 'ContactSubmissions', 'action' => 'add']);
+
         /*
          * Connect catchall routes for all controllers.
          *
