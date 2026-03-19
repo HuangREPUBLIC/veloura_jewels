@@ -10,66 +10,121 @@
     font-weight: normal;
     font-style: normal;
 }
-body {
-    padding: 60px 0;
-}
-header {
-    margin-bottom: 60px;
-}
-img {
-    margin-bottom: 30px;
-}
-h1 {
-    font-weight: bold;
-}
-ul {
-    list-style-type: none;
-    margin: 0 0 30px 0;
-    padding-left: 25px;
-}
-a {
-    color: #0071BC;
-    text-decoration: underline;
-}
-hr {
-    border-bottom: 1px solid #e7e7e7;
-    border-top: 0;
-    margin-bottom: 35px;
+
+
+root {
+    --beige: #F5F5DC;
+    --sage: #BCE3C5;
+    --earth-yellow: #E1A95E;
+    --oakwood: #786C3B;
+    --walnut: #A52A2A;
 }
 
-.text-center {
+/* welcome Section */
+.welcome {
+    display: flex;
+    align-items: stretch;
+    background-color: var(--beige);
+    min-height: 560px;
+}
+
+.welcome-text {
+    flex: 1;
+    padding: 4rem 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.welcome-text h1 {
+    font-size: 3.5rem;
+    font-weight: 800;
+    color: var(--oakwood);
+    line-height: 1.1;
+    margin-bottom: 1rem;
+}
+
+.welcome-text .subtitle {
+    font-size: 1.1rem;
+    color: var(--oakwood);
+    margin-bottom: 2rem;
+}
+
+.welcome-text p {
+    font-size: 0.95rem;
+    color: #555;
+    margin-bottom: 2rem;
+    max-width: 360px;
+}
+
+.welcome-image {
+    flex: 1;
+    background-color: #e0ddd5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 400px;
+}
+
+.welcome-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.btn-outline {
+    padding: 0.7rem 2rem;
+    border: 2px solid #786C3B;
+    border-radius: 4px;
+    color: #786C3B;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    align-self: flex-start;
+    background-color: transparent;
+}
+
+.btn-outline:hover {
+    background-color: var(--oakwood);
+    color: #fff;
+}
+
+/* Get in Touch Section */
+.get-in-touch {
     text-align: center;
+    padding: 5rem 2rem;
+    background-color: #fff;
 }
-.links a {
-    margin-right: 10px;
+
+.get-in-touch h2 {
+    font-size: 2.2rem;
+    color: var(--oakwood);
+    margin-bottom: 1rem;
 }
-.release-name {
-    color: #D33C43;
-    font-weight: 400;
-    font-style: italic;
+
+.get-in-touch p {
+    color: #666;
+    max-width: 500px;
+    margin: 0 auto 2rem;
+    font-size: 0.95rem;
+    line-height: 1.7;
 }
-.bullet:before {
-    font-family: 'cakefont', sans-serif;
-    font-size: 18px;
-    display: inline-block;
-    margin-left: -1.3em;
-    width: 1.2em;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    vertical-align: -1px;
+
+/* Responsive Media for devices */
+@media (max-width: 768px) {
+    .hero, .about {
+        flex-direction: column;
+    }
+
+    .hero-text h1 {
+        font-size: 2.5rem;
+    }
+
+    .footer {
+        flex-direction: column;
+    }
+
+    .footer-links {
+        text-align: left;
+    }
 }
-.success:before {
-    color: #88c671;
-    content: "\0056";
-}
-.problem:before {
-    color: #d33d44;
-    content: "\0057";
-}
-.cake-error {
-    padding: 10px;
-    margin: 10px 0;
-}
-#url-rewriting-warning {
-    display: none;
-}
+
