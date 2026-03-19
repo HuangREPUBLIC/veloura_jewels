@@ -14,7 +14,7 @@
  * @var \App\View\AppView $this
  */
 
-$cakeDescription = 'CakePHP: the rapid development php framework';
+$cakeDescription = 'Veloura Jewels';
 ?>
 <!DOCTYPE html>
 <html>
@@ -27,7 +27,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     </title>
     <?= $this->Html->meta('icon') ?>
 
-    <?= $this->Html->css(['normalize.min', 'milligram.min', 'fonts', 'cake']) ?>
+    <?= $this->Html->css(['fonts', 'cake']) ?>
 
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>
@@ -46,7 +46,6 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     <nav class="navbar-links">
         <?= $this->Html->link('Home', '/') ?>
         <?= $this->Html->link('Contact', '/contact') ?>
-        <?= $this->Html->link('Admin', '/admin') ?>
     </nav>
 
     <div class="navbar-right">

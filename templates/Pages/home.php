@@ -14,7 +14,7 @@
  * @var \App\View\AppView $this
  */
 
-$this->assign('title', 'Welcome to Veloura Jewels');
+$this->assign('title', 'Home');
 $this->Html->css('home', ['block' => true]);
 ?>
 
