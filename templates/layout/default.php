@@ -34,22 +34,31 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     <?= $this->fetch('script') ?>
 </head>
 <body>
-    <nav class="top-nav">
-        <div class="top-nav-title">
-            <a href="<?= $this->Url->build('/') ?>"><span>Cake</span>PHP</a>
-        </div>
-        <div class="top-nav-links">
-            <a target="_blank" rel="noopener" href="https://book.cakephp.org/5/">Documentation</a>
-            <a target="_blank" rel="noopener" href="https://api.cakephp.org/">API</a>
-        </div>
+<header class="navbar">
+    <div class="navbar-brand">
+        <?= $this->Html->link(
+            $this->Html->image('logo.png', ['alt' => 'Veloura Jewels', 'class' => 'navbar-logo']),
+            '/',
+            ['escape' => false]
+        ) ?>
+    </div>
+
+    <nav class="navbar-links">
+        <?= $this->Html->link('Home', '/') ?>
+        <?= $this->Html->link('Contact', '/contact') ?>
+        <?= $this->Html->link('Admin', '/admin') ?>
     </nav>
-    <main class="main">
-        <div class="container">
-            <?= $this->Flash->render() ?>
-            <?= $this->fetch('content') ?>
-        </div>
-    </main>
-    <footer>
-    </footer>
+
+    <div class="navbar-right">
+        <span class="cart">Cart (0)</span>
+        <?= $this->Html->link('Login', '#', ['class' => 'btn-login']) ?>
+    </div>
+</header>
+
+<main class="main-content">
+    <?= $this->Flash->render() ?>
+    <?= $this->fetch('content') ?>
+</main>
+
 </body>
 </html>

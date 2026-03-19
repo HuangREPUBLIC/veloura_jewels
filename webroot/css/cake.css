@@ -112,33 +112,53 @@ th {
 }
 
 /* Nav bar */
-.top-nav {
+.navbar {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    max-width: 112rem;
-    padding: 2rem;
-    margin: 0 auto;
-}
-.top-nav-title a {
-    font-size: 2.4rem;
-    color: var(--color-cakephp-red);
-}
-.top-nav-title span {
-    color: var(--color-cakephp-gray);
-}
-.top-nav-links a {
-    margin: 0 0.5rem;
-}
-.top-nav-title a,
-.top-nav-links a {
-    font-weight: bold;
-}
-.side-nav-item {
-    display: block;
-    padding: 0.5rem 0;
+    padding: 1rem 2rem;
+    border-bottom: 1px solid #e0e0e0;
+    background-color: #fff;
+}.navbar-logo {
+     height: 50px;
+     width: auto;
+ }
+
+.navbar-links {
+    display: flex;
+    gap: 2rem;
 }
 
+.navbar-links a {
+    text-decoration: none;
+    color: #333;
+    font-size: 1.6rem;
+}
+
+.navbar-links a:hover {
+    text-decoration: underline;
+}
+
+.navbar-right {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    font-size: 1.6rem;
+}
+
+.btn-login {
+    padding: 0.4rem 1.2rem;
+    border: 1px solid #333;
+    border-radius: 4px;
+    text-decoration: none;
+    color: #333;
+    font-size: 1.6rem;
+}
+
+.btn-login:hover {
+    background-color: #333;
+    color: #fff;
+}
 /* View action */
 .view.content .text {
     margin-top: 1.2rem;
