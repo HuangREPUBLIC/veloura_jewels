@@ -29,29 +29,17 @@ use Cake\Validation\Validator;
  */
 class ContactSubmissionsTable extends Table
 {
-    /**
-     * Initialize method
-     *
-     * @param array<string, mixed> $config The configuration for the Table.
-     * @return void
-     */
     public function initialize(array $config): void
     {
         parent::initialize($config);
 
         $this->setTable('contact_submissions');
-        $this->setDisplayField('name');
+        $this->setDisplayField('first_name');
         $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');
     }
 
-    /**
-     * Default validation rules.
-     *
-     * @param \Cake\Validation\Validator $validator Validator instance.
-     * @return \Cake\Validation\Validator
-     */
     public function validationDefault(Validator $validator): Validator
     {
         $validator

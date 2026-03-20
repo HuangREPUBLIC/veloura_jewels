@@ -5,45 +5,57 @@
  */
 ?>
 <div class="contactSubmissions index content">
-    <?= $this->Html->link(__('New Contact Submission'), ['action' => 'add'], ['class' => 'button float-right']) ?>
     <h3><?= __('Contact Submissions') ?></h3>
+
     <div class="table-responsive">
         <table>
             <thead>
-                <tr>
-                    <th><?= $this->Paginator->sort('id') ?></th>
-                    <th><?= $this->Paginator->sort('name') ?></th>
-                    <th><?= $this->Paginator->sort('email') ?></th>
-                    <th><?= $this->Paginator->sort('captcha_passed') ?></th>
-                    <th><?= $this->Paginator->sort('created') ?></th>
-                    <th class="actions"><?= __('Actions') ?></th>
-                </tr>
+            <tr>
+                <th><?= $this->Paginator->sort('first_name', 'First Name') ?></th>
+                <th><?= $this->Paginator->sort('last_name', 'Last Name') ?></th>
+                <th><?= $this->Paginator->sort('email', 'Email') ?></th>
+                <th><?= __('Message') ?></th>
+                <th><?= $this->Paginator->sort('created', 'Submission Date/Time') ?></th>
+                <th><?= __('Reply') ?></th>
+                <th class="actions"><?= __('Actions') ?></th>
+            </tr>
             </thead>
             <tbody>
+            <?php if (!empty($contactSubmissions)): ?>
                 <?php foreach ($contactSubmissions as $contactSubmission): ?>
-                <tr>
-                    <td><?= $this->Number->format($contactSubmission->id) ?></td>
-                    <td><?= h($contactSubmission->name) ?></td>
-                    <td><?= h($contactSubmission->email) ?></td>
-                    <td><?= h($contactSubmission->captcha_passed) ?></td>
-                    <td><?= h($contactSubmission->created) ?></td>
-                    <td class="actions">
-                        <?= $this->Html->link(__('View'), ['action' => 'view', $contactSubmission->id]) ?>
-                        <?= $this->Html->link(__('Edit'), ['action' => 'edit', $contactSubmission->id]) ?>
-                        <?= $this->Form->postLink(
-                            __('Delete'),
-                            ['action' => 'delete', $contactSubmission->id],
-                            [
-                                'method' => 'delete',
-                                'confirm' => __('Are you sure you want to delete # {0}?', $contactSubmission->id),
-                            ]
-                        ) ?>
-                    </td>
-                </tr>
+                    <tr>
+                        <td><?= h($contactSubmission->first_name) ?></td>
+                        <td><?= h($contactSubmission->last_name) ?></td>
+                        <td><?= h($contactSubmission->email) ?></td>
+                        <td><?= h(mb_strimwidth($contactSubmission->message, 0, 60, '...')) ?></td>
+                        <td><?= h($contactSubmission->created) ?></td>
+                        <td>
+                            <a href="mailto:<?= h($contactSubmission->email) ?>?subject=Re: Your enquiry&body=Hi <?= h($contactSubmission->first_name) ?>,">
+                                <?= __('Reply') ?>
+                            </a>
+                        </td>
+                        <td class="actions">
+                            <?= $this->Html->link(__('View'), ['action' => 'view', $contactSubmission->id]) ?>
+                            <?= $this->Form->postLink(
+                                __('Delete'),
+                                ['action' => 'delete', $contactSubmission->id],
+                                [
+                                    'method' => 'delete',
+                                    'confirm' => __('Are you sure you want to delete # {0}?', $contactSubmission->id),
+                                ]
+                            ) ?>
+                        </td>
+                    </tr>
                 <?php endforeach; ?>
+            <?php else: ?>
+                <tr>
+                    <td colspan="7"><?= __('No contact form submissions found.') ?></td>
+                </tr>
+            <?php endif; ?>
             </tbody>
         </table>
     </div>
+
     <div class="paginator">
         <ul class="pagination">
             <?= $this->Paginator->first('<< ' . __('first')) ?>

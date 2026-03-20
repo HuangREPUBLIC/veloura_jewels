@@ -6,17 +6,15 @@ namespace App\Model\Entity;
 use Cake\ORM\Entity;
 
 /**
- * ContactSubmission Entity
+ * User Entity
  *
  * @property int $id
- * @property string $first_name
- * @property string $last_name
  * @property string $email
- * @property string $message
- * @property bool $captcha_passed
- * @property \Cake\I18n\DateTime $created
+ * @property string $password
+ * @property \Cake\I18n\DateTime|null $created
+ * @property \Cake\I18n\DateTime|null $modified
  */
-class ContactSubmission extends Entity
+class User extends Entity
 {
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
@@ -28,11 +26,18 @@ class ContactSubmission extends Entity
      * @var array<string, bool>
      */
     protected array $_accessible = [
-        'first_name' => true,
-        'last_name' => true,
         'email' => true,
-        'message' => true,
-        'captcha_passed' => true,
+        'password' => true,
         'created' => true,
+        'modified' => true,
+    ];
+
+    /**
+     * Fields that are excluded from JSON versions of the entity.
+     *
+     * @var array<string>
+     */
+    protected array $_hidden = [
+        'password',
     ];
 }
