@@ -16,30 +16,7 @@ class ContactSubmissionsController extends AppController
      *
      * @return \Cake\Http\Response|null|void Renders view
      */
-    public function beforeFilter(EventInterface $event)
-    {
-        parent::beforeFilter($event);
 
-        $session = $this->request->getSession();
-
-        if (!$session->check('Auth.User')) {
-            return $this->redirect([
-                'controller' => 'Users',
-                'action' => 'login'
-            ]);
-        }
-
-        $role = $session->read('Auth.User.role');
-
-        if (!in_array($role, ['admin', 'full_time'], true)) {
-            $this->Flash->error(__('You do not have permission to access this page.'));
-            return $this->redirect([
-                'controller' => 'Users',
-                'action' => 'dashboard'
-            ]);
-        }
-
-    }
     public function index()
     {
         $query = $this->ContactSubmissions->find();

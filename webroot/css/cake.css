@@ -43,8 +43,6 @@ body {
     background: var(--color-main-bg);
 }
 
-.top-nav-links,
-.side-nav,
 h1, h2, h3, h4, h5, h6 {
     font-family: "Raleway", sans-serif;
 }
@@ -66,19 +64,13 @@ a:active {
     transition: color 0.2s ease-out;
 }
 
-.side-nav a,
-.top-nav-links a,
+
 th a,
 .actions a {
     color: var(--color-lightgray);
 }
 
-.side-nav a:hover,
-.side-nav a:focus,
-.actions a:hover,
-.actions a:focus {
-    color: var(--color-links-active);
-}
+
 
 /* Utility */
 .table-responsive {
@@ -111,32 +103,55 @@ th {
     white-space: nowrap;
 }
 
-/* Nav bar */
-.top-nav {
+/* Navbar */
+.navbar {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    max-width: 112rem;
-    padding: 2rem;
-    margin: 0 auto;
+    padding: 1rem 2rem;
+    border-bottom: 1px solid #e0e0e0;
+    background-color: #fff;
 }
-.top-nav-title a {
-    font-size: 2.4rem;
-    color: var(--color-cakephp-red);
+
+.navbar-logo {
+    height: 50px;
+    width: auto;
 }
-.top-nav-title span {
-    color: var(--color-cakephp-gray);
+
+.navbar-links {
+    display: flex;
+    gap: 2rem;
 }
-.top-nav-links a {
-    margin: 0 0.5rem;
+
+.navbar-links a {
+    text-decoration: none;
+    color: #333;
+    font-size: 1.1rem;
 }
-.top-nav-title a,
-.top-nav-links a {
-    font-weight: bold;
+
+.navbar-links a:hover {
+    text-decoration: underline;
 }
-.side-nav-item {
-    display: block;
-    padding: 0.5rem 0;
+
+.navbar-right {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    font-size: 1.1rem;
+}
+
+.btn-login {
+    padding: 0.4rem 1.2rem;
+    border: 1px solid #333;
+    border-radius: 4px;
+    text-decoration: none;
+    color: #333;
+    font-size: 1rem;
+}
+
+.btn-login:hover {
+    background-color: #333;
+    color: #fff;
 }
 
 /* View action */

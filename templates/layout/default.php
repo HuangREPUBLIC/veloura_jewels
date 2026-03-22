@@ -14,7 +14,7 @@
  * @var \App\View\AppView $this
  */
 
-$cakeDescription = 'CakePHP: the rapid development php framework';
+$cakeDescription = 'Veloura Jewels';
 ?>
 <!DOCTYPE html>
 <html>
@@ -27,29 +27,37 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     </title>
     <?= $this->Html->meta('icon') ?>
 
-    <?= $this->Html->css(['normalize.min', 'milligram.min', 'fonts', 'cake']) ?>
+    <?= $this->Html->css(['fonts', 'cake']) ?>
 
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>
     <?= $this->fetch('script') ?>
 </head>
 <body>
-<nav class="top-nav">
-    <div class="top-nav-title">
-        <a href="<?= $this->Url->build('/') ?>"><span>Cake</span>PHP</a>
+<header class="navbar">
+    <div class="navbar-brand">
+        <?= $this->Html->link(
+            $this->Html->image('logo.png', ['alt' => 'Veloura Jewels', 'class' => 'navbar-logo']),
+            '/',
+            ['escape' => false]
+        ) ?>
     </div>
-    <div class="top-nav-links">
-        <a target="_blank" rel="noopener" href="https://book.cakephp.org/5/">Documentation</a>
-        <a target="_blank" rel="noopener" href="https://api.cakephp.org/">API</a>
+    <nav class="navbar-links">
+        <?= $this->Html->link('Home', '/') ?>
+        <?= $this->Html->link('Contact', '/contact') ?>
+        <?= $this->Html->link('Admin', '/admin') ?>
+    </nav>
+
+    <div class="navbar-right">
+        <span class="cart">Cart (0)</span>
+        <?= $this->Html->link('Login', '#', ['class' => 'btn-login']) ?>
     </div>
-</nav>
-<main class="main">
-    <div class="container">
-        <?= $this->Flash->render() ?>
-        <?= $this->fetch('content') ?>
-    </div>
+</header>
+
+<main class="main-content">
+    <?= $this->Flash->render() ?>
+    <?= $this->fetch('content') ?>
 </main>
-<footer>
-</footer>
+
 </body>
 </html>
