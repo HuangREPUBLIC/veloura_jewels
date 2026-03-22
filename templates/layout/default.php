@@ -25,7 +25,7 @@ $cakeDescription = 'Veloura Jewels';
         <?= $cakeDescription ?>:
         <?= $this->fetch('title') ?>
     </title>
-    <?= $this->Html->meta('icon') ?>
+    <?= $this->Html->meta('icon', '/img/icon.png') ?>
 
     <?= $this->Html->css(['normalize.min', 'fonts', 'default-styles', 'cake']) ?>
 

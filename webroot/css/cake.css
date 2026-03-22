@@ -1,4 +1,9 @@
     /* Milligram overrides */
+
+    html {
+        font-size: 100% !important;
+    }
+
     :root {
         /* The following are official CakePHP colors */
         --color-cakephp-red: #d33c43;
@@ -117,27 +122,27 @@
     }
 
     .navbar-logo {
-        background-color: var(--beige) !important;
+        background-color: solid #e0e0e0 !important;
         height: 70px !important;
         width: auto !important;
     }
 
     .navbar-links {
         display: flex !important;
-        gap: 2rem !important;
+        gap: 1rem !important;
     }
 
     .navbar-links a {
         text-decoration: none !important;
         color: #333 !important;
-        font-size: 1.5rem !important;
+        font-size: 1rem !important;
     }
 
     .navbar-right {
         display: flex !important;
         align-items: center !important;
         gap: 1.5rem !important;
-        font-size: 1.5rem !important;
+        font-size: 1rem !important;
     }
 
     .btn-login {
@@ -146,7 +151,7 @@
         border-radius: 4px !important;
         text-decoration: none !important;
         color: #333 !important;
-        font-size: 1.5rem !important;
+        font-size: 1rem !important;
     }
 
     .navbar-links a:hover {
