@@ -1,0 +1,50 @@
+html { font-size: 100% !important; }
+
+.contact-page {
+    background-color: #DAD7C5;
+    min-height: 100vh;
+    padding: 4rem 2rem;
+}
+
+.contact-header {
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto 3rem;
+}
+
+.contact-header h2 {
+    font-size: 2.8rem;
+    font-weight: 700;
+    color: #333;
+}
+
+.contact-header p {
+    color: #555;
+    font-size: 1rem;
+}
+
+.contactSubmissions.form.content {
+    max-width: 40rem;
+    margin: 0 auto;
+    background-color: #fff;
+    border-radius: 12px;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.contactSubmissions button {
+    width: 100%;
+    background-color: #786C3B;
+    color: #fff;
+    border: none;
+    text-transform: none;
+    letter-spacing: normal;
+}
+
+.contactSubmissions button:hover {
+    background-color: #5a5029;
+}

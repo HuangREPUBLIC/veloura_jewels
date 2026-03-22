@@ -122,7 +122,6 @@
     }
 
     .navbar-logo {
-        background-color: solid #e0e0e0 !important;
         height: 70px !important;
         width: auto !important;
     }
@@ -303,30 +302,64 @@
         justify-content: center;
     }
 
-    @media screen and (max-width: 640px) {
-        /* Fix milligram not having a responsive column system */
-        .row .column[class*='column-'] {
-            flex: 0 0 100%;
-            max-width: 100%
+
+    /* Footer */
+    .footer {
+        background-color: #786C3B;
+        color: #f0ede4;
+        padding: 3rem 4rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        flex-direction: row;
+        gap: 2rem;
+    }
+
+    .footer-brand h3 {
+        color: #F5F5DC;
+        font-size: 1.2rem;
+        margin-bottom: 1rem;
+    }
+
+    .footer-brand p {
+        font-size: 0.85rem;
+        color: #F5F5DC;
+        margin-bottom: 0.3rem;
+    }
+
+    .footer-links {
+        display: flex;
+        flex-direction: column;
+        gap: 0.4rem;
+        text-align: right;
+    }
+
+    .footer-links a {
+        color: #d9d4c4;
+        text-decoration: none;
+        font-size: 0.85rem;
+    }
+
+    .footer-links a:hover {
+        color: #fff;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .welcome, .about {
+            flex-direction: column;
         }
-        .top-nav {
-            margin: 0 auto;
+
+        .welcome-text h1 {
+            font-size: 2rem;
         }
-        .side-nav {
-            margin-bottom: 1rem;
+
+        .footer {
+            flex-direction: column;
         }
-        .heading {
-            margin-bottom: 1rem;
-        }
-        .side-nav-item {
-            display: inline;
-            margin: 0 1.5rem 0 0;
-        }
-        .asc:after {
-            content: " \2192";
-        }
-        .desc:after {
-            content: " \2190";
+
+        .footer-links {
+            text-align: left;
         }
     }
 
