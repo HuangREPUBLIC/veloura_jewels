@@ -28,9 +28,12 @@ use Cake\Validation\Validator;
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
 class ContactSubmissionsTable extends Table
+
 {
+
     public function initialize(array $config): void
     {
+
         parent::initialize($config);
 
         $this->setTable('contact_submissions');

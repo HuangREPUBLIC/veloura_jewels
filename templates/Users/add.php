@@ -4,6 +4,7 @@
  * @var \App\Model\Entity\User $user
  */
 ?>
+<?php $this->Html->css('default-styles', ['block' => true]); ?>
 <div class="row">
     <aside class="column">
         <div class="side-nav">

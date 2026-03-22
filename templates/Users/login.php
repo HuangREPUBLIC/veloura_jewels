@@ -3,6 +3,7 @@
  * @var \App\View\AppView $this
  */
 ?>
+<?php $this->Html->css('default-styles', ['block' => true]); ?>
 <div class="users form content">
     <h2><?= __('Admin Login') ?></h2>
 

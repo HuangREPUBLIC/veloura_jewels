@@ -27,7 +27,7 @@ $cakeDescription = 'Veloura Jewels';
     </title>
     <?= $this->Html->meta('icon') ?>
 
-    <?= $this->Html->css(['fonts', 'cake']) ?>
+    <?= $this->Html->css(['normalize.min', 'fonts', 'default-styles', 'cake']) ?>
 
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>
@@ -45,12 +45,19 @@ $cakeDescription = 'Veloura Jewels';
     <nav class="navbar-links">
         <?= $this->Html->link('Home', '/') ?>
         <?= $this->Html->link('Contact', '/contact') ?>
-        <?= $this->Html->link('Admin', '/admin') ?>
+        <?php if ($this->request->getSession()->check('Auth.User') &&
+            $this->request->getSession()->read('Auth.User.role') === 'admin'): ?>
+            <?= $this->Html->link('Admin', '/dashboard') ?>
+        <?php endif; ?>
     </nav>
 
     <div class="navbar-right">
         <span class="cart">Cart (0)</span>
-        <?= $this->Html->link('Login', '#', ['class' => 'btn-login']) ?>
+        <?php if ($this->request->getSession()->check('Auth.User')): ?>
+            <?= $this->Html->link('Logout', '/logout', ['class' => 'btn-login']) ?>
+        <?php else: ?>
+            <?= $this->Html->link('Login', '/login', ['class' => 'btn-login']) ?>
+        <?php endif; ?>
     </div>
 </header>
 

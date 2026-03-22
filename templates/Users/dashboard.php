@@ -4,6 +4,7 @@
  * @var array $authUser
  */
 ?>
+<?php $this->Html->css('default-styles', ['block' => true]); ?>
 <div class="users dashboard content">
     <h2><?= __('Admin Dashboard') ?></h2>
 

@@ -4,6 +4,8 @@
  * @var \App\Model\Entity\ContactSubmission $contactSubmission
  */
 ?>
+<?php $this->Html->css('default-styles', ['block' => true]); ?>
+
 <div class="contactSubmissions form content">
     <h2><?= __('Contact Us') ?></h2>
     <?= $this->Form->create($contactSubmission) ?>
