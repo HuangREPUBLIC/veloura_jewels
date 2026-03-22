@@ -1,318 +1,327 @@
-/* Milligram overrides */
-:root {
-    /* The following are official CakePHP colors */
-    --color-cakephp-red: #d33c43;
-    --color-cakephp-gray: #404041;
-    --color-cakephp-blue: #2f85ae;
-    --color-cakephp-lightblue: #34bdd7;
+    /* Milligram overrides */
+    :root {
+        /* The following are official CakePHP colors */
+        --color-cakephp-red: #d33c43;
+        --color-cakephp-gray: #404041;
+        --color-cakephp-blue: #2f85ae;
+        --color-cakephp-lightblue: #34bdd7;
 
-    /* These are additional colors */
-    --color-lightgray: #606c76;
-    --color-white: #fff;
+        /* These are additional colors */
+        --color-lightgray: #606c76;
+        --color-white: #fff;
 
-    --color-main-bg: #f5f7fa;
-    --color-links: var(--color-cakephp-blue);
-    --color-links-active: #2a6496;
-    --color-headings: #363637;
+        --color-main-bg: #f5f7fa;
+        --color-links: var(--color-cakephp-blue);
+        --color-links-active: #2a6496;
+        --color-headings: #363637;
 
-    --color-message-success-bg: #e3fcec;
-    --color-message-success-text: #1f9d55;
-    --color-message-success-border: #51d88a;
+        --color-message-success-bg: #e3fcec;
+        --color-message-success-text: #1f9d55;
+        --color-message-success-border: #51d88a;
 
-    --color-message-warning-bg: #fffabc;
-    --color-message-warning-text: #8d7b00;
-    --color-message-warning-border: #d3b800;
+        --color-message-warning-bg: #fffabc;
+        --color-message-warning-text: #8d7b00;
+        --color-message-warning-border: #d3b800;
 
-    --color-message-error-bg: #fcebea;
-    --color-message-error-text: #cc1f1a;
-    --color-message-error-border: #ef5753;
+        --color-message-error-bg: #fcebea;
+        --color-message-error-text: #cc1f1a;
+        --color-message-error-border: #ef5753;
 
-    --color-message-info-bg: #eff8ff;
-    --color-message-info-text: #2779bd;
-    --color-message-info-border: #6cb2eb;
-}
+        --color-message-info-bg: #eff8ff;
+        --color-message-info-text: #2779bd;
+        --color-message-info-border: #6cb2eb;
 
-.button, button, input[type='button'], input[type='reset'], input[type='submit'] {
-    background-color: var(--color-cakephp-red);
-    border-color: var(--color-cakephp-red);
-}
+        --beige: #DAD7C5;
+        --sage: #BCE3C5;
+        --earth-yellow: #E1A95E;
+        --oakwood: #786C3B;
 
-body {
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-weight: 400;
-    background: var(--color-main-bg);
-}
-
-h1, h2, h3, h4, h5, h6 {
-    font-family: "Raleway", sans-serif;
-}
-
-h1, h2, h3, h4, h5, h6 {
-    font-weight: 400;
-    color: var(--color-headings);
-}
-
-a {
-    color: var(--color-links);
-    transition: color 0.2s linear;
-}
-
-a:hover,
-a:focus,
-a:active {
-    color: var(--color-links-active);
-    transition: color 0.2s ease-out;
-}
-
-
-th a,
-.actions a {
-    color: var(--color-lightgray);
-}
-
-
-
-/* Utility */
-.table-responsive {
-    display: block;
-    width: 100%;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-}
-
-/* Main */
-.content {
-    padding: 2rem;
-    background: var(--color-white);
-    border-radius: 0.4rem;
-    /* Thanks Stripe */
-    box-shadow: 0 7px 14px 0 rgba(60, 66, 87, 0.1),
-    0 3px 6px 0 rgba(0, 0, 0, 0.07);
-}
-.content form {
-    margin: 0;
-}
-.actions a {
-    font-weight: bold;
-    padding: 0 0.4rem;
-}
-.actions a:first-child {
-    padding-left: 0;
-}
-th {
-    white-space: nowrap;
-}
-
-/* Navbar */
-.navbar {
-    display: flex !important;
-    align-items: center !important;
-    justify-content: space-between !important;
-    padding: 1rem 2rem !important;
-    border-bottom: 1px solid #e0e0e0 !important;
-    background-color: #fff !important;
-}
-
-.navbar-logo {
-    height: 70px !important;
-    width: auto !important;
-}
-
-.navbar-links {
-    display: flex !important;
-    gap: 2rem !important;
-}
-
-.navbar-links a {
-    text-decoration: none !important;
-    color: #333 !important;
-    font-size: 1.5rem !important;
-}
-
-.navbar-right {
-    display: flex !important;
-    align-items: center !important;
-    gap: 1.5rem !important;
-    font-size: 1.5rem !important;
-}
-
-.btn-login {
-    padding: 0.6rem 1.8rem !important;
-    border: 1px solid #333 !important;
-    border-radius: 4px !important;
-    text-decoration: none !important;
-    color: #333 !important;
-    font-size: 1.5rem !important;
-}
-
-.navbar-links a:hover {
-    text-decoration: underline !important;
-}
-
-
-
-.btn-login:hover {
-    background-color: #333 !important;
-    color: #fff !important;
-}
-
-/* View action */
-.view.content .text {
-    margin-top: 1.2rem;
-}
-.related {
-    margin-top: 2rem;
-}
-
-/* Flash messages */
-.message {
-    padding: .5rem 1rem;
-    background: var(--color-message-info-bg);
-    color: var(--color-message-info-text);
-    border-color: var(--color-message-info-border);
-    border-width: 1px;
-    border-style: solid;
-    border-radius: 4px;
-    margin-bottom: 1rem;
-    cursor: pointer;
-}
-.message.hidden {
-    display: none;
-}
-.message.success {
-    background: var(--color-message-success-bg);
-    color: var(--color-message-success-text);
-    border-color: var(--color-message-success-border);
-}
-.message.warning {
-    background: var(--color-message-warning-bg);
-    color: var(--color-message-warning-text);
-    border-color: var(--color-message-warning-border);
-}
-.message.error {
-    background: var(--color-message-error-bg);
-    color: var(--color-message-error-text);
-    border-color: var(--color-message-error-border);
-}
-
-/* Forms */
-.input {
-    margin-bottom: 1.5rem;
-}
-.input input,
-.input select,
-.input textarea {
-    margin-bottom: 0;
-}
-.input label:has(input[type='checkbox']),
-.input label:has(input[type='radio']) {
-    display: flex;
-    align-items: center;
-}
-.input label:has(~ label),
-.input label:has(input[type='radio']) {
-    margin-bottom: 0;
-}
-.input label > input[type='checkbox'],
-.input label > input[type='radio'] {
-    margin-right: 1.0rem;
-}
-input[type='color'] {
-    max-width: 4rem;
-    padding: 0.3rem .5rem 0.3rem;
-}
-.error-message {
-    color: var(--color-message-error-text);
-}
-
-/* Paginator */
-.paginator {
-    text-align: right;
-}
-.paginator p {
-    margin-bottom: 0;
-}
-.pagination {
-    display: flex;
-    justify-content: center;
-    list-style: none;
-    margin: 0 0 1rem 0;
-    padding: 0;
-}
-.pagination li {
-    display: inline-block;
-    margin: 0.25em;
-    text-align: center;
-}
-.pagination a {
-    color: var(--color-cakephp-blue);
-    display: inline-block;
-    font-size: 1.25rem;
-    line-height: 3rem;
-    min-width: 3rem;
-    padding: 0;
-    position: relative;
-    text-decoration: none;
-    transition: background .3s,color .3s;
-}
-.pagination li.active a,
-.pagination a:hover {
-    text-decoration: underline;
-}
-.pagination .disabled a {
-    cursor: not-allowed;
-    color: var(--color-lightgray);
-    text-decoration: none;
-}
-.first a,
-.prev a,
-.next a,
-.last a {
-    padding: 0 .75rem;
-}
-.disabled a:hover {
-    background: initial;
-    color: initial;
-}
-.asc:after {
-    content: " \2193";
-}
-.desc:after {
-    content: " \2191";
-}
-
-/* Error in non debug mode */
-.error-container {
-    align-items: center;
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    justify-content: center;
-}
-
-@media screen and (max-width: 640px) {
-    /* Fix milligram not having a responsive column system */
-    .row .column[class*='column-'] {
-        flex: 0 0 100%;
-        max-width: 100%
     }
-    .top-nav {
-        margin: 0 auto;
+
+    .button, button, input[type='button'], input[type='reset'], input[type='submit'] {
+        background-color: var(--color-cakephp-red);
+        border-color: var(--color-cakephp-red);
     }
-    .side-nav {
+
+    body {
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        font-weight: 400;
+        background: var(--color-main-bg);
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        font-family: "Raleway", sans-serif;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        font-weight: 400;
+        color: var(--color-headings);
+    }
+
+    a {
+        color: var(--color-links);
+        transition: color 0.2s linear;
+    }
+
+    a:hover,
+    a:focus,
+    a:active {
+        color: var(--color-links-active);
+        transition: color 0.2s ease-out;
+    }
+
+
+    th a,
+    .actions a {
+        color: var(--color-lightgray);
+    }
+
+
+
+    /* Utility */
+    .table-responsive {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    /* Main */
+    .content {
+        padding: 2rem;
+        background: var(--beige);
+        border-radius: 0.4rem;
+
+    }
+    .content form {
+        margin: 0;
+    }
+    .actions a {
+        font-weight: bold;
+        padding: 0 0.4rem;
+    }
+    .actions a:first-child {
+        padding-left: 0;
+    }
+    th {
+        white-space: nowrap;
+    }
+
+    /* Navbar */
+    .navbar {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        padding: 1rem 2rem !important;
+        border-bottom: 1px solid #e0e0e0 !important;
+    }
+
+    .navbar-logo {
+        background-color: var(--beige) !important;
+        height: 70px !important;
+        width: auto !important;
+    }
+
+    .navbar-links {
+        display: flex !important;
+        gap: 2rem !important;
+    }
+
+    .navbar-links a {
+        text-decoration: none !important;
+        color: #333 !important;
+        font-size: 1.5rem !important;
+    }
+
+    .navbar-right {
+        display: flex !important;
+        align-items: center !important;
+        gap: 1.5rem !important;
+        font-size: 1.5rem !important;
+    }
+
+    .btn-login {
+        padding: 0.6rem 1.8rem !important;
+        border: 1px solid #333 !important;
+        border-radius: 4px !important;
+        text-decoration: none !important;
+        color: #333 !important;
+        font-size: 1.5rem !important;
+    }
+
+    .navbar-links a:hover {
+        text-decoration: underline !important;
+    }
+
+
+
+    .btn-login:hover {
+        background-color: #333 !important;
+        color: #fff !important;
+    }
+
+
+
+    /* View action */
+    .view.content .text {
+        margin-top: 1.2rem;
+    }
+    .related {
+        margin-top: 2rem;
+    }
+
+
+
+    /* Flash messages */
+    .message {
+        padding: .5rem 1rem;
+        background: var(--color-message-info-bg);
+        color: var(--color-message-info-text);
+        border-color: var(--color-message-info-border);
+        border-width: 1px;
+        border-style: solid;
+        border-radius: 4px;
         margin-bottom: 1rem;
+        cursor: pointer;
     }
-    .heading {
-        margin-bottom: 1rem;
+    .message.hidden {
+        display: none;
     }
-    .side-nav-item {
-        display: inline;
-        margin: 0 1.5rem 0 0;
+    .message.success {
+        background: var(--color-message-success-bg);
+        color: var(--color-message-success-text);
+        border-color: var(--color-message-success-border);
+    }
+    .message.warning {
+        background: var(--color-message-warning-bg);
+        color: var(--color-message-warning-text);
+        border-color: var(--color-message-warning-border);
+    }
+    .message.error {
+        background: var(--color-message-error-bg);
+        color: var(--color-message-error-text);
+        border-color: var(--color-message-error-border);
+    }
+
+    /* Forms */
+    .input {
+        margin-bottom: 1.5rem;
+    }
+    .input input,
+    .input select,
+    .input textarea {
+        margin-bottom: 0;
+    }
+    .input label:has(input[type='checkbox']),
+    .input label:has(input[type='radio']) {
+        display: flex;
+        align-items: center;
+    }
+    .input label:has(~ label),
+    .input label:has(input[type='radio']) {
+        margin-bottom: 0;
+    }
+    .input label > input[type='checkbox'],
+    .input label > input[type='radio'] {
+        margin-right: 1.0rem;
+    }
+    input[type='color'] {
+        max-width: 4rem;
+        padding: 0.3rem .5rem 0.3rem;
+    }
+    .error-message {
+        color: var(--color-message-error-text);
+    }
+
+    /* Paginator */
+    .paginator {
+        text-align: right;
+    }
+    .paginator p {
+        margin-bottom: 0;
+    }
+    .pagination {
+        display: flex;
+        justify-content: center;
+        list-style: none;
+        margin: 0 0 1rem 0;
+        padding: 0;
+    }
+    .pagination li {
+        display: inline-block;
+        margin: 0.25em;
+        text-align: center;
+    }
+    .pagination a {
+        color: var(--color-cakephp-blue);
+        display: inline-block;
+        font-size: 1.25rem;
+        line-height: 3rem;
+        min-width: 3rem;
+        padding: 0;
+        position: relative;
+        text-decoration: none;
+        transition: background .3s,color .3s;
+    }
+    .pagination li.active a,
+    .pagination a:hover {
+        text-decoration: underline;
+    }
+    .pagination .disabled a {
+        cursor: not-allowed;
+        color: var(--color-lightgray);
+        text-decoration: none;
+    }
+    .first a,
+    .prev a,
+    .next a,
+    .last a {
+        padding: 0 .75rem;
+    }
+    .disabled a:hover {
+        background: initial;
+        color: initial;
     }
     .asc:after {
-        content: " \2192";
+        content: " \2193";
     }
     .desc:after {
-        content: " \2190";
+        content: " \2191";
     }
-}
+
+    /* Error in non debug mode */
+    .error-container {
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        justify-content: center;
+    }
+
+    @media screen and (max-width: 640px) {
+        /* Fix milligram not having a responsive column system */
+        .row .column[class*='column-'] {
+            flex: 0 0 100%;
+            max-width: 100%
+        }
+        .top-nav {
+            margin: 0 auto;
+        }
+        .side-nav {
+            margin-bottom: 1rem;
+        }
+        .heading {
+            margin-bottom: 1rem;
+        }
+        .side-nav-item {
+            display: inline;
+            margin: 0 1.5rem 0 0;
+        }
+        .asc:after {
+            content: " \2192";
+        }
+        .desc:after {
+            content: " \2190";
+        }
+    }
+

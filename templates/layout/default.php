@@ -66,5 +66,23 @@ $cakeDescription = 'Veloura Jewels';
     <?= $this->fetch('content') ?>
 </main>
 
+
+<footer class="footer">
+    <div class="footer-brand">
+        <h3>Veloura Jewels</h3>
+        <p>Opening hours: 10:00 - 6:00</p>
+        <p>123 456 7890</p>
+        <p>veloura.jewels@gmail.com</p>
+        <p>88 Elizabeth Road, Melbourne, VIC 3000</p>
+    </div>
+    <div class="footer-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms &amp; Conditions</a>
+        <a href="#">Refund Policy</a>
+        <a href="#">Shipping Policy</a>
+    </div>
+</footer>
+
 </body>
+
 </html>

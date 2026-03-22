@@ -1,59 +1,54 @@
-/* Home page styles */
-@font-face {
-    font-family: 'cakefont';
-    src: url('../font/cakedingbats-webfont.eot');
-    src: url('../font/cakedingbats-webfont.eot?#iefix') format('embedded-opentype'),
-    url('../font/cakedingbats-webfont.woff2') format('woff2'),
-    url('../font/cakedingbats-webfont.woff') format('woff'),
-    url('../font/cakedingbats-webfont.ttf') format('truetype'),
-    url('../font/cakedingbats-webfont.svg#cake_dingbatsregular') format('svg');
-    font-weight: normal;
-    font-style: normal;
+html {
+    font-size: 100% !important;
 }
 
-
-root {
-    --beige: #F5F5DC;
+:root {
+    --beige: #DAD7C5;
     --sage: #BCE3C5;
     --earth-yellow: #E1A95E;
     --oakwood: #786C3B;
-    --walnut: #A52A2A;
 }
 
-/* welcome Section */
+/* Welcome Section */
+.welcome-wrapper {
+    margin: 2rem;
+    border-radius: 32px;
+    overflow: hidden;
+}
+
 .welcome {
     display: flex;
     align-items: stretch;
     background-color: var(--beige);
-    min-height: 560px;
+    min-height: 480px;
 }
 
 .welcome-text {
     flex: 1;
-    padding: 4rem 3rem;
+    padding: 3rem 2.5rem;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 }
 
 .welcome-text h1 {
-    font-size: 3.5rem;
+    font-size: 2.8rem;
     font-weight: 800;
     color: var(--oakwood);
     line-height: 1.1;
-    margin-bottom: 1rem;
+    margin-bottom: 0.8rem;
 }
 
 .welcome-text .subtitle {
-    font-size: 1.1rem;
+    font-size: 1rem;
     color: var(--oakwood);
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
 }
 
 .welcome-text p {
     font-size: 0.95rem;
     color: #555;
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
     max-width: 360px;
 }
 
@@ -72,12 +67,15 @@ root {
     object-fit: cover;
 }
 
+/* Buttons */
 .btn-outline {
-    padding: 0.7rem 2rem;
+    display: inline-block;
+    padding: 0.6rem 1.6rem;
     border: 2px solid #786C3B;
     border-radius: 4px;
     color: #786C3B;
     text-decoration: none;
+    font-size: 0.95rem;
     transition: all 0.2s ease;
     align-self: flex-start;
     background-color: transparent;
@@ -88,16 +86,57 @@ root {
     color: #fff;
 }
 
+/* About Section */
+.about {
+    display: flex;
+    align-items: flex-start;
+    padding: 4rem 4rem;
+    gap: 4rem;
+    background-color: #fff;
+}
+
+.about-left {
+    flex: 1;
+}
+
+.about-left h2 {
+    font-size: 2.8rem;
+    font-weight: 800;
+    color: #786C3B;
+    line-height: 1.1;
+    margin-bottom: 0.5rem;
+}
+
+.about-left .journey-label {
+    color: #888;
+    font-size: 0.95rem;
+}
+
+.about-right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding-top: 1rem;
+}
+
+.about-right p {
+    color: #555;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    margin: 0;
+}
+
 /* Get in Touch Section */
 .get-in-touch {
     text-align: center;
-    padding: 5rem 2rem;
-    background-color: #fff;
+    padding: 4rem 2rem;
+    background-color: var(--beige);
 }
 
 .get-in-touch h2 {
     font-size: 2.2rem;
-    color: var(--oakwood);
+    color: #786C3B;
     margin-bottom: 1rem;
 }
 
@@ -109,14 +148,55 @@ root {
     line-height: 1.7;
 }
 
-/* Responsive Media for devices */
+/* Footer */
+.footer {
+    background-color: #786C3B;
+    color: #f0ede4;
+    padding: 3rem 4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-direction: row;
+    gap: 2rem;
+}
+
+.footer-brand h3 {
+    color: #F5F5DC;
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+}
+
+.footer-brand p {
+    font-size: 0.85rem;
+    color: #F5F5DC;
+    margin-bottom: 0.3rem;
+}
+
+.footer-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    text-align: right;
+}
+
+.footer-links a {
+    color: #d9d4c4;
+    text-decoration: none;
+    font-size: 0.85rem;
+}
+
+.footer-links a:hover {
+    color: #fff;
+}
+
+/* Responsive */
 @media (max-width: 768px) {
-    .hero, .about {
+    .welcome, .about {
         flex-direction: column;
     }
 
-    .hero-text h1 {
-        font-size: 2.5rem;
+    .welcome-text h1 {
+        font-size: 2rem;
     }
 
     .footer {
@@ -127,4 +207,3 @@ root {
         text-align: left;
     }
 }
-

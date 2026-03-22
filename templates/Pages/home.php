@@ -18,7 +18,7 @@ $this->assign('title', 'Home');
 $this->Html->css('home', ['block' => true]);
 ?>
 
-
+<div class="welcome-wrapper">
 <!-- Welcome Section -->
 <section class="welcome">
     <div class="welcome-text">
@@ -33,7 +33,19 @@ $this->Html->css('home', ['block' => true]);
         <span class="placeholder-text">Jewellery Image</span>
     </div>
 </section>
+</div>
 
+<!-- About Section -->
+<section class="about">
+    <div class="about-left">
+        <h2>About<br>Veloura Jewels</h2>
+        <p class="journey-label">Our Journey</p>
+    </div>
+    <div class="about-right">
+        <p>Founded by Sarah Smith in Brooksdale, Veloura Jewels is dedicated to creating unique, handcrafted pieces that blend creativity and meaningful design. Our goal is to bring beauty and elegance into your home and wardrobe.</p>
+        <?= $this->Html->link('Learn More About Us', '#', ['class' => 'btn-outline']) ?>
+    </div>
+</section>
 
 <!-- Get in Touch Section -->
 <section class="get-in-touch">
