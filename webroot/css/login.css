@@ -1,0 +1,38 @@
+html { font-size: 100% !important; }
+
+.users.form.content {
+    max-width: 24rem;
+    margin: 6rem auto;
+    background-color: #fff;
+    border-radius: 12px;
+    padding: 2.5rem;
+}
+
+.users h2 {
+    text-align: center;
+    color: #786C3B;
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+}
+
+.users button {
+    width: 100%;
+    background-color: #786C3B;
+    color: #fff;
+    border: none;
+    text-transform: none;
+    letter-spacing: normal;
+}
+
+.users button:hover {
+    background-color: #5a5029;
+}
+.users label {
+    font-size: 0.95rem !important;
+}
+
+.users input {
+    font-size: 0.95rem !important;
+    height: 2.5rem !important;
+    padding: 0.5rem 0.8rem !important;
+}

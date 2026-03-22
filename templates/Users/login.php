@@ -3,7 +3,12 @@
  * @var \App\View\AppView $this
  */
 ?>
+
+<!-- CSS Styling -->
 <?php $this->Html->css('default-styles', ['block' => true]); ?>
+<?php $this->Html->css('login', ['block' => true]); ?>
+
+<!-- Form Content -->
 <div class="users form content">
     <h2><?= __('Admin Login') ?></h2>
 

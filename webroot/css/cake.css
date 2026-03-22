@@ -52,6 +52,7 @@
         font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
         font-weight: 400;
         background: var(--color-main-bg);
+        font-size: 14px !important;
     }
 
     h1, h2, h3, h4, h5, h6 {
