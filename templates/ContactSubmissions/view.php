@@ -9,9 +9,11 @@
         <div class="side-nav">
             <h4 class="heading"><?= __('Actions') ?></h4>
             <?= $this->Html->link(__('List Contact Submissions'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
-            <a class="side-nav-item" href="mailto:<?= h($contactSubmission->email) ?>?subject=Re: Your enquiry&body=Hi <?= h($contactSubmission->first_name) ?>,">
-                <?= __('Reply to this user') ?>
-            </a>
+            <?= $this->Html->link(
+                __('Reply to this user'),
+                ['action' => 'reply', $contactSubmission->id],
+                ['class' => 'side-nav-item']
+            ) ?>
             <?= $this->Form->postLink(
                 __('Delete Contact Submission'),
                 ['action' => 'delete', $contactSubmission->id],

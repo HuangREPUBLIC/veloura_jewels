@@ -30,8 +30,10 @@
                         <td><?= h(mb_strimwidth($contactSubmission->message, 0, 60, '...')) ?></td>
                         <td><?= h($contactSubmission->created) ?></td>
                         <td>
-                            <a href="mailto:<?= h($contactSubmission->email) ?>?subject=Re: Your enquiry&body=Hi <?= h($contactSubmission->first_name) ?>,">
-                                <?= __('Reply') ?>
+                            <?= $this->Html->link(
+                                __('Reply'),
+                                ['action' => 'reply', $contactSubmission->id]
+                            ) ?>
                             </a>
                         </td>
                         <td class="actions">

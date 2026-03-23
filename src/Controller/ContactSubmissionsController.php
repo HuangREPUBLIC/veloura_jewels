@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 use Cake\Event\EventInterface;
+use Cake\Mailer\Mailer;
 
 /**
  * ContactSubmissions Controller
@@ -107,5 +108,29 @@ class ContactSubmissionsController extends AppController
         }
 
         return $this->redirect(['action' => 'index']);
+    }
+    public function reply($id = null)
+    {
+        $contactSubmission = $this->ContactSubmissions->get($id);
+
+        if ($this->request->is(['post', 'put'])) {
+            $subject = $this->request->getData('subject');
+            $message = $this->request->getData('message');
+
+            try {
+                $mailer = new Mailer('default');
+                $mailer
+                    ->setTo($contactSubmission->email)
+                    ->setSubject($subject)
+                    ->deliver($message);
+
+                $this->Flash->success('Reply sent successfully.');
+                return $this->redirect(['action' => 'view', $id]);
+            } catch (\Exception $e) {
+                $this->Flash->error('Could not send email. Please try again.');
+            }
+        }
+
+        $this->set(compact('contactSubmission'));
     }
 }
