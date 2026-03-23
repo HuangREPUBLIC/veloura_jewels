@@ -60,6 +60,7 @@ return function (RouteBuilder $routes): void {
 
         //Login Route
         $builder->connect('/login', ['controller' => 'Users', 'action' => 'login']);
+        $builder->connect('/signup', ['controller' => 'Users', 'action' => 'add']);
 
         //Dashboard Route
         $builder->connect('/dashboard', ['controller' => 'Users', 'action' => 'dashboard']);

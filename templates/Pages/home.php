@@ -30,7 +30,7 @@ $this->Html->css('home', ['block' => true]);
         <a href="#" class="btn-outline">Explore Our Collections</a>
     </div>
     <div class="welcome-image">
-        <span class="placeholder-text">Jewellery Image</span>
+       <?= $this->Html->image('homepage.png', ['alt' => 'Veloura Jewels', 'class' => 'welcome-image']); ?>
     </div>
 </section>
 </div>
