@@ -5,7 +5,18 @@
  */
 ?>
 <div class="contactSubmissions view content">
-    <h3><?= __('Replies for Contact Submission #{0}', $contactSubmission->id) ?></h3>
+    <h3><?= __('Reply History') ?></h3>
+    <div class="submission-info">
+        <p>
+            <strong><?= __('Name:') ?></strong>
+            <?= h($contactSubmission->first_name . ' ' . $contactSubmission->last_name) ?>
+        </p>
+
+        <p>
+            <strong><?= __('Email:') ?></strong>
+            <?= h($contactSubmission->email) ?>
+        </p>
+    </div>
 
     <div class="related">
         <?php if (!empty($contactSubmission->contact_replies)): ?>
