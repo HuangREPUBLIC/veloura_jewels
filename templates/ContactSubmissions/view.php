@@ -58,6 +58,32 @@
                     <?= $this->Text->autoParagraph(h($contactSubmission->message)); ?>
                 </blockquote>
             </div>
+            <div class="related">
+                <h4><?= __('Replies') ?></h4>
+
+                <?php if (!empty($contactSubmission->contact_replies)): ?>
+                    <table>
+                        <thead>
+                        <tr>
+                            <th><?= __('Subject') ?></th>
+                            <th><?= __('Message') ?></th>
+                            <th><?= __('Sent At') ?></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <?php foreach ($contactSubmission->contact_replies as $reply): ?>
+                            <tr>
+                                <td><?= h($reply->subject) ?></td>
+                                <td><?= h($reply->message) ?></td>
+                                <td><?= h($reply->sent_at) ?></td>
+                            </tr>
+                        <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                <?php else: ?>
+                    <p><?= __('No replies have been sent yet.') ?></p>
+                <?php endif; ?>
+            </div>
         </div>
     </div>
 </div>
