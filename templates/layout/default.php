@@ -44,9 +44,10 @@ $cakeDescription = 'Veloura Jewels';
     </div>
     <nav class="navbar-links">
         <?= $this->Html->link('Home', '/') ?>
-        <?= $this->Html->link('Contact', '/contact') ?>
         <?php if ($this->Identity->isLoggedIn() && $this->Identity->get('role') === 'admin'): ?>
             <?= $this->Html->link('Admin', '/dashboard') ?>
+        <?php else: ?>
+            <?= $this->Html->link('Contact', '/contact') ?>
         <?php endif; ?>
     </nav>
 

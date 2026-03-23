@@ -47,10 +47,14 @@ class AuthController extends AppController
     {
         $user = $this->Users->newEmptyEntity();
         if ($this->request->is('post')) {
-            $user = $this->Users->patchEntity($user, $this->request->getData());
+
+            $data = $this->request->getData();
+            $data['role'] = 'customer';
+
+            $user = $this->Users->patchEntity($user, $data);
+
             if ($this->Users->save($user)) {
                 $this->Flash->success('You have been registered. Please log in. ');
-
                 return $this->redirect(['action' => 'login']);
             }
             $this->Flash->error('The user could not be registered. Please, try again.');
@@ -206,7 +210,7 @@ class AuthController extends AppController
         // if user passes authentication, grant access to the system
         if ($result && $result->isValid()) {
             // set a fallback location in case user logged in without triggering 'unauthenticatedRedirect'
-            $fallbackLocation = ['controller' => 'Users', 'action' => 'index'];
+            $fallbackLocation = '/';
 
             // and redirect user to the location they're trying to access
             return $this->redirect($this->Authentication->getLoginRedirect() ?? $fallbackLocation);

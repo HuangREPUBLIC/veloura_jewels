@@ -11,6 +11,13 @@ namespace App\Controller;
  */
 class UsersController extends AppController
 {
+    // Only allow admins to edit users
+    public function beforeFilter(\Cake\Event\EventInterface $event)
+    {
+        parent::beforeFilter($event);
+        $this->Authentication->addUnauthenticatedActions([]);
+    }
+
     /**
      * Index method
      *
@@ -66,6 +73,14 @@ class UsersController extends AppController
      */
     public function edit($id = null)
     {
+
+        $identity = $this->Authentication->getIdentity();
+
+        if (!$identity || $identity->get('role') !== 'admin') {
+            $this->Flash->error('You do not have permission to do this.');
+            return $this->redirect('/');
+        }
+
         $user = $this->Users->get($id, contain: []);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $user = $this->Users->patchEntity($user, $this->request->getData());
@@ -130,21 +145,16 @@ class UsersController extends AppController
 
     public function dashboard()
     {
-        $session = $this->request->getSession();
+        $identity = $this->Authentication->getIdentity();
 
-        if (!$session->check('Auth.User')) {
-            return $this->redirect(['action' => 'login']);
+        if (!$identity || $identity->get('role') !== 'admin') {
+            $this->Flash->error('You do not have permission to access the dashboard.');
+            return $this->redirect('/');
         }
 
-        $authUser = $session->read('Auth.User');
-        $this->set(compact('authUser'));
+        $this->set('authUser', $identity);
     }
 
-    public function logout()
-    {
-        $this->request->getSession()->delete('Auth.User');
-        $this->Flash->success(__('You have been logged out.'));
 
-        return $this->redirect(['action' => 'login']);
-    }
+
 }

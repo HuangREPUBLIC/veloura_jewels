@@ -67,6 +67,10 @@ class UsersTable extends Table
             ->requirePresence('password', 'create')
             ->notEmptyString('password');
 
+        $validator
+            ->inList('role', ['admin', 'staff', 'customer'], 'Invalid role selected');
+
+
         return $validator;
     }
 

@@ -23,7 +23,7 @@ $appLocale = Configure::read('App.defaultLocale');
 
     <link href="https://fonts.googleapis.com/css?family=Raleway:400,700" rel="stylesheet">
 
-    <?= $this->Html->css(['default-styles']) ?>
+    <?= $this->Html->css(['default-styles' , 'login']) ?>
 
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>

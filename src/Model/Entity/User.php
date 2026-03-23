@@ -98,4 +98,9 @@ class User extends Entity
 
         return null;
     }
+
+    protected function _setRole(?string $role): string
+    {
+        return $role ?: 'customer';
+    }
 }
