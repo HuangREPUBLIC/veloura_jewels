@@ -25,6 +25,12 @@ class ContactSubmissionsController extends AppController
         $this->set(compact('contactSubmissions'));
     }
 
+    public function beforeFilter(\Cake\Event\EventInterface $event)
+    {
+        parent::beforeFilter($event);
+        $this->Authentication->addUnauthenticatedActions(['add']);
+    }
+
     /**
      * View method
      *

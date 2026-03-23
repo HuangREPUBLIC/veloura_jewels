@@ -45,18 +45,17 @@ $cakeDescription = 'Veloura Jewels';
     <nav class="navbar-links">
         <?= $this->Html->link('Home', '/') ?>
         <?= $this->Html->link('Contact', '/contact') ?>
-        <?php if ($this->request->getSession()->check('Auth.User') &&
-            $this->request->getSession()->read('Auth.User.role') === 'admin'): ?>
+        <?php if ($this->Identity->isLoggedIn() && $this->Identity->get('role') === 'admin'): ?>
             <?= $this->Html->link('Admin', '/dashboard') ?>
         <?php endif; ?>
     </nav>
 
     <div class="navbar-right">
         <span class="cart">Cart (0)</span>
-        <?php if ($this->request->getSession()->check('Auth.User')): ?>
-            <?= $this->Html->link('Logout', '/logout', ['class' => 'btn-login']) ?>
+        <?php if ($this->Identity->isLoggedIn()): ?>
+            <?= $this->Html->link('Logout', '/auth/logout', ['class' => 'btn-login']) ?>
         <?php else: ?>
-            <?= $this->Html->link('Login', '/login', ['class' => 'btn-login']) ?>
+            <?= $this->Html->link('Login', '/auth/login', ['class' => 'btn-login']) ?>
         <?php endif; ?>
     </div>
 </header>

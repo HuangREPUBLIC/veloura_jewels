@@ -19,12 +19,13 @@ use Cake\ORM\Entity;
  * @property \Cake\I18n\DateTime $modified
  * @property string|null $nonce
  * @property \Cake\I18n\DateTime|null $nonce_expiry
+ * @property string $role
  *
  * // Virtual Fields
  * @property string $user_full_display
  * @property string $full_name
  *
- * @property \App\Model\Entity\BlogArticle[] $blog_articles
+
  */
 class User extends Entity
 {
@@ -47,7 +48,8 @@ class User extends Entity
         'modified' => false,
         'nonce' => false, // Nonce and expiry dates are to be set in Controller directly, not through patching
         'nonce_expiry' => false,
-        'blog_articles' => true,
+        'role' => true,
+
     ];
 
     /**

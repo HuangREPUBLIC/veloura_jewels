@@ -59,8 +59,9 @@ return function (RouteBuilder $routes): void {
         $builder->connect('/contact', ['controller' => 'ContactSubmissions', 'action' => 'add']);
 
         //Login Route
-        $builder->connect('/login', ['controller' => 'Users', 'action' => 'login']);
-        $builder->connect('/signup', ['controller' => 'Users', 'action' => 'add']);
+        $builder->connect('/auth/login', ['controller' => 'Auth', 'action' => 'login']);
+        $builder->connect('/auth/logout', ['controller' => 'Auth', 'action' => 'logout']);
+        $builder->connect('/auth/forgot-password', ['controller' => 'Auth', 'action' => 'forgotPassword']);
 
         //Dashboard Route
         $builder->connect('/dashboard', ['controller' => 'Users', 'action' => 'dashboard']);

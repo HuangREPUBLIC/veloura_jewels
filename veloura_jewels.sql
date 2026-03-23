@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 22, 2026 at 12:14 PM
+-- Generation Time: Mar 23, 2026 at 02:08 PM
 -- Server version: 11.8.6-MariaDB
 -- PHP Version: 8.4.16
 
@@ -73,7 +73,11 @@ CREATE TABLE `contact_submissions` (
 INSERT INTO `contact_submissions` (`id`, `first_name`, `last_name`, `email`, `message`, `captcha_passed`, `created`, `modified`) VALUES
 (1, 'Jialin', 'Wu', 'jialinwu.island@gmail.com', '1', 0, '2026-03-20 02:40:43', '2026-03-20 02:40:43'),
 (3, '11', '11', '11@1.com', '1wassadsad', 0, '2026-03-20 02:44:25', '2026-03-20 02:44:25'),
-(4, 'test', 'testing', 'test@gmail.com', 'this is after removing login thing', 0, '2026-03-22 01:11:19', '2026-03-22 01:11:19');
+(4, 'test', 'testing', 'test@gmail.com', 'this is after removing login thing', 0, '2026-03-22 01:11:19', '2026-03-22 01:11:19'),
+(5, 'test', 'testadd', 'newui@gmail.com', 'this is a test message', 0, '2026-03-22 03:19:16', '2026-03-22 03:19:16'),
+(6, 'Ava', 'Burke', 'ava@gmail.com', 'this is avaaaa oo la la', 0, '2026-03-22 08:24:05', '2026-03-22 08:24:05'),
+(7, 'Hunter', 'McConnell', 'hmcc0010@student.monash.edu', 'hello', 0, '2026-03-23 01:45:20', '2026-03-23 01:45:20'),
+(8, 'Hello', 'Maryt', 'mary@gmail.com', 'i love this group 10/10', 0, '2026-03-23 02:09:35', '2026-03-23 02:09:35');
 
 -- --------------------------------------------------------
 
@@ -114,17 +118,20 @@ CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
+  `nonce` varchar(255) DEFAULT NULL,
+  `nonce_expiry` datetime DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
-  `role` varchar(50) NOT NULL DEFAULT 'admin'
+  `role` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `email`, `password`, `created`, `modified`, `role`) VALUES
-(4, 'admin@test.com', '$2y$12$8/IZh.Uu7yYH3PftqfXz4u8Zz3TYZeczS1LS3qKQN3.ftYUxYQuhe', '2026-03-20 14:24:24', '2026-03-20 14:24:24', 'admin');
+INSERT INTO `users` (`id`, `email`, `password`, `nonce`, `nonce_expiry`, `created`, `modified`, `role`) VALUES
+(1, 'test@example.com', 'secret-password', NULL, NULL, '2026-03-23 13:31:14', '2026-03-23 13:31:14', 'admin'),
+(2, 'hmcc0010@student.monash.edu', '$2y$12$GRnZFtFO.MxJtQVI.f5VzObyTs7cDhlMNjAyw4rvJsZFZssyKvmzm', NULL, NULL, '2026-03-23 02:46:29', '2026-03-23 02:46:29', '');
 
 --
 -- Indexes for dumped tables
@@ -167,8 +174,7 @@ ALTER TABLE `product_images`
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `email` (`email`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -190,7 +196,7 @@ ALTER TABLE `categories_products`
 -- AUTO_INCREMENT for table `contact_submissions`
 --
 ALTER TABLE `contact_submissions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `products`
@@ -208,7 +214,7 @@ ALTER TABLE `product_images`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Constraints for dumped tables
