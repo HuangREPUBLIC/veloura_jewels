@@ -124,6 +124,16 @@ class ContactSubmissionsController extends AppController
                     ->setSubject($subject)
                     ->deliver($message);
 
+                $contactRepliesTable = $this->fetchTable('ContactReplies');
+                $reply = $contactRepliesTable->newEntity([
+                    'contact_submission_id' => $contactSubmission->id,
+                    'subject' => $subject,
+                    'message' => $message,
+                    'sent_at' => date('Y-m-d H:i:s'),
+                ]);
+
+                $contactRepliesTable->save($reply);
+
                 $this->Flash->success('Reply sent successfully.');
                 return $this->redirect(['action' => 'view', $id]);
             } catch (\Exception $e) {
