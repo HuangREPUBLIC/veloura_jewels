@@ -143,4 +143,9 @@ class ContactSubmissionsController extends AppController
 
         $this->set(compact('contactSubmission'));
     }
+    public function replies($id = null)
+    {
+        $contactSubmission = $this->ContactSubmissions->get($id, contain: ['ContactReplies']);
+        $this->set(compact('contactSubmission'));
+    }
 }
