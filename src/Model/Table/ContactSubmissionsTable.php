@@ -41,6 +41,10 @@ class ContactSubmissionsTable extends Table
         $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');
+        $this->hasMany('ContactReplies', [
+            'foreignKey' => 'contact_submission_id',
+            'dependent' => true,
+        ]);
     }
 
     public function validationDefault(Validator $validator): Validator
@@ -66,4 +70,5 @@ class ContactSubmissionsTable extends Table
 
         return $validator;
     }
+
 }
