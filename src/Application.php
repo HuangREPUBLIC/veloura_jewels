@@ -14,9 +14,15 @@ declare(strict_types=1);
  * @since     3.3.0
  * @license   https://opensource.org/licenses/mit-license.php MIT License
  */
+
 namespace App;
 
-use App\Middleware\HostHeaderMiddleware;
+// use App\Middleware\HostHeaderMiddleware;
+use Authentication\AuthenticationService;
+use Authentication\AuthenticationServiceInterface;
+use Authentication\AuthenticationServiceProviderInterface;
+use Authentication\Identifier\PasswordIdentifier;
+use Authentication\Middleware\AuthenticationMiddleware;
 use Cake\Core\Configure;
 use Cake\Core\ContainerInterface;
 use Cake\Datasource\FactoryLocator;
@@ -29,6 +35,8 @@ use Cake\Http\MiddlewareQueue;
 use Cake\ORM\Locator\TableLocator;
 use Cake\Routing\Middleware\AssetMiddleware;
 use Cake\Routing\Middleware\RoutingMiddleware;
+use Cake\Routing\Router;
+use Psr\Http\Message\ServerRequestInterface;
 
 /**
  * Application setup class.
@@ -38,7 +46,7 @@ use Cake\Routing\Middleware\RoutingMiddleware;
  *
  * @extends \Cake\Http\BaseApplication<\App\Application>
  */
-class Application extends BaseApplication
+class Application extends BaseApplication implements AuthenticationServiceProviderInterface
 {
     /**
      * Load all the application configuration and bootstrap logic.
@@ -70,7 +78,7 @@ class Application extends BaseApplication
             // Validate Host header to prevent Host Header Injection attacks.
             // In production, ensures App.fullBaseUrl is configured and validates
             // the incoming Host header against it.
-            ->add(new HostHeaderMiddleware())
+            // ->add(new HostHeaderMiddleware())
 
             // Handle plugin/theme assets like CakePHP normally does.
             ->add(new AssetMiddleware([
@@ -92,9 +100,56 @@ class Application extends BaseApplication
             // https://book.cakephp.org/5/en/security/csrf.html#cross-site-request-forgery-csrf-middleware
             ->add(new CsrfProtectionMiddleware([
                 'httponly' => true,
-            ]));
+            ]))
+
+            // Add Authentication support by plugin
+            ->add(new AuthenticationMiddleware($this));
 
         return $middlewareQueue;
+    }
+
+    /**
+     * Authentication plugin implementation
+     *
+     * @param \Psr\Http\Message\ServerRequestInterface $request
+     * @return \Authentication\AuthenticationServiceInterface
+     */
+    public function getAuthenticationService(ServerRequestInterface $request): AuthenticationServiceInterface
+    {
+        $authenticationService = new AuthenticationService([
+            'unauthenticatedRedirect' => Router::url([
+                'controller' => 'Auth',
+                'action' => 'login',
+                'plugin' => null,
+                'prefix' => null,
+            ]),
+            'queryParam' => 'redirect',
+        ]);
+
+        $authentication_fields = [
+            PasswordIdentifier::CREDENTIAL_USERNAME => 'email',
+            PasswordIdentifier::CREDENTIAL_PASSWORD => 'password',
+        ];
+
+        // Load the authenticators, you want session first
+        $authenticationService->loadAuthenticator('Authentication.Session');
+
+        // Configure form data check to pick email and password
+        $authenticationService->loadAuthenticator('Authentication.Form', [
+            'identifier' => [
+                'className' => 'Authentication.Password',
+                'fields' => $authentication_fields,
+            ],
+            'fields' => $authentication_fields,
+            'loginUrl' => [
+                'controller' => 'Auth',
+                'action' => 'login',
+                'plugin' => null,
+                'prefix' => null,
+            ],
+        ]);
+
+        return $authenticationService;
     }
 
     /**

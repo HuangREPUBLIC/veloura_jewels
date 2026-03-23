@@ -12,4 +12,5 @@ return [
     'Migrations' => [
         'onlyCli' => true,
     ],
+    'Authentication' => [],
 ];
