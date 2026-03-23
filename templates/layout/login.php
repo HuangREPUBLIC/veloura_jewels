@@ -1,42 +1,59 @@
 <?php
-/**
- * Login layout
- *
- * This layout comes with no navigation bar and Flash renderer placeholder. Usually used for login page or similar.
- *
- * @var \App\View\AppView $this
- */
-
-use Cake\Core\Configure;
-
-$appLocale = Configure::read('App.defaultLocale');
+$appLocale = \Cake\Core\Configure::read('App.defaultLocale');
 ?>
 <!DOCTYPE html>
 <html lang="<?= $appLocale ?>">
 <head>
     <?= $this->Html->charset() ?>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>
-        <?= $this->fetch('title') ?> - Cake CMS/Auth Sample
-    </title>
-    <?= $this->Html->meta('icon') ?>
-
-    <link href="https://fonts.googleapis.com/css?family=Raleway:400,700" rel="stylesheet">
-
-    <?= $this->Html->css(['default-styles' , 'login']) ?>
-
+    <title><?= $this->fetch('title') ?> - Veloura Jewels</title>
+    <?= $this->Html->meta('icon', '/img/icon.png') ?>
+    <?= $this->Html->css(['normalize.min', 'fonts', 'default-styles', 'cake', 'login']) ?>
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>
     <?= $this->fetch('script') ?>
 </head>
 <body>
-<main class="main">
+
+<header class="navbar">
+    <div class="navbar-brand">
+        <?= $this->Html->link(
+            $this->Html->image('logo.png', ['alt' => 'Veloura Jewels', 'class' => 'navbar-logo']),
+            '/',
+            ['escape' => false]
+        ) ?>
+    </div>
+    <nav class="navbar-links">
+        <?= $this->Html->link('Home', '/') ?>
+        <?= $this->Html->link('Contact', '/contact') ?>
+    </nav>
+    <div class="navbar-right">
+        <span class="cart">Cart (0)</span>
+        <?= $this->Html->link('Login', '/auth/login', ['class' => 'btn-login']) ?>
+
+    </div>
+</header>
+
+<main class="main-content">
+    <?= $this->Flash->render() ?>
     <?= $this->fetch('content') ?>
 </main>
-<footer>
-    <?= $this->element('footer_copyright', [], ['ignoreMissing' => true]); ?>
 
-    <?= $this->fetch('footer_script') ?>
+<footer class="footer">
+    <div class="footer-brand">
+        <h3>Veloura Jewels</h3>
+        <p>Opening hours: 10:00 - 6:00</p>
+        <p>123 456 7890</p>
+        <p>veloura.jewels@gmail.com</p>
+        <p>88 Elizabeth Road, Melbourne, VIC 3000</p>
+    </div>
+    <div class="footer-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms &amp; Conditions</a>
+        <a href="#">Refund Policy</a>
+        <a href="#">Shipping Policy</a>
+    </div>
 </footer>
+
 </body>
 </html>
