@@ -7,14 +7,21 @@ $this->assign('title', 'Admin Dashboard');
 ?>
 <?php $this->Html->css('default-styles', ['block' => true]); ?>
 
-<div class="users form content">
-    <h2>Admin Dashboard</h2>
-    <p>Welcome, <?= h($authUser->get('email')) ?></p>
+<div class="admin-dashboard">
+    <div class="dashboard-hero">
+        <h1>Admin Dashboard</h1>
+        <p>Welcome, <?= h($authUser->email) ?></p>
+    </div>
 
-    <ul>
-        <li><?= $this->Html->link('View Contact Submissions', ['controller' => 'ContactSubmissions', 'action' => 'index']) ?></li>
-        <?php if ($authUser->get('role') === 'admin'): ?>
-            <li><?= $this->Html->link('Manage Users', ['controller' => 'Users', 'action' => 'index']) ?></li>
-        <?php endif; ?>
-    </ul>
+    <div class="dashboard-grid">
+        <a href="<?= $this->Url->build(['controller' => 'ContactSubmissions', 'action' => 'index']) ?>" class="dashboard-card">
+            <h3>View Contact Submissions</h3>
+            <p>Review messages submitted by customers.</p>
+        </a>
+
+        <a href="<?= $this->Url->build(['controller' => 'Users', 'action' => 'index']) ?>" class="dashboard-card">
+            <h3>Manage Users</h3>
+            <p>Edit, update, and organise user accounts.</p>
+        </a>
+    </div>
 </div>

@@ -4,9 +4,8 @@
  * @var \App\Model\Entity\User $user
  */
 ?>
-<?php $this->Html->css('default-styles', ['block' => true]); ?>
 <div class="row">
-    <aside class="column">
+    <aside class="column column-20">
         <div class="side-nav">
             <h4 class="heading"><?= __('Actions') ?></h4>
             <?= $this->Html->link(__('Edit User'), ['action' => 'edit', $user->id], ['class' => 'side-nav-item']) ?>
@@ -15,6 +14,7 @@
             <?= $this->Html->link(__('New User'), ['action' => 'add'], ['class' => 'side-nav-item']) ?>
         </div>
     </aside>
+
     <div class="column column-80">
         <div class="users view content">
             <h3><?= h($user->email) ?></h3>

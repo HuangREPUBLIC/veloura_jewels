@@ -9,6 +9,7 @@
 
 <div class="users form content">
     <h2><?= __('Edit User') ?></h2>
+
     <?= $this->Form->create($user) ?>
     <fieldset>
         <?php
@@ -16,6 +17,7 @@
             'label' => 'Email',
             'required' => true
         ]);
+
         echo $this->Form->control('role', [
             'type' => 'select',
             'options' => [

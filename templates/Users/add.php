@@ -7,20 +7,34 @@
 <?php $this->Html->css('default-styles', ['block' => true]); ?>
 <?php $this->Html->css('login', ['block' => true]); ?>
 
-<div class="row">
+<div class="users form content">
+    <h2><?= __('Add User') ?></h2>
 
-        <div class="column column-80">
-        <div class="users form content">
-            <?= $this->Form->create($user) ?>
-            <fieldset>
-                <legend><?= __('Add User') ?></legend>
-                <?php
-                    echo $this->Form->control('email');
-                    echo $this->Form->control('password');
-                ?>
-            </fieldset>
-            <?= $this->Form->button(__('Submit')) ?>
-            <?= $this->Form->end() ?>
-        </div>
-    </div>
+    <?= $this->Form->create($user) ?>
+    <fieldset>
+        <?php
+        echo $this->Form->control('email', [
+            'label' => 'Email',
+            'required' => true
+        ]);
+
+        echo $this->Form->control('password', [
+            'label' => 'Password',
+            'required' => true
+        ]);
+
+        echo $this->Form->control('role', [
+            'type' => 'select',
+            'options' => [
+                'admin' => 'Admin',
+                'staff' => 'Staff',
+                'customer' => 'Customer',
+            ],
+            'label' => 'Role',
+            'required' => true
+        ]);
+        ?>
+    </fieldset>
+    <?= $this->Form->button(__('Submit')) ?>
+    <?= $this->Form->end() ?>
 </div>
