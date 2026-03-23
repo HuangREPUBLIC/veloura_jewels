@@ -34,7 +34,13 @@
                                 __('Reply'),
                                 ['action' => 'reply', $contactSubmission->id]
                             ) ?>
-                            </a>
+
+                            |
+
+                            <?= $this->Html->link(
+                                __('Replies'),
+                                ['action' => 'replies', $contactSubmission->id]
+                            ) ?>
                         </td>
                         <td class="actions">
                             <?= $this->Html->link(__('View'), ['action' => 'view', $contactSubmission->id]) ?>
