@@ -41,7 +41,7 @@ class ContactSubmissionsController extends AppController
      */
     public function view($id = null)
     {
-        $contactSubmission = $this->ContactSubmissions->get($id, contain: []);
+        $contactSubmission = $this->ContactSubmissions->get($id, contain: ['ContactReplies']);
         $this->set(compact('contactSubmission'));
     }
 
