@@ -6,7 +6,11 @@
 ?>
 
 <div class="contactSubmissions form content">
-    <h2><?= __('Reply to Contact Submission') ?></h2>
+    <h2><?= __('Reply to Enquiry') ?></h2>
+    <p>
+        <strong><?= __('Name:') ?></strong>
+        <?= h($contactSubmission->first_name . ' ' . $contactSubmission->last_name) ?>
+    </p>
 
     <p><strong>Email:</strong> <?= h($contactSubmission->email) ?></p>
 
