@@ -89,7 +89,78 @@ td.actions button {
     border-radius: 4px;
 }
 
-.admin-dashboard { font-size: 1rem; }
-.admin-dashboard h1 { font-size: 2rem; }
-.admin-dashboard p { font-size: 1rem; }
-.admin-dashboard h3 { font-size: 1.2rem; }
+.admin-wrapper {
+    padding: 1rem;
+}
+
+.admin-dashboard {
+    background: var(--beige);
+    border-radius: 1rem;
+    padding: 2rem;
+}
+
+.dashboard-hero {
+    margin-bottom: 1.6rem;
+}
+
+.dashboard-hero h1 {
+    margin: 0 0 0.5rem 0;
+    font-size: 2.2rem;
+    font-weight: 500;
+    color: var(--color-headings);
+}
+
+.dashboard-hero p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #6b7280;
+}
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(240px, 1fr));
+    gap: 1rem;
+}
+
+.dashboard-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.9rem;
+    background: #f7f5ef;
+    border-radius: 0.9rem;
+    padding: 1.3rem;
+    text-decoration: none;
+    border: 1px solid transparent;
+    transition: all 0.18s ease;
+}
+
+.dashboard-card:hover {
+    border: 1px solid var(--oakwood);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.05);
+}
+
+.dashboard-icon {
+    font-size: 1.4rem;
+    line-height: 1;
+    margin-top: 0.1rem;
+}
+
+.dashboard-content h3 {
+    margin: 0 0 0.3rem 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--oakwood);
+}
+
+.dashboard-content p {
+    margin: 0;
+    font-size: 0.85rem;
+    color: #6b7280;
+    line-height: 1.4;
+}
+
+@media (max-width: 768px) {
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+}
