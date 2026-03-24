@@ -4,10 +4,12 @@
  * @var iterable<\App\Model\Entity\ContactSubmission> $contactSubmissions
  */
 ?>
-<div class="contactSubmissions index content">
-    <h3><?= __('Contact Submissions') ?></h3>
 
-    <div class="table-responsive">
+<div class="submissions-wrapper">
+    <div class="contactSubmissions index content">
+        <h3><?= __('Contact Submissions') ?></h3>
+
+     <div class="table-responsive">
         <table>
             <thead>
             <tr>
@@ -63,6 +65,7 @@
             </tbody>
         </table>
     </div>
+</div>
 
     <div class="paginator">
         <ul class="pagination">

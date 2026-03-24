@@ -17,9 +17,8 @@
 $this->assign('title', 'Home');
 $this->Html->css('home', ['block' => true]);
 ?>
-
-<div class="welcome-wrapper">
 <!-- Welcome Section -->
+<div class="welcome-wrapper">
 <section class="welcome">
     <div class="welcome-text">
         <div>
