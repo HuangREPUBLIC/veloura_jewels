@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 namespace App\Controller;
+
 use Cake\Event\EventInterface;
 use Cake\Mailer\Mailer;
 
@@ -12,12 +13,20 @@ use Cake\Mailer\Mailer;
  */
 class ContactSubmissionsController extends AppController
 {
+    public function initialize(): void
+    {
+        parent::initialize();
+
+        // Load Turnstile CAPTCHA component
+        $this->loadComponent('Turnstile');
+    }
+
     /**
      * Index method
      *
      * @return \Cake\Http\Response|null|void Renders view
+     * @throws \Exception
      */
-
     public function index()
     {
         $query = $this->ContactSubmissions->find();
@@ -26,7 +35,7 @@ class ContactSubmissionsController extends AppController
         $this->set(compact('contactSubmissions'));
     }
 
-    public function beforeFilter(\Cake\Event\EventInterface $event)
+    public function beforeFilter(EventInterface $event)
     {
         parent::beforeFilter($event);
         $this->Authentication->addUnauthenticatedActions(['add']);
@@ -53,18 +62,47 @@ class ContactSubmissionsController extends AppController
     public function add()
     {
         $contactSubmission = $this->ContactSubmissions->newEmptyEntity();
-        if ($this->request->is('post')) {
-            $contactSubmission = $this->ContactSubmissions->patchEntity($contactSubmission, $this->request->getData());
 
-            //TODO - Temporary captcha still need to setup actual captcha
-            $contactSubmission->captcha_passed = 0;
+        if ($this->request->is('post')) {
+            $contactSubmission = $this->ContactSubmissions->patchEntity(
+                $contactSubmission,
+                $this->request->getData()
+            );
+
+            // Validate Turnstile response with Cloudflare
+            $turnstileToken = $this->request->getData('cf-turnstile-response');
+
+            if (!$turnstileToken) {
+                $this->Flash->error(__('Please complete the CAPTCHA challenge.'));
+                $this->set(compact('contactSubmission'));
+                return $this->render();
+            }
+
+            $turnstileResponse = $this->Turnstile->validateTurnstile(
+                $turnstileToken,
+                $this->request->clientIp()
+            );
+
+            if (!$turnstileResponse || empty($turnstileResponse['success'])) {
+                $this->log('Turnstile Response Error: ' . json_encode($turnstileResponse));
+                $this->Flash->error(__('CAPTCHA challenge failed. Please try again.'));
+                $this->set(compact('contactSubmission'));
+                return $this->render();
+            }
+
+            // Optional: mark that CAPTCHA was passed if this column exists in your DB
+            if (property_exists($contactSubmission, 'captcha_passed')) {
+                $contactSubmission->captcha_passed = 1;
+            }
 
             if ($this->ContactSubmissions->save($contactSubmission)) {
                 $this->Flash->success(__('Thanks for reaching out! We will get back to you as soon as possible.'));
                 return $this->redirect(['action' => 'add']);
             }
+
             $this->Flash->error(__('Something went wrong. Please check the details and try again.'));
         }
+
         $this->set(compact('contactSubmission'));
     }
 
@@ -109,6 +147,7 @@ class ContactSubmissionsController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+
     public function reply($id = null)
     {
         $contactSubmission = $this->ContactSubmissions->get($id);
@@ -143,6 +182,7 @@ class ContactSubmissionsController extends AppController
 
         $this->set(compact('contactSubmission'));
     }
+
     public function replies($id = null)
     {
         $contactSubmission = $this->ContactSubmissions->get($id, contain: ['ContactReplies']);
