@@ -209,16 +209,22 @@ class AuthController extends AppController
 
         // if user passes authentication, grant access to the system
         if ($result && $result->isValid()) {
-            // set a fallback location in case user logged in without triggering 'unauthenticatedRedirect'
-            $fallbackLocation = '/';
 
-            // and redirect user to the location they're trying to access
+            $user = $this->request->getAttribute('identity');
+
+            // 👉 如果是 admin，直接去 dashboard
+            if ($user && $user->role === 'admin') {
+                return $this->redirect('/dashboard');
+            }
+
+            // 👉 其他用户正常走原逻辑
+            $fallbackLocation = '/';
             return $this->redirect($this->Authentication->getLoginRedirect() ?? $fallbackLocation);
         }
 
         // display error if user submitted their credentials but authentication failed
         if ($this->request->is('post') && !$result->isValid()) {
-            $this->Flash->error('Email address and/or Password is incorrect. Please try again. ');
+            $this->Flash->error('Email address and/or Password is incorrect. Please try again.');
         }
     }
 
