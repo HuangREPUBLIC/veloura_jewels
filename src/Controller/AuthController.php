@@ -212,12 +212,10 @@ class AuthController extends AppController
 
             $user = $this->request->getAttribute('identity');
 
-            // 👉 如果是 admin，直接去 dashboard
             if ($user && $user->role === 'admin') {
                 return $this->redirect('/dashboard');
             }
 
-            // 👉 其他用户正常走原逻辑
             $fallbackLocation = '/';
             return $this->redirect($this->Authentication->getLoginRedirect() ?? $fallbackLocation);
         }
