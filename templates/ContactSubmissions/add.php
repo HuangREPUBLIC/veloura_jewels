@@ -34,6 +34,11 @@
                 'placeholder' => 'Your email address',
                 'required' => true
             ]); ?>
+            <?php echo $this->Form->control('subject', [
+                'label' => 'Subject',
+                'placeholder' => 'Enter subject of your message',
+                'required' => true
+            ]); ?>
             <?php echo $this->Form->control('message', [
                 'label' => 'Message',
                 'placeholder' => 'Write your message here...',

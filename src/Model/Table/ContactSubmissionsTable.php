@@ -62,6 +62,9 @@ class ContactSubmissionsTable extends Table
             ->email('email', false, 'Please enter a valid email address');
 
         $validator
+            ->notEmptyString('subject', 'Please enter a subject');
+
+        $validator
             ->notEmptyString('message', 'Please enter a message');
 
         $validator

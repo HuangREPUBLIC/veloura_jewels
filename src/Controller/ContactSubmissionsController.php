@@ -69,28 +69,6 @@ class ContactSubmissionsController extends AppController
     }
 
     /**
-     * Edit method
-     *
-     * @param string|null $id Contact Submission id.
-     * @return \Cake\Http\Response|null|void Redirects on successful edit, renders view otherwise.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
-    public function edit($id = null)
-    {
-        $contactSubmission = $this->ContactSubmissions->get($id, contain: []);
-        if ($this->request->is(['patch', 'post', 'put'])) {
-            $contactSubmission = $this->ContactSubmissions->patchEntity($contactSubmission, $this->request->getData());
-            if ($this->ContactSubmissions->save($contactSubmission)) {
-                $this->Flash->success(__('The contact submission has been saved.'));
-
-                return $this->redirect(['action' => 'index']);
-            }
-            $this->Flash->error(__('The contact submission could not be saved. Please, try again.'));
-        }
-        $this->set(compact('contactSubmission'));
-    }
-
-    /**
      * Delete method
      *
      * @param string|null $id Contact Submission id.
@@ -133,6 +111,9 @@ class ContactSubmissionsController extends AppController
                 ]);
 
                 $contactRepliesTable->save($reply);
+
+                $contactSubmission->is_replied = true;
+                $this->ContactSubmissions->save($contactSubmission);
 
                 $this->Flash->success('Reply sent successfully.');
                 return $this->redirect(['action' => 'view', $id]);

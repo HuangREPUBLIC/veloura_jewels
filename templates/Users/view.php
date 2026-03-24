@@ -3,39 +3,45 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\User $user
  */
+$this->assign('title', 'View User');
 ?>
-<div class="row">
-    <aside class="column column-20">
-        <div class="side-nav">
-            <h4 class="heading"><?= __('Actions') ?></h4>
-            <?= $this->Html->link(__('Edit User'), ['action' => 'edit', $user->id], ['class' => 'side-nav-item']) ?>
-            <?= $this->Form->postLink(__('Delete User'), ['action' => 'delete', $user->id], ['confirm' => __('Are you sure you want to delete # {0}?', $user->id), 'class' => 'side-nav-item']) ?>
-            <?= $this->Html->link(__('List Users'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
-            <?= $this->Html->link(__('New User'), ['action' => 'add'], ['class' => 'side-nav-item']) ?>
-        </div>
-    </aside>
+<?php $this->Html->css('admincontact', ['block' => true]); ?>
 
-    <div class="column column-80">
-        <div class="users view content">
-            <h3><?= h($user->email) ?></h3>
-            <table>
-                <tr>
-                    <th><?= __('Email') ?></th>
-                    <td><?= h($user->email) ?></td>
-                </tr>
-                <tr>
-                    <th><?= __('Id') ?></th>
-                    <td><?= $this->Number->format($user->id) ?></td>
-                </tr>
-                <tr>
-                    <th><?= __('Created') ?></th>
-                    <td><?= h($user->created) ?></td>
-                </tr>
-                <tr>
-                    <th><?= __('Modified') ?></th>
-                    <td><?= h($user->modified) ?></td>
-                </tr>
-            </table>
+<div class="submissions-wrapper">
+    <div class="users view content">
+        <h3><?= h($user->email) ?></h3>
+
+        <div class="action-buttons">
+            <?= $this->Html->link(__('← Back to Users'), ['action' => 'index']) ?>
+            <?= $this->Html->link(__('Edit'), ['action' => 'edit', $user->id]) ?>
+            <?= $this->Form->postLink(
+                __('Delete'),
+                ['action' => 'delete', $user->id],
+                [
+                    'confirm' => __('Are you sure you want to delete # {0}?', $user->id),
+                    'class' => 'btn-delete'
+                ]
+            ) ?>
+
         </div>
+
+        <table>
+            <tr>
+                <th><?= __('Email') ?></th>
+                <td><?= h($user->email) ?></td>
+            </tr>
+            <tr>
+                <th><?= __('Role') ?></th>
+                <td><?= h($user->role) ?></td>
+            </tr>
+            <tr>
+                <th><?= __('Created') ?></th>
+                <td><?= h($user->created) ?></td>
+            </tr>
+            <tr>
+                <th><?= __('Modified') ?></th>
+                <td><?= h($user->modified) ?></td>
+            </tr>
+        </table>
     </div>
 </div>

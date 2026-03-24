@@ -5,8 +5,10 @@
  */
 $this->assign('title', 'Admin Dashboard');
 ?>
-<?php $this->Html->css('default-styles', ['block' => true]); ?>
+<?php $this->Html->css('admincontact', ['block' => true]); ?>
 
+
+<div class="admin-wrapper">
 <div class="admin-dashboard">
     <div class="dashboard-hero">
         <h1>Admin Dashboard</h1>
@@ -25,3 +27,5 @@ $this->assign('title', 'Admin Dashboard');
         </a>
     </div>
 </div>
+</div>
+

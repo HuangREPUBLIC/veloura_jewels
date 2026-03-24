@@ -1,0 +1,119 @@
+html {
+    font-size: 100% !important;
+}
+
+:root {
+    --beige: #DAD7C5;
+    --oakwood: #786C3B;
+}
+
+.submissions-wrapper {
+    margin: 2rem;
+}
+
+.admin-wrapper {
+    margin: 2rem;
+}
+.submissions-view-wrapper {
+    margin: 4rem;
+}
+
+.contactSubmissions h3 {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--oakwood);
+    margin-bottom: 1.5rem;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+}
+
+thead th {
+    padding: 0.8rem 1rem;
+    text-align: left;
+    background-color: var(--beige);
+    color: var(--oakwood);
+    font-weight: 700;
+}
+
+tbody tr {
+    border-bottom: 1px solid var(--beige);
+}
+
+
+tbody td {
+    padding: 0.8rem 1rem;
+    color: #444;
+    vertical-align: middle;
+}
+
+td.actions a,
+td.actions button {
+    margin-right: 0.5rem;
+    color: var(--oakwood);
+    font-size: 0.85rem;
+}
+
+.replied-yes { color: green; font-weight: 600; }
+.replied-no { color: #999; }
+.action-buttons {
+    display: flex;
+    gap: 0.8rem;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.action-buttons a,
+.action-buttons .btn-delete {
+    color: var(--oakwood);
+    text-decoration: none;
+    font-size: 0.85rem;
+    padding: 0.3rem 0.8rem;
+    border: 1px solid var(--oakwood);
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    background: none;
+    cursor: pointer;
+}
+
+.action-buttons a:hover {
+    background-color: var(--oakwood);
+    color: #fff;
+}
+
+.action-buttons .btn-delete {
+    border-color: #c0392b;
+    color: #c0392b;
+}
+
+.action-buttons .btn-delete:hover {
+    background-color: #c0392b;
+    color: #fff;
+}
+
+.message-box {
+    padding: 1rem;
+    background: var(--beige);
+    border-left: 3px solid var(--oakwood);
+    border-radius: 4px;
+}
+
+.admin-dashboard {
+    font-size: 1rem;
+}
+
+.admin-dashboard h1 {
+    font-size: 2rem;
+}
+
+.admin-dashboard p {
+    font-size: 1rem;
+}
+
+.admin-dashboard h3 {
+    font-size: 1.2rem;
+}
+
