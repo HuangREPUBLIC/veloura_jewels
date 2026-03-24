@@ -5,8 +5,10 @@
  */
 $this->assign('title', 'Admin Dashboard');
 ?>
-<?php $this->Html->css('default-styles', ['block' => true]); ?>
+<?php $this->Html->css('admincontact', ['block' => true]); ?>
 
+
+<div class="admin-wrapper">
 <div class="admin-dashboard">
     <div class="dashboard-hero">
         <h1>Admin Dashboard</h1>
@@ -14,14 +16,22 @@ $this->assign('title', 'Admin Dashboard');
     </div>
 
     <div class="dashboard-grid">
+
         <a href="<?= $this->Url->build(['controller' => 'ContactSubmissions', 'action' => 'index']) ?>" class="dashboard-card">
-            <h3>View Contact Submissions</h3>
-            <p>Review messages submitted by customers.</p>
+            <div class="dashboard-icon">📩</div>
+            <div class="dashboard-content">
+                <h3>Contact Submissions</h3>
+                <p>View and respond to customer enquiries.</p>
+            </div>
         </a>
 
         <a href="<?= $this->Url->build(['controller' => 'Users', 'action' => 'index']) ?>" class="dashboard-card">
-            <h3>Manage Users</h3>
-            <p>Edit, update, and organise user accounts.</p>
+            <div class="dashboard-icon">👤</div>
+            <div class="dashboard-content">
+                <h3>Users</h3>
+                <p>Manage system users and permissions.</p>
+            </div>
         </a>
+
     </div>
-</div>
+

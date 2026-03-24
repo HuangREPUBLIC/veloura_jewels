@@ -3,87 +3,78 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\ContactSubmission $contactSubmission
  */
+$this->assign('title', 'View Submission');
 ?>
-<div class="row">
-    <aside class="column">
-        <div class="side-nav">
-            <h4 class="heading"><?= __('Actions') ?></h4>
-            <?= $this->Html->link(__('List Contact Submissions'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
-            <?= $this->Html->link(
-                __('Reply to this user'),
-                ['action' => 'reply', $contactSubmission->id],
-                ['class' => 'side-nav-item']
-            ) ?>
+<?php $this->Html->css('admincontact', ['block' => true]); ?>
+
+<div class="submissions-view-wrapper">
+    <div class="contactSubmissions view content">
+        <h3><?= h($contactSubmission->first_name . ' ' . $contactSubmission->last_name) ?></h3>
+
+        <div class="action-buttons">
+            <?= $this->Html->link(__('← Back to Submissions'), ['action' => 'index']) ?>
+            <?= $this->Html->link(__('Reply'), ['action' => 'reply', $contactSubmission->id]) ?>
             <?= $this->Form->postLink(
-                __('Delete Contact Submission'),
+                __('Delete'),
                 ['action' => 'delete', $contactSubmission->id],
                 [
                     'confirm' => __('Are you sure you want to delete # {0}?', $contactSubmission->id),
-                    'class' => 'side-nav-item'
+                    'class' => 'btn-delete'
                 ]
             ) ?>
         </div>
-    </aside>
 
-    <div class="column column-80">
-        <div class="contactSubmissions view content">
-            <h3><?= h($contactSubmission->first_name . ' ' . $contactSubmission->last_name) ?></h3>
+        <table>
+            <tr>
+                <th><?= __('Email') ?></th>
+                <td><?= h($contactSubmission->email) ?></td>
+            </tr>
+            <tr>
+                <th><?= __('Subject') ?></th>
+                <td><?= h($contactSubmission->subject) ?></td>
+            </tr>
+            <tr>
+                <th><?= __('Submitted') ?></th>
+                <td><?= h($contactSubmission->created) ?></td>
+            </tr>
+            <tr>
+                <th><?= __('Replied') ?></th>
+                <td><?= $contactSubmission->is_replied ? '<span class="replied-yes">Yes</span>' : '<span class="replied-no">No</span>' ?></td>
+            </tr>
+        </table>
 
-            <table>
-                <tr>
-                    <th><?= __('First Name') ?></th>
-                    <td><?= h($contactSubmission->first_name) ?></td>
-                </tr>
-                <tr>
-                    <th><?= __('Last Name') ?></th>
-                    <td><?= h($contactSubmission->last_name) ?></td>
-                </tr>
-                <tr>
-                    <th><?= __('Email') ?></th>
-                    <td><?= h($contactSubmission->email) ?></td>
-                </tr>
-                <tr>
-                    <th><?= __('Submission Date/Time') ?></th>
-                    <td><?= h($contactSubmission->created) ?></td>
-                </tr>
-                <tr>
-                    <th><?= __('Captcha Passed') ?></th>
-                    <td><?= $contactSubmission->captcha_passed ? __('Yes') : __('No') ?></td>
-                </tr>
-            </table>
-
-            <div class="text">
+        <div style="margin: 1.5rem 0;">
+            <div class="action-buttons" style="margin-bottom: 0.5rem;">
                 <strong><?= __('Message') ?></strong>
-                <blockquote>
-                    <?= $this->Text->autoParagraph(h($contactSubmission->message)); ?>
-                </blockquote>
+                <?= $this->Html->link(__('Reply →'), ['action' => 'reply', $contactSubmission->id]) ?>
             </div>
-            <div class="related">
-                <h4><?= __('Replies') ?></h4>
-
-                <?php if (!empty($contactSubmission->contact_replies)): ?>
-                    <table>
-                        <thead>
-                        <tr>
-                            <th><?= __('Subject') ?></th>
-                            <th><?= __('Message') ?></th>
-                            <th><?= __('Sent At') ?></th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <?php foreach ($contactSubmission->contact_replies as $reply): ?>
-                            <tr>
-                                <td><?= h($reply->subject) ?></td>
-                                <td><?= h($reply->message) ?></td>
-                                <td><?= h($reply->sent_at) ?></td>
-                            </tr>
-                        <?php endforeach; ?>
-                        </tbody>
-                    </table>
-                <?php else: ?>
-                    <p><?= __('No replies have been sent yet.') ?></p>
-                <?php endif; ?>
+            <div class="message-box">
+                <?= $this->Text->autoParagraph(h($contactSubmission->message)) ?>
             </div>
         </div>
+
+        <h4><?= __('Replies') ?></h4>
+        <?php if (!empty($contactSubmission->contact_replies)): ?>
+            <table>
+                <thead>
+                <tr>
+                    <th><?= __('Subject') ?></th>
+                    <th><?= __('Message') ?></th>
+                    <th><?= __('Sent At') ?></th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php foreach ($contactSubmission->contact_replies as $reply): ?>
+                    <tr>
+                        <td><?= h($reply->subject) ?></td>
+                        <td><?= h($reply->message) ?></td>
+                        <td><?= h($reply->sent_at) ?></td>
+                    </tr>
+                <?php endforeach; ?>
+                </tbody>
+            </table>
+        <?php else: ?>
+            <p style="color: #999;"><?= __('No replies sent yet.') ?></p>
+        <?php endif; ?>
     </div>
 </div>

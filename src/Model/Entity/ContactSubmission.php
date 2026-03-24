@@ -12,8 +12,10 @@ use Cake\ORM\Entity;
  * @property string $first_name
  * @property string $last_name
  * @property string $email
+ * @property string $subject
  * @property string $message
  * @property bool $captcha_passed
+ * @property bool $is_replied
  * @property \Cake\I18n\DateTime $created
  */
 class ContactSubmission extends Entity
@@ -31,8 +33,10 @@ class ContactSubmission extends Entity
         'first_name' => true,
         'last_name' => true,
         'email' => true,
+        'subject' => true,
         'message' => true,
         'captcha_passed' => true,
+        'is_replied' => true,
         'created' => true,
     ];
 }

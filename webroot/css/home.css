@@ -9,7 +9,6 @@ html {
     --oakwood: #786C3B;
 }
 
-/* Welcome Section */
 .welcome-wrapper {
     margin: 2rem;
     border-radius: 32px;
@@ -67,7 +66,6 @@ html {
     object-fit: cover;
 }
 
-/* Buttons */
 .btn-outline {
     display: inline-block;
     padding: 0.6rem 1.6rem;
@@ -86,18 +84,15 @@ html {
     color: #fff;
 }
 
-/* About Section */
 .about {
     display: flex;
     align-items: flex-start;
-    padding: 4rem 4rem;
+    padding: 4rem;
     gap: 4rem;
     background-color: #fff;
 }
 
-.about-left {
-    flex: 1;
-}
+.about-left { flex: 1; }
 
 .about-left h2 {
     font-size: 2.8rem;
@@ -127,7 +122,6 @@ html {
     margin: 0;
 }
 
-/* Get in Touch Section */
 .get-in-touch {
     text-align: center;
     padding: 4rem 2rem;
@@ -148,62 +142,7 @@ html {
     line-height: 1.7;
 }
 
-/* Footer */
-.footer {
-    background-color: #786C3B;
-    color: #f0ede4;
-    padding: 3rem 4rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    flex-direction: row;
-    gap: 2rem;
-}
-
-.footer-brand h3 {
-    color: #F5F5DC;
-    font-size: 1.2rem;
-    margin-bottom: 1rem;
-}
-
-.footer-brand p {
-    font-size: 0.85rem;
-    color: #F5F5DC;
-    margin-bottom: 0.3rem;
-}
-
-.footer-links {
-    display: flex;
-    flex-direction: column;
-    gap: 0.4rem;
-    text-align: right;
-}
-
-.footer-links a {
-    color: #d9d4c4;
-    text-decoration: none;
-    font-size: 0.85rem;
-}
-
-.footer-links a:hover {
-    color: #fff;
-}
-
-/* Responsive */
 @media (max-width: 768px) {
-    .welcome, .about {
-        flex-direction: column;
-    }
-
-    .welcome-text h1 {
-        font-size: 2rem;
-    }
-
-    .footer {
-        flex-direction: column;
-    }
-
-    .footer-links {
-        text-align: left;
-    }
+    .welcome, .about { flex-direction: column; }
+    .welcome-text h1 { font-size: 2rem; }
 }

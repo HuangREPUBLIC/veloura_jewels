@@ -9,13 +9,16 @@
 
 <div class="users form content">
     <h2><?= __('Edit User') ?></h2>
+    <?= $this->Html->link(__('← Back'), ['action' => 'index'], ['class' => 'action-buttons-inline']) ?>
+    <br>
 
     <?= $this->Form->create($user) ?>
     <fieldset>
         <?php
         echo $this->Form->control('email', [
             'label' => 'Email',
-            'required' => true
+            'required' => true,
+            'disabled' => true,
         ]);
 
         echo $this->Form->control('role', [
