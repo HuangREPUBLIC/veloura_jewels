@@ -5,7 +5,6 @@
  */
 ?>
 <?php $this->Html->css('contact', ['block' => true]); ?>
-<?php $this->Html->css('default-styles', ['block' => true]); ?>
 
 
 <div class="contact-page">

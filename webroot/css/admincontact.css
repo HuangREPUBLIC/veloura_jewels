@@ -2,20 +2,8 @@ html {
     font-size: 100% !important;
 }
 
-:root {
-    --beige: #DAD7C5;
-    --oakwood: #786C3B;
-}
-
 .submissions-wrapper {
-    margin: 2rem;
-}
-
-.admin-wrapper {
-    margin: 2rem;
-}
-.submissions-view-wrapper {
-    margin: 4rem;
+    margin: 1rem;
 }
 
 .contactSubmissions h3 {
@@ -43,7 +31,6 @@ tbody tr {
     border-bottom: 1px solid var(--beige);
 }
 
-
 tbody td {
     padding: 0.8rem 1rem;
     color: #444;
@@ -59,6 +46,7 @@ td.actions button {
 
 .replied-yes { color: green; font-weight: 600; }
 .replied-no { color: #999; }
+
 .action-buttons {
     display: flex;
     gap: 0.8rem;
@@ -101,19 +89,7 @@ td.actions button {
     border-radius: 4px;
 }
 
-.admin-dashboard {
-    font-size: 1rem;
-}
-
-.admin-dashboard h1 {
-    font-size: 2rem;
-}
-
-.admin-dashboard p {
-    font-size: 1rem;
-}
-
-.admin-dashboard h3 {
-    font-size: 1.2rem;
-}
-
+.admin-dashboard { font-size: 1rem; }
+.admin-dashboard h1 { font-size: 2rem; }
+.admin-dashboard p { font-size: 1rem; }
+.admin-dashboard h3 { font-size: 1.2rem; }
