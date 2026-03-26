@@ -88,6 +88,9 @@ $this->Html->meta([
             'disabled' => true
         ]) ?>
 
+        <?= $this->Form->button(__('Reset'), ['type' => 'reset']) ?>
+
+
         <?= $this->Form->end() ?>
     </div>
 </div>
