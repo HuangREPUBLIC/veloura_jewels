@@ -55,6 +55,12 @@ $this->Html->meta([
                 'required' => true
             ]) ?>
 
+            <?= $this->Form->control('subject', [
+                'label' => 'Subject',
+                'placeholder' => 'Enter Subject for Message',
+                'required' => true
+            ]) ?>
+
             <?= $this->Form->control('message', [
                 'label' => 'Message',
                 'placeholder' => 'Write your message here...',
