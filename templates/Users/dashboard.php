@@ -32,7 +32,7 @@ $this->assign('title', 'Admin Dashboard');
                 <p>Manage system users and permissions.</p>
             </div>
         </a>
-        <a href="<?= $this->Url->build(['controller' => 'ContactSubmissions', 'action' => 'index']) ?>" class="dashboard-card">
+        <a href="<?= $this->Url->build(['controller' => 'Products', 'action' => 'index']) ?>" class="dashboard-card">
             <div class="dashboard-icon">💎</div>
             <div class="dashboard-content">
                 <h3>Manage products</h3>
