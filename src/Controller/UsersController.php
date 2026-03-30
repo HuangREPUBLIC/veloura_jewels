@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use Cake\Event\EventInterface;
 
 /**
  * Users Controller
@@ -11,8 +12,8 @@ namespace App\Controller;
  */
 class UsersController extends AppController
 {
-    // Only allow admins to edit users
-    public function beforeFilter(\Cake\Event\EventInterface $event)
+    // Only allow authenticated users; specific admin checks are inside actions
+    public function beforeFilter(EventInterface $event)
     {
         parent::beforeFilter($event);
         $this->Authentication->addUnauthenticatedActions([]);
@@ -25,6 +26,13 @@ class UsersController extends AppController
      */
     public function index()
     {
+        $identity = $this->Authentication->getIdentity();
+
+        if (!$identity || $identity->get('role') !== 'admin') {
+            $this->Flash->error('You do not have permission to view users.');
+            return $this->redirect('/');
+        }
+
         $query = $this->Users->find();
         $users = $this->paginate($query);
 
@@ -40,6 +48,13 @@ class UsersController extends AppController
      */
     public function view($id = null)
     {
+        $identity = $this->Authentication->getIdentity();
+
+        if (!$identity || $identity->get('role') !== 'admin') {
+            $this->Flash->error('You do not have permission to view this user.');
+            return $this->redirect('/');
+        }
+
         $user = $this->Users->get($id, contain: []);
         $this->set(compact('user'));
     }
@@ -53,7 +68,6 @@ class UsersController extends AppController
      */
     public function edit($id = null)
     {
-
         $identity = $this->Authentication->getIdentity();
 
         if (!$identity || $identity->get('role') !== 'admin') {
@@ -62,15 +76,18 @@ class UsersController extends AppController
         }
 
         $user = $this->Users->get($id, contain: []);
+
         if ($this->request->is(['patch', 'post', 'put'])) {
             $user = $this->Users->patchEntity($user, $this->request->getData());
+
             if ($this->Users->save($user)) {
                 $this->Flash->success(__('The user has been saved.'));
-
                 return $this->redirect(['action' => 'index']);
             }
+
             $this->Flash->error(__('The user could not be saved. Please, try again.'));
         }
+
         $this->set(compact('user'));
     }
 
@@ -83,8 +100,16 @@ class UsersController extends AppController
      */
     public function delete($id = null)
     {
+        $identity = $this->Authentication->getIdentity();
+
+        if (!$identity || $identity->get('role') !== 'admin') {
+            $this->Flash->error('You do not have permission to delete users.');
+            return $this->redirect('/');
+        }
+
         $this->request->allowMethod(['post', 'delete']);
         $user = $this->Users->get($id);
+
         if ($this->Users->delete($user)) {
             $this->Flash->success(__('The user has been deleted.'));
         } else {
@@ -92,35 +117,6 @@ class UsersController extends AppController
         }
 
         return $this->redirect(['action' => 'index']);
-    }
-
-    public function login()
-    {
-        $this->request->allowMethod(['get', 'post']);
-
-        if ($this->request->is('post')) {
-            $email = $this->request->getData('email');
-            $password = $this->request->getData('password');
-
-            $user = $this->Users->find()
-                ->where(['email' => $email])
-                ->first();
-
-            if ($user && password_verify($password, $user->password)) {
-                $this->request->getSession()->write('Auth.User', [
-                    'id' => $user->id,
-                    'email' => $user->email,
-                    'role' => $user->role,
-                ]);
-
-                return $this->redirect([
-                    'controller' => 'Users',
-                    'action' => 'dashboard'
-                ]);
-            }
-
-            $this->Flash->error(__('Invalid email or password.'));
-        }
     }
 
     public function dashboard()
@@ -133,8 +129,9 @@ class UsersController extends AppController
         }
 
         $this->set('authUser', $identity);
+
     }
 
-
-
 }
+
+
