@@ -29,13 +29,12 @@ class AuthController extends AppController
     {
         parent::initialize();
 
-        // By default, CakePHP will (sensibly) default to preventing users from accessing any actions on a controller.
-        // These actions, however, are typically required for users who have not yet logged in.
         $this->Authentication->allowUnauthenticated(['login', 'register', 'forgetPassword', 'resetPassword']);
 
-        // CakePHP loads the model with the same name as the controller by default.
-        // Since we don't have an Auth model, we'll need to load "Users" model when starting the controller manually.
         $this->Users = $this->fetchTable('Users');
+
+        // Load Turnstile CAPTCHA component
+        $this->loadComponent('Turnstile');
     }
 
     /**
@@ -205,11 +204,30 @@ class AuthController extends AppController
     public function login()
     {
         $this->request->allowMethod(['get', 'post']);
+
+        if ($this->request->is('post')) {
+            $turnstileToken = $this->request->getData('cf-turnstile-response');
+
+            if (!$turnstileToken) {
+                $this->Flash->error('Please complete the CAPTCHA challenge.');
+                return;
+            }
+
+            $turnstileResponse = $this->Turnstile->validateTurnstile(
+                $turnstileToken,
+                $this->request->clientIp()
+            );
+
+            if (!$turnstileResponse || empty($turnstileResponse['success'])) {
+                $this->log('Login Turnstile Error: ' . json_encode($turnstileResponse));
+                $this->Flash->error('CAPTCHA challenge failed. Please try again.');
+                return;
+            }
+        }
+
         $result = $this->Authentication->getResult();
 
-        // if user passes authentication, grant access to the system
         if ($result && $result->isValid()) {
-
             $user = $this->request->getAttribute('identity');
 
             if ($user && $user->role === 'admin') {
@@ -220,7 +238,6 @@ class AuthController extends AppController
             return $this->redirect($this->Authentication->getLoginRedirect() ?? $fallbackLocation);
         }
 
-        // display error if user submitted their credentials but authentication failed
         if ($this->request->is('post') && !$result->isValid()) {
             $this->Flash->error('Email address and/or Password is incorrect. Please try again.');
         }
