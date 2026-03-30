@@ -6,7 +6,7 @@ html {
     margin: 1rem;
 }
 
-.contactSubmissions h3 {
+h3.page-title {
     font-size: 1.8rem;
     font-weight: 800;
     color: var(--oakwood);
@@ -170,23 +170,32 @@ td.actions button {
     justify-content: space-between;
 }
 
-.dt-length {
+.dt-layout-cell {
+    display: flex;
+    align-items: center;
+}
+
+.dt-length,
+.dt-search {
     display: flex;
     align-items: center;
     gap: 8px;
+    min-height: 32px;
+}
+
+.dt-length label,
+.dt-search label {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    font-size: 0.85rem;
+    font-weight: 400;
+    line-height: 1;
+    color: #000;
 }
 
 .dt-length label {
-    display: none;
-}
-
-.dt-length:after {
-    content: "Entries Per Page";
-    white-space: nowrap;
-    font-size: 0.85rem;
-    font-weight: 400;
-    line-height: 32px;
-    color: #000;
+    text-transform: capitalize;
 }
 
 .dt-length select {
@@ -194,9 +203,11 @@ td.actions button {
     -webkit-appearance: none;
     -moz-appearance: none;
     width: 60px;
+    min-width: 60px;
     height: 32px;
+    margin-bottom: 0;
     padding: 4px 24px 4px 8px;
-    border: 1px solid;
+    border: 1px solid #a9adb4;
     border-radius: 4px;
     font-size: 0.85rem;
     line-height: 1;
@@ -204,31 +215,17 @@ td.actions button {
     background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 20 20'><path d='M5 7l5 5 5-5' stroke='%23666' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>");
     background-repeat: no-repeat;
     background-position: right 8px center;
+    background-size: 12px;
     box-sizing: border-box;
 }
 
-.dt-search {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.dt-search label {
-    display: flex;
-    align-items: center;
-    margin: 0;
-    height: 32px;
-    font-size: 0.85rem;
-    font-weight: 400;
-    line-height: 1;
-    color: #000;
-}
-
-.dt-search input {
+.dt-search input[type="search"] {
     width: 120px;
+    min-width: 120px;
     height: 32px;
+    margin-bottom: 0;
     padding: 4px 8px;
-    border: 1px solid;
+    border: 1px solid #a9adb4;
     border-radius: 4px;
     font-size: 0.85rem;
     line-height: 1;
@@ -244,8 +241,13 @@ td.actions button {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    font-size: 0.9rem;
+    text-align: center;
     line-height: 1;
+    font-size: 0.9rem;
     border-radius: 4px;
     box-sizing: border-box;
 }
+
+
+
+

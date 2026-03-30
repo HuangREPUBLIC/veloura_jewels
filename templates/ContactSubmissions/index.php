@@ -10,7 +10,7 @@ $this->assign('title', 'Contact Submissions');
 
 <div class="submissions-wrapper">
     <div class="contactSubmissions index content">
-        <h3><?= __('Contact Submissions') ?></h3>
+        <h3 class="page-title"><?= __('Contact Submissions') ?></h3>
 
         <div class="table-responsive" id="datatable" style="padding: 10px">
             <table id="contactFormsTable" class="display">
@@ -70,11 +70,11 @@ $this->assign('title', 'Contact Submissions');
 <script>
     $(document).ready(function() {
         $('#contactFormsTable').DataTable({
-            //We then need to make 1st index column which is date as descending.
             order: [[1, 'desc']],
-
-
-            //only allow search to be allowed with 2nd and 3rd col
+            language: {
+                lengthMenu: '_MENU_ Entries Per Page',
+                search: 'Search:'
+            },
             columnDefs: [
                 {
                     targets: [0, 1, 2, 3],

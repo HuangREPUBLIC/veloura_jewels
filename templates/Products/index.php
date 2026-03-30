@@ -9,9 +9,9 @@ $this->assign('title', 'products');
 <div class="submissions-wrapper">
     <div class="products index content">
         <?= $this->Html->link(__('New Product'), ['action' => 'add'], ['class' => 'button float-right']) ?>
-        <h3><?= __('Products') ?></h3>
+        <h3 class="page-title"><?= __('Products') ?></h3>
         <div class="table-responsive" id="datatable" style="padding: 10px">
-            <table id="ProductsTable" class="display">
+            <table id="productsTable" class="display">
                 <thead>
                 <tr>
                     <th><?= $this->Paginator->sort('id') ?></th>
@@ -55,11 +55,13 @@ $this->assign('title', 'products');
 
 <script>
     $(document).ready(function() {
-        $('#usersTable').DataTable({
+        $('#productsTable').DataTable({
             //We then need to make 1st index column which is date as descending.
             order: [[1, 'desc']],
-
-
+            language: {
+                lengthMenu: '_MENU_ Entries Per Page',
+                search: 'Search:'
+            },
             //only allow search to be allowed with 2nd and 3rd col
             columnDefs: [
                 {

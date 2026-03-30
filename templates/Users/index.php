@@ -9,7 +9,7 @@ $this->assign('title', 'Users');
 
 <div class="submissions-wrapper">
     <div class="users index content">
-        <h3><?= __('Users') ?></h3>
+        <h3 class="page-title"><?= __('Users') ?></h3>
         <div class="table-responsive" id="datatable" style="padding: 10px">
             <table id="usersTable" class="display">
 
@@ -54,8 +54,10 @@ $this->assign('title', 'Users');
         $('#usersTable').DataTable({
             //We then need to make 1st index column which is date as descending.
             order: [[1, 'desc']],
-
-
+            language: {
+                lengthMenu: '_MENU_ Entries Per Page',
+                search: 'Search:'
+            },
             //only allow search to be allowed with 2nd and 3rd col
             columnDefs: [
                 {
