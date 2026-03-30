@@ -8,7 +8,7 @@
     <?= $this->Html->link(__('New Product'), ['action' => 'add'], ['class' => 'button float-right']) ?>
     <h3><?= __('Products') ?></h3>
     <div class="table-responsive">
-        <table>
+        <table id="usersTable" class="display">
             <thead>
                 <tr>
                     <th><?= $this->Paginator->sort('id') ?></th>
@@ -55,3 +55,20 @@
         <p><?= $this->Paginator->counter(__('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')) ?></p>
     </div>
 </div>
+<script>
+    $(document).ready(function() {
+        $('#usersTable').DataTable({
+            //We then need to make 1st index column which is date as descending.
+            order: [[1, 'desc']],
+
+
+            //only allow search to be allowed with 2nd and 3rd col
+            columnDefs: [
+                {
+                    targets: [0, 1, 2, 3],
+                    searchable: true
+                }
+            ]
+        });
+    });
+</script>
