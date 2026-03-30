@@ -8,7 +8,20 @@ $this->layout = 'login';
 $this->assign('title', 'Login');
 ?>
 
-<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+<?php
+// Load CF Turnstile captcha JS library
+$this->Html->script('https://challenges.cloudflare.com/turnstile/v0/api.js', [
+    'block' => true,
+    'async' => true,
+    'defer' => true,
+]);
+
+$this->Html->meta([
+    'block' => true,
+    'link' => 'https://challenges.cloudflare.com',
+    'rel' => 'preconnect',
+]);
+?>
 
 <div class="users form content">
     <?= $this->Form->create() ?>
