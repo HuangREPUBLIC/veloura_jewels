@@ -12,7 +12,7 @@ $this->assign('title', 'Contact Submissions');
     <div class="contactSubmissions index content">
         <h3><?= __('Contact Submissions') ?></h3>
 
-        <div class="table-responsive">
+        <div class="table-responsive" id="datatable" style="padding: 10px">
             <table id="contactFormsTable" class="display">
 
                 <thead>
@@ -65,18 +65,7 @@ $this->assign('title', 'Contact Submissions');
         </div>
     </div>
 
-    <div class="paginator">
-        <ul class="pagination">
-            <?= $this->Paginator->first('<< ' . __('first')) ?>
-            <?= $this->Paginator->prev('< ' . __('previous')) ?>
-            <?= $this->Paginator->numbers() ?>
-            <?= $this->Paginator->next(__('next') . ' >') ?>
-            <?= $this->Paginator->last(__('last') . ' >>') ?>
-        </ul>
-        <p><?= $this->Paginator->counter(__('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')) ?></p>
-    </div>
 </div>
-
 
 <script>
     $(document).ready(function() {

@@ -164,3 +164,88 @@ td.actions button {
         grid-template-columns: 1fr;
     }
 }
+.dt-layout-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.dt-length {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.dt-length label {
+    display: none;
+}
+
+.dt-length:after {
+    content: "Entries Per Page";
+    white-space: nowrap;
+    font-size: 0.85rem;
+    font-weight: 400;
+    line-height: 32px;
+    color: #000;
+}
+
+.dt-length select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 60px;
+    height: 32px;
+    padding: 4px 24px 4px 8px;
+    border: 1px solid;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    line-height: 1;
+    background-color: transparent;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 20 20'><path d='M5 7l5 5 5-5' stroke='%23666' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    box-sizing: border-box;
+}
+
+.dt-search {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.dt-search label {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    height: 32px;
+    font-size: 0.85rem;
+    font-weight: 400;
+    line-height: 1;
+    color: #000;
+}
+
+.dt-search input {
+    width: 120px;
+    height: 32px;
+    padding: 4px 8px;
+    border: 1px solid;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    line-height: 1;
+    background: transparent;
+    box-sizing: border-box;
+}
+
+.dt-paging .dt-paging-button {
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    margin: 0 4px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    line-height: 1;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
