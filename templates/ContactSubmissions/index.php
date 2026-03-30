@@ -13,7 +13,8 @@ $this->assign('title', 'Contact Submissions');
         <h3><?= __('Contact Submissions') ?></h3>
 
         <div class="table-responsive">
-            <table>
+            <table id="contactFormsTable" class="display">
+
                 <thead>
                 <tr>
                     <th><?= __('Details') ?></th>
@@ -75,3 +76,24 @@ $this->assign('title', 'Contact Submissions');
         <p><?= $this->Paginator->counter(__('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')) ?></p>
     </div>
 </div>
+
+
+<script>
+    $(document).ready(function() {
+        $('#contactFormsTable').DataTable({
+            //We then need to make 1st index column which is date as descending.
+            order: [[1, 'desc']],
+
+
+            //only allow search to be allowed with 2nd and 3rd col
+            columnDefs: [
+                {
+                    targets: [0, 1, 2, 3],
+                    searchable: true
+                }
+            ]
+        });
+    });
+</script>
+
+

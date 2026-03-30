@@ -32,6 +32,11 @@ $cakeDescription = 'Veloura Jewels';
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>
     <?= $this->fetch('script') ?>
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.2.2/css/dataTables.dataTables.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/2.2.2/js/dataTables.min.js"></script>
+
 </head>
 <body>
 <header class="navbar">
@@ -42,6 +47,7 @@ $cakeDescription = 'Veloura Jewels';
             ['escape' => false]
         ) ?>
     </div>
+
     <nav class="navbar-links">
         <?= $this->Html->link('Home', '/') ?>
         <?php if ($this->Identity->isLoggedIn() && $this->Identity->get('role') === 'admin'): ?>

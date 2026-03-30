@@ -11,8 +11,9 @@ $this->assign('title', 'Users');
     <div class="users index content">
         <h3><?= __('Users') ?></h3>
         <div class="table-responsive">
-            <table>
-                <thead>
+            <table id="usersTable" class="display">
+
+            <thead>
                 <tr>
                     <th><?= $this->Paginator->sort('email', 'Email') ?></th>
                     <th><?= $this->Paginator->sort('role', 'Role') ?></th>
@@ -56,3 +57,21 @@ $this->assign('title', 'Users');
         </div>
     </div>
 </div>
+
+<script>
+    $(document).ready(function() {
+        $('#usersTable').DataTable({
+            //We then need to make 1st index column which is date as descending.
+            order: [[1, 'desc']],
+
+
+            //only allow search to be allowed with 2nd and 3rd col
+            columnDefs: [
+                {
+                    targets: [0, 1, 2, 3],
+                    searchable: true
+                }
+            ]
+        });
+    });
+</script>
