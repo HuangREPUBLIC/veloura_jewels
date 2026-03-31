@@ -6,9 +6,16 @@
 $this->assign('title', 'products');
 ?>
 <?php $this->Html->css('admincontact', ['block' => true]); ?>
+
+<?php $role = $this->request->getAttribute('identity')->get('role'); ?>
+
 <div class="submissions-wrapper">
     <div class="products index content">
-        <?= $this->Html->link(__('New Product'), ['action' => 'add'], ['class' => 'button float-right']) ?>
+
+        <?php if (in_array($role, ['admin', 'part_time', 'full_time'])): ?>
+            <?= $this->Html->link(__('New Product'), ['action' => 'add'], ['class' => 'button float-right']) ?>
+        <?php endif; ?>
+
         <h3 class="page-title"><?= __('Products') ?></h3>
         <div class="table-responsive" id="datatable" style="padding: 10px">
             <table id="productsTable" class="display">
@@ -20,7 +27,6 @@ $this->assign('title', 'products');
                     <th><?= $this->Paginator->sort('sale_price') ?></th>
                     <th><?= $this->Paginator->sort('stock') ?></th>
                     <th>Category</th>
-
                     <th><?= $this->Paginator->sort('supplier_email') ?></th>
                     <th class="actions"><?= __('Actions') ?></th>
                 </tr>
@@ -28,7 +34,6 @@ $this->assign('title', 'products');
 
                 <tbody>
                 <?php foreach ($products as $product): ?>
-                    <?php $role = $this->request->getAttribute('identity')->get('role'); ?>
                     <tr>
                         <td><?= $this->Number->format($product->id) ?></td>
                         <td><?= h($product->name) ?></td>
@@ -38,8 +43,8 @@ $this->assign('title', 'products');
                         <td>
                             <?php if ($product->stock < 5): ?>
                                 <span style="color:red;font-weight:600;">
-                        <?= $product->stock ?>
-                    </span>
+                                    <?= $product->stock ?>
+                                </span>
                             <?php else: ?>
                                 <?= $product->stock ?>
                             <?php endif; ?>
@@ -60,11 +65,11 @@ $this->assign('title', 'products');
                         <td class="actions">
                             <?= $this->Html->link(__('View'), ['action' => 'view', $product->id]) ?>
 
-                            <?php if (in_array($role, ['admin', 'full_time'])): ?>
+                            <?php if (in_array($role, ['admin', 'part_time', 'full_time'])): ?>
                                 <?= $this->Html->link(__('Edit'), ['action' => 'edit', $product->id]) ?>
                             <?php endif; ?>
 
-                            <?php if ($role === 'admin'): ?>
+                            <?php if (in_array($role, ['admin', 'part_time', 'full_time'])): ?>
                                 <?= $this->Form->postLink(
                                     __('Delete'),
                                     ['action' => 'delete', $product->id],
@@ -80,22 +85,17 @@ $this->assign('title', 'products');
                 </tbody>
             </table>
         </div>
-
     </div>
 </div>
-
-
 
 <script>
     $(document).ready(function() {
         $('#productsTable').DataTable({
-            //We then need to make 1st index column which is date as descending.
             order: [[1, 'desc']],
             language: {
                 lengthMenu: '_MENU_ Entries Per Page',
                 search: 'Search:'
             },
-            //only allow search to be allowed with 2nd and 3rd col
             columnDefs: [
                 {
                     targets: [0, 1, 2, 3],
@@ -105,4 +105,3 @@ $this->assign('title', 'products');
         });
     });
 </script>
-
