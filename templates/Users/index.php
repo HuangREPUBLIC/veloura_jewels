@@ -10,10 +10,11 @@ $this->assign('title', 'Users');
 <div class="submissions-wrapper">
     <div class="users index content">
         <h3 class="page-title"><?= __('Users') ?></h3>
+
         <div class="table-responsive" id="datatable" style="padding: 10px">
             <table id="usersTable" class="display">
 
-            <thead>
+                <thead>
                 <tr>
                     <th><?= $this->Paginator->sort('email', 'Email') ?></th>
                     <th><?= $this->Paginator->sort('role', 'Role') ?></th>
@@ -21,32 +22,49 @@ $this->assign('title', 'Users');
                     <th class="actions"><?= __('Actions') ?></th>
                 </tr>
                 </thead>
+
                 <tbody>
                 <?php foreach ($users as $user): ?>
+
+                    <?php
+                    // Get current logged-in user's role
+                    $identity = $this->request->getAttribute('identity');
+                    $currentRole = $identity ? $identity->get('role') : null;
+                    ?>
+
                     <tr>
                         <td><?= h($user->email) ?></td>
                         <td><?= h($user->role) ?></td>
                         <td><?= h($user->created) ?></td>
+
                         <td class="actions">
                             <?= $this->Html->link(__('View'), ['action' => 'view', $user->id]) ?>
-                            <?= $this->Html->link(__('Edit'), ['action' => 'edit', $user->id]) ?>
-                            <?= $this->Form->postLink(
-                                __('Delete'),
-                                ['action' => 'delete', $user->id],
-                                [
-                                    'method' => 'delete',
-                                    'confirm' => __('Are you sure you want to delete {0}?', $user->email),
-                                    'class' => 'btn-delete',
-                                ]
-                            ) ?>
+
+                            <?php if (in_array($currentRole, ['admin', 'full_time'])): ?>
+                                <!-- Admin and full-time staff can edit user details -->
+                                <?= $this->Html->link(__('Edit'), ['action' => 'edit', $user->id]) ?>
+                            <?php endif; ?>
+
+                            <?php if ($currentRole === 'admin'): ?>
+                                <!-- Only admin can delete user accounts -->
+                                <?= $this->Form->postLink(
+                                    __('Delete'),
+                                    ['action' => 'delete', $user->id],
+                                    [
+                                        'method' => 'delete',
+                                        'confirm' => __('Are you sure you want to delete {0}?', $user->email),
+                                        'class' => 'btn-delete',
+                                    ]
+                                ) ?>
+                            <?php endif; ?>
                         </td>
                     </tr>
+
                 <?php endforeach; ?>
                 </tbody>
             </table>
         </div>
     </div>
-
 </div>
 
 <script>
