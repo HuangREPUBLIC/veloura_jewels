@@ -45,7 +45,11 @@ $this->assign('title', 'Admin Dashboard');
     </div>
     <?php if (!$lowStockProducts->isEmpty()): ?>
         <div class="low-stock-warning" style="margin:20px 0;padding:20px;background:#fff3cd;border:1px solid #ead28b;border-radius:12px;">
-            <h3 style="margin:0 0 8px 0;font-size:1.2rem;">⚠ Low Stock Products</h3>
+
+            <h3 style="margin:0 0 8px 0;font-size:1.2rem;">
+                ⚠ Low Stock Products
+            </h3>
+
             <p style="margin:0 0 15px 0;font-size:0.9rem;color:#5f6b7a;">
                 These products are running low and may need restocking soon.
             </p>
@@ -53,12 +57,25 @@ $this->assign('title', 'Admin Dashboard');
             <div style="display:grid;gap:12px;">
                 <?php foreach ($lowStockProducts as $product): ?>
                     <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:#fff;border:1px solid #f1d98c;border-radius:10px;">
+
                         <div style="font-weight:600;color:#4b5563;">
                             <?= h($product->name) ?>
                         </div>
 
-                        <div style="font-weight:700;color:#b26a00;">
+                        <div style="display:flex;align-items:center;gap:12px;">
+
+                        <span style="font-weight:700;color:#d32f2f;">
                             Stock: <?= $product->stock ?>
+                        </span>
+
+                            <?= $this->Html->link(
+                                'Restock',
+                                ['controller' => 'Products', 'action' => 'edit', $product->id],
+                                [
+                                    'style' => 'padding:6px 12px;background:#d32f2f;color:white;border-radius:6px;font-size:0.8rem;text-decoration:none;'
+                                ]
+                            ) ?>
+
                         </div>
                     </div>
                 <?php endforeach; ?>
