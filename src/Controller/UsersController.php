@@ -128,10 +128,19 @@ class UsersController extends AppController
             return $this->redirect('/');
         }
 
+        $productsTable = $this->fetchTable('Products');
+        $usersTable = $this->fetchTable('Users');
+        $contactSubmissionsTable = $this->fetchTable('ContactSubmissions');
+
+        $totalProducts = $productsTable->find()->count();
+        $totalUsers = $usersTable->find()->count();
+        $totalEnquiries = $contactSubmissionsTable->find()->count();
+
+        $this->set(compact('totalProducts', 'totalUsers', 'totalEnquiries'));
         $this->set('authUser', $identity);
 
+        return null;
     }
-
 }
 
 

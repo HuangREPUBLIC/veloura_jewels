@@ -1,7 +1,10 @@
 <?php
 /**
  * @var \App\View\AppView $this
- * @var \Authentication\Identity $authUser
+ * @var \Authentication\Identity $authUser *
+ * @var int $totalProducts
+ * @var int $totalUsers
+ * @var int $totalEnquiries
  */
 $this->assign('title', 'Admin Dashboard');
 ?>
@@ -13,6 +16,31 @@ $this->assign('title', 'Admin Dashboard');
     <div class="dashboard-hero">
         <h1>Admin Dashboard</h1>
         <p>Welcome, <?= h($authUser->email) ?></p>
+    </div>
+    <div class="dashboard-summary" style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin:30px 0;">
+        <div class="dashboard-card">
+            <div class="dashboard-icon">💎</div>
+            <div class="dashboard-content">
+                <h3>Total Products</h3>
+                <p><?= $totalProducts ?></p>
+            </div>
+        </div>
+
+        <div class="dashboard-card">
+            <div class="dashboard-icon">👤</div>
+            <div class="dashboard-content">
+                <h3>Total Users</h3>
+                <p><?= $totalUsers ?></p>
+            </div>
+        </div>
+
+        <div class="dashboard-card">
+            <div class="dashboard-icon">📩</div>
+            <div class="dashboard-content">
+                <h3>Total Enquiries</h3>
+                <p><?= $totalEnquiries ?></p>
+            </div>
+        </div>
     </div>
 
     <div class="dashboard-grid">
