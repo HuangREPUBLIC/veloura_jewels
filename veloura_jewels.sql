@@ -151,8 +151,7 @@ INSERT INTO `users` (`id`, `email`, `password`, `nonce`, `nonce_expiry`, `create
                                                                                                             (7, '11@1.com', '$2y$12$kY4TdsMfdvtMKcnMBebwPeInMYY7Oa8xN6Gl5Kemi0YcO5jr/SPnq', NULL, NULL, '2026-03-24 04:05:20', '2026-03-24 04:05:20', 'admin');
 
 UPDATE users SET role = 'admin' WHERE id = 3;
-UPDATE users SET role = 'full_time' WHERE id = 6;
-UPDATE users SET role = 'part_time' WHERE id = 7;
+
 
 --
 -- Indexes for dumped tables
