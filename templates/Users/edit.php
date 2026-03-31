@@ -21,16 +21,33 @@
             'disabled' => true,
         ]);
 
-        echo $this->Form->control('role', [
-            'type' => 'select',
-            'options' => [
-                'admin' => 'Admin',
-                'staff' => 'Staff',
-                'customer' => 'Customer',
-            ],
-            'label' => 'Role',
-            'required' => true
-        ]);
+        $identity = $this->request->getAttribute('identity');
+        $role = $identity ? $identity->get('role') : null;
+
+        if ($role === 'admin') {
+            echo $this->Form->control('role', [
+                'type' => 'select',
+                'options' => [
+                    'admin' => 'Admin',
+                    'full_time' => 'Full-time Staff',
+                    'part_time' => 'Part-time Staff',
+                    'customer' => 'Customer',
+                ],
+                'label' => 'Role',
+                'required' => true
+            ]);
+        } elseif ($role === 'full_time') {
+            echo $this->Form->control('role', [
+                'type' => 'select',
+                'options' => [
+                    'full_time' => 'Full-time Staff',
+                    'part_time' => 'Part-time Staff',
+                    'customer' => 'Customer',
+                ],
+                'label' => 'Role',
+                'required' => true
+            ]);
+        }
         ?>
     </fieldset>
     <?= $this->Form->button(__('Save')) ?>
