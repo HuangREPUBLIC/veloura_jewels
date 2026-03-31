@@ -2,32 +2,27 @@
 declare(strict_types=1);
 
 namespace App\Controller;
+
 use Cake\Event\EventInterface;
-/**
- * Products Controller
- *
- * @property \App\Model\Table\ProductsTable $Products
- */
 
 class ProductsController extends AppController
 {
-    /**
-     * Index method
-     *
-     * @return \Cake\Http\Response|null|void Renders view
-     */
-
     public function beforeFilter(EventInterface $event)
     {
         parent::beforeFilter($event);
 
         $identity = $this->Authentication->getIdentity();
 
-        if (!$identity || $identity->get('role') !== 'admin') {
+        if (
+            !$identity ||
+            !in_array($identity->get('role'), ['admin', 'part_time', 'full_time'])
+        ) {
             $this->Flash->error('You do not have permission to access product management.');
             return $this->redirect('/');
         }
-    }public function index()
+    }
+
+    public function index()
     {
         $query = $this->Products->find()->contain(['Categories']);
         $products = $this->paginate($query);
@@ -36,94 +31,79 @@ class ProductsController extends AppController
             ->where(['stock <' => 5])
             ->all();
 
-        $this->set(compact('products','lowStockProducts'));
+        $this->set(compact('products', 'lowStockProducts'));
     }
 
-    /**
-     * View method
-     *
-     * @param string|null $id Product id.
-     * @return \Cake\Http\Response|null|void Renders view
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
     public function view($id = null)
     {
         $product = $this->Products->get($id, contain: ['Categories', 'ProductImages']);
         $this->set(compact('product'));
     }
 
-    /**
-     * Add method
-     *
-     * @return \Cake\Http\Response|null|void Redirects on successful add, renders view otherwise.
-     */
     public function add()
     {
-
         $identity = $this->Authentication->getIdentity();
 
-        if (!$identity || !in_array($identity->get('role'), ['admin', 'full_time'])) {
+        if (
+            !$identity ||
+            !in_array($identity->get('role'), ['admin', 'part_time', 'full_time'])
+        ) {
             $this->Flash->error('You do not have permission to add products.');
             return $this->redirect(['action' => 'index']);
         }
+
         $product = $this->Products->newEmptyEntity();
         if ($this->request->is('post')) {
             $product = $this->Products->patchEntity($product, $this->request->getData());
             if ($this->Products->save($product)) {
                 $this->Flash->success(__('The product has been saved.'));
-
                 return $this->redirect(['action' => 'index']);
             }
             $this->Flash->error(__('The product could not be saved. Please, try again.'));
         }
+
         $categories = $this->Products->Categories->find('list', limit: 200)->all();
         $this->set(compact('product', 'categories'));
     }
 
-    /**
-     * Edit method
-     *
-     * @param string|null $id Product id.
-     * @return \Cake\Http\Response|null|void Redirects on successful edit, renders view otherwise.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
     public function edit($id = null)
     {
         $identity = $this->Authentication->getIdentity();
 
-        if (!$identity || !in_array($identity->get('role'), ['admin', 'full_time'])) {
+        if (
+            !$identity ||
+            !in_array($identity->get('role'), ['admin', 'part_time', 'full_time'])
+        ) {
             $this->Flash->error('You do not have permission to edit products.');
             return $this->redirect(['action' => 'index']);
         }
+
         $product = $this->Products->get($id, contain: ['Categories']);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $product = $this->Products->patchEntity($product, $this->request->getData());
             if ($this->Products->save($product)) {
                 $this->Flash->success(__('The product has been saved.'));
-
                 return $this->redirect(['action' => 'index']);
             }
             $this->Flash->error(__('The product could not be saved. Please, try again.'));
         }
+
         $categories = $this->Products->Categories->find('list', limit: 200)->all();
         $this->set(compact('product', 'categories'));
     }
 
-    /**
-     * Delete method
-     *
-     * @param string|null $id Product id.
-     * @return \Cake\Http\Response|null Redirects to index.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
     public function delete($id = null)
     {
         $identity = $this->Authentication->getIdentity();
 
-        if (!$identity || $identity->get('role') !== 'admin') {
+        if (
+            !$identity ||
+            !in_array($identity->get('role'), ['admin', 'part_time', 'full_time'])
+        ) {
             $this->Flash->error('You do not have permission to delete products.');
             return $this->redirect(['action' => 'index']);
         }
+
         $this->request->allowMethod(['post', 'delete']);
         $product = $this->Products->get($id);
         if ($this->Products->delete($product)) {
