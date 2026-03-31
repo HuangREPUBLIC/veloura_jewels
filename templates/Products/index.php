@@ -18,7 +18,6 @@ $this->assign('title', 'products');
                     <th><?= $this->Paginator->sort('name') ?></th>
                     <th><?= $this->Paginator->sort('purchase_price') ?></th>
                     <th><?= $this->Paginator->sort('sale_price') ?></th>
-
                     <th><?= $this->Paginator->sort('stock') ?></th>
                     <th>Category</th>
 
@@ -29,6 +28,7 @@ $this->assign('title', 'products');
 
                 <tbody>
                 <?php foreach ($products as $product): ?>
+                    <?php $role = $this->request->getAttribute('identity')->get('role'); ?>
                     <tr>
                         <td><?= $this->Number->format($product->id) ?></td>
                         <td><?= h($product->name) ?></td>
@@ -59,15 +59,21 @@ $this->assign('title', 'products');
 
                         <td class="actions">
                             <?= $this->Html->link(__('View'), ['action' => 'view', $product->id]) ?>
-                            <?= $this->Html->link(__('Edit'), ['action' => 'edit', $product->id]) ?>
-                            <?= $this->Form->postLink(
-                                __('Delete'),
-                                ['action' => 'delete', $product->id],
-                                [
-                                    'method' => 'delete',
-                                    'confirm' => __('Are you sure you want to delete # {0}?', $product->id),
-                                ]
-                            ) ?>
+
+                            <?php if (in_array($role, ['admin', 'full_time'])): ?>
+                                <?= $this->Html->link(__('Edit'), ['action' => 'edit', $product->id]) ?>
+                            <?php endif; ?>
+
+                            <?php if ($role === 'admin'): ?>
+                                <?= $this->Form->postLink(
+                                    __('Delete'),
+                                    ['action' => 'delete', $product->id],
+                                    [
+                                        'method' => 'delete',
+                                        'confirm' => __('Are you sure you want to delete # {0}?', $product->id),
+                                    ]
+                                ) ?>
+                            <?php endif; ?>
                         </td>
                     </tr>
                 <?php endforeach; ?>

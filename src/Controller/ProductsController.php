@@ -59,6 +59,13 @@ class ProductsController extends AppController
      */
     public function add()
     {
+
+        $identity = $this->Authentication->getIdentity();
+
+        if (!$identity || !in_array($identity->get('role'), ['admin', 'full_time'])) {
+            $this->Flash->error('You do not have permission to add products.');
+            return $this->redirect(['action' => 'index']);
+        }
         $product = $this->Products->newEmptyEntity();
         if ($this->request->is('post')) {
             $product = $this->Products->patchEntity($product, $this->request->getData());
@@ -82,6 +89,12 @@ class ProductsController extends AppController
      */
     public function edit($id = null)
     {
+        $identity = $this->Authentication->getIdentity();
+
+        if (!$identity || !in_array($identity->get('role'), ['admin', 'full_time'])) {
+            $this->Flash->error('You do not have permission to edit products.');
+            return $this->redirect(['action' => 'index']);
+        }
         $product = $this->Products->get($id, contain: ['Categories']);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $product = $this->Products->patchEntity($product, $this->request->getData());
@@ -105,6 +118,12 @@ class ProductsController extends AppController
      */
     public function delete($id = null)
     {
+        $identity = $this->Authentication->getIdentity();
+
+        if (!$identity || $identity->get('role') !== 'admin') {
+            $this->Flash->error('You do not have permission to delete products.');
+            return $this->redirect(['action' => 'index']);
+        }
         $this->request->allowMethod(['post', 'delete']);
         $product = $this->Products->get($id);
         if ($this->Products->delete($product)) {
