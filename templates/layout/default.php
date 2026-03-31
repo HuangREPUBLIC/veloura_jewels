@@ -51,11 +51,17 @@ $cakeDescription = 'Veloura Jewels';
     </div>
 
     <nav class="navbar-links">
+        <?php
+        $identity = $this->request->getAttribute('identity');
+        $role = $identity ? $identity->get('role') : null;
+        ?>
+
         <?= $this->Html->link('Home', '/') ?>
-        <?php if ($this->Identity->isLoggedIn() && $this->Identity->get('role') === 'admin'): ?>
-            <?= $this->Html->link('Admin', '/dashboard') ?>
-        <?php else: ?>
+
+        <?php if ($role === 'customer' || !$role): ?>
             <?= $this->Html->link('Contact', '/contact') ?>
+        <?php else: ?>
+            <?= $this->Html->link('Admin', ['controller' => 'Users', 'action' => 'dashboard']) ?>
         <?php endif; ?>
     </nav>
 
