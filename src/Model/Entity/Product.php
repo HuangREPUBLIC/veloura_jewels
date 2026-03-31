@@ -32,6 +32,7 @@ class Product extends Entity
         'name' => true,
         'purchase_price' => true,
         'sale_price' => true,
+        'stock' => true,
         'supplier_email' => true,
         'product_images' => true,
         'categories' => true,

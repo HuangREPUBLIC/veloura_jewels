@@ -135,8 +135,12 @@ class UsersController extends AppController
         $totalProducts = $productsTable->find()->count();
         $totalUsers = $usersTable->find()->count();
         $totalEnquiries = $contactSubmissionsTable->find()->count();
+        $lowStockProducts = $productsTable
+            ->find()
+            ->where(['stock <' => 5])
+            ->all();
 
-        $this->set(compact('totalProducts', 'totalUsers', 'totalEnquiries'));
+        $this->set(compact('totalProducts', 'totalUsers', 'totalEnquiries', 'lowStockProducts'));
         $this->set('authUser', $identity);
 
         return null;

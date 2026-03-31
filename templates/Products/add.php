@@ -23,6 +23,7 @@
                     echo $this->Form->control('sale_price');
                     echo $this->Form->control('supplier_email');
                     echo $this->Form->control('categories._ids', ['options' => $categories]);
+                    echo $this->Form->control('stock');
                 ?>
             </fieldset>
             <?= $this->Form->button(__('Submit')) ?>

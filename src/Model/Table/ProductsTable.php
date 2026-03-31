@@ -82,6 +82,10 @@ class ProductsTable extends Table
             ->scalar('supplier_email')
             ->maxLength('supplier_email', 320)
             ->allowEmptyString('supplier_email');
+        $validator
+            ->integer('stock')
+            ->requirePresence('stock', 'create')
+            ->notEmptyString('stock');
 
         return $validator;
     }

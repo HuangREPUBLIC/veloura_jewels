@@ -5,6 +5,7 @@
  * @var int $totalProducts
  * @var int $totalUsers
  * @var int $totalEnquiries
+ * @var \Cake\ORM\ResultSet $lowStockProducts
  */
 $this->assign('title', 'Admin Dashboard');
 ?>
@@ -42,7 +43,26 @@ $this->assign('title', 'Admin Dashboard');
             </div>
         </div>
     </div>
+    <?php if (!$lowStockProducts->isEmpty()): ?>
+        <div class="low-stock-warning" style="margin:20px 0;padding:20px;background:#fff3cd;border:1px solid #ffeeba;border-radius:12px;">
+            <h3 style="margin-top:0;">⚠ Low Stock Products</h3>
+            <p style="margin-bottom:15px;">These products are running low and may need restocking soon.</p>
 
+            <div style="display:grid;gap:12px;">
+                <?php foreach ($lowStockProducts as $product): ?>
+                    <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:#fff;border:1px solid #f1d98c;border-radius:10px;">
+                        <div>
+                            <strong><?= h($product->name) ?></strong>
+                        </div>
+
+                        <div style="font-weight:bold;color:#b26a00;">
+                            Stock: <?= $product->stock ?>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        </div>
+    <?php endif; ?>
     <div class="dashboard-grid">
 
         <a href="<?= $this->Url->build(['controller' => 'ContactSubmissions', 'action' => 'index']) ?>" class="dashboard-card">
