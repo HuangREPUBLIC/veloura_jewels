@@ -44,18 +44,20 @@ $this->assign('title', 'Admin Dashboard');
         </div>
     </div>
     <?php if (!$lowStockProducts->isEmpty()): ?>
-        <div class="low-stock-warning" style="margin:20px 0;padding:20px;background:#fff3cd;border:1px solid #ffeeba;border-radius:12px;">
-            <h3 style="margin-top:0;">⚠ Low Stock Products</h3>
-            <p style="margin-bottom:15px;">These products are running low and may need restocking soon.</p>
+        <div class="low-stock-warning" style="margin:20px 0;padding:20px;background:#fff3cd;border:1px solid #ead28b;border-radius:12px;">
+            <h3 style="margin:0 0 8px 0;font-size:1.2rem;">⚠ Low Stock Products</h3>
+            <p style="margin:0 0 15px 0;font-size:0.9rem;color:#5f6b7a;">
+                These products are running low and may need restocking soon.
+            </p>
 
             <div style="display:grid;gap:12px;">
                 <?php foreach ($lowStockProducts as $product): ?>
                     <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:#fff;border:1px solid #f1d98c;border-radius:10px;">
-                        <div>
-                            <strong><?= h($product->name) ?></strong>
+                        <div style="font-weight:600;color:#4b5563;">
+                            <?= h($product->name) ?>
                         </div>
 
-                        <div style="font-weight:bold;color:#b26a00;">
+                        <div style="font-weight:700;color:#b26a00;">
                             Stock: <?= $product->stock ?>
                         </div>
                     </div>

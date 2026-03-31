@@ -29,10 +29,14 @@ class ProductsController extends AppController
         }
     }public function index()
     {
-        $query = $this->Products->find();
+        $query = $this->Products->find()->contain(['Categories']);
         $products = $this->paginate($query);
+        $lowStockProducts = $this->Products->find()
+            ->contain(['Categories'])
+            ->where(['stock <' => 5])
+            ->all();
 
-        $this->set(compact('products'));
+        $this->set(compact('products','lowStockProducts'));
     }
 
     /**
