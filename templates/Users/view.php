@@ -13,16 +13,26 @@ $this->assign('title', 'View User');
 
         <div class="action-buttons">
             <?= $this->Html->link(__('← Back to Users'), ['action' => 'index']) ?>
-            <?= $this->Html->link(__('Edit'), ['action' => 'edit', $user->id]) ?>
-            <?= $this->Form->postLink(
-                __('Delete'),
-                ['action' => 'delete', $user->id],
-                [
-                    'confirm' => __('Are you sure you want to delete # {0}?', $user->id),
-                    'class' => 'btn-delete'
-                ]
-            ) ?>
 
+            <?php
+            $identity = $this->request->getAttribute('identity');
+            $currentRole = $identity ? $identity->get('role') : null;
+            ?>
+
+            <?php if (in_array($currentRole, ['admin', 'full_time'])): ?>
+                <?= $this->Html->link(__('Edit'), ['action' => 'edit', $user->id]) ?>
+            <?php endif; ?>
+
+            <?php if ($currentRole === 'admin'): ?>
+                <?= $this->Form->postLink(
+                    __('Delete'),
+                    ['action' => 'delete', $user->id],
+                    [
+                        'confirm' => __('Are you sure you want to delete # {0}?', $user->id),
+                        'class' => 'btn-delete'
+                    ]
+                ) ?>
+            <?php endif; ?>
         </div>
 
         <table>
