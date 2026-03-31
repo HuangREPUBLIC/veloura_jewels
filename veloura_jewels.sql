@@ -147,9 +147,12 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `email`, `password`, `nonce`, `nonce_expiry`, `created`, `modified`, `role`) VALUES
-                                                                                                            (3, 'jwuu0179@student.monash.edu', '$2y$12$.6oasfs3NEu8vHt02YEiJexIK13ZWAFO.JE0wIxAtVo2w7Xigbliq', '6e6359045c2622e7308c9b46ea4f07387368910dccaa66efbfd1708e2b1bd9f8fc4b11e47f2288b78f79f46bbdcfca2b55dd8968c772a559c10b6ce3faa32b31', '2026-03-30 06:51:34', '2026-03-23 15:35:34', '2026-03-23 06:51:34', 'admin'),
                                                                                                             (6, 'admin@test.com', '$2y$12$3j848N59AYD3s84DOpqA7eI0Cu6aqLosTj9aGuR.8b4ysY2kaNMg6', NULL, NULL, '2026-03-24 04:04:54', '2026-03-24 04:04:54', 'admin'),
                                                                                                             (7, '11@1.com', '$2y$12$kY4TdsMfdvtMKcnMBebwPeInMYY7Oa8xN6Gl5Kemi0YcO5jr/SPnq', NULL, NULL, '2026-03-24 04:05:20', '2026-03-24 04:05:20', 'admin');
+
+UPDATE users SET role = 'admin' WHERE id = 3;
+UPDATE users SET role = 'full_time' WHERE id = 6;
+UPDATE users SET role = 'part_time' WHERE id = 7;
 
 --
 -- Indexes for dumped tables
