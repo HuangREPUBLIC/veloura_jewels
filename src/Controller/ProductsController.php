@@ -2,12 +2,13 @@
 declare(strict_types=1);
 
 namespace App\Controller;
-
+use Cake\Event\EventInterface;
 /**
  * Products Controller
  *
  * @property \App\Model\Table\ProductsTable $Products
  */
+
 class ProductsController extends AppController
 {
     /**
@@ -15,7 +16,18 @@ class ProductsController extends AppController
      *
      * @return \Cake\Http\Response|null|void Renders view
      */
-    public function index()
+
+    public function beforeFilter(EventInterface $event)
+    {
+        parent::beforeFilter($event);
+
+        $identity = $this->Authentication->getIdentity();
+
+        if (!$identity || $identity->get('role') !== 'admin') {
+            $this->Flash->error('You do not have permission to access product management.');
+            return $this->redirect('/');
+        }
+    }public function index()
     {
         $query = $this->Products->find();
         $products = $this->paginate($query);
