@@ -230,7 +230,7 @@ class AuthController extends AppController
         if ($result && $result->isValid()) {
             $user = $this->request->getAttribute('identity');
 
-            if ($user && $user->role === 'admin') {
+            if ($user && in_array($user->role, ['admin', 'full_time', 'part_time'])) {
                 return $this->redirect('/dashboard');
             }
 
