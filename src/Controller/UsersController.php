@@ -28,7 +28,7 @@ class UsersController extends AppController
     {
         $identity = $this->Authentication->getIdentity();
 
-        if (!$identity || $identity->get('role') !== 'admin') {
+        if (!$identity || !in_array($identity->get('role'), ['admin', 'full_time', 'part_time'])) {
             $this->Flash->error('You do not have permission to view users.');
             return $this->redirect('/');
         }
@@ -50,7 +50,7 @@ class UsersController extends AppController
     {
         $identity = $this->Authentication->getIdentity();
 
-        if (!$identity || $identity->get('role') !== 'admin') {
+        if (!$identity || !in_array($identity->get('role'), ['admin', 'full_time', 'part_time'])) {
             $this->Flash->error('You do not have permission to view this user.');
             return $this->redirect('/');
         }
@@ -70,7 +70,7 @@ class UsersController extends AppController
     {
         $identity = $this->Authentication->getIdentity();
 
-        if (!$identity || $identity->get('role') !== 'admin') {
+        if (!$identity || !in_array($identity->get('role'), ['admin', 'full_time'])) {
             $this->Flash->error('You do not have permission to do this.');
             return $this->redirect('/');
         }
@@ -78,9 +78,28 @@ class UsersController extends AppController
         $user = $this->Users->get($id, contain: []);
 
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $user = $this->Users->patchEntity($user, $this->request->getData());
+            $data = $this->request->getData();
+
+            if ($identity->get('role') === 'full_time') {
+                if (isset($data['role']) && $data['role'] === 'admin') {
+                    $this->Flash->error('You do not have permission to assign the admin role.');
+                    return $this->redirect(['action' => 'index']);
+                }
+            }
+
+            if ($identity->get('role') === 'part_time') {
+                $this->Flash->error('You do not have permission to edit users.');
+                return $this->redirect(['action' => 'index']);
+            }
+
+            $user = $this->Users->patchEntity($user, $data);
 
             if ($this->Users->save($user)) {
+                if ($identity && $identity->get('id') === $user->id) {
+                    $this->Flash->success('Your account has been updated. Please log in again.');
+                    return $this->redirect(['controller' => 'Auth', 'action' => 'logout']);
+                }
+
                 $this->Flash->success(__('The user has been saved.'));
                 return $this->redirect(['action' => 'index']);
             }
@@ -123,7 +142,7 @@ class UsersController extends AppController
     {
         $identity = $this->Authentication->getIdentity();
 
-        if (!$identity || $identity->get('role') !== 'admin') {
+        if (!$identity || !in_array($identity->get('role'), ['admin', 'full_time', 'part_time'])) {
             $this->Flash->error('You do not have permission to access the dashboard.');
             return $this->redirect('/');
         }
