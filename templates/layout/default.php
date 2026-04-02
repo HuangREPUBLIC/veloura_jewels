@@ -26,14 +26,10 @@ $cakeDescription = 'Veloura Jewels';
         <?= $this->fetch('title') ?>
     </title>
     <?= $this->Html->meta('icon', '/img/icon.png') ?>
-
     <?= $this->Html->css(['normalize.min', 'fonts', 'default-styles', 'cake']) ?>
-
     <link rel="stylesheet" href="https://cdn.datatables.net/2.2.2/css/dataTables.dataTables.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/2.2.2/js/dataTables.min.js"></script>
-
-
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>
     <?= $this->fetch('script') ?>
@@ -57,6 +53,7 @@ $cakeDescription = 'Veloura Jewels';
         ?>
 
         <?= $this->Html->link('Home', '/') ?>
+        <?= $this->Html->link('Jewelry', '/') ?>
 
         <?php if ($role === 'customer' || !$role): ?>
             <?= $this->Html->link('Contact', '/contact') ?>
@@ -84,7 +81,7 @@ $cakeDescription = 'Veloura Jewels';
 <footer class="footer">
     <div class="footer-brand">
         <h3>Veloura Jewels</h3>
-        <p>Opening hours: 10:00 - 6:00</p>
+        <p>Opening hours: 10:00AM - 6:00PM</p>
         <p>123 456 7890</p>
         <p>veloura.jewels@gmail.com</p>
         <p>88 Elizabeth Road, Melbourne, VIC 3000</p>
