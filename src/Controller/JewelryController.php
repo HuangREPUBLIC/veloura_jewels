@@ -19,7 +19,6 @@ class JewelryController extends AppController
             'view',
             'cart',
             'addToCart',
-            'updateCart',
             'removeFromCart',
         ]);
     }
@@ -50,9 +49,7 @@ class JewelryController extends AppController
      */
     public function view($id = null)
     {
-        $product = $this->Products->get($id, [
-            'contain' => ['ProductImages']
-        ]);
+        $product = $this->Products->get($id, contain: ['ProductImages']);
 
         $this->set(compact('product'));
     }
