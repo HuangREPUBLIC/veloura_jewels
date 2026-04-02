@@ -10,6 +10,7 @@ $this->assign('title', 'Contact Submissions');
 
 <div class="submissions-wrapper">
     <div class="contactSubmissions index content">
+        <?= $this->Html->link(__('← Back'), ['controller' => 'Users','action' => 'dashboard'], ['class' => 'action-buttons-inline']) ?>
         <h3 class="page-title"><?= __('Contact Submissions') ?></h3>
 
         <div class="table-responsive" id="datatable" style="padding: 10px">

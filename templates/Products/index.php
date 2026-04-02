@@ -5,12 +5,14 @@
  */
 $this->assign('title', 'products');
 ?>
+
 <?php $this->Html->css('admincontact', ['block' => true]); ?>
 
 <?php $role = $this->request->getAttribute('identity')->get('role'); ?>
 
 <div class="submissions-wrapper">
     <div class="products index content">
+        <?= $this->Html->link(__('← Back'), ['controller' => 'Users','action' => 'dashboard'], ['class' => 'action-buttons-inline']) ?>
 
         <?php if (in_array($role, ['admin', 'part_time', 'full_time'])): ?>
             <?= $this->Html->link(__('New Product'), ['action' => 'add'], ['class' => 'button float-right']) ?>

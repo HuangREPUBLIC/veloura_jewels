@@ -9,7 +9,10 @@ $this->assign('title', 'Users');
 
 <div class="submissions-wrapper">
     <div class="users index content">
+        <?= $this->Html->link(__('← Back'), ['controller' => 'Users','action' => 'dashboard']) ?>
+
         <h3 class="page-title"><?= __('Users') ?></h3>
+
 
         <div class="table-responsive" id="datatable" style="padding: 10px">
             <table id="usersTable" class="display">
