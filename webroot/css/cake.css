@@ -1,5 +1,5 @@
 html {
-    font-size: 100% !important;
+    font-size: 100% ;
 }
 
 :root {
@@ -34,7 +34,7 @@ html {
 body {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-weight: 400;
-    font-size: 14px !important;
+    font-size: 14px;
     background: var(--color-main-bg);
 }
 
@@ -102,52 +102,52 @@ main > .row {
 }
 
 .navbar {
-    display: flex !important;
-    align-items: center !important;
-    justify-content: space-between !important;
-    padding: 1rem 2rem !important;
-    border-bottom: 1px solid #e0e0e0 !important;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 2rem;
+    border-bottom: 1px solid #e0e0e0;
 }
 
 .navbar-logo {
-    height: 70px !important;
-    width: auto !important;
+    height: 70px;
+    width: auto;
 }
 
 .navbar-links {
-    display: flex !important;
-    gap: 1rem !important;
+    display: flex;
+    gap: 1rem;
 }
 
 .navbar-links a {
-    color: #333 !important;
-    text-decoration: none !important;
-    font-size: 1rem !important;
+    color: #333;
+    text-decoration: none;
+    font-size: 1rem;
 }
 
 .navbar-links a:hover {
-    text-decoration: underline !important;
+    text-decoration: underline;
 }
 
 .navbar-right {
-    display: flex !important;
-    align-items: center !important;
-    gap: 1.5rem !important;
-    font-size: 1rem !important;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    font-size: 1rem;
 }
 
 .btn-login {
-    padding: 0.6rem 1.8rem !important;
-    border: 1px solid #333 !important;
-    border-radius: 4px !important;
-    text-decoration: none !important;
-    color: #333 !important;
-    font-size: 1rem !important;
+    padding: 0.6rem 1.8rem;
+    border: 1px solid #333;
+    border-radius: 4px;
+    text-decoration: none;
+    color: #333;
+    font-size: 1rem;
 }
 
 .btn-login:hover {
-    background-color: #333 !important;
-    color: #fff !important;
+    background-color: #333;
+    color: #fff;
 }
 
 .view.content .text {

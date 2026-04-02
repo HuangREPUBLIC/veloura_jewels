@@ -1,4 +1,4 @@
-html { font-size: 100% !important; }
+html { font-size: 100%; }
 
 .users.form.content {
     max-width: 24rem;
@@ -28,13 +28,13 @@ html { font-size: 100% !important; }
     background-color: #5a5029;
 }
 .users label {
-    font-size: 0.95rem !important;
+    font-size: 0.95rem;
 }
 
 .users input {
-    font-size: 0.95rem !important;
-    height: 2.5rem !important;
-    padding: 0.5rem 0.8rem !important;
+    font-size: 0.95rem ;
+    height: 2.5rem ;
+    padding: 0.5rem 0.8rem;
 }
 
 .users a {
