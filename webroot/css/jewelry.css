@@ -422,3 +422,11 @@ color: #fff;
         margin-top: 1rem;
     }
 }
+.cart {
+    text-decoration: none;
+    color: #666;
+}
+
+.cart:hover {
+    text-decoration: underline;
+}
