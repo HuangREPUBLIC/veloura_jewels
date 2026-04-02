@@ -46,6 +46,10 @@
             'empty' => 'Select a category',
             'label' => 'Categories'
         ]);
+        echo $this->Form->control('product_images', [
+            'type' => 'file',
+            'label' => 'Images'
+        ]);
         ?>
     </fieldset>
 
