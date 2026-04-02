@@ -25,6 +25,7 @@ $appLocale = \Cake\Core\Configure::read('App.defaultLocale');
     </div>
     <nav class="navbar-links">
         <?= $this->Html->link('Home', '/') ?>
+        <?= $this->Html->link('Jewelry', '/jewelry') ?>
         <?= $this->Html->link('Contact', '/contact') ?>
     </nav>
     <div class="navbar-right">
@@ -42,7 +43,7 @@ $appLocale = \Cake\Core\Configure::read('App.defaultLocale');
 <footer class="footer">
     <div class="footer-brand">
         <h3>Veloura Jewels</h3>
-        <p>Opening hours: 10:00 - 6:00</p>
+        <p>Opening hours: 10:00AM - 6:00PM</p>
         <p>123 456 7890</p>
         <p>veloura.jewels@gmail.com</p>
         <p>88 Elizabeth Road, Melbourne, VIC 3000</p>

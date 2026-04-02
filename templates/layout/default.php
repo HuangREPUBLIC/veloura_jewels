@@ -53,7 +53,7 @@ $cakeDescription = 'Veloura Jewels';
         ?>
 
         <?= $this->Html->link('Home', '/') ?>
-        <?= $this->Html->link('Jewelry', '/') ?>
+        <?= $this->Html->link('Jewelry', '/jewelry') ?>
 
         <?php if ($role === 'customer' || !$role): ?>
             <?= $this->Html->link('Contact', '/contact') ?>
