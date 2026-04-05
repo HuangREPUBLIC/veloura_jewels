@@ -44,6 +44,7 @@ class ProductsTable extends Table
         $this->setDisplayField('name');
         $this->setPrimaryKey('id');
 
+        $this->addBehavior('Timestamp');
         $this->hasMany('ProductImages', [
             'foreignKey' => 'product_id',
         ]);

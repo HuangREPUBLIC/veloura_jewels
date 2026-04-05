@@ -13,7 +13,8 @@ use Cake\ORM\Entity;
  * @property string $purchase_price
  * @property string $sale_price
  * @property string|null $supplier_email
- *
+ * @property \Cake\I18n\DateTime $created
+ * @property \Cake\I18n\DateTime $modified
  * @property \App\Model\Entity\ProductImage[] $product_images
  * @property \App\Model\Entity\Category[] $categories
  */
@@ -36,5 +37,8 @@ class Product extends Entity
         'supplier_email' => true,
         'product_images' => true,
         'categories' => true,
+        'created' => false,
+        'modified' => false,
+        'description' => true,
     ];
 }
