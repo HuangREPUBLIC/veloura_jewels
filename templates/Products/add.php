@@ -51,6 +51,11 @@
             'type' => 'file',
             'label' => 'Images'
         ]);
+        echo $this->Form->control('description', [
+            'type' => 'textarea',
+            'label' => 'Description',
+            'required' => false
+        ]);
         ?>
     </fieldset>
 

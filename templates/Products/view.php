@@ -88,6 +88,10 @@ $this->assign('title', 'View Product');
                     ?>
                 </td>
             </tr>
+            <tr>
+                <th><?= __('Description') ?></th>
+                <td><?= !empty($product->description) ? nl2br(h($product->description)) : '-' ?></td>
+            </tr>
         </table>
     </div>
 </div>
