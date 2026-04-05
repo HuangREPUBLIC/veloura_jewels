@@ -27,7 +27,11 @@ $this->Html->css('home', ['block' => true]);
             <p class="subtitle">Discover Unique Creations</p>
             <p>Immerse yourself in the artistry of our handcrafted jewelry and home décor. Each piece is lovingly designed to tell a story and enhance your everyday life with elegance.</p>
         </div>
-        <a href="#" class="btn-outline">Explore Our Collections</a>
+        <?= $this->Html->link(
+            'Explore Our Collections',
+            ['controller' => 'Jewelry', 'action' => 'index'],
+            ['class' => 'btn-outline']
+        ) ?>
     </div>
     <div class="welcome-image">
        <?= $this->Html->image('homepage.png', ['alt' => 'Veloura Jewels', 'class' => 'welcome-image']); ?>
