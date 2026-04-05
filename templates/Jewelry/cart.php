@@ -44,6 +44,7 @@ echo $this->Html->css('jewelry');
                         <div class="cart-item-info">
                             <h3><?= h($product->name) ?></h3>
                             <p class="cart-price">Unit Price: $<?= number_format((float)$product->sale_price, 2) ?></p>
+
                             <?= $this->Form->create(null, [
                                 'url' => ['controller' => 'Jewelry', 'action' => 'cart'],
                                 'class' => 'cart-update-form'
@@ -53,15 +54,20 @@ echo $this->Html->css('jewelry');
 
                             <div class="cart-quantity-row">
                                 <?= $this->Form->label('quantity_' . $product->id, 'Quantity', ['class' => 'cart-quantity-label']) ?>
-                                <input
-                                    type="number"
-                                    id="quantity_<?= $product->id ?>"
-                                    name="quantity"
-                                    value="<?= (int)$product->quantity ?>"
-                                    min="0"
-                                    max="<?= (int)$product->stock ?>"
-                                    class="cart-quantity-input auto-submit-quantity"
-                                >
+
+                                <div class="qty-box">
+                                    <button type="button" class="qty-btn minus">−</button>
+                                    <input
+                                        type="number"
+                                        id="quantity_<?= $product->id ?>"
+                                        name="quantity"
+                                        value="<?= (int)$product->quantity ?>"
+                                        min="1"
+                                        max="<?= (int)$product->stock ?>"
+                                        class="cart-quantity-input auto-submit-quantity"
+                                    >
+                                    <button type="button" class="qty-btn plus">+</button>
+                                </div>
                             </div>
 
                             <?= $this->Form->end() ?>
@@ -91,3 +97,32 @@ echo $this->Html->css('jewelry');
         </div>
     <?php endif; ?>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('.qty-box').forEach(function (wrapper) {
+            const input = wrapper.querySelector('input');
+            const minus = wrapper.querySelector('.minus');
+            const plus = wrapper.querySelector('.plus');
+            const form = wrapper.closest('form');
+
+            minus.addEventListener('click', function () {
+                let value = parseInt(input.value || 0, 10);
+                if (value > 1) {
+                    input.value = value - 1;
+                    form.submit();
+                }
+            });
+
+            plus.addEventListener('click', function () {
+                let value = parseInt(input.value || 0, 10);
+                const max = parseInt(input.max || 999999, 10);
+
+                if (value < max) {
+                    input.value = value + 1;
+                    form.submit();
+                }
+            });
+        });
+    });
+</script>
