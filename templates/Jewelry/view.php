@@ -40,11 +40,9 @@ echo $this->Html->css('jewelry');
 
             <div class="detail-description">
                 <h3>Product Details</h3>
-                <p>
-                    This piece is part of our curated jewelry collection, designed to bring
-                    elegance and timeless style to your everyday wear.
-                </p>
+                <p><?= nl2br(h($product->description)) ?></p>
             </div>
+
 
             <?php if ((int)$product->stock > 0): ?>
                 <?= $this->Form->create(null, [
