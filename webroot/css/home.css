@@ -1,28 +1,17 @@
-html {
-    font-size: 100%;
-}
-
-:root {
-    --beige: #DAD7C5;
-    --sage: #BCE3C5;
-    --earth-yellow: #E1A95E;
-    --oakwood: #786C3B;
-}
-
-.welcome-wrapper {
+.home-page .welcome-wrapper {
     margin: 2rem;
     border-radius: 32px;
     overflow: hidden;
 }
 
-.welcome {
+.home-page .welcome {
     display: flex;
     align-items: stretch;
     background-color: var(--beige);
     min-height: 480px;
 }
 
-.welcome-text {
+.home-page .welcome-text {
     flex: 1;
     padding: 3rem 2.5rem;
     display: flex;
@@ -30,7 +19,7 @@ html {
     justify-content: space-between;
 }
 
-.welcome-text h1 {
+.home-page .welcome-text h1 {
     font-size: 2.8rem;
     font-weight: 800;
     color: var(--oakwood);
@@ -38,20 +27,20 @@ html {
     margin-bottom: 0.8rem;
 }
 
-.welcome-text .subtitle {
+.home-page .welcome-text .subtitle {
     font-size: 1rem;
     color: var(--oakwood);
     margin-bottom: 1.5rem;
 }
 
-.welcome-text p {
+.home-page .welcome-text p {
     font-size: 0.95rem;
     color: #555;
     margin-bottom: 1.5rem;
     max-width: 360px;
 }
 
-.welcome-image {
+.home-page .welcome-image {
     flex: 1;
     background-color: #e0ddd5;
     display: flex;
@@ -60,13 +49,13 @@ html {
     min-height: 400px;
 }
 
-.welcome-image img {
+.home-page .welcome-image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
 
-.btn-outline {
+.home-page .home-btn-outline {
     display: inline-block;
     padding: 0.6rem 1.6rem;
     border: 2px solid #786C3B;
@@ -79,12 +68,12 @@ html {
     background-color: transparent;
 }
 
-.btn-outline:hover {
+.home-page .home-btn-outline:hover {
     background-color: var(--oakwood);
     color: #fff;
 }
 
-.about {
+.home-page .about {
     display: flex;
     align-items: flex-start;
     padding: 4rem;
@@ -92,9 +81,11 @@ html {
     background-color: #fff;
 }
 
-.about-left { flex: 1; }
+.home-page .about-left {
+    flex: 1;
+}
 
-.about-left h2 {
+.home-page .about-left h2 {
     font-size: 2.8rem;
     font-weight: 800;
     color: #786C3B;
@@ -102,12 +93,12 @@ html {
     margin-bottom: 0.5rem;
 }
 
-.about-left .journey-label {
+.home-page .about-left .journey-label {
     color: #888;
     font-size: 0.95rem;
 }
 
-.about-right {
+.home-page .about-right {
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -115,26 +106,26 @@ html {
     padding-top: 1rem;
 }
 
-.about-right p {
+.home-page .about-right p {
     color: #555;
     font-size: 0.95rem;
     line-height: 1.7;
     margin: 0;
 }
 
-.get-in-touch {
+.home-page .get-in-touch {
     text-align: center;
     padding: 4rem 2rem;
     background-color: var(--beige);
 }
 
-.get-in-touch h2 {
+.home-page .get-in-touch h2 {
     font-size: 2.2rem;
     color: #786C3B;
     margin-bottom: 1rem;
 }
 
-.get-in-touch p {
+.home-page .get-in-touch p {
     color: #666;
     max-width: 500px;
     margin: 0 auto 2rem;
@@ -143,6 +134,12 @@ html {
 }
 
 @media (max-width: 768px) {
-    .welcome, .about { flex-direction: column; }
-    .welcome-text h1 { font-size: 2rem; }
+    .home-page .welcome,
+    .home-page .about {
+        flex-direction: column;
+    }
+
+    .home-page .welcome-text h1 {
+        font-size: 2rem;
+    }
 }

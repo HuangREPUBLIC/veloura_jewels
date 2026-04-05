@@ -9,7 +9,7 @@ echo $this->Html->css('jewelry');
 ?>
 
 <div class="jewelry-page">
-    <?= $this->Html->link(__('← Back'), ['action' => 'index'], ['class' => 'action-buttons-inline']) ?>
+    <?= $this->Html->link(__('← Back'), ['action' => 'index'], ['class' => 'jewelry-back-link']) ?>
     <div class="product-detail">
         <div class="product-detail-image">
             <?php if (!empty($product->product_images)): ?>
@@ -32,7 +32,7 @@ echo $this->Html->css('jewelry');
 
             <p class="detail-stock">
                 <?php if ((int)$product->stock > 0): ?>
-                    In stock: <?= (int)$product->stock ?>
+                    Stock: <?= (int)$product->stock ?>
                 <?php else: ?>
                     Out of stock
                 <?php endif; ?>
@@ -54,18 +54,24 @@ echo $this->Html->css('jewelry');
 
                 <div class="quantity-group">
                     <?= $this->Form->label('quantity', 'Quantity', ['class' => 'quantity-label']) ?>
-                    <?= $this->Form->control('quantity', [
-                        'type' => 'number',
-                        'min' => 1,
-                        'max' => (int)$product->stock,
-                        'value' => 1,
-                        'label' => false,
-                        'class' => 'quantity-input'
-                    ]) ?>
+
+                    <div class="qty-box">
+                        <button type="button" class="jewelry-qty-minus">−</button>
+
+                        <?= $this->Form->number('quantity', [
+                            'min' => 1,
+                            'max' => (int)$product->stock,
+                            'value' => 1,
+                            'class' => 'jewelry-quantity-input',
+                            'label' => false
+                        ]) ?>
+
+                        <button type="button" class="jewelry-qty-plus">+</button>
+                    </div>
                 </div>
 
                 <div class="detail-actions">
-                    <?= $this->Form->button('Add to Cart', ['class' => 'btn-view']) ?>
+                    <?= $this->Form->button('Add to Cart', ['class' => 'jewelry-add-to-cart-btn']) ?>
                 </div>
 
                 <?= $this->Form->end() ?>
@@ -74,10 +80,36 @@ echo $this->Html->css('jewelry');
                     <?= $this->Html->link(
                         'Back to Jewelry',
                         ['controller' => 'Jewelry', 'action' => 'index'],
-                        ['class' => 'btn-secondary']
+                        ['class' => 'jewelry-btn-secondary']
                     ) ?>
                 </div>
             <?php endif; ?>
         </div>
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('.qty-box').forEach(function (wrapper) {
+            const input = wrapper.querySelector('input');
+            const minus = wrapper.querySelector('.jewelry-qty-minus');
+            const plus = wrapper.querySelector('.jewelry-qty-plus');
+
+            minus.addEventListener('click', function () {
+                let value = parseInt(input.value || 0, 10);
+                if (value > 1) {
+                    input.value = value - 1;
+                }
+            });
+
+            plus.addEventListener('click', function () {
+                let value = parseInt(input.value || 0, 10);
+                const max = parseInt(input.max || 999999, 10);
+
+                if (value < max) {
+                    input.value = value + 1;
+                }
+            });
+        });
+    });
+</script>

@@ -18,43 +18,41 @@ $this->assign('title', 'Home');
 $this->Html->css('home', ['block' => true]);
 ?>
 
-<!-- Welcome Section -->
-<div class="welcome-wrapper">
-<section class="welcome">
-    <div class="welcome-text">
-        <div>
-            <h1>Welcome<br>to Veloura<br>Jewels</h1>
-            <p class="subtitle">Discover Unique Creations</p>
-            <p>Immerse yourself in the artistry of our handcrafted jewelry and home décor. Each piece is lovingly designed to tell a story and enhance your everyday life with elegance.</p>
+<div class="home-page">
+    <div class="welcome-wrapper">
+        <section class="welcome">
+            <div class="welcome-text">
+                <div>
+                    <h1>Welcome<br>to Veloura<br>Jewels</h1>
+                    <p class="subtitle">Discover Unique Creations</p>
+                    <p>Immerse yourself in the artistry of our handcrafted jewelry and home décor. Each piece is lovingly designed to tell a story and enhance your everyday life with elegance.</p>
+                </div>
+                <?= $this->Html->link(
+                    'Explore Our Collections',
+                    ['controller' => 'Jewelry', 'action' => 'index'],
+                    ['class' => 'home-btn-outline']
+                ) ?>
+            </div>
+            <div class="welcome-image">
+                <?= $this->Html->image('homepage.png', ['alt' => 'Veloura Jewels', 'class' => 'welcome-image']); ?>
+            </div>
+        </section>
+    </div>
+
+    <section class="about">
+        <div class="about-left">
+            <h2>About<br>Veloura Jewels</h2>
+            <p class="journey-label">Our Journey</p>
         </div>
-        <?= $this->Html->link(
-            'Explore Our Collections',
-            ['controller' => 'Jewelry', 'action' => 'index'],
-            ['class' => 'btn-outline']
-        ) ?>
-    </div>
-    <div class="welcome-image">
-       <?= $this->Html->image('homepage.png', ['alt' => 'Veloura Jewels', 'class' => 'welcome-image']); ?>
-    </div>
-</section>
+        <div class="about-right">
+            <p>Founded by Sarah Smith in Brooksdale, Veloura Jewels is dedicated to creating unique, handcrafted pieces that blend creativity and meaningful design. Our goal is to bring beauty and elegance into your home and wardrobe.</p>
+            <?= $this->Html->link('Learn More About Us', '#', ['class' => 'home-btn-outline']) ?>
+        </div>
+    </section>
+
+    <section class="get-in-touch">
+        <h2>Get in Touch</h2>
+        <p>Have questions or need assistance? We're here to help! Reach out to us and let us know how we can assist you with our handcrafted jewelry and décor.</p>
+        <?= $this->Html->link('Contact Us', '/contact', ['class' => 'home-btn-outline']) ?>
+    </section>
 </div>
-
-<!-- About Section -->
-<section class="about">
-    <div class="about-left">
-        <h2>About<br>Veloura Jewels</h2>
-        <p class="journey-label">Our Journey</p>
-    </div>
-    <div class="about-right">
-        <p>Founded by Sarah Smith in Brooksdale, Veloura Jewels is dedicated to creating unique, handcrafted pieces that blend creativity and meaningful design. Our goal is to bring beauty and elegance into your home and wardrobe.</p>
-        <?= $this->Html->link('Learn More About Us', '#', ['class' => 'btn-outline']) ?>
-    </div>
-</section>
-
-<!-- Get in Touch Section -->
-<section class="get-in-touch">
-    <h2>Get in Touch</h2>
-    <p>Have questions or need assistance? We're here to help! Reach out to us and let us know how we can assist you with our handcrafted jewelry and décor.</p>
-    <?= $this->Html->link('Contact Us', '/contact', ['class' => 'btn-outline']) ?>
-</section>
-

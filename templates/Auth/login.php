@@ -23,7 +23,8 @@ $this->Html->meta([
 ]);
 ?>
 
-<div class="users form content">
+<div class="login-page">
+    <div class="users form content">
     <?= $this->Form->create() ?>
     <fieldset>
         <legend>Login</legend>
@@ -62,8 +63,9 @@ $this->Html->meta([
 
     <?= $this->Form->end() ?>
 
-    <?= $this->Html->link('Register', ['controller' => 'Auth', 'action' => 'register'], ['class' => 'btn-register']) ?>
+    <?= $this->Html->link('Register', ['controller' => 'Auth', 'action' => 'register'], ['class' => 'login-register-btn']) ?>
     <?= $this->Html->link('Forgot password?', ['controller' => 'Auth', 'action' => 'forgetPassword']) ?>
+</div>
 </div>
 
 <script>

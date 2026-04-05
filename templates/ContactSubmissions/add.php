@@ -8,7 +8,7 @@ use Cake\Core\Configure;
 ?>
 
 <?php $this->Html->css('contact', ['block' => true]); ?>
-<?php $this->Html->css('default-styles', ['block' => true]); ?>
+
 
 <?php
 // Load CF Turnstile captcha JS library
@@ -35,7 +35,7 @@ $this->Html->meta([
         <?= $this->Form->create($contactSubmission) ?>
         <fieldset>
 
-            <div class="form-row">
+            <div class="contact-form-row">
                 <?= $this->Form->control('first_name', [
                     'label' => 'First Name',
                     'placeholder' => 'Your first name',
@@ -84,12 +84,14 @@ $this->Html->meta([
 
         <!-- DISABLED UNTIL CAPTCHA PASSES -->
         <?= $this->Form->button(__('Send Message'), [
-            'class' => 'action-button',
+            'class' => 'contact-submit-btn',
             'disabled' => true
         ]) ?>
 
-        <?= $this->Form->button(__('Reset'), ['type' => 'reset']) ?>
-
+        <?= $this->Form->button(__('Reset'), [
+            'type' => 'reset',
+            'class' => 'contact-reset-btn'
+        ]) ?>
 
         <?= $this->Form->end() ?>
     </div>
@@ -97,7 +99,7 @@ $this->Html->meta([
 
 <script>
     var turnstileMessageBlock = document.querySelector('#turnstile-message');
-    var actionButton = document.querySelector('button.action-button');
+    var actionButton = document.querySelector('button.contact-submit-btn');
 
     function turnstileOnSuccess(token) {
         turnstileMessageBlock.style.display = 'none';

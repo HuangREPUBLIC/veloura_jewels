@@ -19,7 +19,7 @@ echo $this->Html->css('jewelry');
         <div class="empty-state">
             <p>Your cart is currently empty.</p>
             <div style="margin-top: 1rem;">
-                <a href="<?= $this->Url->build('/jewelry') ?>" class="btn-view">Continue Shopping</a>
+                <a href="<?= $this->Url->build('/jewelry') ?>" class="jewelry-cart-primary-btn">Continue Shopping</a>
             </div>
         </div>
     <?php else: ?>
@@ -43,7 +43,7 @@ echo $this->Html->css('jewelry');
 
                         <div class="cart-item-info">
                             <h3><?= h($product->name) ?></h3>
-                            <p class="cart-price">Unit Price: $<?= number_format((float)$product->sale_price, 2) ?></p>
+                            <p class="cart-price">Price: $<?= number_format((float)$product->sale_price, 2) ?></p>
 
                             <?= $this->Form->create(null, [
                                 'url' => ['controller' => 'Jewelry', 'action' => 'cart'],
@@ -56,7 +56,7 @@ echo $this->Html->css('jewelry');
                                 <?= $this->Form->label('quantity_' . $product->id, 'Quantity', ['class' => 'cart-quantity-label']) ?>
 
                                 <div class="qty-box">
-                                    <button type="button" class="qty-btn minus">−</button>
+                                    <button type="button" class="jewelry-qty-minus">−</button>
                                     <input
                                         type="number"
                                         id="quantity_<?= $product->id ?>"
@@ -66,7 +66,7 @@ echo $this->Html->css('jewelry');
                                         max="<?= (int)$product->stock ?>"
                                         class="cart-quantity-input auto-submit-quantity"
                                     >
-                                    <button type="button" class="qty-btn plus">+</button>
+                                    <button type="button" class="jewelry-qty-plus">+</button>
                                 </div>
                             </div>
 
@@ -74,7 +74,7 @@ echo $this->Html->css('jewelry');
 
                             <p class="cart-subtotal">Subtotal: $<?= number_format((float)$product->subtotal, 2) ?></p>
 
-                            <a href="<?= $this->Url->build('/jewelry/remove-from-cart/' . $product->id) ?>" class="btn-remove">
+                            <a href="<?= $this->Url->build('/jewelry/remove-from-cart/' . $product->id) ?>" class="jewelry-btn-remove">
                                 Remove
                             </a>
                         </div>
@@ -90,8 +90,8 @@ echo $this->Html->css('jewelry');
                 </div>
 
                 <div class="summary-actions">
-                    <a href="<?= $this->Url->build('/jewelry') ?>" class="btn-secondary">Continue Shopping</a>
-                    <a href="#" class="btn-view">Proceed to Checkout</a>
+                    <a href="<?= $this->Url->build('/jewelry') ?>" class="jewelry-cart-secondary-btn">Continue Shopping</a>
+                    <a href="#" class="jewelry-cart-primary-btn">Proceed to Checkout</a>
                 </div>
             </aside>
         </div>
@@ -102,8 +102,8 @@ echo $this->Html->css('jewelry');
     document.addEventListener('DOMContentLoaded', function () {
         document.querySelectorAll('.qty-box').forEach(function (wrapper) {
             const input = wrapper.querySelector('input');
-            const minus = wrapper.querySelector('.minus');
-            const plus = wrapper.querySelector('.plus');
+            const minus = wrapper.querySelector('.jewelry-qty-minus');
+            const plus = wrapper.querySelector('.jewelry-qty-plus');
             const form = wrapper.closest('form');
 
             minus.addEventListener('click', function () {

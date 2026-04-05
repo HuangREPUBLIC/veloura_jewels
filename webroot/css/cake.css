@@ -58,11 +58,6 @@ th a, .actions a {
     color: var(--color-lightgray);
 }
 
-.button, button, input[type='button'], input[type='reset'], input[type='submit'] {
-    background-color: var(--oakwood);
-    border-color: var(--oakwood);
-}
-
 .table-responsive {
     display: block;
     width: 100%;
