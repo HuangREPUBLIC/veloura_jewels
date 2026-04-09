@@ -124,6 +124,6 @@ return [
     'Stripe' => [
         'secretKey' => 'sk_test_51TKAcBCXA1QjjN9dyV3rbTpZIpzcukmb4u2ADMRLQtUV8amAb07YvDp8YcsxAI8MFdCi4ahRvondwTexii2s1LZ000FLhaavmU',
         'publishableKey' => 'pk_test_51TKAcBCXA1QjjN9dliULLDTjU2TXKht26Bh16rsWZYsWCqwfOuwNfVb32k9GuIfBQ8jm1YqwQhh9CZIvwVLAIp3y00W3Cua6up',
-        'webhookSecret' => '',
+        'webhookSecret' => 'whsec_d9f9803e6d7ef8aa0b14564f997815e6c254649a5b88840ffe10a0a8095d2f3b',
     ],
 ];

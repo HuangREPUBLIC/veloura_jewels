@@ -159,11 +159,12 @@ class UsersController extends AppController
             ->where(['stock <' => 5])
             ->all();
 
-        $this->set(compact('totalProducts', 'totalUsers', 'totalEnquiries', 'lowStockProducts'));
+        $ordersTable = $this->fetchTable('Orders');
+        $totalOrders = $ordersTable->find()->count();
+
+        $this->set(compact('totalProducts', 'totalUsers', 'totalEnquiries', 'totalOrders', 'lowStockProducts'));
         $this->set('authUser', $identity);
 
         return null;
     }
 }
-
-

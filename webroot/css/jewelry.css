@@ -491,7 +491,6 @@
 .jewelry-page .summary-actions {
     display: flex;
     flex-direction: column;
-    gap: 0.8rem;
 }
 
 .jewelry-page .jewelry-cart-link {
@@ -513,11 +512,11 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 0.95rem 1.4rem;
-    background: #181818;
+    padding: 0.85rem 1.4rem;
+    background: #786C3B;
+    border-color: #786C3B;
     color: #fff;
     text-decoration: none;
-    border: 2px solid #6f5f2f;
     border-radius: 14px;
     font-weight: 700;
     letter-spacing: 0.04em;
@@ -542,6 +541,7 @@
     border: 1px solid #d7d7d7;
     border-radius: 14px;
     transition: all 0.2s ease;
+    margin-top: 0.8rem;
 }
 
 .jewelry-page .jewelry-cart-secondary-btn:hover {
@@ -593,4 +593,94 @@
         align-self: flex-start;
         margin-top: 1rem;
     }
+}
+
+/* ===== Success / Cancel pages ===== */
+.jewelry-page .result-card {
+    max-width: 520px;
+    margin: 4rem auto;
+    text-align: center;
+    background: #fff;
+    border-radius: 20px;
+    padding: 3rem 2rem;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.07);
+}
+
+.jewelry-page .result-icon {
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+}
+
+.jewelry-page .result-title {
+    font-size: 1.8rem;
+    color: #1f1f1f;
+    margin-bottom: 0.5rem;
+}
+
+.jewelry-page .result-subtitle {
+    color: #666;
+    font-size: 1rem;
+    margin-bottom: 1.8rem;
+}
+
+.jewelry-page .result-order-info {
+    background: #f9f7f2;
+    border: 1px solid #e8e2d4;
+    border-radius: 12px;
+    padding: 1.2rem;
+    margin-bottom: 1.8rem;
+    text-align: left;
+}
+
+.jewelry-page .result-order-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+}
+
+.jewelry-page .result-order-row:last-child {
+    margin-bottom: 0;
+}
+
+.jewelry-page .result-order-label {
+    color: #888;
+    font-size: 0.9rem;
+}
+
+.jewelry-page .result-order-value {
+    font-weight: 600;
+    color: #333;
+}
+
+.jewelry-page .result-order-value.status {
+    color: #786C3B;
+}
+
+.jewelry-page .result-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 0.95rem;
+    background: #786C3B;
+    color: #fff !important;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    text-decoration: none !important;
+    transition: background 0.2s ease;
+}
+
+.jewelry-page .result-btn:hover {
+    background: #5a5029;
+}
+
+.jewelry-page button.jewelry-cart-primary-btn {
+    width: 100%;
+    border: 2px solid #786C3B;
+    box-sizing: border-box;
+    cursor: pointer;
+    font-size: 0.95rem;
+    appearance: none;
+    -webkit-appearance: none;
 }

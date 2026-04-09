@@ -6,7 +6,7 @@
  */
 
 $this->assign('title', 'Cart');
-echo $this->Html->css('jewelry');
+$this->Html->css('jewelry', ['block' => true]);
 ?>
 
 <div class="jewelry-page">
@@ -90,8 +90,8 @@ echo $this->Html->css('jewelry');
                 </div>
 
                 <div class="summary-actions">
-                    <a href="<?= $this->Url->build('/jewelry') ?>" class="jewelry-cart-secondary-btn">Continue Shopping</a>
                     <a href="<?= $this->Url->build('/checkout') ?>" class="jewelry-cart-primary-btn">Proceed to Checkout</a>
+                    <a href="<?= $this->Url->build('/jewelry') ?>" class="jewelry-cart-secondary-btn">Continue Shopping</a>
                 </div>
             </aside>
         </div>

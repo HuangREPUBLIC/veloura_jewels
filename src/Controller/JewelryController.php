@@ -201,12 +201,8 @@ class JewelryController extends AppController
         $session = $stripe->checkout->sessions->create([
             'mode' => 'payment',
             'line_items' => $lineItems,
-            'success_url' => $this->request->getAttribute('webroot') ?
-                $this->request->scheme() . '://' . $this->request->host() . '/checkout/success?session_id={CHECKOUT_SESSION_ID}' :
-                'http://localhost:8765/checkout/success?session_id={CHECKOUT_SESSION_ID}',
-            'cancel_url' => $this->request->getAttribute('webroot') ?
-                $this->request->scheme() . '://' . $this->request->host() . '/checkout/cancel' :
-                'http://localhost:8765/checkout/cancel',
+            'success_url' => $this->request->scheme() . '://' . $this->request->host() . '/veloura_jewels/jewelry/success?session_id={CHECKOUT_SESSION_ID}',
+            'cancel_url' => $this->request->scheme() . '://' . $this->request->host() . '/veloura_jewels/jewelry/cancel',
             'customer_email' => $customerEmail,
             'metadata' => [
                 'order_id' => (string)$order->id,
@@ -228,9 +224,13 @@ class JewelryController extends AppController
             $order = $this->Orders->find()
                 ->where(['stripe_session_id' => $sessionId])
                 ->first();
+
         }
+        $this->request->getSession()->delete('Cart');
 
         $this->set(compact('order'));
+
+
     }
 
     public function cancel()

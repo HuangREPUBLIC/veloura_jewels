@@ -48,13 +48,12 @@ $this->Html->css('jewelry', ['block' => true]);
                 <strong>$<?= number_format((float)$total, 2) ?></strong>
             </div>
 
-            <?= $this->Form->create(null, [
-                'url' => ['controller' => 'Jewelry', 'action' => 'createCheckoutSession']
-            ]) ?>
-            <?= $this->Form->button('Pay with Stripe', ['class' => 'jewelry-cart-primary-btn']) ?>
-            <?= $this->Form->end() ?>
-
-            <a href="<?= $this->Url->build('/cart') ?>" class="jewelry-cart-secondary-btn jewelry-cart-link">Back to Cart</a>
+            <div class="summary-actions">
+                <?= $this->Form->create(null, ['url' => ['controller' => 'Jewelry', 'action' => 'createCheckoutSession']]) ?>
+                <?= $this->Form->button('Pay', ['class' => 'jewelry-cart-primary-btn']) ?>
+                <?= $this->Form->end() ?>
+                <a href="<?= $this->Url->build('/cart') ?>" class="jewelry-cart-secondary-btn jewelry-cart-link">Back to Cart</a>
+            </div>
         </aside>
     </div>
 </div>

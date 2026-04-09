@@ -5,6 +5,7 @@
  * @var int $totalProducts
  * @var int $totalUsers
  * @var int $totalEnquiries
+ * @var int $totalOrders
  * @var \Cake\ORM\ResultSet $lowStockProducts
  */
 $this->assign('title', 'Admin Dashboard');
@@ -18,7 +19,7 @@ $this->assign('title', 'Admin Dashboard');
         <h1>Admin Dashboard</h1>
         <p>Welcome, <?= h($authUser->email) ?></p>
     </div>
-    <div class="dashboard-summary"style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:20px;margin:30px 0;">
+    <div class="dashboard-summary" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:20px;margin:30px 0;">
         <a href="<?= $this->Url->build(['controller' => 'Products', 'action' => 'index']) ?>" class="dashboard-card">
             <div class="dashboard-icon">💎</div>
             <div class="dashboard-content">
@@ -46,7 +47,7 @@ $this->assign('title', 'Admin Dashboard');
             <div class="dashboard-icon">📦</div>
             <div class="dashboard-content">
                 <h3>Total Orders</h3>
-                <p><?= $totalEnquiries ?></p>
+                <p><?= $totalOrders ?></p>
             </div>
         </a>
     </div>
@@ -114,7 +115,7 @@ $this->assign('title', 'Admin Dashboard');
                 <p>Add, update, and delete product listings.</p>
             </div>
         </a>
-        <a href="<?= $this->Url->build(['controller' => 'Order', 'action' => 'index']) ?>" class="dashboard-card">
+        <a href="<?= $this->Url->build(['controller' => 'Orders', 'action' => 'index']) ?>" class="dashboard-card">
             <div class="dashboard-icon">📦</div>
             <div class="dashboard-content">
                 <h3>Manage Orders</h3>
