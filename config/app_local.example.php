@@ -121,4 +121,9 @@ return [
             'secretKey' => '1x0000000000000000000000000000000AA',
         ],
     ],
+    'Stripe' => [
+        'secretKey' => 'sk_test_51TKAcBCXA1QjjN9dyV3rbTpZIpzcukmb4u2ADMRLQtUV8amAb07YvDp8YcsxAI8MFdCi4ahRvondwTexii2s1LZ000FLhaavmU',
+        'publishableKey' => 'pk_test_51TKAcBCXA1QjjN9dliULLDTjU2TXKht26Bh16rsWZYsWCqwfOuwNfVb32k9GuIfBQ8jm1YqwQhh9CZIvwVLAIp3y00W3Cua6up',
+        'webhookSecret' => '',
+    ],
 ];
