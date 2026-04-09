@@ -42,8 +42,8 @@ $this->assign('title', 'Admin Dashboard');
                 <p><?= $totalEnquiries ?></p>
             </div>
         </a>
-        <a href="<?= $this->Url->build(['controller' => 'Order', 'action' => 'index']) ?>" class="dashboard-card">
-            <div class="dashboard-icon"></div>
+        <a href="<?= $this->Url->build(['controller' => 'Orders', 'action' => 'index']) ?>" class="dashboard-card">
+            <div class="dashboard-icon">📦</div>
             <div class="dashboard-content">
                 <h3>Total Orders</h3>
                 <p><?= $totalEnquiries ?></p>
@@ -112,6 +112,13 @@ $this->assign('title', 'Admin Dashboard');
             <div class="dashboard-content">
                 <h3>Manage products</h3>
                 <p>Add, update, and delete product listings.</p>
+            </div>
+        </a>
+        <a href="<?= $this->Url->build(['controller' => 'Order', 'action' => 'index']) ?>" class="dashboard-card">
+            <div class="dashboard-icon">📦</div>
+            <div class="dashboard-content">
+                <h3>Manage Orders</h3>
+                <p>View and manage customer orders.</p>
             </div>
         </a>
 
