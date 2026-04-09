@@ -7,41 +7,35 @@ $this->layout = 'login';
 $this->assign('title', 'Forget Password');
 ?>
 
-<div class="container login">
-    <div class="row">
-        <div class="column column-50 column-offset-25">
+<div class="login-page">
+    <div class="users form content">
+        <?= $this->Html->link(__('← Back'), ['action' => 'index']) ?>
 
-            <div class="users form content">
+        <?= $this->Form->create() ?>
 
-                <?= $this->Form->create() ?>
+        <fieldset>
+            <legend>Forget Password</legend>
 
-                <fieldset>
+            <?= $this->Flash->render() ?>
 
-                    <legend>Forget Password</legend>
+            <p style="font-size: 0.95rem; color: #555; margin-bottom: 1.2rem;">
+                Enter your email address registered with our system below to reset your password.
+            </p>
 
-                    <?= $this->Flash->render() ?>
+            <?php
+            echo $this->Form->control('email', [
+                'type' => 'email',
+                'required' => true,
+                'autofocus' => true,
+                'label' => 'Email',
+            ]);
+            ?>
 
-                    <p>Enter your email address registered with our system below to reset your password: </p>
+        </fieldset>
 
-                    <?php
-                    echo $this->Form->control('email', [
-                        'type' => 'email',
-                        'required' => true,
-                        'autofocus' => true,
-                        'label' => false,
-                    ]);
-                    ?>
+        <?= $this->Form->button('Send verification email', ['class' => 'login-button']) ?>
+        <?= $this->Form->end() ?>
 
-                </fieldset>
 
-                <?= $this->Form->button('Send verification email') ?>
-                <?= $this->Form->end() ?>
-
-                <hr class="hr-between-buttons">
-
-                <?= $this->Html->link('Back to login', ['controller' => 'Auth', 'action' => 'login'], ['class' => 'button button-outline']) ?>
-
-            </div>
-        </div>
     </div>
 </div>

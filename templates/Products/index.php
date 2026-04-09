@@ -12,13 +12,15 @@ $this->assign('title', 'products');
 
 <div class="submissions-wrapper">
     <div class="products index content">
-        <?= $this->Html->link(__('← Back'), ['controller' => 'Users','action' => 'dashboard'], ['class' => 'action-buttons-inline']) ?>
+        <?= $this->Html->link(__('← Back'), ['controller' => 'Users', 'action' => 'dashboard']) ?>
 
-        <?php if (in_array($role, ['admin', 'part_time', 'full_time'])): ?>
-            <?= $this->Html->link(__('New Product'), ['action' => 'add'], ['class' => 'button float-right']) ?>
-        <?php endif; ?>
+        <div class="page-header-row">
+            <h3 class="page-title"><?= __('Products') ?></h3>
+            <?php if (in_array($role, ['admin', 'part_time', 'full_time'])): ?>
+                <?= $this->Html->link(__('Add New Product'), ['action' => 'add'], ['class' => 'btn-new-product']) ?>
+            <?php endif; ?>
+        </div>
 
-        <h3 class="page-title"><?= __('Products') ?></h3>
         <div class="table-responsive" id="datatable" style="padding: 10px">
             <table id="productsTable" class="display">
                 <thead>

@@ -31,6 +31,12 @@ html { font-size: 100% ; }
     border-radius: 12px;
 }
 
+.contact-page fieldset {
+    border: none !important;
+    margin: 0;
+    padding: 0;
+}
+
 .contact-page .contact-form-row {
     display: grid;
     grid-template-columns: 1fr 1fr;

@@ -10,8 +10,8 @@ html {
     --color-lightgray: #606c76;
     --color-white: #fff;
     --color-main-bg: #f5f7fa;
-    --color-links: var(--color-cakephp-blue);
-    --color-links-active: #2a6496;
+    --color-links: #786c3b;
+    --color-links-active: #5a5029;
     --color-headings: #363637;
     --color-message-success-bg: #e3fcec;
     --color-message-success-text: #1f9d55;
@@ -52,6 +52,17 @@ a {
 a:hover, a:focus, a:active {
     color: var(--color-links-active);
     transition: color 0.2s ease-out;
+}
+
+/* btn-new-product overrides - must stay after generic a rules */
+a.btn-new-product,
+a.btn-new-product:link,
+a.btn-new-product:visited,
+a.btn-new-product:hover,
+a.btn-new-product:focus,
+a.btn-new-product:active {
+    color: #fff !important;
+    text-decoration: none !important;
 }
 
 th a, .actions a {
@@ -122,6 +133,10 @@ main > .row {
 
 .navbar-links a:hover {
     text-decoration: underline;
+}
+
+.navbar-right .cart {
+    color: #555;
 }
 
 .navbar-right {

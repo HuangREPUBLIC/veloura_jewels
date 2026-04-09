@@ -7,50 +7,48 @@
 $this->layout = 'login';
 $this->assign('title', 'Register new user');
 ?>
-<div class="container register">
+<div class="login-page">
     <div class="users form content">
+        <?= $this->Html->link(__('← Back'), ['action' => 'index']) ?>
 
-        <h2>Register new user</h2>
+        <fieldset>
+            <legend>Register</legend>
 
-        <?= $this->Form->create($user) ?>
+            <?= $this->Flash->render() ?>
 
-        <?= $this->Flash->render() ?>
+            <?= $this->Form->create($user) ?>
 
-        <?= $this->Form->control('email'); ?>
+            <?= $this->Form->control('email'); ?>
 
-        <div class="row">
-            <?= $this->Form->control('first_name', ['templateVars' => ['container_class' => 'column']]); ?>
-            <?= $this->Form->control('last_name', ['templateVars' => ['container_class' => 'column']]); ?>
-        </div>
+            <div class="row">
+                <?= $this->Form->control('first_name', ['templateVars' => ['container_class' => 'column']]); ?>
+                <?= $this->Form->control('last_name', ['templateVars' => ['container_class' => 'column']]); ?>
+            </div>
 
-        <div class="row">
-            <?php
-            echo $this->Form->control('password', [
-                'value' => '',
-                'templateVars' => ['container_class' => 'column']
-            ]);
+            <div class="row">
+                <?php
+                echo $this->Form->control('password', [
+                    'value' => '',
+                    'templateVars' => ['container_class' => 'column']
+                ]);
 
-            echo $this->Form->control('password_confirm', [
-                'type' => 'password',
-                'value' => '',
-                'label' => 'Retype Password',
-                'templateVars' => ['container_class' => 'column']
-            ]);
-            ?>
-        </div>
+                echo $this->Form->control('password_confirm', [
+                    'type' => 'password',
+                    'value' => '',
+                    'label' => 'Retype Password',
+                    'templateVars' => ['container_class' => 'column']
+                ]);
+                ?>
+            </div>
 
-        <?= $this->Form->control('avatar', ['type' => 'file']); ?>
+            <?= $this->Form->control('avatar', ['type' => 'file']); ?>
 
-        <?= $this->Form->button('Register') ?>
+        </fieldset>
 
-        <p style="margin-top: 1rem; text-align: center;">
-            <?= $this->Html->link(
-                'Back to login',
-                ['controller' => 'Auth', 'action' => 'login']
-            ) ?>
-        </p>
+        <?= $this->Form->button('Register', ['class' => 'login-button']) ?>
 
         <?= $this->Form->end() ?>
+
 
     </div>
 </div>

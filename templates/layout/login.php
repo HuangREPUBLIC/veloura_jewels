@@ -29,7 +29,13 @@ $appLocale = \Cake\Core\Configure::read('App.defaultLocale');
         <?= $this->Html->link('Contact', '/contact') ?>
     </nav>
     <div class="navbar-right">
-        <span class="cart">Cart (0)</span>
+        <?php
+        $cart = $this->request->getSession()->read('Cart') ?? [];
+        $count = count($cart);
+        ?>
+
+        <?= $this->Html->link("Cart ($count)", ['controller' => 'Jewelry', 'action' => 'cart'], ['class' => 'cart']) ?>
+
         <?= $this->Html->link('Login', '/auth/login', ['class' => 'btn-login']) ?>
 
     </div>

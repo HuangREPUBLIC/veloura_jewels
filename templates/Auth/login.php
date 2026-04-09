@@ -25,47 +25,47 @@ $this->Html->meta([
 
 <div class="login-page">
     <div class="users form content">
-    <?= $this->Form->create() ?>
-    <fieldset>
-        <legend>Login</legend>
-        <?= $this->Flash->render() ?>
+        <?= $this->Form->create() ?>
+        <fieldset>
+            <legend>Login</legend>
+            <?= $this->Flash->render() ?>
 
-        <?php
-        echo $this->Form->control('email', [
-            'type' => 'email',
-            'required' => true,
-            'autofocus' => true,
-        ]);
+            <?php
+            echo $this->Form->control('email', [
+                'type' => 'email',
+                'required' => true,
+                'autofocus' => true,
+            ]);
 
-        echo $this->Form->control('password', [
-            'type' => 'password',
-            'required' => true,
-        ]);
-        ?>
+            echo $this->Form->control('password', [
+                'type' => 'password',
+                'required' => true,
+            ]);
+            ?>
 
-        <div class="cf-turnstile"
-             data-sitekey="<?= Configure::read('Captcha.turnstile.siteKey') ?>"
-             data-theme="light"
-             data-size="flexible"
-             data-callback="turnstileOnSuccess"
-             data-error-callback="turnstileOnError"
-             data-expired-callback="turnstileOnExpired"
-             data-timeout-callback="turnstileOnTimeout">
-        </div>
+            <div class="cf-turnstile"
+                 data-sitekey="<?= Configure::read('Captcha.turnstile.siteKey') ?>"
+                 data-theme="light"
+                 data-size="flexible"
+                 data-callback="turnstileOnSuccess"
+                 data-error-callback="turnstileOnError"
+                 data-expired-callback="turnstileOnExpired"
+                 data-timeout-callback="turnstileOnTimeout">
+            </div>
 
-        <blockquote id="turnstile-message" style="display:none; margin-top:10px;"></blockquote>
-    </fieldset>
+            <blockquote id="turnstile-message" style="display:none; margin-top:10px;"></blockquote>
+        </fieldset>
 
-    <?= $this->Form->button('Login', [
-        'class' => 'login-button',
-        'disabled' => true
-    ]) ?>
+        <?= $this->Form->button('Login', [
+            'class' => 'login-button',
+            'disabled' => true
+        ]) ?>
 
-    <?= $this->Form->end() ?>
+        <?= $this->Form->end() ?>
 
-    <?= $this->Html->link('Register', ['controller' => 'Auth', 'action' => 'register'], ['class' => 'login-register-btn']) ?>
-    <?= $this->Html->link('Forgot password?', ['controller' => 'Auth', 'action' => 'forgetPassword']) ?>
-</div>
+        <?= $this->Html->link('Register', ['controller' => 'Auth', 'action' => 'register'], ['class' => 'login-register-btn']) ?>
+        <?= $this->Html->link('Forgot password?', ['controller' => 'Auth', 'action' => 'forgetPassword']) ?>
+    </div>
 </div>
 
 <script>

@@ -248,8 +248,27 @@ td.actions button {
     border-radius: 4px;
     box-sizing: border-box;
 }
+.page-header-row {
+    display: flex !important;
+    align-items: center;
+    justify-content: space-between !important;
+    margin-bottom: 1.2rem;
+}
+.page-header-row .page-title {
+    margin-bottom: 0;
+}
+a.btn-new-product {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.55rem 1.2rem;
+    background-color: #786C3B;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    white-space: nowrap;
+    transition: background-color 0.2s ease;
+}
 
-
-
-
-
+a.btn-new-product:hover {
+    background-color: #5a5029;
+}

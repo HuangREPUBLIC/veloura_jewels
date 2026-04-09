@@ -26,7 +26,8 @@ $cakeDescription = 'Veloura Jewels';
         <?= $this->fetch('title') ?>
     </title>
     <?= $this->Html->meta('icon', '/img/icon.png') ?>
-    <?= $this->Html->css(['normalize.min', 'fonts', 'default-styles', 'cake']) ?>
+    <?= $this->Html->css(['normalize.min', 'fonts', 'default-styles', 'cake','login']) ?>
+
     <link rel="stylesheet" href="https://cdn.datatables.net/2.2.2/css/dataTables.dataTables.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/2.2.2/js/dataTables.min.js"></script>
@@ -63,7 +64,13 @@ $cakeDescription = 'Veloura Jewels';
     </nav>
 
     <div class="navbar-right">
-        <span class="cart">Cart (0)</span>
+        <?php
+        $cart = $this->request->getSession()->read('Cart') ?? [];
+        $count = count($cart);
+        ?>
+
+        <?= $this->Html->link("Cart ($count)", ['controller' => 'Jewelry', 'action' => 'cart'], ['class' => 'cart']) ?>
+
         <?php if ($this->Identity->isLoggedIn()): ?>
             <?= $this->Html->link('Logout', '/auth/logout', ['class' => 'btn-login']) ?>
         <?php else: ?>

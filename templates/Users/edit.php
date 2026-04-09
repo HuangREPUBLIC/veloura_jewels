@@ -4,52 +4,57 @@
  * @var \App\Model\Entity\User $user
  */
 ?>
-<?php $this->Html->css('default-styles', ['block' => true]); ?>
-<?php $this->Html->css('login', ['block' => true]); ?>
+<div class="login-page">
+    <div class="users form content">
+        <?= $this->Html->link(__('← Back'), ['action' => 'index']) ?>
 
-<div class="users form content">
-    <h2><?= __('Edit User') ?></h2>
-    <?= $this->Html->link(__('← Back'), ['action' => 'index'], ['class' => 'action-buttons-inline']) ?>
-    <br>
+        <?= $this->Form->create($user) ?>
 
-    <?= $this->Form->create($user) ?>
-    <fieldset>
-        <?php
-        echo $this->Form->control('email', [
-            'label' => 'Email',
-            'required' => true,
-            'disabled' => true,
-        ]);
+        <fieldset>
+            <legend><?= __('Edit User') ?></legend>
 
-        $identity = $this->request->getAttribute('identity');
-        $role = $identity ? $identity->get('role') : null;
+            <?= $this->Flash->render() ?>
 
-        if ($role === 'admin') {
-            echo $this->Form->control('role', [
-                'type' => 'select',
-                'options' => [
-                    'admin' => 'Admin',
-                    'full_time' => 'Full-time Staff',
-                    'part_time' => 'Part-time Staff',
-                    'customer' => 'Customer',
-                ],
-                'label' => 'Role',
-                'required' => true
+            <?php
+            echo $this->Form->control('email', [
+                'label' => 'Email',
+                'required' => true,
+                'disabled' => true,
             ]);
-        } elseif ($role === 'full_time') {
-            echo $this->Form->control('role', [
-                'type' => 'select',
-                'options' => [
-                    'full_time' => 'Full-time Staff',
-                    'part_time' => 'Part-time Staff',
-                    'customer' => 'Customer',
-                ],
-                'label' => 'Role',
-                'required' => true
-            ]);
-        }
-        ?>
-    </fieldset>
-    <?= $this->Form->button(__('Save')) ?>
-    <?= $this->Form->end() ?>
+
+            $identity = $this->request->getAttribute('identity');
+            $role = $identity ? $identity->get('role') : null;
+
+            if ($role === 'admin') {
+                echo $this->Form->control('role', [
+                    'type' => 'select',
+                    'options' => [
+                        'admin' => 'Admin',
+                        'full_time' => 'Full-time Staff',
+                        'part_time' => 'Part-time Staff',
+                        'customer' => 'Customer',
+                    ],
+                    'label' => 'Role',
+                    'required' => true
+                ]);
+            } elseif ($role === 'full_time') {
+                echo $this->Form->control('role', [
+                    'type' => 'select',
+                    'options' => [
+                        'full_time' => 'Full-time Staff',
+                        'part_time' => 'Part-time Staff',
+                        'customer' => 'Customer',
+                    ],
+                    'label' => 'Role',
+                    'required' => true
+                ]);
+            }
+            ?>
+        </fieldset>
+
+        <?= $this->Form->button(__('Save'), ['class' => 'login-button']) ?>
+        <?= $this->Form->end() ?>
+
+
+    </div>
 </div>
