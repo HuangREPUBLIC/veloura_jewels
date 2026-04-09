@@ -63,12 +63,7 @@ $cakeDescription = 'Veloura Jewels';
     </nav>
 
     <div class="navbar-right">
-        <?php
-        $cart = $this->request->getSession()->read('Cart') ?? [];
-        $count = count($cart);
-        ?>
-
-        <?= $this->Html->link("Cart ($count)", ['controller' => 'Jewelry', 'action' => 'cart'], ['class' => 'cart']) ?>
+        <span class="cart">Cart (0)</span>
         <?php if ($this->Identity->isLoggedIn()): ?>
             <?= $this->Html->link('Logout', '/auth/logout', ['class' => 'btn-login']) ?>
         <?php else: ?>

@@ -27,6 +27,8 @@ DROP TABLE IF EXISTS `contact_submissions`;
 DROP TABLE IF EXISTS `products`;
 DROP TABLE IF EXISTS `categories`;
 DROP TABLE IF EXISTS `users`;
+DROP TABLE IF EXISTS `order_items`;
+DROP TABLE IF EXISTS `orders`;
 
 SET FOREIGN_KEY_CHECKS = 1;
 -- --------------------------------------------------------
@@ -72,7 +74,38 @@ CREATE TABLE `contact_replies` (
 INSERT INTO `contact_replies` (`id`, `contact_submission_id`, `subject`, `message`, `sent_at`, `created`, `modified`) VALUES
                                                                                                                           (1, 1, 'Re: Your enquiry', 'Hi Jialin,', '2026-03-23 10:10:33', '2026-03-23 10:10:33', '2026-03-23 10:10:33'),
                                                                                                                           (2, 4, 'Re: Your enquiry', 'Hi Hey,', '2026-03-24 06:30:18', '2026-03-24 06:30:19', '2026-03-24 06:30:19'),
-                                                                                                                          (3, 1, 'Re: Your enquiry', 'test', '2026-03-24 06:32:52', '2026-03-24 06:32:52', '2026-03-24 06:32:52');
+CREATE TABLE `orders` (
+                          `id` int(11) NOT NULL AUTO_INCREMENT,
+                          `user_id` int(11) DEFAULT NULL,
+                          `stripe_session_id` varchar(255) DEFAULT NULL,
+                          `stripe_payment_intent_id` varchar(255) DEFAULT NULL,
+                          `customer_email` varchar(255) DEFAULT NULL,
+                          `status` varchar(50) NOT NULL DEFAULT 'pending',
+                          `total_amount` decimal(10,2) NOT NULL DEFAULT 0.00,
+                          `currency` varchar(10) NOT NULL DEFAULT 'aud',
+                          `created` datetime DEFAULT current_timestamp(),
+                          `modified` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+                          PRIMARY KEY (`id`),
+                          KEY `user_id` (`user_id`),
+                          CONSTRAINT `fk_orders_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE `order_items` (
+                               `id` int(11) NOT NULL AUTO_INCREMENT,
+                               `order_id` int(11) NOT NULL,
+                               `product_id` int(11) NOT NULL,
+                               `product_name` varchar(255) NOT NULL,
+                               `unit_price` decimal(10,2) NOT NULL,
+                               `quantity` int(11) NOT NULL,
+                               `subtotal` decimal(10,2) NOT NULL,
+                               `created` datetime DEFAULT current_timestamp(),
+                               `modified` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+                               PRIMARY KEY (`id`),
+                               KEY `order_id` (`order_id`),
+                               KEY `product_id` (`product_id`),
+                               CONSTRAINT `fk_order_items_order` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE,
+                               CONSTRAINT `fk_order_items_product` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;                                                                                                                     (3, 1, 'Re: Your enquiry', 'test', '2026-03-24 06:32:52', '2026-03-24 06:32:52', '2026-03-24 06:32:52');
 
 -- --------------------------------------------------------
 

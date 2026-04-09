@@ -63,6 +63,11 @@ return function (RouteBuilder $routes): void {
         $builder->connect('/cart', ['controller' => 'Jewelry', 'action' => 'cart']);
         $builder->connect('/cart/remove/:id', ['controller' => 'Jewelry', 'action' => 'removeFromCart'])
             ->setPass(['id']);
+        $builder->connect('/checkout', ['controller' => 'Jewelry', 'action' => 'checkout']);
+        $builder->connect('/checkout/create-session', ['controller' => 'Jewelry', 'action' => 'createCheckoutSession']);
+        $builder->connect('/checkout/success', ['controller' => 'Jewelry', 'action' => 'success']);
+        $builder->connect('/checkout/cancel', ['controller' => 'Jewelry', 'action' => 'cancel']);
+        $builder->connect('/stripe/webhook', ['controller' => 'Jewelry', 'action' => 'webhook']);
 
 
         //Contact Form Route
