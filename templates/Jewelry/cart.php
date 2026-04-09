@@ -91,7 +91,7 @@ echo $this->Html->css('jewelry');
 
                 <div class="summary-actions">
                     <a href="<?= $this->Url->build('/jewelry') ?>" class="jewelry-cart-secondary-btn">Continue Shopping</a>
-                    <a href="#" class="jewelry-cart-primary-btn">Proceed to Checkout</a>
+                    <a href="<?= $this->Url->build('/checkout') ?>" class="jewelry-cart-primary-btn">Proceed to Checkout</a>
                 </div>
             </aside>
         </div>

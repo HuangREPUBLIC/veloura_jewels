@@ -5,7 +5,7 @@
  */
 
 $this->assign('title', $product->name);
-echo $this->Html->css('jewelry');
+$this->Html->css('jewelry', ['block' => true]);
 ?>
 
 <div class="jewelry-page">
