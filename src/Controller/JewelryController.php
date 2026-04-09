@@ -220,16 +220,19 @@ class JewelryController extends AppController
             ];
         }
 
-        $session = $stripe->checkout->sessions->create([
+        $sessionParams = [
             'mode' => 'payment',
             'line_items' => $lineItems,
             'success_url' => $this->request->scheme() . '://' . $this->request->host() . '/veloura_jewels/jewelry/success?session_id={CHECKOUT_SESSION_ID}',
             'cancel_url' => $this->request->scheme() . '://' . $this->request->host() . '/veloura_jewels/jewelry/cancel',
-            'customer_email' => $customerEmail,
-            'metadata' => [
-                'order_id' => (string)$order->id,
-            ],
-        ]);
+            'metadata' => ['order_id' => (string)$order->id],
+        ];
+
+        if ($customerEmail) {
+            $sessionParams['customer_email'] = $customerEmail;
+        }
+
+        $session = $stripe->checkout->sessions->create($sessionParams);
 
         $order->stripe_session_id = $session->id;
         $this->Orders->saveOrFail($order);
