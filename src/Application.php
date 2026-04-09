@@ -96,8 +96,7 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
             // https://book.cakephp.org/5/en/controllers/middleware.html#body-parser-middleware
             ->add(new BodyParserMiddleware())
 
-            // Cross Site Request Forgery (CSRF) Protection Middleware
-            // https://book.cakephp.org/5/en/security/csrf.html#cross-site-request-forgery-csrf-middleware
+            // CSRF Protection — skip for Stripe webhook (server-to-server, no token)
             ->add(function ($request, $handler) {
                 if (str_contains((string)$request->getUri()->getPath(), 'stripe/webhook')) {
                     return $handler->handle($request);
