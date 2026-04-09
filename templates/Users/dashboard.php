@@ -42,6 +42,13 @@ $this->assign('title', 'Admin Dashboard');
                 <p><?= $totalEnquiries ?></p>
             </div>
         </a>
+        <a href="<?= $this->Url->build(['controller' => 'Order', 'action' => 'index']) ?>" class="dashboard-card">
+            <div class="dashboard-icon"></div>
+            <div class="dashboard-content">
+                <h3>Total Orders</h3>
+                <p><?= $totalEnquiries ?></p>
+            </div>
+        </a>
     </div>
     <?php if (!$lowStockProducts->isEmpty()): ?>
         <div class="low-stock-warning" style="margin:20px 0;padding:20px;background:#fff3cd;border:1px solid #ead28b;border-radius:12px;">
