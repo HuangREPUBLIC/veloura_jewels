@@ -93,43 +93,6 @@ $this->Html->meta([
     </div>
 </div>
 
-<!-- Live Chat Button -->
-<button class="live-chat-btn" onclick="toggleChat()">
-    <svg class="chat-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
-    </svg>
-    <span class="chat-label">Live Chat</span>
-    <span class="chat-dot"></span>
-</button>
-
-<!-- Chat Popup -->
-<div class="live-chat-popup" id="chatPopup">
-    <div class="chat-popup-header">
-        <div class="chat-popup-header-left">
-            <div class="chat-popup-avatar">
-                <img src="<?= $this->Url->image('icon.png') ?>" alt="Veloura Jewels" style="width:28px;height:28px;object-fit:contain;border-radius:50%;">
-            </div>
-            <div>
-                <div class="chat-popup-title">Veloura Jewels</div>
-                <div class="chat-popup-subtitle">Typically replies in minutes</div>
-            </div>
-        </div>
-        <button class="chat-popup-close" onclick="toggleChat()">✕</button>
-    </div>
-    <div class="chat-popup-body">
-        <div class="chat-bubble">
-            👋 Hi there! Welcome to Veloura Jewels. How can we help you today?
-        </div>
-        <div class="chat-bubble">
-            Feel free to send us a message or use the contact form below.
-        </div>
-    </div>
-    <div class="chat-popup-footer">
-        <a href="<?= $this->Url->build(['controller' => 'ContactSubmissions', 'action' => 'add']) ?>" class="chat-contact-btn">Contact Form</a>
-        <a href="mailto:veloura.jewels@gmail.com" class="chat-email-btn">Send Email</a>
-    </div>
-</div>
 
 <script>
     var turnstileMessageBlock = document.querySelector('#turnstile-message');
@@ -158,7 +121,4 @@ $this->Html->meta([
         actionButton.setAttribute('disabled', 'disabled');
     }
 
-    function toggleChat() {
-        document.getElementById('chatPopup').classList.toggle('open');
-    }
 </script>

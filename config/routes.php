@@ -84,6 +84,9 @@ return function (RouteBuilder $routes): void {
         //Logout Route
         $builder->connect('/logout', ['controller' => 'Users', 'action' => 'logout']);
 
+        //Chat bot Route
+        $builder->connect('/chat/message', ['controller' => 'Chat', 'action' => 'message']);
+
         $builder->fallbacks();
     });
 
