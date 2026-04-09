@@ -223,8 +223,8 @@ class JewelryController extends AppController
         $sessionParams = [
             'mode' => 'payment',
             'line_items' => $lineItems,
-            'success_url' => $this->request->scheme() . '://' . $this->request->host() . '/veloura_jewels/jewelry/success?session_id={CHECKOUT_SESSION_ID}',
-            'cancel_url' => $this->request->scheme() . '://' . $this->request->host() . '/veloura_jewels/jewelry/cancel',
+            'success_url' => $this->request->scheme() . '://' . $this->request->host() . $this->Url->build(['controller' => 'Jewelry', 'action' => 'success', '?' => ['session_id' => '{CHECKOUT_SESSION_ID}']]),
+            'cancel_url' => $this->request->scheme() . '://' . $this->request->host() . $this->Url->build(['controller' => 'Jewelry', 'action' => 'cancel']),
             'metadata' => ['order_id' => (string)$order->id],
         ];
 
