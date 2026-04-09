@@ -223,8 +223,8 @@ class JewelryController extends AppController
         $sessionParams = [
             'mode' => 'payment',
             'line_items' => $lineItems,
-            'success_url' => Router::url(['controller' => 'Jewelry', 'action' => 'success', '?' => ['session_id' => '{CHECKOUT_SESSION_ID}']], true),
-            'cancel_url' => Router::url(['controller' => 'Jewelry', 'action' => 'cancel'], true),
+            'success_url' => $this->request->scheme() . '://' . $this->request->host() . $this->Url->build(['controller' => 'Jewelry', 'action' => 'success', '?' => ['session_id' => '{CHECKOUT_SESSION_ID}']]),
+            'cancel_url' => $this->request->scheme() . '://' . $this->request->host() . $this->Url->build(['controller' => 'Jewelry', 'action' => 'cancel']),
             'metadata' => ['order_id' => (string)$order->id],
         ];
 
