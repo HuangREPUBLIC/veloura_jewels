@@ -491,6 +491,7 @@
 .jewelry-page .summary-actions {
     display: flex;
     flex-direction: column;
+    gap: 0.8rem;
 }
 
 .jewelry-page .jewelry-cart-link {
@@ -675,12 +676,134 @@
     background: #5a5029;
 }
 
-.jewelry-page button.jewelry-cart-primary-btn {
-    width: 100%;
-    border: 2px solid #786C3B;
+/* ===== Filter Bar ===== */
+.jewelry-page .jewelry-filter-bar {
+    margin-bottom: 2rem;
+    padding: 1.2rem 1.4rem;
+    background: #fff;
+    border: 1px solid #ececec;
+    border-radius: 14px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+.jewelry-page .jewelry-filter-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.2rem;
+    align-items: flex-end;
+}
+
+.jewelry-page .filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.jewelry-page .filter-label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+.jewelry-page .filter-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+}
+
+.jewelry-page .filter-tag {
+    display: inline-block;
+    padding: 0.35rem 0.9rem;
+    border: 1.5px solid #d8d8d8;
+    border-radius: 999px;
+    font-size: 0.88rem;
+    color: #555;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.jewelry-page .filter-tag:hover {
+    border-color: #786C3B;
+    color: #786C3B;
+}
+
+.jewelry-page .filter-tag.active {
+    background: #786C3B;
+    border-color: #786C3B;
+    color: #fff;
+}
+
+.jewelry-page .filter-group-price {
+    margin-left: auto;
+}
+
+.jewelry-page .filter-price-inputs {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.jewelry-page .price-prefix {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.jewelry-page .price-sep {
+    color: #aaa;
+    font-size: 0.9rem;
+}
+
+.jewelry-page .price-input {
+    width: 80px;
+    height: 36px;
+    padding: 0 0.6rem;
+    border: 1.5px solid #d8d8d8;
+    border-radius: 8px;
+    font-size: 0.9rem;
     box-sizing: border-box;
+    outline: none;
+}
+
+.jewelry-page .price-input:focus {
+    border-color: #786C3B;
+}
+
+.jewelry-page .filter-apply-btn {
+    height: 36px;
+    padding: 0 1rem;
+    background: #786C3B;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.88rem;
+    font-weight: 600;
     cursor: pointer;
-    font-size: 0.95rem;
-    appearance: none;
-    -webkit-appearance: none;
+    transition: background 0.2s ease;
+}
+
+.jewelry-page .filter-apply-btn:hover {
+    background: #5a5029;
+}
+
+.jewelry-page .filter-clear-btn {
+    font-size: 0.85rem;
+    color: #999;
+    text-decoration: none;
+    padding: 0 0.4rem;
+}
+
+.jewelry-page .filter-clear-btn:hover {
+    color: #c0392b;
+}
+
+@media (max-width: 768px) {
+    .jewelry-page .jewelry-filter-form {
+        flex-direction: column;
+    }
+    .jewelry-page .filter-group-price {
+        margin-left: 0;
+    }
 }

@@ -44,12 +44,34 @@ class JewelryController extends AppController
 
     public function index()
     {
-        $products = $this->Products->find()
-            ->contain(['ProductImages'])
-            ->orderBy(['Products.id' => 'DESC'])
-            ->all();
+        $categoriesTable = $this->fetchTable('Categories');
+        $categories = $categoriesTable->find()->orderBy(['name' => 'ASC'])->all();
 
-        $this->set(compact('products'));
+        $categoryId = (int)$this->request->getQuery('category');
+        $minPrice   = $this->request->getQuery('min_price');
+        $maxPrice   = $this->request->getQuery('max_price');
+
+        $query = $this->Products->find()
+            ->contain(['ProductImages'])
+            ->orderBy(['Products.id' => 'DESC']);
+
+        if ($categoryId > 0) {
+            $query->matching('Categories', function ($q) use ($categoryId) {
+                return $q->where(['Categories.id' => $categoryId]);
+            });
+        }
+
+        if ($minPrice !== null && $minPrice !== '') {
+            $query->where(['Products.sale_price >=' => (float)$minPrice]);
+        }
+
+        if ($maxPrice !== null && $maxPrice !== '') {
+            $query->where(['Products.sale_price <=' => (float)$maxPrice]);
+        }
+
+        $products = $query->all();
+
+        $this->set(compact('products', 'categories', 'categoryId', 'minPrice', 'maxPrice'));
     }
 
     public function view($id = null)

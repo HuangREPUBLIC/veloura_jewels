@@ -26,10 +26,6 @@ DROP TABLE IF EXISTS `users`;
 
 SET FOREIGN_KEY_CHECKS = 1;
 
--- --------------------------------------------------------
--- Table structure
--- --------------------------------------------------------
-
 CREATE TABLE `categories` (
                               `id` int(11) NOT NULL AUTO_INCREMENT,
                               `name` varchar(64) NOT NULL,
@@ -152,9 +148,9 @@ INSERT INTO `users` (`id`, `email`, `password`, `nonce`, `nonce_expiry`, `create
 -- Data: contact_submissions
 -- --------------------------------------------------------
 INSERT INTO `contact_submissions` (`id`, `first_name`, `last_name`, `email`, `subject`, `message`, `captcha_passed`, `is_replied`, `created`, `modified`) VALUES
-                                                                                                                                                              (1, 'Jialin', 'Wu',   'jialinwu.island@gmail.com', '',                      '1',                            0, 1, '2026-03-20 02:40:43', '2026-03-24 06:32:52'),
-                                                                                                                                                              (3, '11',     '11',   '11@1.com',                  '',                      '1wassadsad',                   0, 0, '2026-03-20 02:44:25', '2026-03-20 02:44:25'),
-                                                                                                                                                              (4, 'Hey',    'Test', 'Testing@mail.com',           'This is a test subject','I want to test the subject',   0, 0, '2026-03-24 06:23:08', '2026-03-24 06:23:08');
+                                                                                                                                                              (1, 'Jialin', 'Wu',   'jialinwu.island@gmail.com', '',                       '1',                           0, 1, '2026-03-20 02:40:43', '2026-03-24 06:32:52'),
+                                                                                                                                                              (3, '11',     '11',   '11@1.com',                  '',                       '1wassadsad',                  0, 0, '2026-03-20 02:44:25', '2026-03-20 02:44:25'),
+                                                                                                                                                              (4, 'Hey',    'Test', 'Testing@mail.com',           'This is a test subject', 'I want to test the subject',  0, 0, '2026-03-24 06:23:08', '2026-03-24 06:23:08');
 
 -- --------------------------------------------------------
 -- Data: contact_replies
@@ -208,6 +204,31 @@ INSERT INTO `categories_products` (`id`, `category_id`, `product_id`) VALUES
                                                                           (11, 3, 11), (12, 3, 12), (13, 3, 13), (14, 3, 14),
                                                                           (15, 4, 15), (16, 4, 16), (17, 4, 17), (18, 4, 18),
                                                                           (19, 5, 19), (20, 5, 20);
+
+-- --------------------------------------------------------
+-- Data: product_images
+-- --------------------------------------------------------
+INSERT INTO `product_images` (`id`, `product_id`, `filename`) VALUES
+                                                                  (1,  1,  'diamond_solitaire_ring.png'),
+                                                                  (2,  2,  'rose_gold_twisted_band.png'),
+                                                                  (3,  3,  'emerald_halo_ring.png'),
+                                                                  (4,  4,  'sapphire_three_stone_ring.png'),
+                                                                  (5,  5,  'pearl_cocktail_ring.png'),
+                                                                  (6,  6,  'diamond_tennis_necklace.png'),
+                                                                  (7,  7,  'gold_lariat_necklace.png'),
+                                                                  (8,  8,  'amethyst_pendant_necklace.png'),
+                                                                  (9,  9,  'pearl_strand_necklace.png'),
+                                                                  (10, 10, 'ruby_heart_pendant.png'),
+                                                                  (11, 11, 'diamond_stud_earrings.png'),
+                                                                  (12, 12, 'gold_hoop_earrings.png'),
+                                                                  (13, 13, 'chandelier_drop_earrings.png'),
+                                                                  (14, 14, 'pearl_drop_earrings.png'),
+                                                                  (15, 15, 'gold_tennis_bracelet.png'),
+                                                                  (16, 16, 'charm_bracelet.png'),
+                                                                  (17, 17, 'amethyst_bangle.png'),
+                                                                  (18, 18, 'pearl_wrap_bracelet.png'),
+                                                                  (19, 19, 'butterfly_brooch.png'),
+                                                                  (20, 20, 'floral_gold_brooch.png');
 
 COMMIT;
 
