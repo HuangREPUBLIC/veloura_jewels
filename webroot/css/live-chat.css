@@ -93,6 +93,7 @@
 /* Header */
 .chat-popup-header {
     background: #786C3B;
+    font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;
     color: #fff;
     padding: 1rem 1.2rem;
     display: flex;
@@ -148,6 +149,7 @@
 
 /* Messages area */
 .chat-popup-body {
+    font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;
     padding: 1rem;
     background: #f9f7f2;
     flex: 1;
@@ -196,6 +198,7 @@
 /* Input area */
 .chat-popup-input-area {
     display: flex;
+    font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;
     align-items: center;
     gap: 0.5rem;
     padding: 0.75rem 0.9rem;
