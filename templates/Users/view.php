@@ -7,7 +7,7 @@ $this->assign('title', 'View User');
 ?>
 <?php $this->Html->css('admincontact', ['block' => true]); ?>
 
-<div class="submissions-wrapper">
+<div class="admin-wrapper">
     <div class="users view content">
         <h3><?= h($user->email) ?></h3>
 

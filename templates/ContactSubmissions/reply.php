@@ -7,15 +7,15 @@ $this->assign('title', 'Reply to Enquiry');
 ?>
 <?php $this->Html->css('admincontact', ['block' => true]); ?>
 
-<div class="submissions-wrapper">
-    <div class="contactSubmissions form content">
+<div class="login-page">
+    <div class="users form content login-card--wide">
         <h3><?= __('Reply to Enquiry') ?></h3>
 
-        <div class ="action-buttons">
+        <div class="action-buttons">
             <?= $this->Html->link(__('← Back to Submissions'), ['action' => 'index']) ?>
         </div>
 
-        <table style="margin-bottom: 1.5rem;">
+        <table class="reply-context-table">
             <tr>
                 <th><?= __('Name') ?></th>
                 <td><?= h($contactSubmission->first_name . ' ' . $contactSubmission->last_name) ?></td>
@@ -33,18 +33,18 @@ $this->assign('title', 'Reply to Enquiry');
         <?= $this->Form->create() ?>
         <fieldset>
             <?= $this->Form->control('subject', [
-                'label' => 'Subject',
+                'label'    => 'Subject',
                 'required' => true,
-                'value' => 'Re: ' . $contactSubmission->subject
+                'value'    => 'Re: ' . $contactSubmission->subject,
             ]) ?>
             <?= $this->Form->control('message', [
-                'type' => 'textarea',
-                'label' => 'Message',
+                'type'     => 'textarea',
+                'label'    => 'Message',
                 'required' => true,
-                'value' => 'Hi ' . $contactSubmission->first_name . ','
+                'value'    => 'Hi ' . $contactSubmission->first_name . ',',
             ]) ?>
         </fieldset>
-        <?= $this->Form->button(__('Send Reply')) ?>
+        <?= $this->Form->button(__('Send Reply'), ['class' => 'login-button']) ?>
         <?= $this->Form->end() ?>
     </div>
 </div>

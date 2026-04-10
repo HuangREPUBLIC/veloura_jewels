@@ -7,7 +7,7 @@ $this->assign('title', 'Orders');
 ?>
 <?php $this->Html->css('admincontact', ['block' => true]); ?>
 
-<div class="submissions-wrapper">
+<div class="admin-wrapper">
     <div class="orders index content">
         <?= $this->Html->link(__('← Back'), ['controller' => 'Users', 'action' => 'dashboard']) ?>
 
@@ -26,7 +26,6 @@ $this->assign('title', 'Orders');
                     <th class="actions"><?= __('Actions') ?></th>
                 </tr>
                 </thead>
-
                 <tbody>
                 <?php foreach ($orders as $order): ?>
                     <tr>
@@ -34,14 +33,14 @@ $this->assign('title', 'Orders');
                         <td><?= h($order->customer_email) ?></td>
                         <td>
                             <?php
-                            $statusColors = [
-                                'paid' => 'color:green;font-weight:600;',
-                                'pending' => 'color:#b7860b;font-weight:600;',
-                                'cancelled' => 'color:#c0392b;font-weight:600;',
+                            $statusClass = [
+                                'paid'      => 'status-paid',
+                                'pending'   => 'status-pending',
+                                'cancelled' => 'status-cancelled',
                             ];
-                            $style = $statusColors[$order->status] ?? '';
+                            $cls = $statusClass[$order->status] ?? '';
                             ?>
-                            <span style="<?= $style ?>"><?= h(ucfirst($order->status)) ?></span>
+                            <span class="<?= $cls ?>"><?= h(ucfirst($order->status)) ?></span>
                         </td>
                         <td>$<?= number_format((float)$order->total_amount, 2) ?></td>
                         <td><?= strtoupper(h($order->currency)) ?></td>
@@ -65,12 +64,7 @@ $this->assign('title', 'Orders');
                 lengthMenu: '_MENU_ Entries Per Page',
                 search: 'Search:'
             },
-            columnDefs: [
-                {
-                    targets: [0, 1, 2, 3, 4, 5],
-                    searchable: true
-                }
-            ]
+            columnDefs: [{ targets: [0, 1, 2, 3, 4, 5], searchable: true }]
         });
     });
 </script>

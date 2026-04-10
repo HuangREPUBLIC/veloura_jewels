@@ -18,7 +18,7 @@ $this->assign('title', 'Forget Password');
 
             <?= $this->Flash->render() ?>
 
-            <p style="font-size: 0.95rem; color: #555; margin-bottom: 1.2rem;">
+            <p class="form-hint">
                 Enter your email address registered with our system below to reset your password.
             </p>
 

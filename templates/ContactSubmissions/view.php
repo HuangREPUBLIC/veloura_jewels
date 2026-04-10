@@ -7,7 +7,7 @@ $this->assign('title', 'View Submission');
 ?>
 <?php $this->Html->css('admincontact', ['block' => true]); ?>
 
-<div class="submissions-view-wrapper">
+<div class="admin-wrapper">
     <div class="contactSubmissions view content">
         <h3><?= h($contactSubmission->first_name . ' ' . $contactSubmission->last_name) ?></h3>
 
@@ -19,7 +19,7 @@ $this->assign('title', 'View Submission');
                 ['action' => 'delete', $contactSubmission->id],
                 [
                     'confirm' => __('Are you sure you want to delete # {0}?', $contactSubmission->id),
-                    'class' => 'btn-delete'
+                    'class'   => 'btn-delete',
                 ]
             ) ?>
         </div>
@@ -43,8 +43,8 @@ $this->assign('title', 'View Submission');
             </tr>
         </table>
 
-        <div style="margin: 1.5rem 0;">
-            <div class="action-buttons" style="margin-bottom: 0.5rem;">
+        <div class="submission-message-block">
+            <div class="submission-message-header">
                 <strong><?= __('Message') ?></strong>
                 <?= $this->Html->link(__('Reply →'), ['action' => 'reply', $contactSubmission->id]) ?>
             </div>
@@ -53,8 +53,8 @@ $this->assign('title', 'View Submission');
             </div>
         </div>
 
-        <h4><?= __('Replies') ?></h4>
         <?php if (!empty($contactSubmission->contact_replies)): ?>
+            <h4><?= __('Replies') ?></h4>
             <table>
                 <thead>
                 <tr>
@@ -74,7 +74,7 @@ $this->assign('title', 'View Submission');
                 </tbody>
             </table>
         <?php else: ?>
-            <p style="color: #999;"><?= __('No replies sent yet.') ?></p>
+            <p class="text-muted"><?= __('No replies sent yet.') ?></p>
         <?php endif; ?>
     </div>
 </div>

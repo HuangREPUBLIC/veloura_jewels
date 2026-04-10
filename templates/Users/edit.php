@@ -4,12 +4,13 @@
  * @var \App\Model\Entity\User $user
  */
 ?>
+<?php $this->Html->css('admincontact', ['block' => true]); ?>
+
 <div class="login-page">
     <div class="users form content">
         <?= $this->Html->link(__('← Back'), ['action' => 'index']) ?>
 
         <?= $this->Form->create($user) ?>
-
         <fieldset>
             <legend><?= __('Edit User') ?></legend>
 
@@ -17,7 +18,7 @@
 
             <?php
             echo $this->Form->control('email', [
-                'label' => 'Email',
+                'label'    => 'Email',
                 'required' => true,
                 'disabled' => true,
             ]);
@@ -27,26 +28,26 @@
 
             if ($role === 'admin') {
                 echo $this->Form->control('role', [
-                    'type' => 'select',
+                    'type'    => 'select',
                     'options' => [
-                        'admin' => 'Admin',
+                        'admin'     => 'Admin',
                         'full_time' => 'Full-time Staff',
                         'part_time' => 'Part-time Staff',
-                        'customer' => 'Customer',
+                        'customer'  => 'Customer',
                     ],
-                    'label' => 'Role',
-                    'required' => true
+                    'label'    => 'Role',
+                    'required' => true,
                 ]);
             } elseif ($role === 'full_time') {
                 echo $this->Form->control('role', [
-                    'type' => 'select',
+                    'type'    => 'select',
                     'options' => [
                         'full_time' => 'Full-time Staff',
                         'part_time' => 'Part-time Staff',
-                        'customer' => 'Customer',
+                        'customer'  => 'Customer',
                     ],
-                    'label' => 'Role',
-                    'required' => true
+                    'label'    => 'Role',
+                    'required' => true,
                 ]);
             }
             ?>
@@ -54,7 +55,5 @@
 
         <?= $this->Form->button(__('Save'), ['class' => 'login-button']) ?>
         <?= $this->Form->end() ?>
-
-
     </div>
 </div>

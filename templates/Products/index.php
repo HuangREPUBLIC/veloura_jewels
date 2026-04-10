@@ -3,14 +3,13 @@
  * @var \App\View\AppView $this
  * @var iterable<\App\Model\Entity\Product> $products
  */
-$this->assign('title', 'products');
+$this->assign('title', 'Products');
 ?>
-
 <?php $this->Html->css('admincontact', ['block' => true]); ?>
 
 <?php $role = $this->request->getAttribute('identity')->get('role'); ?>
 
-<div class="submissions-wrapper">
+<div class="admin-wrapper">
     <div class="products index content">
         <?= $this->Html->link(__('← Back'), ['controller' => 'Users', 'action' => 'dashboard']) ?>
 
@@ -35,7 +34,6 @@ $this->assign('title', 'products');
                     <th class="actions"><?= __('Actions') ?></th>
                 </tr>
                 </thead>
-
                 <tbody>
                 <?php foreach ($products as $product): ?>
                     <tr>
@@ -43,17 +41,13 @@ $this->assign('title', 'products');
                         <td><?= h($product->name) ?></td>
                         <td><?= $this->Number->format($product->purchase_price) ?></td>
                         <td><?= $this->Number->format($product->sale_price) ?></td>
-
                         <td>
                             <?php if ($product->stock < 5): ?>
-                                <span style="color:red;font-weight:600;">
-                                    <?= $product->stock ?>
-                                </span>
+                                <span class="stock-low"><?= $product->stock ?></span>
                             <?php else: ?>
                                 <?= $product->stock ?>
                             <?php endif; ?>
                         </td>
-
                         <td>
                             <?php
                             if (!empty($product->categories)) {
@@ -63,9 +57,7 @@ $this->assign('title', 'products');
                             }
                             ?>
                         </td>
-
                         <td><?= h($product->supplier_email) ?></td>
-
                         <td class="actions">
                             <?= $this->Html->link(__('View'), ['action' => 'view', $product->id]) ?>
 
@@ -78,8 +70,9 @@ $this->assign('title', 'products');
                                     __('Delete'),
                                     ['action' => 'delete', $product->id],
                                     [
-                                        'method' => 'delete',
+                                        'method'  => 'delete',
                                         'confirm' => __('Are you sure you want to delete # {0}?', $product->id),
+                                        'class'   => 'btn-delete',
                                     ]
                                 ) ?>
                             <?php endif; ?>
@@ -100,12 +93,7 @@ $this->assign('title', 'products');
                 lengthMenu: '_MENU_ Entries Per Page',
                 search: 'Search:'
             },
-            columnDefs: [
-                {
-                    targets: [0, 1, 2, 3],
-                    searchable: true
-                }
-            ]
+            columnDefs: [{ targets: [0, 1, 2, 3], searchable: true }]
         });
     });
 </script>

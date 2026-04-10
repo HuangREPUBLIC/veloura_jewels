@@ -5,17 +5,15 @@
  */
 $this->assign('title', 'Contact Submissions');
 ?>
-
 <?php $this->Html->css('admincontact', ['block' => true]); ?>
 
-<div class="submissions-wrapper">
+<div class="admin-wrapper">
     <div class="contactSubmissions index content">
-        <?= $this->Html->link(__('← Back'), ['controller' => 'Users','action' => 'dashboard'], ['class' => 'action-buttons-inline']) ?>
+        <?= $this->Html->link(__('← Back'), ['controller' => 'Users', 'action' => 'dashboard']) ?>
         <h3 class="page-title"><?= __('Contact Submissions') ?></h3>
 
         <div class="table-responsive" id="datatable" style="padding: 10px">
             <table id="contactFormsTable" class="display">
-
                 <thead>
                 <tr>
                     <th><?= __('Details') ?></th>
@@ -38,9 +36,9 @@ $this->assign('title', 'Contact Submissions');
                             <td><?= h($contactSubmission->created) ?></td>
                             <td>
                                 <?php if ($contactSubmission->is_replied): ?>
-                                    <span style="color: green;">Yes</span>
+                                    <span class="replied-yes">Yes</span>
                                 <?php else: ?>
-                                    <span style="color: #999;">No</span>
+                                    <span class="replied-no">No</span>
                                 <?php endif; ?>
                             </td>
                             <td class="actions">
@@ -49,8 +47,9 @@ $this->assign('title', 'Contact Submissions');
                                     __('Delete'),
                                     ['action' => 'delete', $contactSubmission->id],
                                     [
-                                        'method' => 'delete',
+                                        'method'  => 'delete',
                                         'confirm' => __('Are you sure you want to delete # {0}?', $contactSubmission->id),
+                                        'class'   => 'btn-delete',
                                     ]
                                 ) ?>
                             </td>
@@ -65,7 +64,6 @@ $this->assign('title', 'Contact Submissions');
             </table>
         </div>
     </div>
-
 </div>
 
 <script>
@@ -76,14 +74,7 @@ $this->assign('title', 'Contact Submissions');
                 lengthMenu: '_MENU_ Entries Per Page',
                 search: 'Search:'
             },
-            columnDefs: [
-                {
-                    targets: [0, 1, 2, 3],
-                    searchable: true
-                }
-            ]
+            columnDefs: [{ targets: [0, 1, 2, 3], searchable: true }]
         });
     });
 </script>
-
-

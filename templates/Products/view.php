@@ -7,7 +7,7 @@ $this->assign('title', 'View Product');
 ?>
 <?php $this->Html->css('admincontact', ['block' => true]); ?>
 
-<div class="submissions-wrapper">
+<div class="admin-wrapper">
     <div class="products view content">
         <h3><?= h($product->name) ?></h3>
 
@@ -29,7 +29,7 @@ $this->assign('title', 'View Product');
                     ['action' => 'delete', $product->id],
                     [
                         'confirm' => __('Are you sure you want to delete # {0}?', $product->id),
-                        'class' => 'btn-delete'
+                        'class'   => 'btn-delete',
                     ]
                 ) ?>
             <?php endif; ?>
@@ -60,9 +60,7 @@ $this->assign('title', 'View Product');
                 <th><?= __('Stock') ?></th>
                 <td>
                     <?php if ($product->stock < 5): ?>
-                        <span style="color:red;font-weight:600;">
-                            <?= $product->stock ?>
-                        </span>
+                        <span class="stock-low"><?= $product->stock ?></span>
                     <?php else: ?>
                         <?= $product->stock ?>
                     <?php endif; ?>

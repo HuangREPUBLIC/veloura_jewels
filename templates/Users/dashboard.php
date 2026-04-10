@@ -1,7 +1,7 @@
 <?php
 /**
  * @var \App\View\AppView $this
- * @var \Authentication\Identity $authUser *
+ * @var \Authentication\Identity $authUser
  * @var int $totalProducts
  * @var int $totalUsers
  * @var int $totalEnquiries
@@ -12,116 +12,144 @@ $this->assign('title', 'Admin Dashboard');
 ?>
 <?php $this->Html->css('admincontact', ['block' => true]); ?>
 
-
 <div class="admin-wrapper">
-<div class="admin-dashboard">
-    <div class="dashboard-hero">
-        <h1>Admin Dashboard</h1>
-        <p>Welcome, <?= h($authUser->email) ?></p>
-    </div>
-    <div class="dashboard-summary" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:20px;margin:30px 0;">
-        <a href="<?= $this->Url->build(['controller' => 'Products', 'action' => 'index']) ?>" class="dashboard-card">
-            <div class="dashboard-icon">💎</div>
-            <div class="dashboard-content">
-                <h3>Total Products</h3>
-                <p><?= $totalProducts ?></p>
-            </div>
-        </a>
+    <div class="admin-dashboard">
 
-        <a href="<?= $this->Url->build(['controller' => 'Users', 'action' => 'index']) ?>" class="dashboard-card">
-            <div class="dashboard-icon">👤</div>
-            <div class="dashboard-content">
-                <h3>Total Users</h3>
-                <p><?= $totalUsers ?></p>
-            </div>
-        </a>
 
-        <a href="<?= $this->Url->build(['controller' => 'ContactSubmissions', 'action' => 'index']) ?>" class="dashboard-card">
-            <div class="dashboard-icon">📩</div>
-            <div class="dashboard-content">
-                <h3>Total Enquiries</h3>
-                <p><?= $totalEnquiries ?></p>
-            </div>
-        </a>
-        <a href="<?= $this->Url->build(['controller' => 'Orders', 'action' => 'index']) ?>" class="dashboard-card">
-            <div class="dashboard-icon">📦</div>
-            <div class="dashboard-content">
-                <h3>Total Orders</h3>
-                <p><?= $totalOrders ?></p>
-            </div>
-        </a>
-    </div>
-    <?php if (!$lowStockProducts->isEmpty()): ?>
-        <div class="low-stock-warning" style="margin:20px 0;padding:20px;background:#fff3cd;border:1px solid #ead28b;border-radius:12px;">
-
-            <h3 style="margin:0 0 8px 0;font-size:1.2rem;">
-                ⚠ Low Stock Products
-            </h3>
-
-            <p style="margin:0 0 15px 0;font-size:0.9rem;color:#5f6b7a;">
-                These products are running low and may need restocking soon.
-            </p>
-
-            <div style="display:grid;gap:12px;">
-                <?php foreach ($lowStockProducts as $product): ?>
-                    <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:#fff;border:1px solid #f1d98c;border-radius:10px;">
-
-                        <div style="font-weight:600;color:#4b5563;">
-                            <?= h($product->name) ?>
-                        </div>
-
-                        <div style="display:flex;align-items:center;gap:12px;">
-
-                        <span style="font-weight:700;color:#d32f2f;">
-                            Stock: <?= $product->stock ?>
-                        </span>
-
-                            <?= $this->Html->link(
-                                'Restock',
-                                ['controller' => 'Products', 'action' => 'edit', $product->id],
-                                [
-                                    'style' => 'padding:6px 12px;background:#d32f2f;color:white;border-radius:6px;font-size:0.8rem;text-decoration:none;'
-                                ]
-                            ) ?>
-
-                        </div>
-                    </div>
-                <?php endforeach; ?>
-            </div>
+        <div class="dashboard-hero">
+            <h1>Admin Dashboard</h1>
+            <p>Welcome, <?= h($authUser->email) ?></p>
         </div>
-    <?php endif; ?>
 
-    <div class="dashboard-grid">
 
-        <a href="<?= $this->Url->build(['controller' => 'ContactSubmissions', 'action' => 'index']) ?>" class="dashboard-card">
-            <div class="dashboard-icon">📩</div>
-            <div class="dashboard-content">
-                <h3>Contact Submissions</h3>
-                <p>View and respond to customer enquiries.</p>
-            </div>
-        </a>
+        <div class="dashboard-summary">
+            <a href="<?= $this->Url->build(['controller' => 'Products', 'action' => 'index']) ?>" class="dashboard-card">
+                <div class="dashboard-icon">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#786c3b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/>
+                    </svg>
+                </div>
+                <div class="dashboard-content">
+                    <h3>Total Products</h3>
+                    <p><?= $totalProducts ?></p>
+                </div>
+            </a>
 
-        <a href="<?= $this->Url->build(['controller' => 'Users', 'action' => 'index']) ?>" class="dashboard-card">
-            <div class="dashboard-icon">👤</div>
-            <div class="dashboard-content">
-                <h3>Users</h3>
-                <p>Manage system users and permissions.</p>
+            <a href="<?= $this->Url->build(['controller' => 'Users', 'action' => 'index']) ?>" class="dashboard-card">
+                <div class="dashboard-icon">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#786c3b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+                    </svg>
+                </div>
+                <div class="dashboard-content">
+                    <h3>Total Users</h3>
+                    <p><?= $totalUsers ?></p>
+                </div>
+            </a>
+
+            <a href="<?= $this->Url->build(['controller' => 'ContactSubmissions', 'action' => 'index']) ?>" class="dashboard-card">
+                <div class="dashboard-icon">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#786c3b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>
+                    </svg>
+                </div>
+                <div class="dashboard-content">
+                    <h3>Total Enquiries</h3>
+                    <p><?= $totalEnquiries ?></p>
+                </div>
+            </a>
+
+            <a href="<?= $this->Url->build(['controller' => 'Orders', 'action' => 'index']) ?>" class="dashboard-card">
+                <div class="dashboard-icon">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#786c3b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/>
+                    </svg>
+                </div>
+                <div class="dashboard-content">
+                    <h3>Total Orders</h3>
+                    <p><?= $totalOrders ?></p>
+                </div>
+            </a>
+        </div>
+
+
+        <?php if (!$lowStockProducts->isEmpty()): ?>
+            <div class="low-stock-warning">
+                <h3>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:6px;">
+                        <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+                    </svg>
+                    Low Stock Products
+                </h3>
+                <p>These products are running low and may need restocking soon.</p>
+                <div class="low-stock-list">
+                    <?php foreach ($lowStockProducts as $product): ?>
+                        <div class="low-stock-row">
+                            <span class="low-stock-name"><?= h($product->name) ?></span>
+                            <div class="low-stock-actions">
+                                <span class="low-stock-badge">Stock: <?= $product->stock ?></span>
+                                <?= $this->Html->link(
+                                    'Restock',
+                                    ['controller' => 'Products', 'action' => 'edit', $product->id],
+                                    ['class' => 'low-stock-btn']
+                                ) ?>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
             </div>
-        </a>
-        <a href="<?= $this->Url->build(['controller' => 'Products', 'action' => 'index']) ?>" class="dashboard-card">
-            <div class="dashboard-icon">💎</div>
-            <div class="dashboard-content">
-                <h3>Manage products</h3>
-                <p>Add, update, and delete product listings.</p>
-            </div>
-        </a>
-        <a href="<?= $this->Url->build(['controller' => 'Orders', 'action' => 'index']) ?>" class="dashboard-card">
-            <div class="dashboard-icon">📦</div>
-            <div class="dashboard-content">
-                <h3>Manage Orders</h3>
-                <p>View and manage customer orders.</p>
-            </div>
-        </a>
+        <?php endif; ?>
+
+
+        <div class="dashboard-grid">
+            <a href="<?= $this->Url->build(['controller' => 'ContactSubmissions', 'action' => 'index']) ?>" class="dashboard-card">
+                <div class="dashboard-icon">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#786c3b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>
+                    </svg>
+                </div>
+                <div class="dashboard-content">
+                    <h3>Contact Submissions</h3>
+                    <p>View and respond to customer enquiries.</p>
+                </div>
+            </a>
+
+            <a href="<?= $this->Url->build(['controller' => 'Users', 'action' => 'index']) ?>" class="dashboard-card">
+                <div class="dashboard-icon">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#786c3b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                    </svg>
+                </div>
+                <div class="dashboard-content">
+                    <h3>Users</h3>
+                    <p>Manage system users and permissions.</p>
+                </div>
+            </a>
+
+            <a href="<?= $this->Url->build(['controller' => 'Products', 'action' => 'index']) ?>" class="dashboard-card">
+                <div class="dashboard-icon">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#786c3b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/>
+                    </svg>
+                </div>
+                <div class="dashboard-content">
+                    <h3>Manage Products</h3>
+                    <p>Add, update, and delete product listings.</p>
+                </div>
+            </a>
+
+            <a href="<?= $this->Url->build(['controller' => 'Orders', 'action' => 'index']) ?>" class="dashboard-card">
+                <div class="dashboard-icon">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#786c3b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/>
+                    </svg>
+                </div>
+                <div class="dashboard-content">
+                    <h3>Manage Orders</h3>
+                    <p>View and manage customer orders.</p>
+                </div>
+            </a>
+        </div>
 
     </div>
-
+</div>

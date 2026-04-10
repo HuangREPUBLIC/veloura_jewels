@@ -10,14 +10,20 @@
 }
 
 .jewelry-page .jewelry-hero h1 {
-    font-size: 2.2rem;
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 3rem;
+    font-weight: 400;
+    letter-spacing: 0.04em;
     margin-bottom: 0.6rem;
-    color: #1f1f1f;
+    color: #1c1c1a;
 }
 
 .jewelry-page .jewelry-hero p {
-    color: #666;
-    font-size: 1rem;
+    font-family: 'Jost', sans-serif;
+    color: #777;
+    font-size: 0.88rem;
+    font-weight: 400;
+    letter-spacing: 0.06em;
     margin: 0;
 }
 
@@ -49,13 +55,13 @@
     border-radius: 16px;
     overflow: hidden;
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
     height: 100%;
 }
 
 .jewelry-page .product-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+    transform: translateY(-5px);
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.09);
 }
 
 .jewelry-page .product-image-wrapper {
@@ -71,6 +77,11 @@
     height: 100%;
     object-fit: cover;
     display: block;
+    transition: transform 0.4s ease;
+}
+
+.jewelry-page .product-card:hover .product-image {
+    transform: scale(1.04);
 }
 
 .jewelry-page .product-placeholder {
@@ -81,24 +92,31 @@
     justify-content: center;
     background: #f0f0f0;
     color: #9a9a9a;
-    font-size: 0.95rem;
-    letter-spacing: 0.04em;
+    font-size: 0.85rem;
+    letter-spacing: 0.06em;
+    font-family: 'Jost', sans-serif;
 }
 
 .jewelry-page .product-card-body {
-    padding: 1rem 0.75rem 0.75rem;
+    padding: 1.1rem 1rem 0.9rem;
     text-align: left;
 }
 
 .jewelry-page .product-name {
-    font-size: 1.1rem;
-    color: #222;
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 1.25rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    color: #1c1c1a;
     margin: 0 0 0.4rem;
+    line-height: 1.3;
 }
 
 .jewelry-page .product-price {
-    font-size: 1rem;
-    font-weight: 600;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
     color: #8a6d3b;
     margin: 0;
 }
@@ -149,29 +167,38 @@
 }
 
 .jewelry-page .detail-label {
-    font-size: 0.9rem;
-    color: #8a8a8a;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.72rem;
+    color: #9a9a9a;
     text-transform: uppercase;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.14em;
+    font-weight: 500;
     margin-bottom: 0.5rem;
 }
 
 .jewelry-page .detail-name {
-    font-size: 2.2rem;
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 2.5rem;
+    font-weight: 400;
+    letter-spacing: 0.02em;
     margin: 0 0 1rem;
-    color: #1f1f1f;
+    color: #1c1c1a;
+    line-height: 1.15;
 }
 
 .jewelry-page .detail-price {
-    font-size: 1.4rem;
-    font-weight: 700;
+    font-family: 'Jost', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 600;
     color: #8a6d3b;
     margin-bottom: 1rem;
+    letter-spacing: 0.02em;
 }
 
 .jewelry-page .detail-stock {
-    font-size: 0.95rem;
-    color: #555;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.88rem;
+    color: #666;
     margin-bottom: 1.5rem;
 }
 
@@ -180,15 +207,20 @@
 }
 
 .jewelry-page .detail-description h3 {
-    font-size: 1.1rem;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
     margin-bottom: 0.6rem;
-    color: #222;
+    color: #444;
 }
 
 .jewelry-page .detail-description p {
     margin: 0;
     color: #666;
-    line-height: 1.7;
+    line-height: 1.75;
+    font-size: 0.95rem;
 }
 
 .jewelry-page .add-to-cart-form {
@@ -202,7 +234,11 @@
 .jewelry-page .quantity-label {
     display: block;
     margin-bottom: 0.7rem;
+    font-family: 'Jost', sans-serif;
     font-weight: 600;
+    font-size: 0.82rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
     color: #333;
 }
 
@@ -221,7 +257,8 @@
     text-decoration: none;
     border: 1px solid #ccc;
     border-radius: 999px;
-    font-size: 0.95rem;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.88rem;
     transition: all 0.2s ease;
 }
 
@@ -240,9 +277,10 @@
     color: #fff;
     border: none;
     border-radius: 999px;
-    font-size: 1rem;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.8rem;
     font-weight: 700;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
     cursor: pointer;
     transition: all 0.2s ease;
@@ -257,7 +295,6 @@
     transform: translateY(1px);
 }
 
-/* detail quantity */
 .jewelry-page .quantity-group .qty-box {
     display: inline-flex;
     align-items: center;
@@ -295,6 +332,7 @@
     height: 44px;
     min-height: 44px;
     padding: 0.35rem 0.4rem;
+    font-family: 'Jost', sans-serif;
     font-size: 1rem;
     font-weight: 600;
     border: 2px solid #c8c8c8;
@@ -363,16 +401,20 @@
 }
 
 .jewelry-page .cart-item-info h3 {
+    font-family: 'Cormorant Garamond', Georgia, serif;
     margin: 0 0 0.8rem;
-    color: #222;
-    font-size: 1.2rem;
+    color: #1c1c1a;
+    font-size: 1.3rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
 }
 
 .jewelry-page .cart-price,
 .jewelry-page .cart-subtotal {
+    font-family: 'Jost', sans-serif;
     margin: 0 0 0.5rem;
     color: #555;
-    font-size: 0.95rem;
+    font-size: 0.92rem;
 }
 
 .jewelry-page .cart-update-form {
@@ -387,14 +429,15 @@
 }
 
 .jewelry-page .cart-quantity-label {
+    font-family: 'Jost', sans-serif;
     margin: 0;
     min-width: 90px;
     font-weight: 600;
-    font-size: 0.95rem;
+    font-size: 0.88rem;
+    letter-spacing: 0.04em;
     color: #333;
 }
 
-/* cart quantity */
 .jewelry-page .cart-quantity-row .qty-box {
     display: inline-flex;
     align-items: center;
@@ -408,6 +451,7 @@
     min-height: 36px;
     height: 36px;
     padding: 0.3rem 0.4rem;
+    font-family: 'Jost', sans-serif;
     font-size: 0.95rem;
     border: 2px solid #c8c8c8;
     border-radius: 10px;
@@ -447,6 +491,8 @@
     margin-top: auto;
     align-self: flex-end;
     display: inline-block;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.85rem;
     color: #b33a3a;
     text-decoration: none;
     font-weight: 600;
@@ -463,14 +509,16 @@
     padding: 1.6rem;
     box-shadow: 0 10px 24px rgba(0, 0, 0, 0.04);
     position: sticky;
-    top: 2rem;
+    top: 6rem;
 }
 
 .jewelry-page .cart-summary h2 {
+    font-family: 'Cormorant Garamond', Georgia, serif;
     margin: 0 0 1.2rem;
-    font-size: 1.3rem;
-    color: #1f1f1f;
-    font-weight: 700;
+    font-size: 1.5rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    color: #1c1c1a;
 }
 
 .jewelry-page .summary-row {
@@ -480,12 +528,14 @@
     padding-bottom: 1rem;
     margin-bottom: 1rem;
     border-bottom: 1px solid #ececec;
-    font-size: 1rem;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.95rem;
 }
 
 .jewelry-page .summary-row strong {
-    font-size: 1.2rem;
-    color: #1f1f1f;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #1c1c1a;
 }
 
 .jewelry-page .summary-actions {
@@ -495,13 +545,13 @@
 }
 
 .jewelry-page .jewelry-cart-link {
+    font-family: 'Jost', sans-serif;
     text-decoration: none;
     color: #666;
+    font-size: 0.88rem;
 }
 
-.jewelry-page .jewelry-cart-link:hover {
-    text-decoration: underline;
-}
+.jewelry-page .jewelry-cart-link:hover { text-decoration: underline; }
 
 .jewelry-page .jewelry-cart-primary-btn,
 .jewelry-page .jewelry-cart-secondary-btn {
@@ -518,31 +568,34 @@
     border-color: #786C3B;
     color: #fff;
     text-decoration: none;
-    border-radius: 14px;
+    border-radius: 12px;
+    font-family: 'Jost', sans-serif;
     font-weight: 700;
-    letter-spacing: 0.04em;
-    text-transform: none;
+    font-size: 0.82rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
     transition: all 0.2s ease;
 }
 
 .jewelry-page .jewelry-cart-primary-btn:hover {
-    background: #0f0f0f;
+    background: #5a5029;
     color: #fff;
-    border-color: #8a6d3b;
 }
 
 .jewelry-page .jewelry-cart-secondary-btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 0.95rem 1.4rem;
+    padding: 0.85rem 1.4rem;
     background: #fff;
-    color: #222;
+    color: #333;
     text-decoration: none;
     border: 1px solid #d7d7d7;
-    border-radius: 14px;
+    border-radius: 12px;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.88rem;
     transition: all 0.2s ease;
-    margin-top: 0.8rem;
+    margin-top: 0.5rem;
 }
 
 .jewelry-page .jewelry-cart-secondary-btn:hover {
@@ -553,50 +606,31 @@
 .jewelry-page .jewelry-back-link {
     display: inline-block;
     margin-bottom: 1.5rem;
+    font-family: 'Jost', sans-serif;
     color: #786C3B;
     text-decoration: none;
     font-weight: 600;
+    font-size: 0.88rem;
+    letter-spacing: 0.04em;
 }
 
-.jewelry-page .jewelry-back-link:hover {
-    text-decoration: underline;
-}
+.jewelry-page .jewelry-back-link:hover { text-decoration: underline; }
 
 @media (max-width: 900px) {
-    .jewelry-page .product-detail {
-        grid-template-columns: 1fr;
-    }
-
+    .jewelry-page .product-detail { grid-template-columns: 1fr; }
     .jewelry-page .product-detail-image,
     .jewelry-page .detail-image,
     .jewelry-page .detail-placeholder {
         min-height: 380px;
         height: 380px;
     }
-
-    .jewelry-page .cart-layout {
-        grid-template-columns: 1fr;
-    }
-
-    .jewelry-page .cart-item {
-        grid-template-columns: 1fr;
-    }
-
-    .jewelry-page .cart-item-image {
-        height: 240px;
-    }
-
-    .jewelry-page .cart-summary {
-        position: static;
-    }
-
-    .jewelry-page .jewelry-btn-remove {
-        align-self: flex-start;
-        margin-top: 1rem;
-    }
+    .jewelry-page .cart-layout { grid-template-columns: 1fr; }
+    .jewelry-page .cart-item { grid-template-columns: 1fr; }
+    .jewelry-page .cart-item-image { height: 240px; }
+    .jewelry-page .cart-summary { position: static; }
+    .jewelry-page .jewelry-btn-remove { align-self: flex-start; margin-top: 1rem; }
 }
 
-/* ===== Success / Cancel pages ===== */
 .jewelry-page .result-card {
     max-width: 520px;
     margin: 4rem auto;
@@ -607,20 +641,21 @@
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.07);
 }
 
-.jewelry-page .result-icon {
-    font-size: 3.5rem;
-    margin-bottom: 1rem;
-}
+.jewelry-page .result-icon { font-size: 3.5rem; margin-bottom: 1rem; }
 
 .jewelry-page .result-title {
-    font-size: 1.8rem;
-    color: #1f1f1f;
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 2rem;
+    font-weight: 400;
+    color: #1c1c1a;
     margin-bottom: 0.5rem;
+    letter-spacing: 0.02em;
 }
 
 .jewelry-page .result-subtitle {
+    font-family: 'Jost', sans-serif;
     color: #666;
-    font-size: 1rem;
+    font-size: 0.92rem;
     margin-bottom: 1.8rem;
 }
 
@@ -639,23 +674,22 @@
     margin-bottom: 0.5rem;
 }
 
-.jewelry-page .result-order-row:last-child {
-    margin-bottom: 0;
-}
+.jewelry-page .result-order-row:last-child { margin-bottom: 0; }
 
 .jewelry-page .result-order-label {
+    font-family: 'Jost', sans-serif;
     color: #888;
-    font-size: 0.9rem;
+    font-size: 0.88rem;
 }
 
 .jewelry-page .result-order-value {
+    font-family: 'Jost', sans-serif;
     font-weight: 600;
     color: #333;
+    font-size: 0.88rem;
 }
 
-.jewelry-page .result-order-value.status {
-    color: #786C3B;
-}
+.jewelry-page .result-order-value.status { color: #786C3B; }
 
 .jewelry-page .result-btn {
     display: inline-flex;
@@ -666,17 +700,17 @@
     background: #786C3B;
     color: #fff !important;
     border-radius: 12px;
-    font-size: 1rem;
-    font-weight: 600;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
     text-decoration: none !important;
     transition: background 0.2s ease;
 }
 
-.jewelry-page .result-btn:hover {
-    background: #5a5029;
-}
+.jewelry-page .result-btn:hover { background: #5a5029; }
 
-/* ===== Filter Bar ===== */
 .jewelry-page .jewelry-filter-bar {
     margin-bottom: 2rem;
     padding: 1.2rem 1.4rem;
@@ -700,11 +734,12 @@
 }
 
 .jewelry-page .filter-label {
-    font-size: 0.8rem;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.72rem;
     font-weight: 600;
-    color: #888;
+    color: #999;
     text-transform: uppercase;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.1em;
 }
 
 .jewelry-page .filter-options {
@@ -715,11 +750,13 @@
 
 .jewelry-page .filter-tag {
     display: inline-block;
-    padding: 0.35rem 0.9rem;
+    padding: 0.32rem 0.9rem;
     border: 1.5px solid #d8d8d8;
     border-radius: 999px;
-    font-size: 0.88rem;
-    color: #555;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 400;
+    color: #666;
     text-decoration: none;
     transition: all 0.2s ease;
     white-space: nowrap;
@@ -736,9 +773,7 @@
     color: #fff;
 }
 
-.jewelry-page .filter-group-price {
-    margin-left: auto;
-}
+.jewelry-page .filter-group-price { margin-left: auto; }
 
 .jewelry-page .filter-price-inputs {
     display: flex;
@@ -746,14 +781,11 @@
     gap: 0.5rem;
 }
 
-.jewelry-page .price-prefix {
-    font-size: 0.9rem;
-    color: #666;
-}
-
+.jewelry-page .price-prefix,
 .jewelry-page .price-sep {
-    color: #aaa;
-    font-size: 0.9rem;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.88rem;
+    color: #888;
 }
 
 .jewelry-page .price-input {
@@ -762,14 +794,13 @@
     padding: 0 0.6rem;
     border: 1.5px solid #d8d8d8;
     border-radius: 8px;
-    font-size: 0.9rem;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.88rem;
     box-sizing: border-box;
     outline: none;
 }
 
-.jewelry-page .price-input:focus {
-    border-color: #786C3B;
-}
+.jewelry-page .price-input:focus { border-color: #786C3B; }
 
 .jewelry-page .filter-apply-btn {
     height: 36px;
@@ -778,32 +809,64 @@
     color: #fff;
     border: none;
     border-radius: 8px;
-    font-size: 0.88rem;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.82rem;
     font-weight: 600;
     cursor: pointer;
     transition: background 0.2s ease;
 }
 
-.jewelry-page .filter-apply-btn:hover {
-    background: #5a5029;
-}
+.jewelry-page .filter-apply-btn:hover { background: #5a5029; }
 
 .jewelry-page .filter-clear-btn {
-    font-size: 0.85rem;
-    color: #999;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.82rem;
+    color: #aaa;
     text-decoration: none;
     padding: 0 0.4rem;
 }
 
-.jewelry-page .filter-clear-btn:hover {
-    color: #c0392b;
-}
+.jewelry-page .filter-clear-btn:hover { color: #c0392b; }
 
 @media (max-width: 768px) {
-    .jewelry-page .jewelry-filter-form {
-        flex-direction: column;
-    }
-    .jewelry-page .filter-group-price {
-        margin-left: 0;
-    }
+    .jewelry-page .jewelry-filter-form { flex-direction: column; }
+    .jewelry-page .filter-group-price { margin-left: 0; }
+}
+
+.jewelry-page .result-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.2rem;
+}
+
+.jewelry-page .result-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+    width: 100%;
+}
+
+.jewelry-page .result-btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 0.95rem;
+    background: #fff;
+    color: #555;
+    border: 1.5px solid #d7d7d7;
+    border-radius: 12px;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.jewelry-page .result-btn-secondary:hover {
+    background: #f7f7f7;
+    border-color: #bbb;
+    color: #333;
+    text-decoration: none;
 }

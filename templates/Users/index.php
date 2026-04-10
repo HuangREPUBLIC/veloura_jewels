@@ -7,16 +7,14 @@ $this->assign('title', 'Users');
 ?>
 <?php $this->Html->css('admincontact', ['block' => true]); ?>
 
-<div class="submissions-wrapper">
+<div class="admin-wrapper">
     <div class="users index content">
-        <?= $this->Html->link(__('← Back'), ['controller' => 'Users','action' => 'dashboard']) ?>
+        <?= $this->Html->link(__('← Back'), ['controller' => 'Users', 'action' => 'dashboard']) ?>
 
         <h3 class="page-title"><?= __('Users') ?></h3>
 
-
         <div class="table-responsive" id="datatable" style="padding: 10px">
             <table id="usersTable" class="display">
-
                 <thead>
                 <tr>
                     <th><?= $this->Paginator->sort('email', 'Email') ?></th>
@@ -25,31 +23,24 @@ $this->assign('title', 'Users');
                     <th class="actions"><?= __('Actions') ?></th>
                 </tr>
                 </thead>
-
                 <tbody>
                 <?php foreach ($users as $user): ?>
-
                     <?php
-                    // Get current logged-in user's role
                     $identity = $this->request->getAttribute('identity');
                     $currentRole = $identity ? $identity->get('role') : null;
                     ?>
-
                     <tr>
                         <td><?= h($user->email) ?></td>
                         <td><?= h($user->role) ?></td>
                         <td><?= h($user->created) ?></td>
-
                         <td class="actions">
                             <?= $this->Html->link(__('View'), ['action' => 'view', $user->id]) ?>
 
                             <?php if (in_array($currentRole, ['admin', 'full_time'])): ?>
-                                <!-- Admin and full-time staff can edit user details -->
                                 <?= $this->Html->link(__('Edit'), ['action' => 'edit', $user->id]) ?>
                             <?php endif; ?>
 
                             <?php if ($currentRole === 'admin'): ?>
-                                <!-- Only admin can delete user accounts -->
                                 <?= $this->Form->postLink(
                                     __('Delete'),
                                     ['action' => 'delete', $user->id],
@@ -62,7 +53,6 @@ $this->assign('title', 'Users');
                             <?php endif; ?>
                         </td>
                     </tr>
-
                 <?php endforeach; ?>
                 </tbody>
             </table>
@@ -73,19 +63,12 @@ $this->assign('title', 'Users');
 <script>
     $(document).ready(function() {
         $('#usersTable').DataTable({
-            //We then need to make 1st index column which is date as descending.
             order: [[1, 'desc']],
             language: {
                 lengthMenu: '_MENU_ Entries Per Page',
                 search: 'Search:'
             },
-            //only allow search to be allowed with 2nd and 3rd col
-            columnDefs: [
-                {
-                    targets: [0, 1, 2, 3],
-                    searchable: true
-                }
-            ]
+            columnDefs: [{ targets: [0, 1, 2, 3], searchable: true }]
         });
     });
 </script>

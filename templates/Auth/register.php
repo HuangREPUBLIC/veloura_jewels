@@ -8,7 +8,7 @@ $this->layout = 'login';
 $this->assign('title', 'Register new user');
 ?>
 <div class="login-page">
-    <div class="users form content">
+    <div class="users form content login-card--wide">
         <?= $this->Html->link(__('← Back'), ['action' => 'index']) ?>
 
         <fieldset>

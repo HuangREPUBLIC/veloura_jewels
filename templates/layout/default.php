@@ -4,13 +4,6 @@
  * Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
  *
  * Licensed under The MIT License
- * For full copyright and license information, please see the LICENSE.txt
- * Redistributions of files must retain the above copyright notice.
- *
- * @copyright     Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
- * @link          https://cakephp.org CakePHP(tm) Project
- * @since         0.10.0
- * @license       https://opensource.org/licenses/mit-license.php MIT License
  * @var \App\View\AppView $this
  */
 
@@ -26,6 +19,12 @@ $cakeDescription = 'Veloura Jewels';
         <?= $this->fetch('title') ?>
     </title>
     <?= $this->Html->meta('icon', '/img/icon.png') ?>
+
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+
     <?= $this->Html->css(['normalize.min', 'fonts', 'default-styles', 'cake', 'login', 'live-chat']) ?>
 
     <link rel="stylesheet" href="https://cdn.datatables.net/2.2.2/css/dataTables.dataTables.min.css">
@@ -110,7 +109,6 @@ $_showChat = (
 );
 ?>
 <?php if ($_showChat): ?>
-    <!-- Live Chat Button -->
     <button class="live-chat-btn" onclick="toggleChat()">
         <svg class="chat-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -120,7 +118,6 @@ $_showChat = (
         <span class="chat-dot"></span>
     </button>
 
-    <!-- Chat Popup -->
     <div class="live-chat-popup" id="chatPopup">
         <div class="chat-popup-header">
             <div class="chat-popup-header-left">
@@ -191,7 +188,6 @@ $_showChat = (
             document.querySelector('.chat-send-btn').disabled = true;
 
             appendBubble(message, 'user');
-
             var typing = appendBubble('...', 'bot');
             typing.classList.add('chat-bubble-typing');
 

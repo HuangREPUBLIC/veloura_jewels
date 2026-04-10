@@ -1,4 +1,5 @@
 .login-page {
+    font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;
     min-height: calc(100vh - 160px);
     display: flex;
     align-items: center;
@@ -23,6 +24,7 @@
 }
 
 .login-page .users legend {
+    font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;
     width: 100%;
     text-align: center;
     color: #786C3B;
@@ -148,4 +150,15 @@
 
 .login-page .users a:last-child:hover {
     text-decoration: underline;
+}
+
+.login-card--wide {
+    max-width: 560px !important;
+}
+
+.form-hint {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 1.2rem;
+    line-height: 1.6;
 }
