@@ -1,4 +1,6 @@
 .jewelry-page {
+    font-family: var(--font-body);
+    font-size: 1rem;
     max-width: 1200px;
     margin: 0 auto;
     padding: 2rem 1rem 3rem;
@@ -10,7 +12,7 @@
 }
 
 .jewelry-page .jewelry-hero h1 {
-    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-family: var(--font-display);
     font-size: 3rem;
     font-weight: 400;
     letter-spacing: 0.04em;
@@ -19,7 +21,7 @@
 }
 
 .jewelry-page .jewelry-hero p {
-    font-family: 'Jost', sans-serif;
+    font-family: var(--font-body);
     color: #777;
     font-size: 0.88rem;
     font-weight: 400;
@@ -94,7 +96,7 @@
     color: #9a9a9a;
     font-size: 0.85rem;
     letter-spacing: 0.06em;
-    font-family: 'Jost', sans-serif;
+    font-family: var(--font-body);
 }
 
 .jewelry-page .product-card-body {
@@ -103,7 +105,7 @@
 }
 
 .jewelry-page .product-name {
-    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-family: var(--font-display);
     font-size: 1.25rem;
     font-weight: 500;
     letter-spacing: 0.02em;
@@ -113,7 +115,7 @@
 }
 
 .jewelry-page .product-price {
-    font-family: 'Jost', sans-serif;
+    font-family: var(--font-body);
     font-size: 0.9rem;
     font-weight: 500;
     letter-spacing: 0.04em;
@@ -167,7 +169,7 @@
 }
 
 .jewelry-page .detail-label {
-    font-family: 'Jost', sans-serif;
+    font-family: var(--font-body);
     font-size: 0.72rem;
     color: #9a9a9a;
     text-transform: uppercase;
@@ -177,7 +179,7 @@
 }
 
 .jewelry-page .detail-name {
-    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-family: var(--font-display);
     font-size: 2.5rem;
     font-weight: 400;
     letter-spacing: 0.02em;
@@ -187,7 +189,7 @@
 }
 
 .jewelry-page .detail-price {
-    font-family: 'Jost', sans-serif;
+    font-family: var(--font-body);
     font-size: 1.3rem;
     font-weight: 600;
     color: #8a6d3b;
@@ -196,7 +198,7 @@
 }
 
 .jewelry-page .detail-stock {
-    font-family: 'Jost', sans-serif;
+    font-family: var(--font-body);
     font-size: 0.88rem;
     color: #666;
     margin-bottom: 1.5rem;
@@ -207,7 +209,7 @@
 }
 
 .jewelry-page .detail-description h3 {
-    font-family: 'Jost', sans-serif;
+    font-family: var(--font-body);
     font-size: 0.78rem;
     font-weight: 600;
     letter-spacing: 0.1em;
@@ -234,7 +236,7 @@
 .jewelry-page .quantity-label {
     display: block;
     margin-bottom: 0.7rem;
-    font-family: 'Jost', sans-serif;
+    font-family: var(--font-body);
     font-weight: 600;
     font-size: 0.82rem;
     letter-spacing: 0.08em;
@@ -257,7 +259,7 @@
     text-decoration: none;
     border: 1px solid #ccc;
     border-radius: 999px;
-    font-family: 'Jost', sans-serif;
+    font-family: var(--font-body);
     font-size: 0.88rem;
     transition: all 0.2s ease;
 }
@@ -277,7 +279,7 @@
     color: #fff;
     border: none;
     border-radius: 999px;
-    font-family: 'Jost', sans-serif;
+    font-family: var(--font-body);
     font-size: 0.8rem;
     font-weight: 700;
     letter-spacing: 0.12em;
@@ -332,7 +334,7 @@
     height: 44px;
     min-height: 44px;
     padding: 0.35rem 0.4rem;
-    font-family: 'Jost', sans-serif;
+    font-family: var(--font-body);
     font-size: 1rem;
     font-weight: 600;
     border: 2px solid #c8c8c8;
@@ -401,7 +403,7 @@
 }
 
 .jewelry-page .cart-item-info h3 {
-    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-family: var(--font-display);
     margin: 0 0 0.8rem;
     color: #1c1c1a;
     font-size: 1.3rem;
@@ -411,7 +413,7 @@
 
 .jewelry-page .cart-price,
 .jewelry-page .cart-subtotal {
-    font-family: 'Jost', sans-serif;
+    font-family: var(--font-body);
     margin: 0 0 0.5rem;
     color: #555;
     font-size: 0.92rem;
@@ -429,7 +431,7 @@
 }
 
 .jewelry-page .cart-quantity-label {
-    font-family: 'Jost', sans-serif;
+    font-family: var(--font-body);
     margin: 0;
     min-width: 90px;
     font-weight: 600;
@@ -451,7 +453,7 @@
     min-height: 36px;
     height: 36px;
     padding: 0.3rem 0.4rem;
-    font-family: 'Jost', sans-serif;
+    font-family: var(--font-body);
     font-size: 0.95rem;
     border: 2px solid #c8c8c8;
     border-radius: 10px;
@@ -491,16 +493,14 @@
     margin-top: auto;
     align-self: flex-end;
     display: inline-block;
-    font-family: 'Jost', sans-serif;
+    font-family: var(--font-body);
     font-size: 0.85rem;
     color: #b33a3a;
     text-decoration: none;
     font-weight: 600;
 }
 
-.jewelry-page .jewelry-btn-remove:hover {
-    text-decoration: underline;
-}
+.jewelry-page .jewelry-btn-remove:hover { text-decoration: underline; }
 
 .jewelry-page .cart-summary {
     background: #fff;
@@ -513,7 +513,7 @@
 }
 
 .jewelry-page .cart-summary h2 {
-    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-family: var(--font-display);
     margin: 0 0 1.2rem;
     font-size: 1.5rem;
     font-weight: 500;
@@ -528,7 +528,7 @@
     padding-bottom: 1rem;
     margin-bottom: 1rem;
     border-bottom: 1px solid #ececec;
-    font-family: 'Jost', sans-serif;
+    font-family: var(--font-body);
     font-size: 0.95rem;
 }
 
@@ -545,7 +545,7 @@
 }
 
 .jewelry-page .jewelry-cart-link {
-    font-family: 'Jost', sans-serif;
+    font-family: var(--font-body);
     text-decoration: none;
     color: #666;
     font-size: 0.88rem;
@@ -569,7 +569,7 @@
     color: #fff;
     text-decoration: none;
     border-radius: 12px;
-    font-family: 'Jost', sans-serif;
+    font-family: var(--font-body);
     font-weight: 700;
     font-size: 0.82rem;
     letter-spacing: 0.08em;
@@ -592,7 +592,7 @@
     text-decoration: none;
     border: 1px solid #d7d7d7;
     border-radius: 12px;
-    font-family: 'Jost', sans-serif;
+    font-family: var(--font-body);
     font-size: 0.88rem;
     transition: all 0.2s ease;
     margin-top: 0.5rem;
@@ -606,7 +606,7 @@
 .jewelry-page .jewelry-back-link {
     display: inline-block;
     margin-bottom: 1.5rem;
-    font-family: 'Jost', sans-serif;
+    font-family: var(--font-body);
     color: #786C3B;
     text-decoration: none;
     font-weight: 600;
@@ -644,7 +644,7 @@
 .jewelry-page .result-icon { font-size: 3.5rem; margin-bottom: 1rem; }
 
 .jewelry-page .result-title {
-    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-family: var(--font-display);
     font-size: 2rem;
     font-weight: 400;
     color: #1c1c1a;
@@ -653,7 +653,7 @@
 }
 
 .jewelry-page .result-subtitle {
-    font-family: 'Jost', sans-serif;
+    font-family: var(--font-body);
     color: #666;
     font-size: 0.92rem;
     margin-bottom: 1.8rem;
@@ -677,13 +677,13 @@
 .jewelry-page .result-order-row:last-child { margin-bottom: 0; }
 
 .jewelry-page .result-order-label {
-    font-family: 'Jost', sans-serif;
+    font-family: var(--font-body);
     color: #888;
     font-size: 0.88rem;
 }
 
 .jewelry-page .result-order-value {
-    font-family: 'Jost', sans-serif;
+    font-family: var(--font-body);
     font-weight: 600;
     color: #333;
     font-size: 0.88rem;
@@ -700,7 +700,7 @@
     background: #786C3B;
     color: #fff !important;
     border-radius: 12px;
-    font-family: 'Jost', sans-serif;
+    font-family: var(--font-body);
     font-size: 0.85rem;
     font-weight: 700;
     letter-spacing: 0.08em;
@@ -734,7 +734,7 @@
 }
 
 .jewelry-page .filter-label {
-    font-family: 'Jost', sans-serif;
+    font-family: var(--font-body);
     font-size: 0.72rem;
     font-weight: 600;
     color: #999;
@@ -753,7 +753,7 @@
     padding: 0.32rem 0.9rem;
     border: 1.5px solid #d8d8d8;
     border-radius: 999px;
-    font-family: 'Jost', sans-serif;
+    font-family: var(--font-body);
     font-size: 0.82rem;
     font-weight: 400;
     color: #666;
@@ -783,7 +783,7 @@
 
 .jewelry-page .price-prefix,
 .jewelry-page .price-sep {
-    font-family: 'Jost', sans-serif;
+    font-family: var(--font-body);
     font-size: 0.88rem;
     color: #888;
 }
@@ -794,7 +794,7 @@
     padding: 0 0.6rem;
     border: 1.5px solid #d8d8d8;
     border-radius: 8px;
-    font-family: 'Jost', sans-serif;
+    font-family: var(--font-body);
     font-size: 0.88rem;
     box-sizing: border-box;
     outline: none;
@@ -809,7 +809,7 @@
     color: #fff;
     border: none;
     border-radius: 8px;
-    font-family: 'Jost', sans-serif;
+    font-family: var(--font-body);
     font-size: 0.82rem;
     font-weight: 600;
     cursor: pointer;
@@ -819,7 +819,7 @@
 .jewelry-page .filter-apply-btn:hover { background: #5a5029; }
 
 .jewelry-page .filter-clear-btn {
-    font-family: 'Jost', sans-serif;
+    font-family: var(--font-body);
     font-size: 0.82rem;
     color: #aaa;
     text-decoration: none;
@@ -857,7 +857,7 @@
     color: #555;
     border: 1.5px solid #d7d7d7;
     border-radius: 12px;
-    font-family: 'Jost', sans-serif;
+    font-family: var(--font-body);
     font-size: 0.85rem;
     font-weight: 500;
     text-decoration: none;

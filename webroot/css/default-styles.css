@@ -4,13 +4,13 @@
 
 html {
     box-sizing: border-box;
-    font-size: 62.5%;
+    font-size: 100%;
 }
 
 body {
+    font-family: var(--font-body);
     color: #3d3d3a;
-    font-family: 'Jost', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
-    font-size: 1em;
+    font-size: 1rem;
     font-weight: 400;
     letter-spacing: 0.01em;
     line-height: 1.65;

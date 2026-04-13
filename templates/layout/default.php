@@ -23,7 +23,7 @@ $cakeDescription = 'Veloura Jewels';
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
 
     <?= $this->Html->css(['normalize.min', 'fonts', 'default-styles', 'cake', 'login', 'live-chat']) ?>
 
@@ -126,7 +126,7 @@ $_showChat = (
                 </div>
                 <div>
                     <div class="chat-popup-title">Veloura Jewels</div>
-                    <div class="chat-popup-subtitle">AI Jewelry Advisor</div>
+                    <div class="chat-popup-subtitle">Jewelry Advisor</div>
                 </div>
             </div>
             <button class="chat-popup-close" onclick="toggleChat()">✕</button>
@@ -139,17 +139,9 @@ $_showChat = (
         </div>
 
         <div class="chat-popup-input-area">
-
-            </button>
             <input type="file" id="chatFileInput" style="display:none" onchange="handleFileAttach(this)">
-            <input
-                type="text"
-                id="chatInput"
-                class="chat-input"
-                placeholder="Type a message..."
-                autocomplete="off"
-                onkeydown="if(event.key==='Enter') sendChatMessage()"
-            >
+            <input type="text" id="chatInput" class="chat-input" placeholder="Type a message..."
+                   autocomplete="off" onkeydown="if(event.key==='Enter') sendChatMessage()">
             <button class="chat-send-btn" onclick="sendChatMessage()">
                 <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" width="18" height="18">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -161,7 +153,9 @@ $_showChat = (
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                           d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"/>
                 </svg>
+            </button>
         </div>
+    </div>
 
     <script>
         var _chatHistory = [];
@@ -225,13 +219,14 @@ $_showChat = (
                     document.querySelector('.chat-send-btn').disabled = false;
                     input.focus();
                 });
-            function handleFileAttach(input) {
-                if (!input.files || !input.files[0]) return;
-                var file = input.files[0];
-                appendBubble('📎 ' + file.name, 'user');
 
-                input.value = '';
-            }
+        }
+        function handleFileAttach(input) {
+            if (!input.files || !input.files[0]) return;
+            var file = input.files[0];
+            appendBubble('📎 ' + file.name, 'user');
+
+            input.value = '';
         }
     </script>
 <?php endif; ?>
