@@ -50,13 +50,20 @@ class AuthController extends AppController
             $data = $this->request->getData();
             $data['role'] = 'customer';
 
+            // Password confirmation check
+            if (empty($data['password_confirm']) || $data['password'] !== $data['password_confirm']) {
+                $this->Flash->error('Passwords do not match. Please try again.');
+                $this->set(compact('user'));
+                return;
+            }
+
             $user = $this->Users->patchEntity($user, $data);
 
             if ($this->Users->save($user)) {
-                $this->Flash->success('You have been registered. Please log in. ');
+                $this->Flash->success('Account created! Please log in.');
                 return $this->redirect(['action' => 'login']);
             }
-            $this->Flash->error('The user could not be registered. Please, try again.');
+            $this->Flash->error('The account could not be created. Please check your details and try again.');
         }
         $this->set(compact('user'));
     }
@@ -180,18 +187,35 @@ class AuthController extends AppController
      * @return \Cake\Http\Response|null|void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function changePassword(?string $id = null)
+    public function changePassword()
     {
-        $user = $this->Users->get($id, ['contain' => []]);
-        if ($this->request->is(['patch', 'post', 'put'])) {
-            // Used a different validation set in Model/Table file to ensure both fields are filled
-            $user = $this->Users->patchEntity($user, $this->request->getData(), ['validate' => 'resetPassword']);
-            if ($this->Users->save($user)) {
-                $this->Flash->success('The user has been saved.');
+        $userId = $this->Authentication->getIdentity()->get('id');
+        $user = $this->Users->get($userId);
 
-                return $this->redirect(['controller' => 'Users', 'action' => 'index']);
+        if ($this->request->is(['patch', 'post', 'put'])) {
+            $currentPassword = $this->request->getData('current_password');
+            $newPassword     = $this->request->getData('password');
+            $confirmPassword = $this->request->getData('confirm_password');
+
+            // Verify current password first
+            if (!password_verify($currentPassword, $user->password)) {
+                $this->Flash->error('Your current password is incorrect.');
+                $this->set(compact('user'));
+                return;
             }
-            $this->Flash->error('The user could not be saved. Please, try again.');
+
+            if ($newPassword !== $confirmPassword) {
+                $this->Flash->error('New password and confirmation do not match.');
+                $this->set(compact('user'));
+                return;
+            }
+
+            $user = $this->Users->patchEntity($user, ['password' => $newPassword], ['validate' => 'resetPassword']);
+            if ($this->Users->save($user)) {
+                $this->Flash->success('Your password has been updated successfully.');
+                return $this->redirect(['controller' => 'Profile', 'action' => 'index']);
+            }
+            $this->Flash->error('The password could not be updated. Please try again.');
         }
         $this->set(compact('user'));
     }

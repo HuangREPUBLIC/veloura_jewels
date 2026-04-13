@@ -70,6 +70,58 @@ class UsersTable extends Table
         $validator
             ->inList('role', ['admin', 'full_time', 'part_time', 'customer'], 'Invalid role selected');
 
+        return $validator;
+    }
+
+    /**
+     * Profile edit validation — personal info fields only, no password or role.
+     *
+     * @param \Cake\Validation\Validator $validator Validator instance.
+     * @return \Cake\Validation\Validator
+     */
+    public function validationProfileEdit(Validator $validator): Validator
+    {
+        $validator
+            ->scalar('first_name')
+            ->maxLength('first_name', 100)
+            ->allowEmptyString('first_name');
+
+        $validator
+            ->scalar('last_name')
+            ->maxLength('last_name', 100)
+            ->allowEmptyString('last_name');
+
+        $validator
+            ->scalar('phone')
+            ->maxLength('phone', 20)
+            ->allowEmptyString('phone')
+            ->add('phone', 'validPhone', [
+                'rule'    => ['custom', '/^[\d\s\+\-\(\)]{6,20}$/'],
+                'message' => 'Please enter a valid phone number.',
+            ]);
+
+        $validator
+            ->scalar('address')
+            ->maxLength('address', 500)
+            ->allowEmptyString('address');
+
+        return $validator;
+    }
+
+    /**
+     * Reset / change password validation.
+     *
+     * @param \Cake\Validation\Validator $validator Validator instance.
+     * @return \Cake\Validation\Validator
+     */
+    public function validationResetPassword(Validator $validator): Validator
+    {
+        $validator
+            ->scalar('password')
+            ->minLength('password', 8, 'Password must be at least 8 characters.')
+            ->maxLength('password', 255)
+            ->requirePresence('password')
+            ->notEmptyString('password');
 
         return $validator;
     }

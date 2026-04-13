@@ -15,6 +15,8 @@ use Cake\ORM\Entity;
  * @property string $first_name
  * @property string $last_name
  * @property string|null $avatar
+ * @property string|null $phone
+ * @property string|null $address
  * @property \Cake\I18n\DateTime $created
  * @property \Cake\I18n\DateTime $modified
  * @property string|null $nonce
@@ -44,9 +46,11 @@ class User extends Entity
         'first_name' => true,
         'last_name' => true,
         'avatar' => true,
+        'phone' => true,
+        'address' => true,
         'created' => false,
         'modified' => false,
-        'nonce' => false, // Nonce and expiry dates are to be set in Controller directly, not through patching
+        'nonce' => false,
         'nonce_expiry' => false,
         'role' => true,
 
