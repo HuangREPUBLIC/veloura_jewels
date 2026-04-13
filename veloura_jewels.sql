@@ -1,156 +1,183 @@
--- Veloura Jewels Database - Complete Version
--- Generated: 2026-04-09
-
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-START TRANSACTION;
-SET time_zone = "+00:00";
-SET FOREIGN_KEY_CHECKS = 0;
+-- Veloura Jewels Database
+-- Updated: product_images ON DELETE CASCADE, categories type field
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8mb4 */;
 
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+SET FOREIGN_KEY_CHECKS = 0;
+
 CREATE DATABASE IF NOT EXISTS `veloura_jewels` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_uca1400_ai_ci;
 USE `veloura_jewels`;
 
 DROP TABLE IF EXISTS `categories_products`;
 DROP TABLE IF EXISTS `product_images`;
+DROP TABLE IF EXISTS `order_items`;
 DROP TABLE IF EXISTS `contact_replies`;
 DROP TABLE IF EXISTS `contact_submissions`;
-DROP TABLE IF EXISTS `order_items`;
 DROP TABLE IF EXISTS `orders`;
+DROP TABLE IF EXISTS `product_variants`;
 DROP TABLE IF EXISTS `products`;
 DROP TABLE IF EXISTS `categories`;
 DROP TABLE IF EXISTS `users`;
 
-SET FOREIGN_KEY_CHECKS = 1;
-
 CREATE TABLE `categories` (
-                              `id` int(11) NOT NULL AUTO_INCREMENT,
+                              `id`   int(11)     NOT NULL AUTO_INCREMENT,
                               `name` varchar(64) NOT NULL,
+                              `type` varchar(20) NOT NULL DEFAULT 'jewelry',
                               PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci AUTO_INCREMENT=6;
 
 CREATE TABLE `users` (
-                         `id` int(11) NOT NULL AUTO_INCREMENT,
-                         `email` varchar(255) NOT NULL,
-                         `password` varchar(255) NOT NULL,
-                         `nonce` varchar(255) DEFAULT NULL,
-                         `nonce_expiry` datetime DEFAULT NULL,
-                         `created` datetime DEFAULT NULL,
-                         `modified` datetime DEFAULT NULL,
-                         `role` varchar(255) NOT NULL DEFAULT 'customer',
+                         `id`           int(11)      NOT NULL AUTO_INCREMENT,
+                         `email`        varchar(255) NOT NULL,
+                         `password`     varchar(255) NOT NULL,
+                         `first_name`   varchar(100) DEFAULT NULL,
+                         `last_name`    varchar(100) DEFAULT NULL,
+                         `phone`        varchar(20)  DEFAULT NULL,
+                         `address`      varchar(500) DEFAULT NULL,
+                         `nonce`        varchar(255) DEFAULT NULL,
+                         `nonce_expiry` datetime     DEFAULT NULL,
+                         `created`      datetime     DEFAULT NULL,
+                         `modified`     datetime     DEFAULT NULL,
+                         `role`         varchar(255) NOT NULL DEFAULT 'customer',
                          PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci AUTO_INCREMENT=9;
 
 CREATE TABLE `products` (
-                            `id` int(11) NOT NULL AUTO_INCREMENT,
-                            `name` varchar(64) NOT NULL,
+                            `id`             int(11)      NOT NULL AUTO_INCREMENT,
+                            `name`           varchar(64)  NOT NULL,
                             `purchase_price` decimal(9,2) NOT NULL,
-                            `sale_price` decimal(9,2) NOT NULL,
-                            `stock` int(11) NOT NULL DEFAULT 0,
+                            `sale_price`     decimal(9,2) NOT NULL,
                             `supplier_email` varchar(320) DEFAULT NULL,
-                            `created` datetime DEFAULT NULL,
-                            `modified` datetime DEFAULT NULL,
-                            `description` TEXT DEFAULT NULL,
+                            `created`        datetime     DEFAULT NULL,
+                            `modified`       datetime     DEFAULT NULL,
+                            `description`    TEXT         DEFAULT NULL,
                             PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci AUTO_INCREMENT=24;
+
+CREATE TABLE `product_variants` (
+                                    `id`         int(11)     NOT NULL AUTO_INCREMENT,
+                                    `product_id` int(11)     NOT NULL,
+                                    `size`       varchar(20) NOT NULL,
+                                    `stock`      int(11)     NOT NULL DEFAULT 0,
+                                    PRIMARY KEY (`id`),
+                                    KEY `product_id` (`product_id`),
+                                    CONSTRAINT `fk_variants_product` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci AUTO_INCREMENT=44;
 
 CREATE TABLE `categories_products` (
-                                       `id` int(11) NOT NULL AUTO_INCREMENT,
+                                       `id`          int(11) NOT NULL AUTO_INCREMENT,
                                        `category_id` int(11) NOT NULL,
-                                       `product_id` int(11) NOT NULL,
+                                       `product_id`  int(11) NOT NULL,
                                        PRIMARY KEY (`id`),
                                        KEY `category_id` (`category_id`),
                                        KEY `product_id` (`product_id`),
                                        CONSTRAINT `categories_products_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`),
-                                       CONSTRAINT `categories_products_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+                                       CONSTRAINT `categories_products_ibfk_2` FOREIGN KEY (`product_id`)  REFERENCES `products` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci AUTO_INCREMENT=21;
 
 CREATE TABLE `product_images` (
-                                  `id` int(11) NOT NULL AUTO_INCREMENT,
-                                  `product_id` int(11) NOT NULL,
-                                  `filename` varchar(4096) NOT NULL,
+                                  `id`         int(11)       NOT NULL AUTO_INCREMENT,
+                                  `product_id` int(11)       NOT NULL,
+                                  `filename`   varchar(4096) NOT NULL,
                                   PRIMARY KEY (`id`),
                                   KEY `product_id` (`product_id`),
-                                  CONSTRAINT `product_images_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+                                  CONSTRAINT `product_images_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci AUTO_INCREMENT=46;
 
 CREATE TABLE `contact_submissions` (
-                                       `id` int(11) NOT NULL AUTO_INCREMENT,
-                                       `first_name` varchar(50) NOT NULL,
-                                       `last_name` varchar(50) NOT NULL,
-                                       `email` varchar(255) NOT NULL,
-                                       `subject` varchar(255) NOT NULL,
-                                       `message` text NOT NULL,
-                                       `captcha_passed` tinyint(1) NOT NULL DEFAULT 0,
-                                       `is_replied` tinyint(1) NOT NULL DEFAULT 0,
-                                       `created` datetime DEFAULT current_timestamp(),
-                                       `modified` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+                                       `id`             int(11)      NOT NULL AUTO_INCREMENT,
+                                       `first_name`     varchar(50)  NOT NULL,
+                                       `last_name`      varchar(50)  NOT NULL,
+                                       `email`          varchar(255) NOT NULL,
+                                       `subject`        varchar(255) NOT NULL,
+                                       `message`        text         NOT NULL,
+                                       `captcha_passed` tinyint(1)   NOT NULL DEFAULT 0,
+                                       `is_replied`     tinyint(1)   NOT NULL DEFAULT 0,
+                                       `created`        datetime     DEFAULT current_timestamp(),
+                                       `modified`       datetime     DEFAULT current_timestamp() ON UPDATE current_timestamp(),
                                        PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci AUTO_INCREMENT=5;
 
 CREATE TABLE `contact_replies` (
-                                   `id` int(11) NOT NULL AUTO_INCREMENT,
-                                   `contact_submission_id` int(11) NOT NULL,
-                                   `subject` varchar(255) NOT NULL,
-                                   `message` text NOT NULL,
-                                   `sent_at` datetime DEFAULT current_timestamp(),
-                                   `created` datetime DEFAULT current_timestamp(),
-                                   `modified` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+                                   `id`                    int(11)      NOT NULL AUTO_INCREMENT,
+                                   `contact_submission_id` int(11)      NOT NULL,
+                                   `subject`               varchar(255) NOT NULL,
+                                   `message`               text         NOT NULL,
+                                   `sent_at`               datetime     DEFAULT current_timestamp(),
+                                   `created`               datetime     DEFAULT current_timestamp(),
+                                   `modified`              datetime     DEFAULT current_timestamp() ON UPDATE current_timestamp(),
                                    PRIMARY KEY (`id`),
                                    KEY `fk_contact_replies_submission` (`contact_submission_id`),
                                    CONSTRAINT `fk_contact_replies_submission` FOREIGN KEY (`contact_submission_id`) REFERENCES `contact_submissions` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci AUTO_INCREMENT=4;
 
 CREATE TABLE `orders` (
-                          `id` int(11) NOT NULL AUTO_INCREMENT,
-                          `user_id` int(11) DEFAULT NULL,
-                          `stripe_session_id` varchar(255) DEFAULT NULL,
-                          `stripe_payment_intent_id` varchar(255) DEFAULT NULL,
-                          `customer_email` varchar(255) DEFAULT NULL,
-                          `status` varchar(50) NOT NULL DEFAULT 'pending',
-                          `total_amount` decimal(10,2) NOT NULL DEFAULT 0.00,
-                          `currency` varchar(10) NOT NULL DEFAULT 'aud',
-                          `created` datetime DEFAULT current_timestamp(),
-                          `modified` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+                          `id`                       int(11)       NOT NULL AUTO_INCREMENT,
+                          `user_id`                  int(11)       DEFAULT NULL,
+                          `stripe_session_id`        varchar(255)  DEFAULT NULL,
+                          `stripe_payment_intent_id` varchar(255)  DEFAULT NULL,
+                          `customer_email`           varchar(255)  DEFAULT NULL,
+                          `status`                   varchar(50)   NOT NULL DEFAULT 'pending',
+                          `total_amount`             decimal(10,2) NOT NULL DEFAULT 0.00,
+                          `currency`                 varchar(10)   NOT NULL DEFAULT 'aud',
+                          `created`                  datetime      DEFAULT current_timestamp(),
+                          `modified`                 datetime      DEFAULT current_timestamp() ON UPDATE current_timestamp(),
                           PRIMARY KEY (`id`),
                           KEY `user_id` (`user_id`),
                           CONSTRAINT `fk_orders_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 CREATE TABLE `order_items` (
-                               `id` int(11) NOT NULL AUTO_INCREMENT,
-                               `order_id` int(11) NOT NULL,
-                               `product_id` int(11) NOT NULL,
-                               `product_name` varchar(255) NOT NULL,
-                               `unit_price` decimal(10,2) NOT NULL,
-                               `quantity` int(11) NOT NULL,
-                               `subtotal` decimal(10,2) NOT NULL,
-                               `created` datetime DEFAULT current_timestamp(),
-                               `modified` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+                               `id`            int(11)       NOT NULL AUTO_INCREMENT,
+                               `order_id`      int(11)       NOT NULL,
+                               `product_id`    int(11)       NOT NULL,
+                               `variant_id`    int(11)       DEFAULT NULL,
+                               `product_name`  varchar(255)  NOT NULL,
+                               `selected_size` varchar(20)   DEFAULT NULL,
+                               `unit_price`    decimal(10,2) NOT NULL,
+                               `quantity`      int(11)       NOT NULL,
+                               `subtotal`      decimal(10,2) NOT NULL,
+                               `created`       datetime      DEFAULT current_timestamp(),
+                               `modified`      datetime      DEFAULT current_timestamp() ON UPDATE current_timestamp(),
                                PRIMARY KEY (`id`),
-                               KEY `order_id` (`order_id`),
+                               KEY `order_id`   (`order_id`),
                                KEY `product_id` (`product_id`),
-                               CONSTRAINT `fk_order_items_order` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE,
-                               CONSTRAINT `fk_order_items_product` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE RESTRICT
+                               KEY `variant_id` (`variant_id`),
+                               CONSTRAINT `fk_order_items_order`   FOREIGN KEY (`order_id`)   REFERENCES `orders` (`id`)           ON DELETE CASCADE,
+                               CONSTRAINT `fk_order_items_product` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`)         ON DELETE RESTRICT,
+                               CONSTRAINT `fk_order_items_variant` FOREIGN KEY (`variant_id`) REFERENCES `product_variants` (`id`) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+-- Data: categories
+-- --------------------------------------------------------
+INSERT INTO `categories` (`id`, `name`, `type`) VALUES
+                                                    (1, 'Rings',     'jewelry'),
+                                                    (2, 'Necklaces', 'jewelry'),
+                                                    (3, 'Earrings',  'jewelry'),
+                                                    (4, 'Bracelets', 'jewelry'),
+                                                    (5, 'Brooches',  'jewelry');
 
 -- --------------------------------------------------------
 -- Data: users
 -- --------------------------------------------------------
-INSERT INTO `users` (`id`, `email`, `password`, `nonce`, `nonce_expiry`, `created`, `modified`, `role`) VALUES
-                                                                                                            (6, 'admin@test.com', '$2y$12$3j848N59AYD3s84DOpqA7eI0Cu6aqLosTj9aGuR.8b4ysY2kaNMg6', NULL, NULL, '2026-03-24 04:04:54', '2026-03-24 04:04:54', 'admin'),
-                                                                                                            (7, '11@1.com',       '$2y$12$kY4TdsMfdvtMKcnMBebwPeInMYY7Oa8xN6Gl5Kemi0YcO5jr/SPnq', NULL, NULL, '2026-03-24 04:05:20', '2026-03-24 04:05:20', 'admin');
+INSERT INTO `users` (`id`, `email`, `password`, `first_name`, `last_name`, `phone`, `address`, `nonce`, `nonce_expiry`, `created`, `modified`, `role`) VALUES
+                                                                                                                                                           (6, 'admin@test.com', '$2y$12$3j848N59AYD3s84DOpqA7eI0Cu6aqLosTj9aGuR.8b4ysY2kaNMg6', NULL, NULL, NULL, NULL, NULL, NULL, '2026-03-24 04:04:54', '2026-03-24 04:04:54', 'admin'),
+                                                                                                                                                           (7, '11@1.com',       '$2y$12$kY4TdsMfdvtMKcnMBebwPeInMYY7Oa8xN6Gl5Kemi0YcO5jr/SPnq', NULL, NULL, NULL, NULL, NULL, NULL, '2026-03-24 04:05:20', '2026-03-24 04:05:20', 'admin'),
+                                                                                                                                                           (8, '22@2.com',       '$2y$12$HVY249.r40bMDIkKUxhfT.KfrsOXCuxrVjQKBCPeHbWgkO0bLsYeW', '11', '11', NULL, NULL, NULL, NULL, '2026-04-13 21:43:57', '2026-04-13 21:43:57', 'customer');
 
 -- --------------------------------------------------------
 -- Data: contact_submissions
 -- --------------------------------------------------------
 INSERT INTO `contact_submissions` (`id`, `first_name`, `last_name`, `email`, `subject`, `message`, `captcha_passed`, `is_replied`, `created`, `modified`) VALUES
-                                                                                                                                                              (1, 'Jialin', 'Wu',   'jialinwu.island@gmail.com', '',                       '1',                           0, 1, '2026-03-20 02:40:43', '2026-03-24 06:32:52'),
-                                                                                                                                                              (3, '11',     '11',   '11@1.com',                  '',                       '1wassadsad',                  0, 0, '2026-03-20 02:44:25', '2026-03-20 02:44:25'),
-                                                                                                                                                              (4, 'Hey',    'Test', 'Testing@mail.com',           'This is a test subject', 'I want to test the subject',  0, 0, '2026-03-24 06:23:08', '2026-03-24 06:23:08');
+                                                                                                                                                              (1, 'Jialin', 'Wu',   'jialinwu.island@gmail.com', '',                       '1',                          0, 1, '2026-03-20 02:40:43', '2026-03-24 06:32:52'),
+                                                                                                                                                              (3, '11',     '11',   '11@1.com',                  '',                       '1wassadsad',                 0, 0, '2026-03-20 02:44:25', '2026-03-20 02:44:25'),
+                                                                                                                                                              (4, 'Hey',    'Test', 'Testing@mail.com',           'This is a test subject', 'I want to test the subject', 0, 0, '2026-03-24 06:23:08', '2026-03-24 06:23:08');
 
 -- --------------------------------------------------------
 -- Data: contact_replies
@@ -161,39 +188,43 @@ INSERT INTO `contact_replies` (`id`, `contact_submission_id`, `subject`, `messag
                                                                                                                           (3, 1, 'Re: Your enquiry', 'test',       '2026-03-24 06:32:52', '2026-03-24 06:32:52', '2026-03-24 06:32:52');
 
 -- --------------------------------------------------------
--- Data: categories
--- --------------------------------------------------------
-INSERT INTO `categories` (`id`, `name`) VALUES
-                                            (1, 'Rings'),
-                                            (2, 'Necklaces'),
-                                            (3, 'Earrings'),
-                                            (4, 'Bracelets'),
-                                            (5, 'Brooches');
-
--- --------------------------------------------------------
 -- Data: products
 -- --------------------------------------------------------
-INSERT INTO `products` (`id`, `name`, `purchase_price`, `sale_price`, `stock`, `supplier_email`, `created`, `modified`, `description`) VALUES
-                                                                                                                                           (1,  'Diamond Solitaire Ring',    450.00, 1299.00,  8, 'supplier@luxgems.com.au',   NOW(), NOW(), 'A timeless classic featuring a 0.5ct round brilliant diamond set in 18k white gold. The six-prong setting maximises light reflection for exceptional brilliance. Comes with GIA certification. Available in sizes 5-9.'),
-                                                                                                                                           (2,  'Rose Gold Twisted Band',     85.00,  249.00, 25, 'supplier@goldcraft.com.au', NOW(), NOW(), 'Elegantly twisted 14k rose gold band with a brushed finish. Comfortable everyday wear with a 2mm profile. Hypoallergenic and tarnish-resistant. Perfect as a stacking ring or standalone piece.'),
-                                                                                                                                           (3,  'Emerald Halo Ring',         320.00,  890.00,  5, 'supplier@luxgems.com.au',   NOW(), NOW(), 'A stunning 0.8ct natural Colombian emerald encircled by 18 pave-set diamonds totalling 0.3ct. Set in 18k yellow gold with a split shank design. Each stone is hand-selected for colour and clarity.'),
-                                                                                                                                           (4,  'Sapphire Three-Stone Ring', 380.00, 1050.00,  3, 'supplier@luxgems.com.au',   NOW(), NOW(), 'Inspired by the Royal Collection. Features a 1ct oval Ceylon sapphire flanked by two round diamonds (0.25ct each) in a platinum setting. Symbolising past, present and future.'),
-                                                                                                                                           (5,  'Pearl Cocktail Ring',        60.00,  185.00, 18, 'supplier@pearlsea.com.au',  NOW(), NOW(), 'A bold statement piece featuring a 10mm freshwater pearl in a floral sterling silver setting with rhodium plating. The adjustable band fits sizes 6-9. Pairs beautifully with evening wear.'),
-                                                                                                                                           (6,  'Diamond Tennis Necklace',   720.00, 1980.00,  4, 'supplier@luxgems.com.au',   NOW(), NOW(), '45cm sterling silver chain set with 3.5ct of brilliant-cut diamonds in a continuous line. Each stone is individually set in four-prong bezels for maximum security and sparkle. Lobster clasp closure.'),
-                                                                                                                                           (7,  'Gold Lariat Necklace',      110.00,  320.00, 14, 'supplier@goldcraft.com.au', NOW(), NOW(), 'Minimalist 14k gold Y-necklace with a polished bar drop. 60cm adjustable chain with a sleek sliding mechanism. Versatile enough for both casual and formal occasions.'),
-                                                                                                                                           (8,  'Amethyst Pendant Necklace',  75.00,  220.00, 20, 'supplier@gemstone.com.au',  NOW(), NOW(), 'Faceted 8mm oval amethyst pendant in a sterling silver bezel setting. 40cm box chain included. The deep violet hue of the stone is enhanced by the simple setting. February birthstone gift option.'),
-                                                                                                                                           (9,  'Pearl Strand Necklace',     180.00,  520.00,  7, 'supplier@pearlsea.com.au',  NOW(), NOW(), '45cm single strand of 7-8mm Akoya cultured pearls with exceptional lustre. Knotted between each pearl for security and drape. Sterling silver ball clasp. Presented in a signature Veloura gift box.'),
-                                                                                                                                           (10, 'Ruby Heart Pendant',        140.00,  410.00,  9, 'supplier@gemstone.com.au',  NOW(), NOW(), 'Heart-shaped 1.2ct natural ruby pendant in 18k rose gold. The vivid red stone symbolises passion and love. 40cm fine chain included. Certificate of authenticity provided.'),
-                                                                                                                                           (11, 'Diamond Stud Earrings',     380.00, 1050.00, 12, 'supplier@luxgems.com.au',   NOW(), NOW(), 'Classic 0.5ct total weight diamond studs in 18k white gold four-prong settings. Push-back butterfly closures for security. GIA-certified stones with excellent cut grade. Suitable for pierced ears only.'),
-                                                                                                                                           (12, 'Gold Hoop Earrings',         55.00,  160.00, 30, 'supplier@goldcraft.com.au', NOW(), NOW(), 'Lightweight 14k yellow gold huggie hoops with a 20mm diameter. Hinged click-in closure for easy wear. High-polish finish that catches the light. Comfortable for all-day wear.'),
-                                                                                                                                           (13, 'Chandelier Drop Earrings',   95.00,  275.00, 11, 'supplier@gemstone.com.au',  NOW(), NOW(), 'Statement earrings featuring cascading tiers of aquamarine and white topaz in sterling silver. Total drop length 6cm. Fishhook ear wires. Perfect for weddings and formal events.'),
-                                                                                                                                           (14, 'Pearl Drop Earrings',        65.00,  195.00, 16, 'supplier@pearlsea.com.au',  NOW(), NOW(), '8mm freshwater pearl drops suspended from sterling silver shepherd hooks. The pearls have a soft pink overtone and high lustre. Simple, elegant and suitable for everyday wear or special occasions.'),
-                                                                                                                                           (15, 'Gold Tennis Bracelet',      530.00, 1480.00,  6, 'supplier@luxgems.com.au',   NOW(), NOW(), '18cm 18k white gold bracelet set with 4ct of brilliant-cut diamonds in a continuous line. Box clasp with safety catch. Each diamond is individually set for flexibility. Timeless investment piece.'),
-                                                                                                                                           (16, 'Charm Bracelet',             70.00,  210.00, 22, 'supplier@goldcraft.com.au', NOW(), NOW(), 'Sterling silver belcher chain bracelet with five pre-set charms including a heart, star, moon, key and infinity symbol. 18cm with a lobster clasp. Additional charms can be added from our charm collection.'),
-                                                                                                                                           (17, 'Amethyst Bangle',            90.00,  265.00, 13, 'supplier@gemstone.com.au',  NOW(), NOW(), 'Rigid 14k gold-plated brass bangle set with seven 4mm round amethysts. Internal diameter 6.5cm to fit most wrists. The gradient of violet stones adds a pop of colour to any outfit.'),
-                                                                                                                                           (18, 'Pearl Wrap Bracelet',        55.00,  165.00, 19, 'supplier@pearlsea.com.au',  NOW(), NOW(), 'Three-strand freshwater pearl bracelet with sterling silver box clasp. Each strand features 5-6mm white pearls with a satin finish. 18cm length. Elegant yet understated.'),
-                                                                                                                                           (19, 'Butterfly Brooch',           45.00,  135.00, 15, 'supplier@gemstone.com.au',  NOW(), NOW(), 'Intricate butterfly brooch in rhodium-plated sterling silver with pave-set cubic zirconia wings. 4cm wingspan. Double pin-back for secure fastening. A whimsical accent for jackets, scarves and bags.'),
-                                                                                                                                           (20, 'Floral Gold Brooch',         60.00,  178.00, 10, 'supplier@goldcraft.com.au', NOW(), NOW(), 'Five-petal flower brooch in 14k gold-plated brass with a 6mm freshwater pearl centre. 3.5cm diameter. Single pin-back closure. Adds a touch of vintage glamour to lapels and evening wear.');
+INSERT INTO `products` (`id`, `name`, `purchase_price`, `sale_price`, `supplier_email`, `created`, `modified`, `description`) VALUES
+                                                                                                                                  (1,  'Art Deco Ring',                       50.00,  110.00, 'supplier@luxgems.com.au',   '2026-04-13 11:29:33', '2026-04-14 01:24:28', 'This ring is meticulously crafted for a perfect balance between bold structure and refined elegance. The design and stone setting ensure a unique brilliance. Inspired by Art Deco aesthetic, each piece embodies timeless sophistication.\r\nAll our products are handcrafted in our ateliers\r\nMaterial: Sterling silver\r\nStone: White cubic zirconia\r\nWidth: 0.5 cm\r\nColor: Silver'),
+                                                                                                                                  (2,  'Statement Torsade Pavé Ring',         85.00,  210.00, 'supplier@goldcraft.com.au', '2026-04-13 11:29:33', '2026-04-14 01:26:17', 'This ring embodies elegance and versatility. Its radiant shine echoes pure light, creating a captivating sparkle that draws attention.\r\nAll our products are handcrafted in our ateliers\r\nMaterial: APM Yellow Alloy made of 95% recycled material and 18k yellow gold plated, anti-tarnishing and hypoallergenic\r\nStone: White cubic zirconia\r\nWidth: 0.9 cm\r\nColor: Yellow'),
+                                                                                                                                  (3,  'Dainty Rose Gold Ring',               30.00,  120.00, 'supplier@luxgems.com.au',   '2026-04-13 11:29:33', '2026-04-14 01:26:33', 'This ring is made with Alloy and 18k rose gold plated. It is microset with white cubic zirconia.\r\nThe APM Alloy is made of 95% recycled material. It is anti-tarnishing and Hypoallergenic.\r\nMaterial: Alloy made of 95% recycled material and 18k rose gold plated, white cubic zirconia, anti-tarnishing and Hypoallergenic\r\nAll our products are handcrafted and microset by hand in our ateliers\r\nColor: Rose gold'),
+                                                                                                                                  (4,  'Chunky Ice Ring',                    100.00,  300.00, 'supplier@luxgems.com.au',   '2026-04-13 11:29:33', '2026-04-14 01:38:58', 'Sterling silver intertwines with paths of brilliant stones to reflect the geometric patterns created by broken ice.\r\nAll our products are handcrafted in our ateliers\r\nMaterial: Sterling silver\r\nStone: White cubic zirconia\r\nColor: Silver'),
+                                                                                                                                  (5,  'LOVE Morse Code Ring',                30.00,  120.00, 'supplier@pearlsea.com.au',  '2026-04-13 11:29:33', '2026-04-14 01:27:20', 'This collection is using Morse code as a secret Love language.\r\nThis ring is embellished with the code LOVE on it, and the word LOVE is also engraved inside.\r\nMaterial: APM Rose Alloy made of 95% recycled material and 18k gold plated (3 microns), white cubic zirconia, anti-tarnishing and anti-allergenic\r\nAll our products are handcrafted and microset by hand in our ateliers\r\nColor: Rose gold'),
+                                                                                                                                  (6,  'Art Deco Adjustable Necklace',        70.00,  230.00, 'supplier@luxgems.com.au',   '2026-04-13 11:29:33', '2026-04-14 01:28:09', 'This necklace is meticulously crafted for a perfect balance between bold structure and refined elegance.\r\nMaterial: Sterling silver\r\nStone: White cubic zirconia\r\nColor: Silver\r\nPendant size: Length 4.6 cm ; Width 0.7 cm\r\nTotal chain length: Adjustable to 48 cm maximum with sliding clasp'),
+                                                                                                                                  (7,  'Art Deco Pavé Choker',               300.00,  780.00, 'supplier@goldcraft.com.au', '2026-04-13 11:29:33', '2026-04-14 01:28:26', 'This choker is meticulously crafted for a perfect balance between bold structure and refined elegance.\r\nMaterial: Sterling silver\r\nStone: Over 210 white cubic zirconia\r\nColor: Silver\r\nTotal chain length: 40 cm ; Width 0.8 cm'),
+                                                                                                                                  (8,  'Lilac Torsade Adjustable Necklace',   60.00,  210.00, 'supplier@gemstone.com.au',  '2026-04-13 11:29:33', '2026-04-14 01:29:56', 'This necklace embodies elegance and versatility.\r\nMaterial: APM Yellow Alloy made of 95% recycled material and 18k yellow gold plated\r\nStone: Purple cubic zirconia\r\nColor: Yellow\r\nTotal chain length: Adjustable to 65 cm maximum with sliding clasp'),
+                                                                                                                                  (9,  'Lumière Pavé Choker',                180.00,  620.00, 'supplier@pearlsea.com.au',  '2026-04-13 11:29:33', '2026-04-14 01:30:20', 'This minimalist and versatile choker perfectly captures the essence of spring.\r\nMaterial: Sterling silver\r\nStone: White cubic zirconia\r\nColor: Silver'),
+                                                                                                                                  (10, 'Maille Marine Chain Necklace',       140.00,  410.00, 'supplier@gemstone.com.au',  '2026-04-13 11:29:33', '2026-04-14 01:30:35', 'Material: Rose Alloy made of 95% recycled material and 18k gold plated, white cubic zirconia\r\nColor: Rose gold\r\nTotal chain length: 45 cm'),
+                                                                                                                                  (11, 'Statement Art Deco Drop Earrings',   150.00,  430.00, 'supplier@luxgems.com.au',   '2026-04-13 11:29:33', '2026-04-14 01:38:02', 'These earrings are meticulously crafted for a perfect balance between bold structure and refined elegance.\r\nMaterial: Sterling silver\r\nStone: White cubic zirconia\r\nColor: Silver\r\nLength: 7.1 cm ; Width : 2.2 cm'),
+                                                                                                                                  (12, 'Torsade Pavé Hoop Earrings',         55.00,  210.00, 'supplier@goldcraft.com.au', '2026-04-13 11:29:33', '2026-04-14 01:37:09', 'These earrings embody elegance and versatility.\r\nMaterial: APM Yellow Alloy made of 95% recycled material and 18k yellow gold plated\r\nStone: White cubic zirconia\r\nColor: Yellow\r\nLength: 2.1 cm ; Width : 0.7 cm'),
+                                                                                                                                  (13, 'Dainty Rose Gold Hoop Earrings',     95.00,  275.00, 'supplier@gemstone.com.au',  '2026-04-13 11:29:33', '2026-04-14 01:36:32', 'Material: Alloy made of 95% recycled material and 18k gold plated, white cubic zirconia\r\nColor: Rose gold\r\nSize: Small (Length: 2.8 cm ; Width : 0.5 cm)'),
+                                                                                                                                  (14, 'Asymmetric Cross Earrings',          65.00,  240.00, 'supplier@pearlsea.com.au',  '2026-04-13 11:29:33', '2026-04-14 01:36:10', 'Material: Platinum and rhodium plated on patented white alloy, made from recycled materials\r\nStone: Cubic zirconia\r\nDimensions: 39 mm length, 20 mm width'),
+                                                                                                                                  (15, 'Art Deco Pavé Bracelet',             90.00,  350.00, 'supplier@luxgems.com.au',   '2026-04-13 11:29:33', '2026-04-14 01:35:53', 'This bracelet is meticulously crafted for a perfect balance between bold structure and refined elegance.\r\nMaterial: Sterling silver\r\nStone: White cubic zirconia\r\nColor: Silver'),
+                                                                                                                                  (16, 'Lilac Lumière Pavé Bracelet',        90.00,  300.00, 'supplier@goldcraft.com.au', '2026-04-13 11:29:33', '2026-04-14 01:32:10', 'Material: Platinum and rhodium plated on patented white alloy\r\nStone: Lilac cubic zirconia\r\nDimensions: 4 mm width'),
+                                                                                                                                  (17, 'Maille Marine Chain Bracelet',       90.00,  265.00, 'supplier@gemstone.com.au',  '2026-04-13 11:29:33', '2026-04-14 01:31:37', 'Material: Rose Alloy made of 95% recycled material and 18k gold plated, white cubic zirconia\r\nColor: Rose gold'),
+                                                                                                                                  (18, 'Up and Down Bracelet',              150.00,  510.00, 'supplier@pearlsea.com.au',  '2026-04-13 11:29:33', '2026-04-14 01:31:17', 'Material: Sterling silver, ruthenium\r\nStone: White cubic zirconia\r\nColor: Dark Grey\r\nClosure: Magnet Clasp'),
+                                                                                                                                  (19, 'Flower Meadow Brooch',               20.00,   70.00, 'supplier@gemstone.com.au',  '2026-04-13 11:29:33', '2026-04-14 01:42:22', 'The Flower Meadow Brooch features beautiful cateye stones in flower-like shapes with scattered multi-colour crystals.\r\nRose gold-coloured plating\r\nNickel free, lead free, cadmium free'),
+                                                                                                                                  (20, 'Swaying Crystal Leaf Brooch',        20.00,   70.00, 'supplier@goldcraft.com.au', '2026-04-13 11:29:33', '2026-04-14 01:30:53', 'Features leaf-like stones in deep navy blue, fine stone detailing, and articulated detail.\r\nSilver-coloured plating\r\nNickel free, lead free, cadmium free');
+
+-- --------------------------------------------------------
+-- Data: product_variants
+-- --------------------------------------------------------
+INSERT INTO `product_variants` (`id`, `product_id`, `size`, `stock`) VALUES
+                                                                         (1,  1, 'Size 5', 2), (2,  1, 'Size 6', 2), (3,  1, 'Size 7', 2), (4,  1, 'Size 8', 1), (5,  1, 'Size 9', 1),
+                                                                         (6,  2, 'Size 5', 5), (7,  2, 'Size 6', 5), (8,  2, 'Size 7', 5), (9,  2, 'Size 8', 5), (10, 2, 'Size 9', 5),
+                                                                         (11, 3, 'Size 5', 1), (12, 3, 'Size 6', 1), (13, 3, 'Size 7', 1), (14, 3, 'Size 8', 1), (15, 3, 'Size 9', 1),
+                                                                         (16, 4, 'Size 5', 1), (17, 4, 'Size 6', 1), (18, 4, 'Size 7', 1), (19, 4, 'Size 8', 0), (20, 4, 'Size 9', 0),
+                                                                         (21, 5, 'Size 5', 4), (22, 5, 'Size 6', 4), (23, 5, 'Size 7', 4), (24, 5, 'Size 8', 3), (25, 5, 'Size 9', 3),
+                                                                         (26, 6,  'One Size', 4),  (27, 7,  'One Size', 14), (28, 8,  'One Size', 20), (29, 9,  'One Size', 7),
+                                                                         (30, 10, 'One Size', 9),  (31, 11, 'One Size', 12), (32, 12, 'One Size', 30), (33, 13, 'One Size', 11),
+                                                                         (34, 14, 'One Size', 16), (35, 15, 'One Size', 6),  (36, 16, 'One Size', 22), (37, 17, 'One Size', 13),
+                                                                         (38, 18, 'One Size', 19), (39, 19, 'One Size', 15), (40, 20, 'One Size', 10);
 
 -- --------------------------------------------------------
 -- Data: categories_products
@@ -209,26 +240,26 @@ INSERT INTO `categories_products` (`id`, `category_id`, `product_id`) VALUES
 -- Data: product_images
 -- --------------------------------------------------------
 INSERT INTO `product_images` (`id`, `product_id`, `filename`) VALUES
-                                                                  (1,  1,  'diamond_solitaire_ring.png'),
-                                                                  (2,  2,  'rose_gold_twisted_band.png'),
-                                                                  (3,  3,  'emerald_halo_ring.png'),
-                                                                  (4,  4,  'sapphire_three_stone_ring.png'),
-                                                                  (5,  5,  'pearl_cocktail_ring.png'),
-                                                                  (6,  6,  'diamond_tennis_necklace.png'),
-                                                                  (7,  7,  'gold_lariat_necklace.png'),
-                                                                  (8,  8,  'amethyst_pendant_necklace.png'),
-                                                                  (9,  9,  'pearl_strand_necklace.png'),
-                                                                  (10, 10, 'ruby_heart_pendant.png'),
-                                                                  (11, 11, 'diamond_stud_earrings.png'),
-                                                                  (12, 12, 'gold_hoop_earrings.png'),
-                                                                  (13, 13, 'chandelier_drop_earrings.png'),
-                                                                  (14, 14, 'pearl_drop_earrings.png'),
-                                                                  (15, 15, 'gold_tennis_bracelet.png'),
-                                                                  (16, 16, 'charm_bracelet.png'),
-                                                                  (17, 17, 'amethyst_bangle.png'),
-                                                                  (18, 18, 'pearl_wrap_bracelet.png'),
-                                                                  (19, 19, 'butterfly_brooch.png'),
-                                                                  (20, 20, 'floral_gold_brooch.png');
+                                                                  (21, 1,  'art_deco_ring.png'),
+                                                                  (22, 2,  'statement_torsade_pave___ring.png'),
+                                                                  (23, 3,  'dainty_rose_gold_ring.png'),
+                                                                  (25, 5,  'LOVE_morse_code_ring.png'),
+                                                                  (26, 6,  'art_deco_adjustable_necklace.png'),
+                                                                  (27, 7,  'art_deco_pave___choker.png'),
+                                                                  (28, 8,  'lilac_torsade_adjustable_necklace.png'),
+                                                                  (29, 9,  'lumiere-pave-choker.png'),
+                                                                  (30, 10, 'maille-marine-chain-necklace.png'),
+                                                                  (31, 20, 'swaying_crystal_leaf_brooch.png'),
+                                                                  (33, 18, 'up-and-down-bracelet.png'),
+                                                                  (34, 17, 'maille-marine-chain-bracelet.png'),
+                                                                  (35, 16, 'lilac-lumiere-pave-bracelet.png'),
+                                                                  (36, 15, 'art-deco-pave-bracelet.png'),
+                                                                  (37, 14, 'asymmetric-cross-earrings.png'),
+                                                                  (38, 13, 'dainty-rose-gold-hoop-earrings.png'),
+                                                                  (39, 12, 'torsade-hoop-earrings.png'),
+                                                                  (40, 11, 'art-deco-statement-drop-earrings.png'),
+                                                                  (41, 4,  'chunky_rce_ring.png'),
+                                                                  (44, 19, 'flower_meadow_brooch.png');
 
 COMMIT;
 
