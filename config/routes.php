@@ -61,8 +61,7 @@ return function (RouteBuilder $routes): void {
             ->setPass(['id']);
         $builder->connect('/jewelry/add-to-cart', ['controller' => 'Jewelry', 'action' => 'addToCart']);
         $builder->connect('/cart', ['controller' => 'Jewelry', 'action' => 'cart']);
-        $builder->connect('/cart/remove/:id', ['controller' => 'Jewelry', 'action' => 'removeFromCart'])
-            ->setPass(['id']);
+        $builder->connect('/cart/remove', ['controller' => 'Jewelry', 'action' => 'removeFromCart']);
         $builder->connect('/checkout', ['controller' => 'Jewelry', 'action' => 'checkout']);
         $builder->connect('/checkout/create-session', ['controller' => 'Jewelry', 'action' => 'createCheckoutSession']);
         $builder->connect('/checkout/success', ['controller' => 'Jewelry', 'action' => 'success']);
@@ -77,12 +76,21 @@ return function (RouteBuilder $routes): void {
         $builder->connect('/auth/login', ['controller' => 'Auth', 'action' => 'login']);
         $builder->connect('/auth/logout', ['controller' => 'Auth', 'action' => 'logout']);
         $builder->connect('/auth/forgot-password', ['controller' => 'Auth', 'action' => 'forgotPassword']);
+        $builder->connect('/auth/change-password', ['controller' => 'Auth', 'action' => 'changePassword']);
 
         //Dashboard Route
         $builder->connect('/dashboard', ['controller' => 'Users', 'action' => 'dashboard']);
 
         //Logout Route
         $builder->connect('/logout', ['controller' => 'Users', 'action' => 'logout']);
+
+        // Profile routes (customer)
+        $builder->connect('/profile', ['controller' => 'Profile', 'action' => 'index']);
+        $builder->connect('/profile/edit', ['controller' => 'Profile', 'action' => 'edit']);
+        $builder->connect('/profile/change-password', ['controller' => 'Profile', 'action' => 'changePassword']);
+        $builder->connect('/profile/orders', ['controller' => 'Profile', 'action' => 'orders']);
+        $builder->connect('/profile/orders/:id', ['controller' => 'Profile', 'action' => 'orderDetail'])
+            ->setPass(['id']);
 
         //Chat bot Route
         $builder->connect('/chat/message', ['controller' => 'Chat', 'action' => 'message']);
