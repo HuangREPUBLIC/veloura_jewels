@@ -57,12 +57,21 @@ $this->assign('title', 'View Product');
                 <td><?= $this->Number->format($product->sale_price) ?></td>
             </tr>
             <tr>
-                <th><?= __('Stock') ?></th>
+                <th><?= __('Size & Stock') ?></th>
                 <td>
-                    <?php if ($product->stock < 5): ?>
-                        <span class="stock-low"><?= $product->stock ?></span>
+                    <?php if (!empty($product->product_variants)): ?>
+                        <?php foreach ($product->product_variants as $variant): ?>
+                            <div>
+                                <?= h($variant->size) ?>:
+                                <?php if ($variant->stock < 5): ?>
+                                    <span class="stock-low"><?= $variant->stock ?></span>
+                                <?php else: ?>
+                                    <?= $variant->stock ?>
+                                <?php endif; ?>
+                            </div>
+                        <?php endforeach; ?>
                     <?php else: ?>
-                        <?= $product->stock ?>
+                        -
                     <?php endif; ?>
                 </td>
             </tr>
@@ -89,6 +98,21 @@ $this->assign('title', 'View Product');
             <tr>
                 <th><?= __('Description') ?></th>
                 <td><?= !empty($product->description) ? nl2br(h($product->description)) : '-' ?></td>
+            </tr>
+            <tr>
+                <th><?= __('Images') ?></th>
+                <td>
+                    <?php if (!empty($product->product_images)): ?>
+                        <div style="display:flex;flex-wrap:wrap;gap:0.8rem;margin-top:0.4rem;">
+                            <?php foreach ($product->product_images as $img): ?>
+                                <img src="<?= $this->Url->image('products/' . h($img->filename)) ?>"
+                                     style="width:100px;height:100px;object-fit:cover;border-radius:8px;border:1px solid #e0e0e0;">
+                            <?php endforeach; ?>
+                        </div>
+                    <?php else: ?>
+                        —
+                    <?php endif; ?>
+                </td>
             </tr>
         </table>
     </div>

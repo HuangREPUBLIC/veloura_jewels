@@ -17,6 +17,7 @@ use Cake\ORM\Entity;
  * @property \Cake\I18n\DateTime $modified
  * @property \App\Model\Entity\ProductImage[] $product_images
  * @property \App\Model\Entity\Category[] $categories
+ * @property \App\Model\Entity\ProductVariant[] $product_variants
  */
 class Product extends Entity
 {
@@ -33,12 +34,12 @@ class Product extends Entity
         'name' => true,
         'purchase_price' => true,
         'sale_price' => true,
-        'stock' => true,
         'supplier_email' => true,
         'product_images' => true,
         'categories' => true,
         'created' => false,
         'modified' => false,
         'description' => true,
+        'product_variants' => true,
     ];
 }

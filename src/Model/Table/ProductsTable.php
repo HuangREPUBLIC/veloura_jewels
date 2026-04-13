@@ -27,6 +27,7 @@ use Cake\Validation\Validator;
  * @method iterable<\App\Model\Entity\Product>|\Cake\Datasource\ResultSetInterface<\App\Model\Entity\Product> saveManyOrFail(iterable $entities, array $options = [])
  * @method iterable<\App\Model\Entity\Product>|\Cake\Datasource\ResultSetInterface<\App\Model\Entity\Product>|false deleteMany(iterable $entities, array $options = [])
  * @method iterable<\App\Model\Entity\Product>|\Cake\Datasource\ResultSetInterface<\App\Model\Entity\Product> deleteManyOrFail(iterable $entities, array $options = [])
+ * @property \App\Model\Table\ProductVariantsTable&\Cake\ORM\Association\HasMany $ProductVariants
  */
 class ProductsTable extends Table
 {
@@ -52,6 +53,9 @@ class ProductsTable extends Table
             'foreignKey' => 'product_id',
             'targetForeignKey' => 'category_id',
             'joinTable' => 'categories_products',
+        ]);
+        $this->hasMany('ProductVariants', [
+            'foreignKey' => 'product_id',
         ]);
     }
 
@@ -83,10 +87,6 @@ class ProductsTable extends Table
             ->scalar('supplier_email')
             ->maxLength('supplier_email', 320)
             ->allowEmptyString('supplier_email');
-        $validator
-            ->integer('stock')
-            ->requirePresence('stock', 'create')
-            ->notEmptyString('stock');
 
         return $validator;
     }

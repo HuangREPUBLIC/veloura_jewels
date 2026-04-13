@@ -24,13 +24,13 @@ $this->assign('title', 'Products');
             <table id="productsTable" class="display">
                 <thead>
                 <tr>
-                    <th><?= $this->Paginator->sort('id') ?></th>
-                    <th><?= $this->Paginator->sort('name') ?></th>
-                    <th><?= $this->Paginator->sort('purchase_price') ?></th>
-                    <th><?= $this->Paginator->sort('sale_price') ?></th>
-                    <th><?= $this->Paginator->sort('stock') ?></th>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Purchase Price</th>
+                    <th>Sale Price</th>
+                    <th>Size & Stock</th>
                     <th>Category</th>
-                    <th><?= $this->Paginator->sort('supplier_email') ?></th>
+                    <th>Supplier Email</th>
                     <th class="actions"><?= __('Actions') ?></th>
                 </tr>
                 </thead>
@@ -42,11 +42,21 @@ $this->assign('title', 'Products');
                         <td><?= $this->Number->format($product->purchase_price) ?></td>
                         <td><?= $this->Number->format($product->sale_price) ?></td>
                         <td>
-                            <?php if ($product->stock < 5): ?>
-                                <span class="stock-low"><?= $product->stock ?></span>
-                            <?php else: ?>
-                                <?= $product->stock ?>
-                            <?php endif; ?>
+                            <?php
+                            $lowVariants = [];
+                            if (!empty($product->product_variants)) {
+                                foreach ($product->product_variants as $v) {
+                                    if ($v->stock < 5) {
+                                        $lowVariants[] = h($v->size) . ': ' . $v->stock;
+                                    }
+                                }
+                            }
+                            if (!empty($lowVariants)) {
+                                echo '<span class="stock-low">' . implode(', ', $lowVariants) . '</span>';
+                            } else {
+                                echo '✓';
+                            }
+                            ?>
                         </td>
                         <td>
                             <?php
@@ -56,7 +66,9 @@ $this->assign('title', 'Products');
                                 echo '-';
                             }
                             ?>
+
                         </td>
+
                         <td><?= h($product->supplier_email) ?></td>
                         <td class="actions">
                             <?= $this->Html->link(__('View'), ['action' => 'view', $product->id]) ?>
@@ -93,7 +105,7 @@ $this->assign('title', 'Products');
                 lengthMenu: '_MENU_ Entries Per Page',
                 search: 'Search:'
             },
-            columnDefs: [{ targets: [0, 1, 2, 3], searchable: true }]
+            columnDefs: [{ targets: [0, 1, 2, 3, 4, 5, 6, 7], searchable: true }]
         });
     });
 </script>
