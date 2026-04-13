@@ -244,3 +244,21 @@
 
 .chat-send-btn:hover { background: #5a5029; }
 .chat-send-btn:disabled { background: #ccc; cursor: not-allowed; }
+
+.chat-attach-btn {
+    background-color: #8B7D5E;
+    border: none;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    cursor: pointer;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: background-color 0.2s;
+}
+.chat-attach-btn:hover {
+    background-color: #6e6347;
+}
