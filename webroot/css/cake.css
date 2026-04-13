@@ -130,9 +130,16 @@ main > .row { margin-bottom: 4rem; }
     box-shadow: 0 1px 0 rgba(0,0,0,0.04);
 }
 
+.navbar-brand {
+    min-width: 120px;
+    display: flex;
+    align-items: center;
+}
+
 .navbar-logo {
-    height: 50px;
+    height: 46px;
     width: auto;
+    display: block;
 }
 
 .navbar-links {
@@ -143,11 +150,11 @@ main > .row { margin-bottom: 4rem; }
 
 .navbar-links a {
     font-family: 'Cinzel', Georgia, serif;
-    font-weight: 500;
+    font-weight: 600;
     font-size: 0.78rem;
     letter-spacing: 0.13em;
     text-transform: uppercase;
-    color: #4a4a46;
+    color: #2a2a26;
     text-decoration: none;
     padding: 0.45rem 1rem;
     border-radius: 5px;
@@ -169,7 +176,7 @@ main > .row { margin-bottom: 4rem; }
 .navbar-right .cart {
     font-family: 'Cinzel', Georgia, serif;
     font-size: 0.78rem;
-    font-weight: 500;
+    font-weight: 600;
     letter-spacing: 0.08em;
     text-transform: uppercase;
     color: #555;
@@ -203,6 +210,36 @@ main > .row { margin-bottom: 4rem; }
     background-color: var(--oakwood);
     color: #fff;
     text-decoration: none;
+}
+
+.btn-profile {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: 'Cinzel', Georgia, serif;
+    font-size: 0.76rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.52rem 1.1rem;
+    border: 1.5px solid var(--oakwood);
+    border-radius: 5px;
+    text-decoration: none;
+    color: #fff;
+    background: var(--oakwood);
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.btn-profile:hover {
+    background: var(--oakwood-dark);
+    border-color: var(--oakwood-dark);
+    color: #fff;
+    text-decoration: none;
+}
+
+.btn-profile svg {
+    flex-shrink: 0;
 }
 
 /* ============================================

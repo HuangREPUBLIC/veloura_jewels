@@ -10,7 +10,7 @@
 $cakeDescription = 'Veloura Jewels';
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="">
 <head>
     <?= $this->Html->charset() ?>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -69,6 +69,13 @@ $cakeDescription = 'Veloura Jewels';
         <?= $this->Html->link("Cart ($count)", ['controller' => 'Jewelry', 'action' => 'cart'], ['class' => 'cart']) ?>
 
         <?php if ($this->Identity->isLoggedIn()): ?>
+            <?php if ($role === 'customer'): ?>
+                <?= $this->Html->link(
+                    '<svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg> Profile',
+                    ['controller' => 'Profile', 'action' => 'index'],
+                    ['class' => 'btn-profile', 'escape' => false]
+                ) ?>
+            <?php endif; ?>
             <?= $this->Html->link('Logout', '/auth/logout', ['class' => 'btn-login']) ?>
         <?php else: ?>
             <?= $this->Html->link('Login', '/auth/login', ['class' => 'btn-login']) ?>
@@ -105,7 +112,14 @@ $_showChat = (
     ($_chatController === 'ContactSubmissions' && $_chatAction === 'add')     ||
     ($_chatController === 'Jewelry'            && $_chatAction === 'index')   ||
     ($_chatController === 'Jewelry'            && $_chatAction === 'cart')    ||
-    ($_chatController === 'Jewelry'            && $_chatAction === 'view')
+    ($_chatController === 'Jewelry'            && $_chatAction === 'view')    ||
+    ($_chatController === 'Jewelry'            && $_chatAction === 'checkout')    ||
+    ($_chatController === 'Jewelry'            && $_chatAction === 'success')    ||
+    ($_chatController === 'Jewelry'            && $_chatAction === 'cancel')    ||
+    ($_chatController === 'Profile'            && $_chatAction === 'index')    ||
+    ($_chatController === 'Profile'            && $_chatAction === 'edit')    ||
+    ($_chatController === 'Profile'            && $_chatAction === 'orders')    ||
+    ($_chatController === 'Auth'               && $_chatAction === 'changePassword')
 );
 ?>
 <?php if ($_showChat): ?>
