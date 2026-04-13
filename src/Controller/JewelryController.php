@@ -50,10 +50,20 @@ class JewelryController extends AppController
         $categoryId = (int)$this->request->getQuery('category');
         $minPrice   = $this->request->getQuery('min_price');
         $maxPrice   = $this->request->getQuery('max_price');
+        $sortBy     = $this->request->getQuery('sort') ?? 'newest';
+
+        $sortOptions = [
+            'newest'    => ['Products.id'         => 'DESC'],
+            'price_asc' => ['Products.sale_price' => 'ASC'],
+            'price_desc'=> ['Products.sale_price' => 'DESC'],
+            'name_asc'  => ['Products.name'       => 'ASC'],
+        ];
+
+        $orderBy = $sortOptions[$sortBy] ?? $sortOptions['newest'];
 
         $query = $this->Products->find()
             ->contain(['ProductImages'])
-            ->orderBy(['Products.id' => 'DESC']);
+            ->orderBy($orderBy);
 
         if ($categoryId > 0) {
             $query->matching('Categories', function ($q) use ($categoryId) {
@@ -71,12 +81,12 @@ class JewelryController extends AppController
 
         $products = $query->all();
 
-        $this->set(compact('products', 'categories', 'categoryId', 'minPrice', 'maxPrice'));
+        $this->set(compact('products', 'categories', 'categoryId', 'minPrice', 'maxPrice', 'sortBy'));
     }
 
     public function view($id = null)
     {
-        $product = $this->Products->get($id, contain: ['ProductImages']);
+        $product = $this->Products->get($id, contain: ['ProductImages', 'ProductVariants']);
         $this->set(compact('product'));
     }
 
@@ -84,28 +94,40 @@ class JewelryController extends AppController
     {
         $this->request->allowMethod(['post']);
 
-        $productId = (int)$this->request->getData('product_id');
-        $quantity = (int)$this->request->getData('quantity');
+        $productId  = (int)$this->request->getData('product_id');
+        $variantId  = (int)$this->request->getData('variant_id');
+        $quantity   = (int)$this->request->getData('quantity');
 
-        if ($quantity < 1) {
-            $quantity = 1;
+        if ($quantity < 1) $quantity = 1;
+
+        $variantsTable = $this->fetchTable('ProductVariants');
+        $variant = $variantsTable->get($variantId);
+
+        if ($variant->product_id !== $productId) {
+            $this->Flash->error('Invalid size selection.');
+            return $this->redirect(['action' => 'view', $productId]);
         }
 
-        $product = $this->Products->get($productId);
-        if ($quantity > (int)$product->stock) {
-            $quantity = (int)$product->stock;
+        if ($quantity > $variant->stock) {
+            $quantity = $variant->stock;
         }
 
         $session = $this->request->getSession();
         $cart = $session->read('Cart') ?? [];
 
-        if (isset($cart[$productId])) {
-            $cart[$productId] += $quantity;
-            if ($cart[$productId] > (int)$product->stock) {
-                $cart[$productId] = (int)$product->stock;
+        $key = $productId . '_' . $variantId;
+
+        if (isset($cart[$key])) {
+            $cart[$key]['quantity'] += $quantity;
+            if ($cart[$key]['quantity'] > $variant->stock) {
+                $cart[$key]['quantity'] = $variant->stock;
             }
         } else {
-            $cart[$productId] = $quantity;
+            $cart[$key] = [
+                'product_id' => $productId,
+                'variant_id' => $variantId,
+                'quantity'   => $quantity,
+            ];
         }
 
         $session->write('Cart', $cart);
@@ -120,22 +142,17 @@ class JewelryController extends AppController
         $cart = $session->read('Cart') ?? [];
 
         if ($this->request->is('post')) {
-            $productId = (int)$this->request->getData('product_id');
+            $key      = $this->request->getData('cart_key');
             $quantity = (int)$this->request->getData('quantity');
 
-            if (isset($cart[$productId])) {
+            if (isset($cart[$key])) {
                 if ($quantity <= 0) {
-                    unset($cart[$productId]);
+                    unset($cart[$key]);
                 } else {
-                    $product = $this->Products->get($productId);
-
-                    if ($quantity > (int)$product->stock) {
-                        $quantity = (int)$product->stock;
-                    }
-
-                    $cart[$productId] = $quantity;
+                    $variantsTable = $this->fetchTable('ProductVariants');
+                    $variant = $variantsTable->get($cart[$key]['variant_id']);
+                    $cart[$key]['quantity'] = min($quantity, $variant->stock);
                 }
-
                 $session->write('Cart', $cart);
             }
 
@@ -146,12 +163,15 @@ class JewelryController extends AppController
         $this->set(compact('products', 'total'));
     }
 
-    public function removeFromCart($id = null)
+    public function removeFromCart()
     {
-        $session = $this->request->getSession();
-        $cart = $session->read('Cart') ?? [];
+        $this->request->allowMethod(['post']);
 
-        unset($cart[$id]);
+        $session = $this->request->getSession();
+        $cart    = $session->read('Cart') ?? [];
+        $key     = $this->request->getData('cart_key');
+
+        unset($cart[$key]);
         $session->write('Cart', $cart);
 
         return $this->redirect(['action' => 'cart']);
@@ -199,7 +219,9 @@ class JewelryController extends AppController
             $item = $this->OrderItems->newEmptyEntity();
             $item->order_id = $order->id;
             $item->product_id = $product->id;
+            $item->variant_id    = $product->variant->id;
             $item->product_name = $product->name;
+            $item->selected_size = $product->variant->size;
             $item->unit_price = $product->sale_price;
             $item->quantity = $product->quantity;
             $item->subtotal = $product->subtotal;
@@ -247,15 +269,13 @@ class JewelryController extends AppController
 
         if ($sessionId !== '') {
             $order = $this->Orders->find()
+                ->contain(['OrderItems'])
                 ->where(['stripe_session_id' => $sessionId])
                 ->first();
-
         }
+
         $this->request->getSession()->delete('Cart');
-
         $this->set(compact('order'));
-
-
     }
 
     public function cancel()
@@ -307,11 +327,13 @@ class JewelryController extends AppController
                         ->all();
 
                     foreach ($items as $item) {
-                        $product = $this->Products->get($item->product_id);
-                        $newStock = max(0, (int)$product->stock - (int)$item->quantity);
-                        $product->stock = $newStock;
-                        $this->Products->saveOrFail($product);
+                        if (!$item->variant_id) continue;
+                        $variantsTable = $this->fetchTable('ProductVariants');
+                        $variant = $variantsTable->get($item->variant_id);
+                        $variant->stock = max(0, $variant->stock - (int)$item->quantity);
+                        $variantsTable->saveOrFail($variant);
                     }
+
                 }
             }
         }
@@ -322,32 +344,29 @@ class JewelryController extends AppController
 
     private function buildCartProductsAndTotal(): array
     {
-        $session = $this->request->getSession();
-        $cart = $session->read('Cart') ?? [];
-
+        $session  = $this->request->getSession();
+        $cart     = $session->read('Cart') ?? [];
         $products = [];
-        $total = 0;
+        $total    = 0;
 
         if (!empty($cart)) {
-            $products = $this->Products->find()
-                ->where(['Products.id IN' => array_keys($cart)])
-                ->contain(['ProductImages'])
-                ->all()
-                ->toList();
+            $variantsTable = $this->fetchTable('ProductVariants');
 
-            foreach ($products as $product) {
-                $qty = (int)($cart[$product->id] ?? 0);
+            foreach ($cart as $key => $item) {
+                $product = $this->Products->get($item['product_id'], contain: ['ProductImages']);
+                $variant = $variantsTable->get($item['variant_id']);
 
-                if ($qty > (int)$product->stock) {
-                    $qty = (int)$product->stock;
-                }
+                $qty = (int)$item['quantity'];
+                if ($qty > $variant->stock) $qty = $variant->stock;
+                if ($qty <= 0) continue;
 
-                $product->quantity = $qty;
-                $product->subtotal = $qty * (float)$product->sale_price;
+                $product->cart_key  = $key;
+                $product->variant   = $variant;
+                $product->quantity  = $qty;
+                $product->subtotal  = $qty * (float)$product->sale_price;
                 $total += $product->subtotal;
+                $products[] = $product;
             }
-
-            $products = array_filter($products, fn($p) => $p->quantity > 0);
         }
 
         return [$products, $total];

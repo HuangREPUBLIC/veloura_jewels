@@ -713,7 +713,6 @@
 
 .jewelry-page .jewelry-filter-bar {
     margin-bottom: 2rem;
-    padding: 1.2rem 1.4rem;
     background: #fff;
     border: 1px solid #ececec;
     border-radius: 14px;
@@ -721,64 +720,143 @@
 }
 
 .jewelry-page .jewelry-filter-form {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1.2rem;
-    align-items: flex-end;
+    width: 100%;
 }
 
-.jewelry-page .filter-group {
+.jewelry-page .filter-bar-inner {
     display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
+    align-items: center;
+    gap: 0;
+    border-bottom: 1.5px solid #e0ddd4;
+    padding: 0 0.5rem;
 }
 
-.jewelry-page .filter-label {
-    font-family: var(--font-body);
-    font-size: 0.72rem;
-    font-weight: 600;
-    color: #999;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
+/* ---- Dropdown trigger buttons ---- */
+.jewelry-page .filter-dropdown {
+    position: relative;
 }
 
-.jewelry-page .filter-options {
+.jewelry-page .filter-dropdown-btn {
     display: flex;
-    flex-wrap: wrap;
+    align-items: center;
     gap: 0.4rem;
-}
-
-.jewelry-page .filter-tag {
-    display: inline-block;
-    padding: 0.32rem 0.9rem;
-    border: 1.5px solid #d8d8d8;
-    border-radius: 999px;
     font-family: var(--font-body);
     font-size: 0.82rem;
-    font-weight: 400;
-    color: #666;
-    text-decoration: none;
-    transition: all 0.2s ease;
+    font-weight: 500;
+    color: #555;
+    background: none;
+    border: none;
+    padding: 1rem 1.2rem;
+    cursor: pointer;
     white-space: nowrap;
+    border-bottom: 2px solid transparent;
+    transition: color 0.2s ease, border-color 0.2s ease;
+    margin-bottom: -1px;
 }
 
-.jewelry-page .filter-tag:hover {
-    border-color: #786C3B;
-    color: #786C3B;
+.jewelry-page .filter-dropdown-btn:hover,
+.jewelry-page .filter-dropdown:hover .filter-dropdown-btn {
+    color: var(--oakwood);
+    border-bottom-color: var(--oakwood);
 }
 
-.jewelry-page .filter-tag.active {
-    background: #786C3B;
-    border-color: #786C3B;
-    color: #fff;
+.jewelry-page .filter-dropdown-btn.is-active {
+    color: var(--oakwood);
+    font-weight: 600;
+    border-bottom-color: var(--oakwood);
 }
 
-.jewelry-page .filter-group-price { margin-left: auto; }
+.jewelry-page .filter-active-label {
+    color: var(--oakwood);
+}
 
-.jewelry-page .filter-price-inputs {
+.jewelry-page .filter-chevron {
+    width: 10px;
+    height: 10px;
+    transition: transform 0.2s ease;
+    flex-shrink: 0;
+}
+
+.jewelry-page .filter-dropdown:hover .filter-chevron {
+    transform: rotate(180deg);
+}
+
+/* ---- Dropdown menus ---- */
+.jewelry-page .filter-dropdown-menu {
+    display: none;
+    position: absolute;
+    top: calc(100% + 1px);
+    left: 0;
+    min-width: 180px;
+    background: #fff;
+    border: 1px solid #e8e8e8;
+    border-radius: 10px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+    z-index: 100;
+    padding: 0.4rem 0;
+    animation: dropdownFade 0.15s ease;
+}
+
+.jewelry-page .filter-dropdown-menu--sort {
+    right: 0;
+    left: auto;
+    min-width: 200px;
+}
+
+.jewelry-page .filter-dropdown-menu--price {
+    min-width: 260px;
+    padding: 1rem 1.2rem;
+}
+
+.jewelry-page .filter-dropdown:hover .filter-dropdown-menu {
+    display: block;
+}
+
+@keyframes dropdownFade {
+    from { opacity: 0; transform: translateY(-4px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ---- Dropdown items ---- */
+.jewelry-page .filter-dropdown-item {
+    display: block;
+    padding: 0.55rem 1.2rem;
+    font-family: var(--font-body);
+    font-size: 0.84rem;
+    color: #555;
+    text-decoration: none;
+    transition: background 0.15s ease, color 0.15s ease;
+    cursor: pointer;
+    white-space: nowrap;
+    border: none;
+    background: none;
+    width: 100%;
+    text-align: left;
+    user-select: none;
+}
+
+.jewelry-page .filter-dropdown-item:hover {
+    background: rgba(120, 108, 59, 0.07);
+    color: var(--oakwood);
+    text-decoration: none;
+}
+
+.jewelry-page .filter-dropdown-item.active {
+    color: var(--oakwood);
+    font-weight: 600;
+    background: rgba(120, 108, 59, 0.06);
+}
+
+.jewelry-page .filter-dropdown-item input[type="radio"] {
+    display: none;
+}
+
+/* ---- Price dropdown internals ---- */
+.jewelry-page .price-dropdown-row {
     display: flex;
     align-items: center;
     gap: 0.5rem;
+    margin-bottom: 0.8rem;
 }
 
 .jewelry-page .price-prefix,
@@ -789,26 +867,27 @@
 }
 
 .jewelry-page .price-input {
-    width: 80px;
-    height: 36px;
-    padding: 0 0.6rem;
+    width: 75px;
+    height: 34px;
+    padding: 0 0.5rem;
     border: 1.5px solid #d8d8d8;
-    border-radius: 8px;
+    border-radius: 7px;
     font-family: var(--font-body);
-    font-size: 0.88rem;
+    font-size: 0.85rem;
     box-sizing: border-box;
     outline: none;
 }
 
-.jewelry-page .price-input:focus { border-color: #786C3B; }
+.jewelry-page .price-input:focus { border-color: var(--oakwood); }
 
 .jewelry-page .filter-apply-btn {
-    height: 36px;
+    width: 100%;
+    height: 34px;
     padding: 0 1rem;
-    background: #786C3B;
+    background: var(--oakwood);
     color: #fff;
     border: none;
-    border-radius: 8px;
+    border-radius: 7px;
     font-family: var(--font-body);
     font-size: 0.82rem;
     font-weight: 600;
@@ -816,21 +895,33 @@
     transition: background 0.2s ease;
 }
 
-.jewelry-page .filter-apply-btn:hover { background: #5a5029; }
+.jewelry-page .filter-apply-btn:hover { background: var(--oakwood-dark); }
 
-.jewelry-page .filter-clear-btn {
-    font-family: var(--font-body);
-    font-size: 0.82rem;
-    color: #aaa;
-    text-decoration: none;
-    padding: 0 0.4rem;
+/* ---- Sort right-aligned ---- */
+.jewelry-page .filter-dropdown--right {
+    margin-left: auto;
 }
 
-.jewelry-page .filter-clear-btn:hover { color: #c0392b; }
+/* ---- Clear ---- */
+.jewelry-page .filter-clear-btn {
+    font-family: var(--font-body);
+    font-size: 0.78rem;
+    color: var(--oakwood);
+    text-decoration: none;
+    padding: 0 0.8rem;
+    white-space: nowrap;
+    transition: color 0.2s ease;
+}
+
+.jewelry-page .filter-clear-btn:hover {
+    color: #c0392b;
+    text-decoration: none;
+}
 
 @media (max-width: 768px) {
-    .jewelry-page .jewelry-filter-form { flex-direction: column; }
-    .jewelry-page .filter-group-price { margin-left: 0; }
+    .jewelry-page .filter-bar-inner { flex-wrap: wrap; }
+    .jewelry-page .filter-dropdown--right { margin-left: 0; }
+    .jewelry-page .filter-dropdown-menu { position: fixed; left: 1rem; right: 1rem; min-width: unset; }
 }
 
 .jewelry-page .result-icon {
@@ -854,12 +945,12 @@
     width: 100%;
     padding: 0.95rem;
     background: #fff;
-    color: #555;
+    color: #333;
     border: 1.5px solid #d7d7d7;
     border-radius: 12px;
     font-family: var(--font-body);
     font-size: 0.85rem;
-    font-weight: 500;
+    font-weight: 600;
     text-decoration: none;
     transition: background 0.2s ease, border-color 0.2s ease;
 }
@@ -869,4 +960,72 @@
     border-color: #bbb;
     color: #333;
     text-decoration: none;
+}
+
+.jewelry-page .quantity-group select {
+    height: 44px;
+    border: 2px solid #c8c8c8;
+    border-radius: 12px;
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    background: #fff;
+    color: #333;
+    cursor: pointer;
+    outline: none;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 20 20'><path d='M5 7l5 5 5-5' stroke='%23666' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 0.8rem center;
+    padding: 0 2rem 0 1rem;
+    min-width: 120px;
+    width: auto;
+    transition: border-color 0.2s;
+}
+
+.jewelry-page .quantity-group select:focus {
+    border-color: #786C3B;
+}
+
+/* ---- Sort ---- */
+.filter-group-sort {
+    border-top: 1px solid rgba(120, 108, 59, 0.1);
+    padding-top: 1rem;
+    margin-top: 0.5rem;
+}
+
+.filter-sort-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.4rem;
+}
+
+.filter-sort-radio {
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    letter-spacing: 0.04em;
+    color: #666;
+    padding: 0.35rem 0.9rem;
+    border: 1px solid #d1d1d1;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    user-select: none;
+}
+
+.filter-sort-radio input[type="radio"] {
+    display: none;
+}
+
+.filter-sort-radio:hover {
+    border-color: var(--oakwood);
+    color: var(--oakwood);
+}
+
+.filter-sort-radio.active {
+    background: var(--oakwood);
+    border-color: var(--oakwood);
+    color: #fff;
 }

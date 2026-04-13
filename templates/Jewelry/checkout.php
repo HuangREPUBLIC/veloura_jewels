@@ -22,7 +22,7 @@ $this->Html->css('jewelry', ['block' => true]);
                     <div class="cart-item-image">
                         <?php if (!empty($product->product_images)): ?>
                             <img
-                                src="<?= $this->Url->image(h($product->product_images[0]->filename)) ?>"
+                                src="<?= $this->Url->image('products/' . h($product->product_images[0]->filename)) ?>"
                                 alt="<?= h($product->name) ?>"
                                 class="cart-image"
                             >
@@ -33,6 +33,7 @@ $this->Html->css('jewelry', ['block' => true]);
 
                     <div class="cart-item-info">
                         <h3><?= h($product->name) ?></h3>
+                        <p>Size: <?= h($product->variant->size) ?></p>
                         <p>Price: $<?= number_format((float)$product->sale_price, 2) ?></p>
                         <p>Quantity: <?= (int)$product->quantity ?></p>
                         <p>Subtotal: $<?= number_format((float)$product->subtotal, 2) ?></p>

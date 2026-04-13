@@ -18,6 +18,19 @@ $this->assign('title', 'Payment Successful');
 
         <?php if (!empty($order)): ?>
             <div class="result-order-info">
+
+                <?php if (!empty($order->order_items)): ?>
+                    <?php foreach ($order->order_items as $item): ?>
+                        <div class="result-order-row">
+                            <span class="result-order-label"><?= h($item->product_name) ?></span>
+                            <span class="result-order-value">
+                        <?= h($item->selected_size) ?> × <?= $item->quantity ?>
+                        — $<?= number_format((float)$item->subtotal, 2) ?>
+                    </span>
+                        </div>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+
                 <div class="result-order-row">
                     <span class="result-order-label">Email</span>
                     <span class="result-order-value"><?= h($order->customer_email) ?></span>
