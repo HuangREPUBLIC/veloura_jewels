@@ -23,14 +23,14 @@ $this->assign('title', 'Order ' . $order->id);
                 <th><?= __('Status') ?></th>
                 <td>
                     <?php
-                    $statusColors = [
-                        'paid' => 'color:green;font-weight:600;',
-                        'pending' => 'color:#b7860b;font-weight:600;',
-                        'cancelled' => 'color:#c0392b;font-weight:600;',
+                    $statusClass = [
+                        'paid'      => 'status-paid',
+                        'pending'   => 'status-pending',
+                        'cancelled' => 'status-cancelled',
                     ];
-                    $style = $statusColors[$order->status] ?? '';
+                    $cls = $statusClass[$order->status] ?? '';
                     ?>
-                    <span style="<?= $style ?>"><?= h(ucfirst($order->status)) ?></span>
+                    <span class="<?= $cls ?>"><?= h(ucfirst($order->status)) ?></span>
                 </td>
             </tr>
             <tr>
@@ -62,6 +62,7 @@ $this->assign('title', 'Order ' . $order->id);
                 <thead>
                 <tr>
                     <th><?= __('Product') ?></th>
+                    <th><?= __('Size') ?></th>
                     <th><?= __('Unit Price') ?></th>
                     <th><?= __('Quantity') ?></th>
                     <th><?= __('Subtotal') ?></th>
@@ -71,6 +72,7 @@ $this->assign('title', 'Order ' . $order->id);
                 <?php foreach ($order->order_items as $item): ?>
                     <tr>
                         <td><?= h($item->product_name) ?></td>
+                        <td><?= h($item->selected_size) ?: '-' ?></td>
                         <td>$<?= number_format((float)$item->unit_price, 2) ?></td>
                         <td><?= h($item->quantity) ?></td>
                         <td>$<?= number_format((float)$item->subtotal, 2) ?></td>

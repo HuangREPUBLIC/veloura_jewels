@@ -87,7 +87,19 @@ $this->assign('title', 'Admin Dashboard');
                         <div class="low-stock-row">
                             <span class="low-stock-name"><?= h($product->name) ?></span>
                             <div class="low-stock-actions">
-                                <span class="low-stock-badge">Stock: <?= $product->stock ?></span>
+            <span class="low-stock-badge">
+                <?php
+                if (!empty($product->product_variants)) {
+                    $lowVariants = [];
+                    foreach ($product->product_variants as $v) {
+                        if ($v->stock < 5) {
+                            $lowVariants[] = h($v->size) . ': ' . $v->stock;
+                        }
+                    }
+                    echo implode(', ', $lowVariants);
+                }
+                ?>
+            </span>
                                 <?= $this->Html->link(
                                     'Restock',
                                     ['controller' => 'Products', 'action' => 'edit', $product->id],

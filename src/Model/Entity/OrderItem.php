@@ -11,7 +11,9 @@ use Cake\ORM\Entity;
  * @property int $id
  * @property int $order_id
  * @property int $product_id
+ * @property int|null $variant_id
  * @property string $product_name
+ * @property string|null $selected_size
  * @property float $unit_price
  * @property int $quantity
  * @property float $subtotal
@@ -23,13 +25,15 @@ use Cake\ORM\Entity;
 class OrderItem extends Entity
 {
     protected array $_accessible = [
-        'order_id' => true,
-        'product_id' => true,
+        'order_id'     => true,
+        'product_id'   => true,
+        'variant_id'   => true,
         'product_name' => true,
-        'unit_price' => true,
-        'quantity' => true,
-        'subtotal' => true,
-        'created' => false,
-        'modified' => false,
+        'selected_size' => true,
+        'unit_price'   => true,
+        'quantity'     => true,
+        'subtotal'     => true,
+        'created'      => false,
+        'modified'     => false,
     ];
 }
