@@ -30,10 +30,9 @@ class OrdersController extends AppController
             return $this->redirect('/');
         }
 
-        $query = $this->Orders->find()
-            ->orderBy(['Orders.created' => 'DESC']);
-
-        $orders = $this->paginate($query);
+        $orders = $this->Orders->find()
+            ->orderBy(['Orders.created' => 'DESC'])
+            ->all();
 
         $this->set(compact('orders'));
     }

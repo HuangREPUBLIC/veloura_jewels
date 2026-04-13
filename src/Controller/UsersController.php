@@ -33,8 +33,7 @@ class UsersController extends AppController
             return $this->redirect('/');
         }
 
-        $query = $this->Users->find();
-        $users = $this->paginate($query);
+        $users = $this->Users->find()->all();
 
         $this->set(compact('users'));
     }
@@ -156,7 +155,11 @@ class UsersController extends AppController
         $totalEnquiries = $contactSubmissionsTable->find()->count();
         $lowStockProducts = $productsTable
             ->find()
-            ->where(['stock <' => 5])
+            ->contain(['ProductVariants'])
+            ->matching('ProductVariants', function ($q) {
+                return $q->where(['ProductVariants.stock <' => 5]);
+            })
+            ->distinct(['Products.id'])
             ->all();
 
         $ordersTable = $this->fetchTable('Orders');

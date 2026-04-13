@@ -17,12 +17,12 @@ $this->assign('title', 'Orders');
             <table id="ordersTable" class="display">
                 <thead>
                 <tr>
-                    <th><?= $this->Paginator->sort('id', 'ID') ?></th>
-                    <th><?= $this->Paginator->sort('customer_email', 'Customer') ?></th>
-                    <th><?= $this->Paginator->sort('status', 'Status') ?></th>
-                    <th><?= $this->Paginator->sort('total_amount', 'Total') ?></th>
-                    <th><?= $this->Paginator->sort('currency', 'Currency') ?></th>
-                    <th><?= $this->Paginator->sort('created', 'Date') ?></th>
+                    <th>ID</th>
+                    <th>Customer</th>
+                    <th>Status</th>
+                    <th>Total</th>
+                    <th>Currency</th>
+                    <th>Date</th>
                     <th class="actions"><?= __('Actions') ?></th>
                 </tr>
                 </thead>

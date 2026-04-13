@@ -506,3 +506,55 @@ a.btn-new-product:hover {
 .reply-context-table {
     margin-bottom: 1.5rem;
 }
+
+.btn-add-variant {
+    display: inline-block;
+    margin-top: 0.6rem;
+    padding: 0.4rem 1rem;
+    background: transparent;
+    border: 1.5px solid var(--oakwood);
+    border-radius: 6px;
+    color: var(--oakwood);
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.18s ease;
+}
+
+.btn-add-variant:hover {
+    background: var(--oakwood);
+    color: #fff;
+}
+.variant-row select {
+    padding: 0.5rem 0.8rem;
+    border: 1.5px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 0.88rem;
+    background: #fff;
+    cursor: pointer;
+    min-width: 120px;
+}
+
+.variant-row input[type="number"] {
+    padding: 0.5rem 0.8rem;
+    border: 1.5px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 0.88rem;
+    width: 90px;
+}
+
+.variant-row button {
+    padding: 0.4rem 0.7rem;
+    border: 1.5px solid #dc2626;
+    border-radius: 6px;
+    background: #fff;
+    color: #dc2626;
+    cursor: pointer;
+    font-size: 0.82rem;
+    transition: all 0.18s ease;
+}
+
+.variant-row button:hover {
+    background: #dc2626;
+    color: #fff;
+}

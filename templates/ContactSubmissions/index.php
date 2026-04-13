@@ -16,10 +16,10 @@ $this->assign('title', 'Contact Submissions');
             <table id="contactFormsTable" class="display">
                 <thead>
                 <tr>
-                    <th><?= __('Details') ?></th>
-                    <th><?= __('Subject') ?></th>
-                    <th><?= $this->Paginator->sort('created', 'Submission Date/Time') ?></th>
-                    <th><?= __('Replied') ?></th>
+                    <th>Details</th>
+                    <th>Subject</th>
+                    <th>Submission Date/Time</th>
+                    <th>Replied</th>
                     <th class="actions"><?= __('Actions') ?></th>
                 </tr>
                 </thead>
@@ -69,7 +69,7 @@ $this->assign('title', 'Contact Submissions');
 <script>
     $(document).ready(function() {
         $('#contactFormsTable').DataTable({
-            order: [[1, 'desc']],
+            order: [[2, 'desc']],
             language: {
                 lengthMenu: '_MENU_ Entries Per Page',
                 search: 'Search:'

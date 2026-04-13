@@ -17,9 +17,10 @@ $this->assign('title', 'Users');
             <table id="usersTable" class="display">
                 <thead>
                 <tr>
-                    <th><?= $this->Paginator->sort('email', 'Email') ?></th>
-                    <th><?= $this->Paginator->sort('role', 'Role') ?></th>
-                    <th><?= $this->Paginator->sort('created', 'Created') ?></th>
+                    <th>Email</th>
+                    <th>Name</th>
+                    <th>Role</th>
+                    <th>Created</th>
                     <th class="actions"><?= __('Actions') ?></th>
                 </tr>
                 </thead>
@@ -31,6 +32,7 @@ $this->assign('title', 'Users');
                     ?>
                     <tr>
                         <td><?= h($user->email) ?></td>
+                        <td><?= h(trim($user->first_name . ' ' . $user->last_name)) ?: '<span style="color:#bbb">—</span>' ?></td>
                         <td><?= h($user->role) ?></td>
                         <td><?= h($user->created) ?></td>
                         <td class="actions">
@@ -63,7 +65,7 @@ $this->assign('title', 'Users');
 <script>
     $(document).ready(function() {
         $('#usersTable').DataTable({
-            order: [[1, 'desc']],
+            order: [[3, 'desc']],
             language: {
                 lengthMenu: '_MENU_ Entries Per Page',
                 search: 'Search:'

@@ -29,8 +29,7 @@ class ContactSubmissionsController extends AppController
      */
     public function index()
     {
-        $query = $this->ContactSubmissions->find()->orderBy(['created' => 'DESC']);
-        $contactSubmissions = $this->paginate($query);
+        $contactSubmissions = $this->ContactSubmissions->find()->orderBy(['created' => 'DESC'])->all();
 
         $this->set(compact('contactSubmissions'));
     }

@@ -41,6 +41,22 @@ $this->assign('title', 'View User');
                 <td><?= h($user->email) ?></td>
             </tr>
             <tr>
+                <th><?= __('First Name') ?></th>
+                <td><?= h($user->first_name) ?: '—' ?></td>
+            </tr>
+            <tr>
+                <th><?= __('Last Name') ?></th>
+                <td><?= h($user->last_name) ?: '—' ?></td>
+            </tr>
+            <tr>
+                <th><?= __('Phone') ?></th>
+                <td><?= h($user->phone) ?: '—' ?></td>
+            </tr>
+            <tr>
+                <th><?= __('Address') ?></th>
+                <td><?= h($user->address) ?: '—' ?></td>
+            </tr>
+            <tr>
                 <th><?= __('Role') ?></th>
                 <td><?= h($user->role) ?></td>
             </tr>
