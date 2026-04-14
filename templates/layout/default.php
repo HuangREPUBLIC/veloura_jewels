@@ -52,12 +52,7 @@ $cakeDescription = 'Veloura Jewels';
 
         <?= $this->Html->link('Home', '/') ?>
         <?= $this->Html->link('Jewelry', '/jewelry') ?>
-
-        <?php if ($role === 'customer' || !$role): ?>
-            <?= $this->Html->link('Contact', '/contact') ?>
-        <?php else: ?>
-            <?= $this->Html->link('Admin', ['controller' => 'Users', 'action' => 'dashboard']) ?>
-        <?php endif; ?>
+        <?= $this->Html->link('Contact', '/contact') ?>
     </nav>
 
     <div class="navbar-right">
@@ -75,6 +70,8 @@ $cakeDescription = 'Veloura Jewels';
                     ['controller' => 'Profile', 'action' => 'index'],
                     ['class' => 'btn-profile', 'escape' => false]
                 ) ?>
+            <?php else: ?>
+                <?= $this->Html->link('Admin', ['controller' => 'Users', 'action' => 'dashboard'], ['class' => 'btn-profile']) ?>
             <?php endif; ?>
             <?= $this->Html->link('Logout', '/auth/logout', ['class' => 'btn-login']) ?>
         <?php else: ?>
