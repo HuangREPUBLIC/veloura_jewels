@@ -21,9 +21,6 @@ $this->assign('title', 'Payment Cancelled');
             <a href="<?= $this->Url->build(['controller' => 'Jewelry', 'action' => 'cart']) ?>" class="result-btn">
                 Return to Cart
             </a>
-            <a href="<?= $this->Url->build(['controller' => 'Jewelry', 'action' => 'index']) ?>" class="result-btn-secondary">
-                Continue Browsing
-            </a>
         </div>
 
     </div>
