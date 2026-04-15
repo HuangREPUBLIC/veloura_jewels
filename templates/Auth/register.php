@@ -3,8 +3,6 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\User $user
  */
-
-$this->layout = 'login';
 $this->assign('title', 'Create Account');
 ?>
 <div class="login-page">

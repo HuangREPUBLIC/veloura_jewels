@@ -3,7 +3,6 @@
  * @var \App\View\AppView $this
  */
 
-$this->layout = 'login';
 $this->assign('title', 'Forget Password');
 ?>
 

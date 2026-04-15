@@ -3,8 +3,6 @@
  * @var \App\View\AppView $this
  */
 use Cake\Core\Configure;
-
-$this->layout = 'login';
 $this->assign('title', 'Login');
 ?>
 

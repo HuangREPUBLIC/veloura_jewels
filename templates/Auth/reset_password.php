@@ -3,8 +3,6 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\User $user
  */
-
-$this->layout = 'login';
 $this->assign('title', 'Reset Password');
 ?>
 <div class="login-page">
