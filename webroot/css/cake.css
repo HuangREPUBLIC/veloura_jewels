@@ -261,6 +261,7 @@ main > .row { margin-bottom: 4rem; }
     gap: 10px;
     padding: 0.65rem 1.1rem;
     font-family: 'Cinzel', Georgia, serif;
+    font-weight: 600;
     font-size: 0.7rem;
     letter-spacing: 0.1em;
     text-transform: uppercase;

@@ -15,12 +15,10 @@ $this->assign('title', 'Admin Dashboard');
 <div class="admin-wrapper">
     <div class="admin-dashboard">
 
-
         <div class="dashboard-hero">
             <h1>Admin Dashboard</h1>
             <p>Welcome, <?= h($authUser->email) ?></p>
         </div>
-
 
         <div class="dashboard-summary">
             <a href="<?= $this->Url->build(['controller' => 'Products', 'action' => 'index']) ?>" class="dashboard-card">
@@ -72,7 +70,6 @@ $this->assign('title', 'Admin Dashboard');
             </a>
         </div>
 
-
         <?php if (!$lowStockProducts->isEmpty()): ?>
             <div class="low-stock-warning">
                 <h3>
@@ -82,36 +79,32 @@ $this->assign('title', 'Admin Dashboard');
                     Low Stock Products
                 </h3>
                 <p>These products are running low and may need restocking soon.</p>
+
                 <div class="low-stock-list">
                     <?php foreach ($lowStockProducts as $product): ?>
                         <div class="low-stock-row">
-                            <span class="low-stock-name"><?= h($product->name) ?></span>
-                            <div class="low-stock-actions">
-            <span class="low-stock-badge">
-                <?php
-                if (!empty($product->product_variants)) {
-                    $lowVariants = [];
-                    foreach ($product->product_variants as $v) {
-                        if ($v->stock < 5) {
-                            $lowVariants[] = h($v->size) . ': ' . $v->stock;
-                        }
-                    }
-                    echo implode(', ', $lowVariants);
-                }
-                ?>
-            </span>
+                            <div class="low-stock-row-top">
+                                <span class="low-stock-name"><?= h($product->name) ?></span>
                                 <?= $this->Html->link(
                                     'Restock',
                                     ['controller' => 'Products', 'action' => 'edit', $product->id],
                                     ['class' => 'low-stock-btn']
                                 ) ?>
                             </div>
+                            <div class="low-stock-pills">
+                                <?php foreach ($product->product_variants as $v): ?>
+                                    <?php if ($v->stock < 5): ?>
+                                        <span class="low-stock-pill <?= $v->stock === 0 ? 'pill-zero' : 'pill-low' ?>">
+                                            <?= h($v->size) ?>: <?= $v->stock ?>
+                                        </span>
+                                    <?php endif; ?>
+                                <?php endforeach; ?>
+                            </div>
                         </div>
                     <?php endforeach; ?>
                 </div>
             </div>
         <?php endif; ?>
-
 
         <div class="dashboard-grid">
             <a href="<?= $this->Url->build(['controller' => 'ContactSubmissions', 'action' => 'index']) ?>" class="dashboard-card">

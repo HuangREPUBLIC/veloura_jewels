@@ -59,16 +59,14 @@ $this->assign('title', 'Products');
                             ?>
                         </td>
                         <td>
-                            <?php
-                            if (!empty($product->categories)) {
-                                echo implode(', ', collection($product->categories)->extract('name')->toList());
-                            } else {
-                                echo '-';
-                            }
-                            ?>
-
+                            <?php if (!empty($product->categories)): ?>
+                                <?php foreach ($product->categories as $cat): ?>
+                                    <span class="cat-pill"><?= h($cat->name) ?></span>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                -
+                            <?php endif; ?>
                         </td>
-
                         <td><?= h($product->supplier_email) ?></td>
                         <td class="actions">
                             <?= $this->Html->link(__('View'), ['action' => 'view', $product->id]) ?>

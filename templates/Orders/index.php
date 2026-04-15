@@ -11,7 +11,10 @@ $this->assign('title', 'Orders');
     <div class="orders index content">
         <?= $this->Html->link(__('← Back'), ['controller' => 'Users', 'action' => 'dashboard']) ?>
 
-        <h3 class="page-title"><?= __('Orders') ?></h3>
+
+        <div class="page-header-row">
+            <h3 class="page-title"><?= __('Orders') ?></h3>
+        </div>
 
         <div class="table-responsive" id="datatable" style="padding: 10px">
             <table id="ordersTable" class="display">
@@ -34,13 +37,13 @@ $this->assign('title', 'Orders');
                         <td>
                             <?php
                             $statusClass = [
-                                'paid'      => 'status-paid',
-                                'pending'   => 'status-pending',
-                                'cancelled' => 'status-cancelled',
+                                'paid'      => 'status-pill-paid',
+                                'pending'   => 'status-pill-pending',
+                                'cancelled' => 'status-pill-cancelled',
                             ];
-                            $cls = $statusClass[$order->status] ?? '';
+                            $cls = $statusClass[$order->status] ?? 'status-pill-pending';
                             ?>
-                            <span class="<?= $cls ?>"><?= h(ucfirst($order->status)) ?></span>
+                            <span class="status-pill <?= $cls ?>"><?= h(ucfirst($order->status)) ?></span>
                         </td>
                         <td>$<?= number_format((float)$order->total_amount, 2) ?></td>
                         <td><?= strtoupper(h($order->currency)) ?></td>

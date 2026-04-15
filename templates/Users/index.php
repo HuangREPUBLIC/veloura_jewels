@@ -4,6 +4,8 @@
  * @var iterable<\App\Model\Entity\User> $users
  */
 $this->assign('title', 'Users');
+$identity = $this->request->getAttribute('identity');
+$currentRole = $identity ? $identity->get('role') : null;
 ?>
 <?php $this->Html->css('admincontact', ['block' => true]); ?>
 
@@ -11,9 +13,11 @@ $this->assign('title', 'Users');
     <div class="users index content">
         <?= $this->Html->link(__('← Back'), ['controller' => 'Users', 'action' => 'dashboard']) ?>
 
-        <h3 class="page-title"><?= __('Users') ?></h3>
+        <div class="page-header-row">
+            <h3 class="page-title"><?= __('Users') ?></h3>
+        </div>
 
-        <div class="table-responsive" id="datatable" style="padding: 10px">
+        <div class="table-responsive" style="padding: 10px">
             <table id="usersTable" class="display">
                 <thead>
                 <tr>
@@ -26,14 +30,10 @@ $this->assign('title', 'Users');
                 </thead>
                 <tbody>
                 <?php foreach ($users as $user): ?>
-                    <?php
-                    $identity = $this->request->getAttribute('identity');
-                    $currentRole = $identity ? $identity->get('role') : null;
-                    ?>
                     <tr>
                         <td><?= h($user->email) ?></td>
                         <td><?= h(trim($user->first_name . ' ' . $user->last_name)) ?: '<span style="color:#bbb">—</span>' ?></td>
-                        <td><?= h($user->role) ?></td>
+                        <td><span class="role-pill role-pill-<?= h($user->role) ?>"><?= h($user->role) ?></span></td>
                         <td><?= h($user->created) ?></td>
                         <td class="actions">
                             <?= $this->Html->link(__('View'), ['action' => 'view', $user->id]) ?>
@@ -47,9 +47,9 @@ $this->assign('title', 'Users');
                                     __('Delete'),
                                     ['action' => 'delete', $user->id],
                                     [
-                                        'method' => 'delete',
+                                        'method'  => 'delete',
                                         'confirm' => __('Are you sure you want to delete {0}?', $user->email),
-                                        'class' => 'btn-delete',
+                                        'class'   => 'btn-delete',
                                     ]
                                 ) ?>
                             <?php endif; ?>
