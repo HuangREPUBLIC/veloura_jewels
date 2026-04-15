@@ -47,7 +47,7 @@ $cakeDescription = 'Veloura Jewels';
     <nav class="navbar-links">
         <?= $this->Html->link('Home', '/') ?>
         <?= $this->Html->link('Jewelry', '/jewelry') ?>
-        <?= $this->Html->link('HomeDecor', '/homedecor') ?>
+        <?= $this->Html->link('HomeDecor', '/home-decor') ?>
         <?= $this->Html->link('Contact', '/contact') ?>
 
     </nav>

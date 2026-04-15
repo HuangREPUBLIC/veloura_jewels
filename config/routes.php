@@ -57,6 +57,7 @@ return function (RouteBuilder $routes): void {
 
         // Jewelry shop routes
         $builder->connect('/jewelry', ['controller' => 'Jewelry', 'action' => 'index']);
+        $builder->connect('/home-decor', ['controller' => 'Jewelry', 'action' => 'home_decor']);
         $builder->connect('/jewelry/view/:id', ['controller' => 'Jewelry', 'action' => 'view'])
             ->setPass(['id']);
         $builder->connect('/jewelry/add-to-cart', ['controller' => 'Jewelry', 'action' => 'addToCart']);

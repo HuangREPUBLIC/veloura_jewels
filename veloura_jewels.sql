@@ -161,7 +161,12 @@ INSERT INTO `categories` (`id`, `name`, `type`) VALUES
                                                     (2, 'Necklaces', 'jewelry'),
                                                     (3, 'Earrings',  'jewelry'),
                                                     (4, 'Bracelets', 'jewelry'),
-                                                    (5, 'Brooches',  'jewelry');
+                                                    (5, 'Brooches',  'jewelry'),
+                                                    (6,  'Candles',     'home_decor'),
+                                                    (7,  'Vases',       'home_decor'),
+                                                    (8,  'Cushions',    'home_decor'),
+                                                    (9,  'Wall Art',    'home_decor'),
+                                                    (10, 'Throws',      'home_decor');
 
 -- --------------------------------------------------------
 -- Data: users

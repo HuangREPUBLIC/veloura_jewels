@@ -26,6 +26,7 @@ class Category extends Entity
      */
     protected array $_accessible = [
         'name' => true,
+        'type' => true,
         'products' => true,
     ];
 }

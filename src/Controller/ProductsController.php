@@ -71,7 +71,8 @@ class ProductsController extends AppController
         }
 
         $categories = $this->Products->Categories->find('list', limit: 200)->all();
-        $this->set(compact('product', 'categories'));
+        $types = ['jewelry' => 'Jewelry', 'home_decor' => 'Home Decor'];
+        $this->set(compact('product', 'categories', 'types'));
     }
 
     public function edit($id = null)
@@ -118,7 +119,8 @@ class ProductsController extends AppController
         }
 
         $categories = $this->Products->Categories->find('list', limit: 200)->all();
-        $this->set(compact('product', 'categories'));
+        $types = ['jewelry' => 'Jewelry', 'home_decor' => 'Home Decor'];
+        $this->set(compact('product', 'categories', 'types'));
     }
 
     /**
