@@ -20,20 +20,6 @@ class ProfileController extends AppController
     }
 
     /**
-     * Redirect admins away from the profile area before any action runs.
-     */
-    public function beforeFilter(EventInterface $event): void
-    {
-        parent::beforeFilter($event);
-
-        $user = $this->Authentication->getIdentity();
-        if ($user && in_array($user->get('role'), ['admin', 'full_time', 'part_time'])) {
-            $event->stopPropagation();
-            $this->response = $this->redirect('/dashboard');
-        }
-    }
-
-    /**
      * Profile index — personal info summary + recent orders
      */
     public function index()
