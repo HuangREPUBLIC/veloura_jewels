@@ -32,7 +32,7 @@ html {
     --oakwood: #786c3b;
     --oakwood-dark: #5a5029;
 
-    --font-display: 'Cinzel', Georgia, serif;
+    --font-display: 'Raleway', 'Helvetica Neue', sans-serif;
     --font-body: 'Raleway', 'Helvetica Neue', sans-serif;
     --font-admin: Arial, 'Helvetica Neue', Helvetica, sans-serif;
 }
@@ -152,10 +152,9 @@ main > .row { margin-bottom: 4rem; }
 }
 
 .navbar-links a {
-    font-family: 'Cinzel', Georgia, serif;
+    font-family: var(--font-display);
     font-weight: 600;
     font-size: 0.92rem;
-    letter-spacing: 0.1em;
     text-transform: uppercase;
     color: #2a2a26;
     text-decoration: none;
@@ -260,7 +259,7 @@ main > .row { margin-bottom: 4rem; }
     align-items: center;
     gap: 10px;
     padding: 0.65rem 1.1rem;
-    font-family: 'Cinzel', Georgia, serif;
+    font-family: var(--font-display);
     font-weight: 600;
     font-size: 0.82rem;
     letter-spacing: 0.08em;
