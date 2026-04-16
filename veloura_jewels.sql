@@ -1,29 +1,27 @@
--- Veloura Jewels Database
--- Updated: product_images ON DELETE CASCADE, categories type field
+-- phpMyAdmin SQL Dump
+-- version 5.2.3
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Generation Time: Apr 16, 2026 at 01:21 PM
+-- Server version: 11.8.6-MariaDB
+-- PHP Version: 8.4.16
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8mb4 */;
 
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET time_zone = "+00:00";
-SET FOREIGN_KEY_CHECKS = 0;
-
+--
+-- Database: `veloura_jewels`
+--
 CREATE DATABASE IF NOT EXISTS `veloura_jewels` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_uca1400_ai_ci;
 USE `veloura_jewels`;
-
-DROP TABLE IF EXISTS `categories_products`;
-DROP TABLE IF EXISTS `product_images`;
-DROP TABLE IF EXISTS `order_items`;
-DROP TABLE IF EXISTS `contact_replies`;
-DROP TABLE IF EXISTS `contact_submissions`;
-DROP TABLE IF EXISTS `orders`;
-DROP TABLE IF EXISTS `product_variants`;
-DROP TABLE IF EXISTS `products`;
-DROP TABLE IF EXISTS `categories`;
-DROP TABLE IF EXISTS `users`;
-
 
 -- --------------------------------------------------------
 
@@ -539,61 +537,6 @@ ALTER TABLE `product_images`
 --
 ALTER TABLE `product_variants`
     ADD CONSTRAINT `fk_variants_product` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE;
-COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-
--- --------------------------------------------------------
--- Data: product_variants
--- --------------------------------------------------------
-INSERT INTO `product_variants` (`id`, `product_id`, `size`, `stock`) VALUES
-                                                                         (1,  1, 'Size 5', 2), (2,  1, 'Size 6', 2), (3,  1, 'Size 7', 2), (4,  1, 'Size 8', 1), (5,  1, 'Size 9', 1),
-                                                                         (6,  2, 'Size 5', 5), (7,  2, 'Size 6', 5), (8,  2, 'Size 7', 5), (9,  2, 'Size 8', 5), (10, 2, 'Size 9', 5),
-                                                                         (11, 3, 'Size 5', 1), (12, 3, 'Size 6', 1), (13, 3, 'Size 7', 1), (14, 3, 'Size 8', 1), (15, 3, 'Size 9', 1),
-                                                                         (16, 4, 'Size 5', 1), (17, 4, 'Size 6', 1), (18, 4, 'Size 7', 1), (19, 4, 'Size 8', 0), (20, 4, 'Size 9', 0),
-                                                                         (21, 5, 'Size 5', 4), (22, 5, 'Size 6', 4), (23, 5, 'Size 7', 4), (24, 5, 'Size 8', 3), (25, 5, 'Size 9', 3),
-                                                                         (26, 6,  'One Size', 4),  (27, 7,  'One Size', 14), (28, 8,  'One Size', 20), (29, 9,  'One Size', 7),
-                                                                         (30, 10, 'One Size', 9),  (31, 11, 'One Size', 12), (32, 12, 'One Size', 30), (33, 13, 'One Size', 11),
-                                                                         (34, 14, 'One Size', 16), (35, 15, 'One Size', 6),  (36, 16, 'One Size', 22), (37, 17, 'One Size', 13),
-                                                                         (38, 18, 'One Size', 19), (39, 19, 'One Size', 15), (40, 20, 'One Size', 10);
-
--- --------------------------------------------------------
--- Data: categories_products
--- --------------------------------------------------------
-INSERT INTO `categories_products` (`id`, `category_id`, `product_id`) VALUES
-                                                                          (1,  1, 1),  (2,  1, 2),  (3,  1, 3),  (4,  1, 4),  (5,  1, 5),
-                                                                          (6,  2, 6),  (7,  2, 7),  (8,  2, 8),  (9,  2, 9),  (10, 2, 10),
-                                                                          (11, 3, 11), (12, 3, 12), (13, 3, 13), (14, 3, 14),
-                                                                          (15, 4, 15), (16, 4, 16), (17, 4, 17), (18, 4, 18),
-                                                                          (19, 5, 19), (20, 5, 20);
-
--- --------------------------------------------------------
--- Data: product_images
--- --------------------------------------------------------
-INSERT INTO `product_images` (`id`, `product_id`, `filename`) VALUES
-                                                                  (21, 1,  'art_deco_ring.png'),
-                                                                  (22, 2,  'statement_torsade_pave___ring.png'),
-                                                                  (23, 3,  'dainty_rose_gold_ring.png'),
-                                                                  (25, 5,  'LOVE_morse_code_ring.png'),
-                                                                  (26, 6,  'art_deco_adjustable_necklace.png'),
-                                                                  (27, 7,  'art_deco_pave___choker.png'),
-                                                                  (28, 8,  'lilac_torsade_adjustable_necklace.png'),
-                                                                  (29, 9,  'lumiere-pave-choker.png'),
-                                                                  (30, 10, 'maille-marine-chain-necklace.png'),
-                                                                  (31, 20, 'swaying_crystal_leaf_brooch.png'),
-                                                                  (33, 18, 'up-and-down-bracelet.png'),
-                                                                  (34, 17, 'maille-marine-chain-bracelet.png'),
-                                                                  (35, 16, 'lilac-lumiere-pave-bracelet.png'),
-                                                                  (36, 15, 'art-deco-pave-bracelet.png'),
-                                                                  (37, 14, 'asymmetric-cross-earrings.png'),
-                                                                  (38, 13, 'dainty-rose-gold-hoop-earrings.png'),
-                                                                  (39, 12, 'torsade-hoop-earrings.png'),
-                                                                  (40, 11, 'art-deco-statement-drop-earrings.png'),
-                                                                  (41, 4,  'chunky_rce_ring.png'),
-                                                                  (44, 19, 'flower_meadow_brooch.png');
-
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
