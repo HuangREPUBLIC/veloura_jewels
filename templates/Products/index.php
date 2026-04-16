@@ -4,6 +4,22 @@
  * @var iterable<\App\Model\Entity\Product> $products
  */
 $this->assign('title', 'Products');
+
+function catPillClass(string $name): string {
+    $map = [
+        'rings'     => 'rings',
+        'necklaces' => 'necklaces',
+        'earrings'  => 'earrings',
+        'bracelets' => 'bracelets',
+        'brooches'  => 'brooches',
+        'candles'   => 'candles',
+        'vases'     => 'vases',
+        'cushions'  => 'cushions',
+        'wall art'  => 'wall-art',
+        'throws'    => 'throws',
+    ];
+    return 'cat-pill-' . ($map[strtolower($name)] ?? 'default');
+}
 ?>
 <?php $this->Html->css('admincontact', ['block' => true]); ?>
 
@@ -20,7 +36,7 @@ $this->assign('title', 'Products');
             <?php endif; ?>
         </div>
 
-        <div class="table-responsive" id="datatable" style="padding: 10px">
+        <div class="table-responsive" style="padding: 10px">
             <table id="productsTable" class="display">
                 <thead>
                 <tr>
@@ -51,17 +67,15 @@ $this->assign('title', 'Products');
                                     }
                                 }
                             }
-                            if (!empty($lowVariants)) {
-                                echo '<span class="stock-low">' . implode(', ', $lowVariants) . '</span>';
-                            } else {
-                                echo '✓';
-                            }
+                            echo !empty($lowVariants)
+                                ? '<span class="stock-low">' . implode(', ', $lowVariants) . '</span>'
+                                : '✓';
                             ?>
                         </td>
                         <td>
                             <?php if (!empty($product->categories)): ?>
                                 <?php foreach ($product->categories as $cat): ?>
-                                    <span class="cat-pill"><?= h($cat->name) ?></span>
+                                    <span class="cat-pill <?= catPillClass($cat->name) ?>"><?= h($cat->name) ?></span>
                                 <?php endforeach; ?>
                             <?php else: ?>
                                 -
@@ -70,21 +84,11 @@ $this->assign('title', 'Products');
                         <td><?= h($product->supplier_email) ?></td>
                         <td class="actions">
                             <?= $this->Html->link(__('View'), ['action' => 'view', $product->id]) ?>
-
                             <?php if (in_array($role, ['admin', 'part_time', 'full_time'])): ?>
                                 <?= $this->Html->link(__('Edit'), ['action' => 'edit', $product->id]) ?>
                             <?php endif; ?>
-
                             <?php if (in_array($role, ['admin', 'part_time', 'full_time'])): ?>
-                                <?= $this->Form->postLink(
-                                    __('Delete'),
-                                    ['action' => 'delete', $product->id],
-                                    [
-                                        'method'  => 'delete',
-                                        'confirm' => __('Are you sure you want to delete # {0}?', $product->id),
-                                        'class'   => 'btn-delete',
-                                    ]
-                                ) ?>
+                                <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $product->id], ['method' => 'delete', 'confirm' => __('Are you sure you want to delete # {0}?', $product->id), 'class' => 'btn-delete']) ?>
                             <?php endif; ?>
                         </td>
                     </tr>
@@ -98,12 +102,9 @@ $this->assign('title', 'Products');
 <script>
     $(document).ready(function() {
         $('#productsTable').DataTable({
-            order: [[1, 'desc']],
-            language: {
-                lengthMenu: '_MENU_ Entries Per Page',
-                search: 'Search:'
-            },
-            columnDefs: [{ targets: [0, 1, 2, 3, 4, 5, 6, 7], searchable: true }]
+            order: [[0, 'desc']],
+            language: { lengthMenu: '_MENU_ Entries Per Page', search: 'Search:' },
+            columnDefs: [{ targets: [0,1,2,3,4,5,6,7], searchable: true }]
         });
     });
 </script>

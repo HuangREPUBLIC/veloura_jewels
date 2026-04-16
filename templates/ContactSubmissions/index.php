@@ -15,13 +15,13 @@ $this->assign('title', 'Contact Submissions');
             <h3 class="page-title"><?= __('Contact Submissions') ?></h3>
         </div>
 
-        <div class="table-responsive" id="datatable" style="padding: 10px">
+        <div class="table-responsive" style="padding: 10px">
             <table id="contactFormsTable" class="display">
                 <thead>
                 <tr>
                     <th>Details</th>
                     <th>Subject</th>
-                    <th>Submission Date/Time</th>
+                    <th>Date</th>
                     <th>Replied</th>
                     <th class="actions"><?= __('Actions') ?></th>
                 </tr>

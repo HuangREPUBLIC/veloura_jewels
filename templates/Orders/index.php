@@ -11,12 +11,11 @@ $this->assign('title', 'Orders');
     <div class="orders index content">
         <?= $this->Html->link(__('← Back'), ['controller' => 'Users', 'action' => 'dashboard']) ?>
 
-
         <div class="page-header-row">
             <h3 class="page-title"><?= __('Orders') ?></h3>
         </div>
 
-        <div class="table-responsive" id="datatable" style="padding: 10px">
+        <div class="table-responsive" style="padding: 10px">
             <table id="ordersTable" class="display">
                 <thead>
                 <tr>
@@ -24,7 +23,6 @@ $this->assign('title', 'Orders');
                     <th>Customer</th>
                     <th>Status</th>
                     <th>Total</th>
-                    <th>Currency</th>
                     <th>Date</th>
                     <th class="actions"><?= __('Actions') ?></th>
                 </tr>
@@ -45,8 +43,7 @@ $this->assign('title', 'Orders');
                             ?>
                             <span class="status-pill <?= $cls ?>"><?= h(ucfirst($order->status)) ?></span>
                         </td>
-                        <td>$<?= number_format((float)$order->total_amount, 2) ?></td>
-                        <td><?= strtoupper(h($order->currency)) ?></td>
+                        <td>$<?= number_format((float)$order->total_amount, 2) ?> <?= strtoupper(h($order->currency)) ?></td>
                         <td><?= h($order->created) ?></td>
                         <td class="actions">
                             <?= $this->Html->link(__('View'), ['action' => 'view', $order->id]) ?>
@@ -62,12 +59,9 @@ $this->assign('title', 'Orders');
 <script>
     $(document).ready(function() {
         $('#ordersTable').DataTable({
-            order: [[5, 'desc']],
-            language: {
-                lengthMenu: '_MENU_ Entries Per Page',
-                search: 'Search:'
-            },
-            columnDefs: [{ targets: [0, 1, 2, 3, 4, 5], searchable: true }]
+            order: [[4, 'desc']],
+            language: { lengthMenu: '_MENU_ Entries Per Page', search: 'Search:' },
+            columnDefs: [{ targets: [0,1,2,3,4], searchable: true }]
         });
     });
 </script>
