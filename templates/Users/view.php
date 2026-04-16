@@ -35,7 +35,7 @@ $this->assign('title', 'View User');
             <?php endif; ?>
         </div>
 
-        <table>
+        <table class="view-table">
             <tr>
                 <th><?= __('Email') ?></th>
                 <td><?= h($user->email) ?></td>

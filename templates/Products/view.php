@@ -4,6 +4,27 @@
  * @var \App\Model\Entity\Product $product
  */
 $this->assign('title', 'View Product');
+
+function catPillClass(string $name): string {
+    $map = [
+        'rings'     => 'rings',
+        'necklaces' => 'necklaces',
+        'earrings'  => 'earrings',
+        'bracelets' => 'bracelets',
+        'brooches'  => 'brooches',
+        'candles'   => 'candles',
+        'vases'     => 'vases',
+        'cushions'  => 'cushions',
+        'wall art'  => 'wall-art',
+        'throws'    => 'throws',
+    ];
+    return 'cat-pill-' . ($map[strtolower($name)] ?? 'default');
+}
+
+$productType = '';
+if (!empty($product->categories)) {
+    $productType = $product->categories[0]->type ?? '';
+}
 ?>
 <?php $this->Html->css('admincontact', ['block' => true]); ?>
 
@@ -35,7 +56,7 @@ $this->assign('title', 'View Product');
             <?php endif; ?>
         </div>
 
-        <table>
+        <table class="view-table">
             <tr>
                 <th><?= __('Id') ?></th>
                 <td><?= $this->Number->format($product->id) ?></td>
@@ -43,6 +64,30 @@ $this->assign('title', 'View Product');
             <tr>
                 <th><?= __('Name') ?></th>
                 <td><?= h($product->name) ?></td>
+            </tr>
+            <tr>
+                <th><?= __('Type') ?></th>
+                <td>
+                    <?php if ($productType === 'jewelry'): ?>
+                        Jewelry
+                    <?php elseif ($productType === 'home_decor'): ?>
+                        Home Decor
+                    <?php else: ?>
+                        -
+                    <?php endif; ?>
+                </td>
+            </tr>
+            <tr>
+                <th><?= __('Categories') ?></th>
+                <td>
+                    <?php
+                    if (!empty($product->categories)) {
+                        echo implode(', ', collection($product->categories)->extract('name')->toList());
+                    } else {
+                        echo '-';
+                    }
+                    ?>
+                </td>
             </tr>
             <tr>
                 <th><?= __('Supplier Email') ?></th>
@@ -84,18 +129,6 @@ $this->assign('title', 'View Product');
                 <td><?= h($product->modified) ?></td>
             </tr>
             <tr>
-                <th><?= __('Categories') ?></th>
-                <td>
-                    <?php
-                    if (!empty($product->categories)) {
-                        echo implode(', ', collection($product->categories)->extract('name')->toList());
-                    } else {
-                        echo '-';
-                    }
-                    ?>
-                </td>
-            </tr>
-            <tr>
                 <th><?= __('Description') ?></th>
                 <td><?= !empty($product->description) ? nl2br(h($product->description)) : '-' ?></td>
             </tr>
@@ -106,7 +139,7 @@ $this->assign('title', 'View Product');
                         <div style="display:flex;flex-wrap:wrap;gap:0.8rem;margin-top:0.4rem;">
                             <?php foreach ($product->product_images as $img): ?>
                                 <img src="<?= $this->Url->image('products/' . h($img->filename)) ?>"
-                                     style="width:100px;height:100px;object-fit:cover;border-radius:8px;border:1px solid #e0e0e0;">
+                                     style="width:100px;height:100px;object-fit:cover;border-radius:8px;border:1px solid #ddd9cf;">
                             <?php endforeach; ?>
                         </div>
                     <?php else: ?>

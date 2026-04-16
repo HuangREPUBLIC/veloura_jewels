@@ -7,14 +7,14 @@ $this->assign('title', 'Order ' . $order->id);
 ?>
 <?php $this->Html->css('admincontact', ['block' => true]); ?>
 
-<div class="submissions-wrapper">
+<div class="admin-wrapper">
     <div class="orders view content">
 
         <?= $this->Html->link(__('← Back'), ['action' => 'index']) ?>
 
         <h3 class="page-title">Order <?= h($order->id) ?></h3>
 
-        <table style="margin-bottom: 2rem;">
+        <table class="view-table" style="margin-bottom: 2rem;">
             <tr>
                 <th><?= __('Customer Email') ?></th>
                 <td><?= h($order->customer_email) ?></td>
@@ -24,9 +24,9 @@ $this->assign('title', 'Order ' . $order->id);
                 <td>
                     <?php
                     $statusClass = [
-                        'paid'      => 'status-paid',
-                        'pending'   => 'status-pending',
-                        'cancelled' => 'status-cancelled',
+                        'paid'      => 'status-pill status-pill-paid',
+                        'pending'   => 'status-pill status-pill-pending',
+                        'cancelled' => 'status-pill status-pill-cancelled',
                     ];
                     $cls = $statusClass[$order->status] ?? '';
                     ?>
@@ -55,10 +55,10 @@ $this->assign('title', 'Order ' . $order->id);
             </tr>
         </table>
 
-        <h3 class="page-title" style="font-size:1.2rem;">Order Items</h3>
+        <h3 class="page-title" style="font-size:1.1rem; margin-top: 1.8rem;">Order Items</h3>
 
         <?php if (!empty($order->order_items)): ?>
-            <table>
+            <table class="view-table">
                 <thead>
                 <tr>
                     <th><?= __('Product') ?></th>
@@ -81,7 +81,7 @@ $this->assign('title', 'Order ' . $order->id);
                 </tbody>
             </table>
         <?php else: ?>
-            <p style="color:#888;">No items found for this order.</p>
+            <p class="text-muted">No items found for this order.</p>
         <?php endif; ?>
 
     </div>

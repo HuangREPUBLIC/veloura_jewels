@@ -24,7 +24,7 @@ $this->assign('title', 'View Submission');
             ) ?>
         </div>
 
-        <table>
+        <table class="view-table" style="margin-bottom: 1.5rem;">
             <tr>
                 <th><?= __('Email') ?></th>
                 <td><?= h($contactSubmission->email) ?></td>
@@ -54,8 +54,8 @@ $this->assign('title', 'View Submission');
         </div>
 
         <?php if (!empty($contactSubmission->contact_replies)): ?>
-            <h4><?= __('Replies') ?></h4>
-            <table>
+            <h4 style="margin: 1.5rem 0 0.8rem;"><?= __('Replies') ?></h4>
+            <table class="view-table">
                 <thead>
                 <tr>
                     <th><?= __('Subject') ?></th>
