@@ -23,7 +23,6 @@ $cakeDescription = 'Veloura Jewels';
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
 
     <?= $this->Html->css(['normalize.min', 'fonts', 'default-styles', 'cake', 'login', 'live-chat']) ?>
 
@@ -157,6 +156,7 @@ $_showChat = (
     ($_chatController === 'Pages'              && $_chatAction === 'display') ||
     ($_chatController === 'ContactSubmissions' && $_chatAction === 'add')     ||
     ($_chatController === 'Jewelry'            && $_chatAction === 'index')   ||
+    ($_chatController === 'Jewelry'            && $_chatAction === 'home_decor')   ||
     ($_chatController === 'Jewelry'            && $_chatAction === 'cart')    ||
     ($_chatController === 'Jewelry'            && $_chatAction === 'view')    ||
     ($_chatController === 'Jewelry'            && $_chatAction === 'checkout')    ||
