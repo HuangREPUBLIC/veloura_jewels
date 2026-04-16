@@ -154,8 +154,8 @@ main > .row { margin-bottom: 4rem; }
 .navbar-links a {
     font-family: 'Cinzel', Georgia, serif;
     font-weight: 600;
-    font-size: 0.78rem;
-    letter-spacing: 0.13em;
+    font-size: 0.92rem;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
     color: #2a2a26;
     text-decoration: none;
@@ -181,8 +181,8 @@ main > .row { margin-bottom: 4rem; }
    =========================================== */
 
 .nav-icon-btn {
-    width: 38px;
-    height: 38px;
+    width: 42px;
+    height: 42px;
     border: none;
     background: transparent;
     border-radius: 8px;
@@ -262,8 +262,8 @@ main > .row { margin-bottom: 4rem; }
     padding: 0.65rem 1.1rem;
     font-family: 'Cinzel', Georgia, serif;
     font-weight: 600;
-    font-size: 0.7rem;
-    letter-spacing: 0.1em;
+    font-size: 0.82rem;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
     color: #2a2a26;
     text-decoration: none;
@@ -277,13 +277,15 @@ main > .row { margin-bottom: 4rem; }
 
 .nav-dropdown a svg {
     flex-shrink: 0;
+    width: 16px;
+    height: 16px;
 }
 
 .nav-dropdown-label {
     display: block;
     padding: 0.5rem 1.1rem 0.2rem;
     font-family: var(--font-body);
-    font-size: 0.68rem;
+    font-size: 0.76rem;
     color: #999;
     letter-spacing: 0.05em;
     text-transform: uppercase;
