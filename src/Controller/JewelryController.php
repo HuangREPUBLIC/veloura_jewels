@@ -21,6 +21,7 @@ class JewelryController extends AppController
 
         $this->Authentication->addUnauthenticatedActions([
             'index',
+            'homeDecor',
             'view',
             'cart',
             'addToCart',
@@ -45,7 +46,10 @@ class JewelryController extends AppController
     public function index()
     {
         $categoriesTable = $this->fetchTable('Categories');
-        $categories = $categoriesTable->find()->orderBy(['name' => 'ASC'])->all();
+        $categories = $categoriesTable->find()
+            ->where(['type' => 'jewelry'])
+            ->orderBy(['name' => 'ASC'])
+            ->all();
 
         $categoryId = (int)$this->request->getQuery('category');
         $minPrice   = $this->request->getQuery('min_price');
@@ -65,9 +69,64 @@ class JewelryController extends AppController
             ->contain(['ProductImages'])
             ->orderBy($orderBy);
 
+        // Always restrict to jewelry-type categories
         if ($categoryId > 0) {
             $query->matching('Categories', function ($q) use ($categoryId) {
-                return $q->where(['Categories.id' => $categoryId]);
+                return $q->where(['Categories.id' => $categoryId, 'Categories.type' => 'jewelry']);
+            });
+        } else {
+            $query->matching('Categories', function ($q) {
+                return $q->where(['Categories.type' => 'jewelry']);
+            });
+        }
+
+        if ($minPrice !== null && $minPrice !== '') {
+            $query->where(['Products.sale_price >=' => (float)$minPrice]);
+        }
+
+        if ($maxPrice !== null && $maxPrice !== '') {
+            $query->where(['Products.sale_price <=' => (float)$maxPrice]);
+        }
+
+        $products = $query->all();
+
+        $this->set(compact('products', 'categories', 'categoryId', 'minPrice', 'maxPrice', 'sortBy'));
+    }
+
+    public function homeDecor()
+    {
+        $categoriesTable = $this->fetchTable('Categories');
+        $categories = $categoriesTable->find()
+            ->where(['type' => 'home_decor'])
+            ->orderBy(['name' => 'ASC'])
+            ->all();
+
+        $categoryId = (int)$this->request->getQuery('category');
+        $minPrice   = $this->request->getQuery('min_price');
+        $maxPrice   = $this->request->getQuery('max_price');
+        $sortBy     = $this->request->getQuery('sort') ?? 'newest';
+
+        $sortOptions = [
+            'newest'    => ['Products.id'         => 'DESC'],
+            'price_asc' => ['Products.sale_price' => 'ASC'],
+            'price_desc'=> ['Products.sale_price' => 'DESC'],
+            'name_asc'  => ['Products.name'       => 'ASC'],
+        ];
+
+        $orderBy = $sortOptions[$sortBy] ?? $sortOptions['newest'];
+
+        $query = $this->Products->find()
+            ->contain(['ProductImages'])
+            ->orderBy($orderBy);
+
+        // Always restrict to home_decor-type categories
+        if ($categoryId > 0) {
+            $query->matching('Categories', function ($q) use ($categoryId) {
+                return $q->where(['Categories.id' => $categoryId, 'Categories.type' => 'home_decor']);
+            });
+        } else {
+            $query->matching('Categories', function ($q) {
+                return $q->where(['Categories.type' => 'home_decor']);
             });
         }
 
