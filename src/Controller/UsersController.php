@@ -28,7 +28,7 @@ class UsersController extends AppController
     {
         $identity = $this->Authentication->getIdentity();
 
-        if (!$identity || !in_array($identity->get('role'), ['admin', 'full_time', 'part_time'])) {
+        if (!$identity || !in_array($identity->get('role'), ['admin', 'staff'])) {
             $this->Flash->error('You do not have permission to view users.');
             return $this->redirect('/');
         }
@@ -49,7 +49,7 @@ class UsersController extends AppController
     {
         $identity = $this->Authentication->getIdentity();
 
-        if (!$identity || !in_array($identity->get('role'), ['admin', 'full_time', 'part_time'])) {
+        if (!$identity || !in_array($identity->get('role'), ['admin', 'staff'])) {
             $this->Flash->error('You do not have permission to view this user.');
             return $this->redirect('/');
         }
@@ -69,7 +69,7 @@ class UsersController extends AppController
     {
         $identity = $this->Authentication->getIdentity();
 
-        if (!$identity || !in_array($identity->get('role'), ['admin', 'full_time'])) {
+        if (!$identity || !in_array($identity->get('role'), ['admin'])) {
             $this->Flash->error('You do not have permission to do this.');
             return $this->redirect('/');
         }
@@ -79,14 +79,14 @@ class UsersController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $data = $this->request->getData();
 
-            if ($identity->get('role') === 'full_time') {
+            if ($identity->get('role') === 'staff') {
                 if (isset($data['role']) && $data['role'] === 'admin') {
                     $this->Flash->error('You do not have permission to assign the admin role.');
                     return $this->redirect(['action' => 'index']);
                 }
             }
 
-            if ($identity->get('role') === 'part_time') {
+            if ($identity->get('role') === 'customer') {
                 $this->Flash->error('You do not have permission to edit users.');
                 return $this->redirect(['action' => 'index']);
             }
@@ -141,7 +141,7 @@ class UsersController extends AppController
     {
         $identity = $this->Authentication->getIdentity();
 
-        if (!$identity || !in_array($identity->get('role'), ['admin', 'full_time', 'part_time'])) {
+        if (!$identity || !in_array($identity->get('role'), ['admin', 'staff'])) {
             $this->Flash->error('You do not have permission to access the dashboard.');
             return $this->redirect('/');
         }

@@ -15,7 +15,7 @@ class ProductsController extends AppController
 
         if (
             !$identity ||
-            !in_array($identity->get('role'), ['admin', 'part_time', 'full_time'])
+            !in_array($identity->get('role'), ['admin', 'staff'])
         ) {
             $this->Flash->error('You do not have permission to access product management.');
             return $this->redirect('/');
@@ -50,7 +50,7 @@ class ProductsController extends AppController
 
         if (
             !$identity ||
-            !in_array($identity->get('role'), ['admin', 'part_time', 'full_time'])
+            !in_array($identity->get('role'), ['admin', 'staff'])
         ) {
             $this->Flash->error('You do not have permission to add products.');
             return $this->redirect(['action' => 'index']);
@@ -98,7 +98,7 @@ class ProductsController extends AppController
 
         if (
             !$identity ||
-            !in_array($identity->get('role'), ['admin', 'part_time', 'full_time'])
+            !in_array($identity->get('role'), ['admin', 'staff'])
         ) {
             $this->Flash->error('You do not have permission to edit products.');
             return $this->redirect(['action' => 'index']);
@@ -198,7 +198,7 @@ class ProductsController extends AppController
 
         if (
             !$identity ||
-            !in_array($identity->get('role'), ['admin', 'part_time', 'full_time'])
+            !in_array($identity->get('role'), ['admin', 'staff'])
         ) {
             $this->Flash->error('You do not have permission to delete products.');
             return $this->redirect(['action' => 'index']);

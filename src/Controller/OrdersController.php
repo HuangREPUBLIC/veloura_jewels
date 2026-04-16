@@ -25,7 +25,7 @@ class OrdersController extends AppController
     {
         $identity = $this->Authentication->getIdentity();
 
-        if (!$identity || !in_array($identity->get('role'), ['admin', 'full_time', 'part_time'])) {
+        if (!$identity || !in_array($identity->get('role'), ['admin', 'staff'])) {
             $this->Flash->error('You do not have permission to view orders.');
             return $this->redirect('/');
         }
@@ -44,7 +44,7 @@ class OrdersController extends AppController
     {
         $identity = $this->Authentication->getIdentity();
 
-        if (!$identity || !in_array($identity->get('role'), ['admin', 'full_time', 'part_time'])) {
+        if (!$identity || !in_array($identity->get('role'), ['admin', 'staff'])) {
             $this->Flash->error('You do not have permission to view this order.');
             return $this->redirect('/');
         }
