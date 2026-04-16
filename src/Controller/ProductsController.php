@@ -59,10 +59,9 @@ class ProductsController extends AppController
         $product = $this->Products->newEmptyEntity();
         if ($this->request->is('post')) {
             $product = $this->Products->patchEntity($product, $this->request->getData(), [
-                'associated' => ['ProductVariants']
+                'associated' => ['ProductVariants', 'Categories']
             ]);
-            if ($this->Products->save($product, ['associated' => ['ProductVariants']])) {
-                // Handle image uploads
+            if ($this->Products->save($product, ['associated' => ['ProductVariants', 'Categories']])) {
                 $this->_saveProductImages($product->id);
                 $this->Flash->success(__('The product has been saved.'));
                 return $this->redirect(['action' => 'index']);
@@ -70,9 +69,27 @@ class ProductsController extends AppController
             $this->Flash->error(__('The product could not be saved. Please, try again.'));
         }
 
-        $categories = $this->Products->Categories->find('list', limit: 200)->all();
+        // Return categories with their type so JS can filter by type
+        $categoriesRaw = $this->Products->Categories->find()
+            ->select(['id', 'name', 'type'])
+            ->orderBy(['type' => 'ASC', 'name' => 'ASC'])
+            ->all()
+            ->toArray();
+
+        $categories = [];
+        foreach ($categoriesRaw as $cat) {
+            $categories[$cat->id] = $cat->name;
+        }
+
+        // Pass full category data as JSON for JS filtering
+        $categoriesJson = json_encode(array_map(fn($cat) => [
+            'id'   => $cat->id,
+            'name' => $cat->name,
+            'type' => $cat->type,
+        ], $categoriesRaw));
+
         $types = ['jewelry' => 'Jewelry', 'home_decor' => 'Home Decor'];
-        $this->set(compact('product', 'categories', 'types'));
+        $this->set(compact('product', 'categories', 'categoriesJson', 'types'));
     }
 
     public function edit($id = null)
@@ -90,12 +107,10 @@ class ProductsController extends AppController
         $product = $this->Products->get($id, contain: ['Categories', 'ProductVariants', 'ProductImages']);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $product = $this->Products->patchEntity($product, $this->request->getData(), [
-                'associated' => ['ProductVariants']
+                'associated' => ['ProductVariants', 'Categories']
             ]);
-            if ($this->Products->save($product, ['associated' => ['ProductVariants']])) {
-                // Handle new image uploads
+            if ($this->Products->save($product, ['associated' => ['ProductVariants', 'Categories']])) {
                 $this->_saveProductImages($product->id);
-                // Handle image deletions
                 $deleteIds = $this->request->getData('delete_images') ?? [];
                 if (!empty($deleteIds)) {
                     $productImagesTable = $this->fetchTable('ProductImages');
@@ -118,9 +133,27 @@ class ProductsController extends AppController
             $this->Flash->error(__('The product could not be saved. Please, try again.'));
         }
 
-        $categories = $this->Products->Categories->find('list', limit: 200)->all();
+        // Return categories with their type so JS can filter by type
+        $categoriesRaw = $this->Products->Categories->find()
+            ->select(['id', 'name', 'type'])
+            ->orderBy(['type' => 'ASC', 'name' => 'ASC'])
+            ->all()
+            ->toArray();
+
+        $categories = [];
+        foreach ($categoriesRaw as $cat) {
+            $categories[$cat->id] = $cat->name;
+        }
+
+        // Pass full category data as JSON for JS filtering
+        $categoriesJson = json_encode(array_map(fn($cat) => [
+            'id'   => $cat->id,
+            'name' => $cat->name,
+            'type' => $cat->type,
+        ], $categoriesRaw));
+
         $types = ['jewelry' => 'Jewelry', 'home_decor' => 'Home Decor'];
-        $this->set(compact('product', 'categories', 'types'));
+        $this->set(compact('product', 'categories', 'categoriesJson', 'types'));
     }
 
     /**
@@ -133,7 +166,6 @@ class ProductsController extends AppController
 
         if (!$uploads) return;
 
-        // Support both single file and multiple files
         if (!is_array($uploads)) {
             $uploads = [$uploads];
         }
@@ -148,16 +180,11 @@ class ProductsController extends AppController
             $originalName = $upload->getClientFilename();
             $ext = strtolower(pathinfo($originalName, PATHINFO_EXTENSION));
 
-            // Only allow image types
             if (!in_array($ext, ['jpg', 'jpeg', 'png', 'webp', 'gif'])) continue;
 
-            // Use original filename, sanitised
             $filename = preg_replace('/[^a-z0-9_\-\.]/i', '_', $originalName);
-
-            // Move file to webroot/img/
             $upload->moveTo($uploadDir . $filename);
 
-            // Save record
             $imageEntity = $productImagesTable->newEmptyEntity();
             $imageEntity->product_id = $productId;
             $imageEntity->filename   = $filename;
