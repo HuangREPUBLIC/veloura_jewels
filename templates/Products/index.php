@@ -21,16 +21,20 @@ function catPillClass(string $name): string {
     return 'cat-pill-' . ($map[strtolower($name)] ?? 'default');
 }
 ?>
-<?php $this->Html->css('admincontact', ['block' => true]); ?>
+<?= $this->Html->css('admincontact') ?>
 
 <?php $role = $this->request->getAttribute('identity')->get('role'); ?>
 
 <div class="admin-wrapper">
     <div class="products index content">
-        <?= $this->Html->link(__('← Back'), ['controller' => 'Users', 'action' => 'dashboard']) ?>
+        <?= $this->Html->link(__('← Back'), ['controller' => 'Users', 'action' => 'dashboard'], ['class' => 'back-link']) ?>
 
         <div class="page-header-row">
-            <h3 class="page-title"><?= __('Products') ?></h3>
+            <div>
+                <h3 class="page-title"><?= __('Products') ?></h3>
+                <p class="page-subtitle">Manage product listings and details</p>
+            </div>
+
             <?php if (in_array($role, ['admin', 'part_time', 'full_time'])): ?>
                 <?= $this->Html->link(__('Add New Product'), ['action' => 'add'], ['class' => 'btn-new-product']) ?>
             <?php endif; ?>
@@ -54,9 +58,16 @@ function catPillClass(string $name): string {
                 <?php foreach ($products as $product): ?>
                     <tr>
                         <td><?= $this->Number->format($product->id) ?></td>
-                        <td><?= h($product->name) ?></td>
+
+                        <td class="product-cell">
+                            <div class="product-text">
+                                <span class="product-name"><?= h($product->name) ?></span>
+                            </div>
+                        </td>
+
                         <td><?= $this->Number->format($product->purchase_price) ?></td>
                         <td><?= $this->Number->format($product->sale_price) ?></td>
+
                         <td>
                             <?php
                             $lowVariants = [];
@@ -81,14 +92,18 @@ function catPillClass(string $name): string {
                                 -
                             <?php endif; ?>
                         </td>
-                        <td><?= h($product->supplier_email) ?></td>
+                        <td class="supplier-email"><?= h($product->supplier_email) ?></td>
                         <td class="actions">
-                            <?= $this->Html->link(__('View'), ['action' => 'view', $product->id]) ?>
+                            <?= $this->Html->link(__('View'), ['action' => 'view', $product->id], ['class' => 'btn-view']) ?>
                             <?php if (in_array($role, ['admin', 'part_time', 'full_time'])): ?>
-                                <?= $this->Html->link(__('Edit'), ['action' => 'edit', $product->id]) ?>
+                                <?= $this->Html->link(__('Edit'), ['action' => 'edit', $product->id], ['class' => 'btn-edit']) ?>
                             <?php endif; ?>
                             <?php if (in_array($role, ['admin', 'part_time', 'full_time'])): ?>
-                                <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $product->id], ['method' => 'delete', 'confirm' => __('Are you sure you want to delete # {0}?', $product->id), 'class' => 'btn-delete']) ?>
+                                <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $product->id], [
+                                    'method' => 'delete',
+                                    'confirm' => __('Are you sure you want to delete # {0}?', $product->id),
+                                    'class' => 'btn-delete'
+                                ]) ?>
                             <?php endif; ?>
                         </td>
                     </tr>
