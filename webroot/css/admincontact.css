@@ -792,3 +792,258 @@ a.btn-new-product:hover {
     background: #dc2626;
     color: #fff;
 }
+
+/* ===========================================
+   View products page
+   =========================================== */
+
+.admin-wrapper {
+    background: #f8f5ef;
+    padding: 24px;
+}
+
+.products.index.content {
+    background: #ffffff;
+    border: 1px solid #ddd2c2;
+    border-radius: 24px;
+    padding: 32px 36px;
+    box-shadow: 0 6px 18px rgba(70, 56, 35, 0.05);
+}
+
+.back-link {
+    display: inline-block;
+    margin-bottom: 26px;
+    color: #8a7a4a;
+    text-decoration: none;
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+.back-link:hover {
+    color: #6f5c2f;
+}
+
+.page-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 24px;
+    margin-bottom: 38px;
+}
+
+.page-header-row .page-title,
+h3.page-title,
+.products.index.content .page-title {
+    margin: 0 !important;
+    font-size: 1.7rem !important;
+    font-weight: 700 !important;
+    line-height: 1.2 !important;
+    letter-spacing: -0.3px !important;
+    color: #6f5c2f !important;
+    font-family: "Raleway", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+}
+
+.page-header-row .page-subtitle {
+    margin: 8px 0 0 !important;
+    font-size: 0.88rem !important;
+    color: #8f7f6d !important;
+}
+
+.btn-new-product {
+    background: #8a7a3d;
+    color: #fff !important;
+    text-decoration: none;
+    padding: 14px 24px;
+    border-radius: 12px;
+    border: 1px solid #8a7a3d;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: 0.2s ease;
+}
+
+.btn-new-product:hover {
+    background: #746632;
+    border-color: #746632;
+    color: #fff !important;
+}
+
+.table-wrapper {
+    background: #f5f1e8;
+    border-radius: 18px;
+    padding: 10px 0;
+}
+
+#productsTable {
+    width: 100% !important;
+    border-collapse: collapse !important;
+    background: #fdfbf7 !important;
+    font-family: "Raleway", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+}
+
+#productsTable thead th {
+    position: relative;
+    background: #f6f1e8 !important;
+    color: #8a744f !important;
+    border-bottom: 1px solid #e0d5c5 !important;
+    padding: 20px 38px 20px 16px !important;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 0.82rem;
+    white-space: nowrap;
+}
+
+table.dataTable thead > tr > th.sorting,
+table.dataTable thead > tr > th.sorting_asc,
+table.dataTable thead > tr > th.sorting_desc,
+table.dataTable thead > tr > th.sorting_asc_disabled,
+table.dataTable thead > tr > th.sorting_desc_disabled {
+    padding-right: 38px !important;
+}
+
+table.dataTable thead .sorting:before,
+table.dataTable thead .sorting:after,
+table.dataTable thead .sorting_asc:before,
+table.dataTable thead .sorting_asc:after,
+table.dataTable thead .sorting_desc:before,
+table.dataTable thead .sorting_desc:after {
+    right: 14px !important;
+}
+
+#productsTable tbody td {
+    padding: 22px 16px !important;
+    border-bottom: 1px solid #e3d9cb !important;
+    color: #3f372f;
+    vertical-align: middle;
+    background: #fcfaf6 !important;
+    font-family: "Raleway", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+}
+
+#productsTable tbody td:first-child {
+    font-size: 0.9rem;
+    color: #9a8d7b;
+    font-weight: 500;
+}
+
+#productsTable tbody tr:hover td {
+    background: #f1e9dc !important;
+}
+
+.product-cell .product-text {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.product-name {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #3f372f;
+    line-height: 1.45;
+    font-family: "Raleway", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+}
+
+.cat-pill {
+    display: inline-block;
+    padding: 8px 16px;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    background: #e7d9c2;
+    color: #7a5630;
+}
+
+.stock-low {
+    color: #b94c4c;
+    font-weight: 600;
+}
+
+.supplier-email {
+    color: #4c433b;
+}
+
+.actions {
+    white-space: nowrap;
+}
+
+.actions a,
+.btn-delete {
+    display: inline-block;
+    text-decoration: none;
+    padding: 9px 15px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-right: 8px;
+    transition: 0.2s ease;
+    font-family: "Raleway", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+}
+
+.btn-view {
+    border: 1px solid #9a884f;
+    color: #7a6242 !important;
+    background: transparent;
+}
+
+.btn-view:hover {
+    background: #ece2d1;
+}
+
+.btn-edit {
+    border: 1px solid #8a7a3d;
+    background: #8a7a3d;
+    color: #fff !important;
+}
+
+.btn-edit:hover {
+    background: #746632;
+    border-color: #746632;
+}
+
+.btn-delete {
+    border: 1px solid #c64545;
+    background: transparent;
+    color: #c64545 !important;
+}
+
+.btn-delete:hover {
+    background: #f7e6e6;
+}
+
+.dataTables_wrapper .dataTables_length,
+.dataTables_wrapper .dataTables_filter,
+.dataTables_wrapper .dataTables_length label,
+.dataTables_wrapper .dataTables_filter label {
+    margin-bottom: 18px;
+    color: #8a744f !important;
+    font-weight: 500;
+    font-size: 1.05rem !important;
+    font-family: "Raleway", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+}
+
+.dataTables_wrapper .dataTables_length select,
+.dataTables_wrapper .dataTables_filter input {
+    border: 1px solid #cfc2af;
+    border-radius: 10px;
+    padding: 8px 12px;
+    background: #fbf8f3;
+    color: #4b4238;
+}
+
+.dataTables_wrapper .dataTables_length select {
+    min-width: 88px;
+    height: 46px;
+    font-size: 1rem !important;
+}
+
+.dataTables_wrapper .dataTables_info,
+#productsTable_info {
+    margin-top: 14px;
+    color: #9a8d7b;
+    font-size: 0.85rem;
+    font-family: "Raleway", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.dataTables_wrapper .dataTables_paginate {
+    margin-top: 18px;
+    color: #8a744f;
+}
