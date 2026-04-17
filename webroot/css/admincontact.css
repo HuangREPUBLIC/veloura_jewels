@@ -839,7 +839,6 @@ h3.page-title,
     line-height: 1.2 !important;
     letter-spacing: -0.3px !important;
     color: #6f5c2f !important;
-    font-family: var(--font-display) !important;
 }
 
 .page-header-row .page-subtitle {
@@ -879,7 +878,6 @@ h3.page-title,
     border-radius: 14px;
     overflow: hidden;
     background: #fdfbf7 !important;
-    font-family: var(--font-admin) !important;
 }
 
 #productsTable thead th {
@@ -917,7 +915,6 @@ table.dataTable thead .sorting_desc:after {
     color: #3f372f;
     vertical-align: middle;
     background: #f4efe7 !important;
-    font-family: var(--font-admin) !important;
 }
 
 #productsTable tbody td:first-child {
@@ -941,7 +938,6 @@ table.dataTable thead .sorting_desc:after {
     font-weight: 500;
     color: #3f372f;
     line-height: 1.45;
-    font-family: var(--font-admin) !important;
 }
 
 .cat-pill {
@@ -977,7 +973,6 @@ table.dataTable thead .sorting_desc:after {
     font-size: 0.9rem;
     margin-right: 8px;
     transition: 0.2s ease;
-    font-family: var(--font-admin) !important;
 }
 
 .btn-view {
@@ -1019,7 +1014,6 @@ table.dataTable thead .sorting_desc:after {
     color: #8a744f !important;
     font-weight: 500;
     font-size: 1.05rem !important;
-    font-family: var(--font-admin) !important;
 }
 
 .dataTables_wrapper .dataTables_length select,
@@ -1042,7 +1036,6 @@ table.dataTable thead .sorting_desc:after {
     margin-top: 14px;
     color: #9a8d7b;
     font-size: 0.85rem;
-    font-family: var(--font-admin);
 }
 
 .dataTables_wrapper .dataTables_paginate {
