@@ -796,14 +796,13 @@ a.btn-new-product:hover {
 /* ===========================================
    View products page
    =========================================== */
-
 .admin-wrapper {
-    background: #f8f5ef;
+    background: var(--beige-light);
     padding: 24px;
 }
 
 .products.index.content {
-    background: #ffffff;
+    background: #f6f4f1;
     border: 1px solid #ddd2c2;
     border-radius: 24px;
     padding: 32px 36px;
@@ -840,7 +839,7 @@ h3.page-title,
     line-height: 1.2 !important;
     letter-spacing: -0.3px !important;
     color: #6f5c2f !important;
-    font-family: "Raleway", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+    font-family: var(--font-display) !important;
 }
 
 .page-header-row .page-subtitle {
@@ -876,13 +875,16 @@ h3.page-title,
 #productsTable {
     width: 100% !important;
     border-collapse: collapse !important;
+    border: 1px solid #e0d6c7;
+    border-radius: 14px;
+    overflow: hidden;
     background: #fdfbf7 !important;
-    font-family: "Raleway", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+    font-family: var(--font-admin) !important;
 }
 
 #productsTable thead th {
     position: relative;
-    background: #f6f1e8 !important;
+    background: #e6ded1 !important;
     color: #8a744f !important;
     border-bottom: 1px solid #e0d5c5 !important;
     padding: 20px 38px 20px 16px !important;
@@ -914,8 +916,8 @@ table.dataTable thead .sorting_desc:after {
     border-bottom: 1px solid #e3d9cb !important;
     color: #3f372f;
     vertical-align: middle;
-    background: #fcfaf6 !important;
-    font-family: "Raleway", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+    background: #f4efe7 !important;
+    font-family: var(--font-admin) !important;
 }
 
 #productsTable tbody td:first-child {
@@ -925,7 +927,7 @@ table.dataTable thead .sorting_desc:after {
 }
 
 #productsTable tbody tr:hover td {
-    background: #f1e9dc !important;
+    background: #ebe4d8 !important;
 }
 
 .product-cell .product-text {
@@ -939,7 +941,7 @@ table.dataTable thead .sorting_desc:after {
     font-weight: 500;
     color: #3f372f;
     line-height: 1.45;
-    font-family: "Raleway", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+    font-family: var(--font-admin) !important;
 }
 
 .cat-pill {
@@ -975,7 +977,7 @@ table.dataTable thead .sorting_desc:after {
     font-size: 0.9rem;
     margin-right: 8px;
     transition: 0.2s ease;
-    font-family: "Raleway", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+    font-family: var(--font-admin) !important;
 }
 
 .btn-view {
@@ -1017,7 +1019,7 @@ table.dataTable thead .sorting_desc:after {
     color: #8a744f !important;
     font-weight: 500;
     font-size: 1.05rem !important;
-    font-family: "Raleway", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+    font-family: var(--font-admin) !important;
 }
 
 .dataTables_wrapper .dataTables_length select,
@@ -1040,7 +1042,7 @@ table.dataTable thead .sorting_desc:after {
     margin-top: 14px;
     color: #9a8d7b;
     font-size: 0.85rem;
-    font-family: "Raleway", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: var(--font-admin);
 }
 
 .dataTables_wrapper .dataTables_paginate {
