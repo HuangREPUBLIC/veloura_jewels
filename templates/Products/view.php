@@ -129,8 +129,12 @@ if (!empty($product->categories)) {
                 <td><?= h($product->modified) ?></td>
             </tr>
             <tr>
-                <th><?= __('Description') ?></th>
+                <th><?= __('Product Description') ?></th>
                 <td><?= !empty($product->description) ? nl2br(h($product->description)) : '-' ?></td>
+            </tr>
+            <tr>
+                <th><?= __('Story') ?></th>
+                <td><?= !empty($product->story) ? nl2br(h($product->story)) : '-' ?></td>
             </tr>
             <tr>
                 <th><?= __('Images') ?></th>
