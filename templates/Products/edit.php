@@ -97,7 +97,7 @@ if (!empty($product->type)) {
                 'multiple' => true,
                 'accept'   => 'image/*',
             ]);
-            echo $this->Form->control('description', ['type' => 'textarea', 'label' => 'Description', 'required' => true]);
+            echo $this->Form->control('description', ['type' => 'textarea', 'label' => 'Product Description', 'required' => true]);
             echo $this->Form->control('story', ['type' => 'textarea', 'label' => 'Story', 'required' => true]);
             ?>
 
