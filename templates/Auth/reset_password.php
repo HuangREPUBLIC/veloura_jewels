@@ -25,7 +25,7 @@ $this->assign('title', 'Reset Password');
             ]);
             echo $this->Form->control('password_confirm', [
                 'type' => 'password',
-                'label' => 'Repeat New Password',
+                'label' => 'Confirm New Password',
                 'required' => true,
                 'value' => ''
             ]);

@@ -161,6 +161,13 @@ class AuthController extends AppController
         }
 
         if ($this->request->is(['patch', 'post', 'put'])) {
+            if ($this->request->getData('password') !== $this->request->getData('password_confirm')) {
+                $this->Flash->error('Passwords do not match. Please try again.');
+                $this->set(compact('user'));
+
+                return;
+            }
+
             // Used a different validation set in Model/Table file to ensure both fields are filled
             $user = $this->Users->patchEntity($user, $this->request->getData(), ['validate' => 'resetPassword']);
 
