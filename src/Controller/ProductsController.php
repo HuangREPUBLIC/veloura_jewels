@@ -4,6 +4,8 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use Cake\Event\EventInterface;
+use Cake\Log\Log;
+use Cake\Datasource\Exception\RecordNotFoundException;
 
 class ProductsController extends AppController
 {
@@ -213,8 +215,19 @@ class ProductsController extends AppController
         }
 
         $this->request->allowMethod(['post', 'delete']);
-        $product = $this->Products->get($id);
+
+        try {
+            $product = $this->Products->get($id);
+        } catch (RecordNotFoundException $e) {
+            $this->Flash->error(__('Product not found.'));
+            return $this->redirect(['action' => 'index']);
+        }
+
+        $adminId = $identity->get('id');
+        $adminEmail = $identity->get('email');
+
         if ($this->Products->delete($product)) {
+            Log::write('info', "Product deleted: id={$product->id}, name=\"{$product->name}\" by admin id={$adminId} ({$adminEmail})");
             $this->Flash->success(__('The product has been deleted.'));
         } else {
             $this->Flash->error(__('The product could not be deleted. Please, try again.'));
