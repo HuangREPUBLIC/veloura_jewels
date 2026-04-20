@@ -4,7 +4,7 @@
  * @var iterable<\App\Model\Entity\Product> $products
  */
 $this->assign('title', 'Products');
-
+// test
 function catPillClass(string $name): string {
     $map = [
         'rings'     => 'rings',
