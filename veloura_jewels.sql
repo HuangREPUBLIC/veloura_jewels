@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.3
+-- version 5.2.2
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Apr 20, 2026 at 04:45 PM
--- Server version: 12.2.2-MariaDB
--- PHP Version: 8.4.18
+-- Host: localhost:3306
+-- Generation Time: Apr 21, 2026 at 01:23 AM
+-- Server version: 11.4.10-MariaDB
+-- PHP Version: 8.4.19
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -17,11 +17,6 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8mb4 */;
 
---
--- Database: `veloura_jewels`
---
-CREATE DATABASE IF NOT EXISTS `veloura_jewels` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_uca1400_ai_ci;
-USE `veloura_jewels`;
 
 -- --------------------------------------------------------
 
@@ -67,7 +62,7 @@ CREATE TABLE IF NOT EXISTS `categories_products` (
     PRIMARY KEY (`id`),
     KEY `category_id` (`category_id`),
     KEY `product_id` (`product_id`)
-    ) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+    ) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `categories_products`
@@ -89,7 +84,10 @@ INSERT INTO `categories_products` (`id`, `category_id`, `product_id`) VALUES
                                                                           (13, 3, 13),
                                                                           (14, 3, 14),
                                                                           (15, 4, 15),
-                                                                          (16, 4, 16);
+                                                                          (21, 5, 16),
+                                                                          (22, 4, 24),
+                                                                          (23, 2, 25),
+                                                                          (24, 5, 26);
 
 -- --------------------------------------------------------
 
@@ -231,7 +229,7 @@ CREATE TABLE IF NOT EXISTS `products` (
     `description` text DEFAULT NULL,
     `story` text DEFAULT NULL,
     PRIMARY KEY (`id`)
-    ) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+    ) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `products`
@@ -239,21 +237,24 @@ CREATE TABLE IF NOT EXISTS `products` (
 
 INSERT INTO `products` (`id`, `name`, `purchase_price`, `sale_price`, `supplier_email`, `created`, `modified`, `description`, `story`) VALUES
                                                                                                                                            (1, 'Art Deco Ring', 50.00, 110.00, 'supplier@luxgems.com.au', '2026-04-13 11:29:33', '2026-04-16 12:20:04', 'This ring is meticulously crafted for a perfect balance between bold structure and refined elegance. The design and stone setting ensure a unique brilliance. Inspired by Art Deco aesthetic, each piece embodies timeless sophistication.\r\nAll our products are handcrafted in our ateliers\r\nMaterial: Sterling silver\r\nStone: White cubic zirconia\r\nWidth: 0.5 cm\r\nColor: Silver', NULL),
-                                                                                                                                           (2, 'Statement Torsade Pavé Ring', 85.00, 210.00, 'supplier@goldcraft.com.au', '2026-04-13 11:29:33', '2026-04-14 01:26:17', 'This ring embodies elegance and versatility. Its radiant shine echoes pure light, creating a captivating sparkle that draws attention.\r\nAll our products are handcrafted in our ateliers\r\nMaterial: APM Yellow Alloy made of 95% recycled material and 18k yellow gold plated, anti-tarnishing and hypoallergenic\r\nStone: White cubic zirconia\r\nWidth: 0.9 cm\r\nColor: Yellow', NULL),
-                                                                                                                                           (3, 'Dainty Rose Gold Ring', 30.00, 120.00, 'supplier@luxgems.com.au', '2026-04-13 11:29:33', '2026-04-14 01:26:33', 'This ring is made with Alloy and 18k rose gold plated. It is microset with white cubic zirconia.\r\nThe APM Alloy is made of 95% recycled material. It is anti-tarnishing and Hypoallergenic.\r\nMaterial: Alloy made of 95% recycled material and 18k rose gold plated, white cubic zirconia, anti-tarnishing and Hypoallergenic\r\nAll our products are handcrafted and microset by hand in our ateliers\r\nColor: Rose gold', NULL),
+                                                                                                                                           (2, 'Duo Luxe Two-Tone Ring', 85.00, 210.00, 'supplier@goldcraft.com.au', '2026-04-13 11:29:33', '2026-04-20 23:53:13', 'Material: Sterling silver with 18K gold recynil\r\nStones: Cubic zirconia\r\nDimensions: 6 mm width', NULL),
+                                                                                                                                           (3, 'Infinity Crossover Ring', 40.00, 130.00, 'supplier@luxgems.com.au', '2026-04-13 11:29:33', '2026-04-21 00:28:42', 'Material: 18K yellow gold vermeil and rhodium-plated white gold on sterling silver base, made from recycled materials\r\nStone: Pavé cubic zirconia\r\nDimensions: 7 mm width, comfort-fit band', NULL),
                                                                                                                                            (4, 'Chunky Ice Ring', 100.00, 300.00, 'supplier@luxgems.com.au', '2026-04-13 11:29:33', '2026-04-14 01:38:58', 'Sterling silver intertwines with paths of brilliant stones to reflect the geometric patterns created by broken ice.\r\nAll our products are handcrafted in our ateliers\r\nMaterial: Sterling silver\r\nStone: White cubic zirconia\r\nColor: Silver', NULL),
-                                                                                                                                           (5, 'LOVE Morse Code Ring', 30.00, 120.00, 'supplier@pearlsea.com.au', '2026-04-13 11:29:33', '2026-04-14 01:27:20', 'This collection is using Morse code as a secret Love language.\r\nThis ring is embellished with the code LOVE on it, and the word LOVE is also engraved inside.\r\nMaterial: APM Rose Alloy made of 95% recycled material and 18k gold plated (3 microns), white cubic zirconia, anti-tarnishing and anti-allergenic\r\nAll our products are handcrafted and microset by hand in our ateliers\r\nColor: Rose gold', NULL),
-                                                                                                                                           (6, 'Art Deco Adjustable Necklace', 70.00, 230.00, 'supplier@luxgems.com.au', '2026-04-13 11:29:33', '2026-04-14 01:28:09', 'This necklace is meticulously crafted for a perfect balance between bold structure and refined elegance.\r\nMaterial: Sterling silver\r\nStone: White cubic zirconia\r\nColor: Silver\r\nPendant size: Length 4.6 cm ; Width 0.7 cm\r\nTotal chain length: Adjustable to 48 cm maximum with sliding clasp', NULL),
+                                                                                                                                           (5, 'Eternal Spark White Gold Ring', 30.00, 120.00, 'supplier@pearlsea.com.au', '2026-04-13 11:29:33', '2026-04-20 23:54:01', 'Material: Rhodium plated on premium white alloy, made from recycled\r\nStones: Cubic zirconia\r\nBand Width: 3 mm', NULL),
+                                                                                                                                           (6, 'Éclat Lariat Necklace', 70.00, 189.96, 'supplier@luxgems.com.au', '2026-04-13 11:29:33', '2026-04-20 23:57:50', 'Material: 18K yellow gold vermeil on sterling silver, made from recycled materials\r\nStone: Cubic zirconia\r\nDimensions: 45 cm chain length, 32 mm drop pendant length', NULL),
                                                                                                                                            (7, 'Art Deco Pavé Choker', 300.00, 780.00, 'supplier@goldcraft.com.au', '2026-04-13 11:29:33', '2026-04-14 01:28:26', 'This choker is meticulously crafted for a perfect balance between bold structure and refined elegance.\r\nMaterial: Sterling silver\r\nStone: Over 210 white cubic zirconia\r\nColor: Silver\r\nTotal chain length: 40 cm ; Width 0.8 cm', NULL),
-                                                                                                                                           (8, 'Lilac Torsade Adjustable Necklace', 60.00, 210.00, 'supplier@gemstone.com.au', '2026-04-13 11:29:33', '2026-04-14 01:29:56', 'This necklace embodies elegance and versatility.\r\nMaterial: APM Yellow Alloy made of 95% recycled material and 18k yellow gold plated\r\nStone: Purple cubic zirconia\r\nColor: Yellow\r\nTotal chain length: Adjustable to 65 cm maximum with sliding clasp', NULL),
-                                                                                                                                           (9, 'Lumière Pavé Choker', 180.00, 620.00, 'supplier@pearlsea.com.au', '2026-04-13 11:29:33', '2026-04-14 01:30:20', 'This minimalist and versatile choker perfectly captures the essence of spring.\r\nMaterial: Sterling silver\r\nStone: White cubic zirconia\r\nColor: Silver', NULL),
-                                                                                                                                           (10, 'Maille Marine Chain Necklace', 140.00, 410.00, 'supplier@gemstone.com.au', '2026-04-13 11:29:33', '2026-04-14 01:30:35', 'Material: Rose Alloy made of 95% recycled material and 18k gold plated, white cubic zirconia\r\nColor: Rose gold\r\nTotal chain length: 45 cm', NULL),
-                                                                                                                                           (11, 'Statement Art Deco Drop Earrings', 150.00, 430.00, 'supplier@luxgems.com.au', '2026-04-13 11:29:33', '2026-04-14 01:38:02', 'These earrings are meticulously crafted for a perfect balance between bold structure and refined elegance.\r\nMaterial: Sterling silver\r\nStone: White cubic zirconia\r\nColor: Silver\r\nLength: 7.1 cm ; Width : 2.2 cm', NULL),
-                                                                                                                                           (12, 'Torsade Pavé Hoop Earrings', 55.00, 210.00, 'supplier@goldcraft.com.au', '2026-04-13 11:29:33', '2026-04-14 01:37:09', 'These earrings embody elegance and versatility.\r\nMaterial: APM Yellow Alloy made of 95% recycled material and 18k yellow gold plated\r\nStone: White cubic zirconia\r\nColor: Yellow\r\nLength: 2.1 cm ; Width : 0.7 cm', NULL),
-                                                                                                                                           (13, 'Dainty Rose Gold Hoop Earrings', 95.00, 275.00, 'supplier@gemstone.com.au', '2026-04-13 11:29:33', '2026-04-14 01:36:32', 'Material: Alloy made of 95% recycled material and 18k gold plated, white cubic zirconia\r\nColor: Rose gold\r\nSize: Small (Length: 2.8 cm ; Width : 0.5 cm)', NULL),
-                                                                                                                                           (14, 'Asymmetric Cross Earrings', 65.00, 240.00, 'supplier@pearlsea.com.au', '2026-04-13 11:29:33', '2026-04-14 01:36:10', 'Material: Platinum and rhodium plated on patented white alloy, made from recycled materials\r\nStone: Cubic zirconia\r\nDimensions: 39 mm length, 20 mm width', NULL),
-                                                                                                                                           (15, 'Art Deco Pavé Bracelet', 90.00, 350.00, 'supplier@luxgems.com.au', '2026-04-13 11:29:33', '2026-04-14 01:35:53', 'This bracelet is meticulously crafted for a perfect balance between bold structure and refined elegance.\r\nMaterial: Sterling silver\r\nStone: White cubic zirconia\r\nColor: Silver', NULL),
-                                                                                                                                           (16, 'Lilac Lumière Pavé Bracelet', 90.00, 300.00, 'supplier@goldcraft.com.au', '2026-04-13 11:29:33', '2026-04-14 01:32:10', 'Material: Platinum and rhodium plated on patented white alloy\r\nStone: Lilac cubic zirconia\r\nDimensions: 4 mm width', NULL);
+                                                                                                                                           (8, 'Eternal Dawn Necklace', 60.00, 210.00, 'supplier@gemstone.com.au', '2026-04-13 11:29:33', '2026-04-20 21:01:31', 'Material: 14k White Gold plated on 925 Sterling Silver\r\nStone: High-grade teardrop Cubic Zirconia\r\nDimensions: 320 mm length, 5 mm width (pendant)\r\n', NULL),
+                                                                                                                                           (9, 'Lumière Choker', 180.00, 620.00, 'supplier@pearlsea.com.au', '2026-04-13 11:29:33', '2026-04-20 23:50:33', 'This minimalist and versatile choker perfectly captures the essence of spring.\r\nMaterial: Sterling silver\r\nStone: White cubic zirconia\r\nColor: Silver', NULL),
+                                                                                                                                           (10, 'Blush Halo Pendant Necklace', 140.00, 460.00, 'supplier@gemstone.com.au', '2026-04-13 11:29:33', '2026-04-20 23:52:38', 'Material: 18K rose gold vermeil on sterling silver, made from recycled materials Stone: Lab-created pink sapphire and cubic zirconia Dimensions: 45 cm chain length, 18 mm pendant width', NULL),
+                                                                                                                                           (11, 'Celeste Drop Earrings', 100.00, 380.00, 'supplier@luxgems.com.au', '2026-04-13 11:29:33', '2026-04-21 00:18:09', 'Material: Rhodium-plated white gold vermeil on sterling silver, made from recycled materials\r\nStone: Cubic zirconia\r\nDimensions: 42 mm length, 12 mm width', NULL),
+                                                                                                                                           (12, 'Aurelia Twist Hoops', 55.00, 185.00, 'supplier@goldcraft.com.au', '2026-04-13 11:29:33', '2026-04-21 00:13:54', 'Material: 18K yellow gold vermeil on sterling silver, made from recycled materials\r\nStone: Cubic zirconia\r\nDimensions: 28 mm diameter, 6 mm width', NULL),
+                                                                                                                                           (13, 'Luna Twist Hoops', 95.00, 275.00, 'supplier@gemstone.com.au', '2026-04-13 11:29:33', '2026-04-21 00:49:31', 'Material: Rhodium-plated white gold vermeil on sterling silver base, made from recycled materials\r\nStone: Pavé cubic zirconia\r\nDimensions: 24 mm diameter, 5 mm width', NULL),
+                                                                                                                                           (14, 'Cascading Drop Earrings', 75.00, 280.00, 'supplier@pearlsea.com.au', '2026-04-13 11:29:33', '2026-04-20 23:11:26', 'Material: Platinum and rhodium plated on patented white alloy, made from recycled materials\r\nStone: Cubic zirconia\r\nDimensions: 39 mm length, 20 mm width', NULL),
+                                                                                                                                           (15, 'Éclat Lariat Bracelet', 50.00, 180.00, 'supplier@luxgems.com.au', '2026-04-13 11:29:33', '2026-04-21 00:08:35', 'Material: 18K yellow gold vermeil on sterling silver, made from recycled materials\r\nStone: Cubic zirconia\r\nDimensions: 45 cm chain length, 32 mm drop pendant length', NULL),
+                                                                                                                                           (16, 'Étoile Bloom Brooch', 90.00, 320.00, 'supplier@goldcraft.com.au', '2026-04-13 11:29:33', '2026-04-21 00:22:08', 'Material: Rhodium-plated white gold vermeil on sterling silver base, made from recycled materials\r\nStone: Cubic zirconia\r\nDimensions: 48 mm length, 32 mm width', NULL),
+                                                                                                                                           (24, 'Rhodium Tennis Bracelet', 90.00, 300.00, 'supplier@gemstone.com.au', '2026-04-20 23:08:12', '2026-04-20 23:08:12', 'Material: Rhodium plated on premium white alloy, made from recycled materials\r\nStone: Swarovski crystals\r\nDimensions: 18cm length, 6cm width', NULL),
+                                                                                                                                           (25, 'Elegant Silver Necklace', 85.00, 215.00, 'supplier@gemstone.com.au', '2026-04-20 23:17:07', '2026-04-20 23:17:07', 'Material: Rhodium plated on premium white alloy, made from recycled materials\r\nStone: Cubic zirconia\r\nDimensions: 45 cm chain length, 18 mm pendant width', NULL),
+                                                                                                                                           (26, 'Fleur Pastel Bloom Brooch', 68.00, 220.00, 'supplier@gemstone.com.au', '2026-04-21 00:42:02', '2026-04-21 00:44:51', 'Material: Rose gold vermeil on sterling silver base, made from recycled materials\r\nStone: Lab-created morganite, lavender quartz, peridot, and freshwater pearl accents\r\nDimensions: 46 mm length, 34 mm width', NULL);
 
 -- --------------------------------------------------------
 
@@ -268,7 +269,7 @@ CREATE TABLE IF NOT EXISTS `product_images` (
     `filename` varchar(4096) NOT NULL,
     PRIMARY KEY (`id`),
     KEY `product_id` (`product_id`)
-    ) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+    ) ENGINE=InnoDB AUTO_INCREMENT=76 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `product_images`
@@ -276,21 +277,25 @@ CREATE TABLE IF NOT EXISTS `product_images` (
 
 INSERT INTO `product_images` (`id`, `product_id`, `filename`) VALUES
                                                                   (21, 1, 'art_deco_ring.png'),
-                                                                  (22, 2, 'statement_torsade_pave___ring.png'),
-                                                                  (23, 3, 'dainty_rose_gold_ring.png'),
-                                                                  (25, 5, 'LOVE_morse_code_ring.png'),
-                                                                  (26, 6, 'art_deco_adjustable_necklace.png'),
                                                                   (27, 7, 'art_deco_pave___choker.png'),
-                                                                  (28, 8, 'lilac_torsade_adjustable_necklace.png'),
                                                                   (29, 9, 'lumiere-pave-choker.png'),
-                                                                  (30, 10, 'maille-marine-chain-necklace.png'),
-                                                                  (35, 16, 'lilac-lumiere-pave-bracelet.png'),
-                                                                  (36, 15, 'art-deco-pave-bracelet.png'),
-                                                                  (37, 14, 'asymmetric-cross-earrings.png'),
-                                                                  (38, 13, 'dainty-rose-gold-hoop-earrings.png'),
-                                                                  (39, 12, 'torsade-hoop-earrings.png'),
-                                                                  (40, 11, 'art-deco-statement-drop-earrings.png'),
-                                                                  (41, 4, 'chunky_rce_ring.png');
+                                                                  (41, 4, 'chunky_rce_ring.png'),
+                                                                  (47, 8, 'necklace1.png'),
+                                                                  (51, 24, 'bracelet2.png'),
+                                                                  (52, 14, 'earrings1.png'),
+                                                                  (54, 25, 'necklaces3.png'),
+                                                                  (55, 5, 'rings2.png'),
+                                                                  (56, 2, 'rings3.png'),
+                                                                  (57, 10, 'necklaces2.png'),
+                                                                  (58, 6, 'necklaces4.png'),
+                                                                  (63, 15, 'bracelet3.png'),
+                                                                  (64, 12, 'earrings2.png'),
+                                                                  (65, 11, 'earrings3.png'),
+                                                                  (66, 16, 'brooch1.png'),
+                                                                  (67, 3, 'rings4.png'),
+                                                                  (72, 26, 'brooch2.png'),
+                                                                  (74, 13, 'earrings4.png'),
+                                                                  (75, 13, 'earrings4.png');
 
 -- --------------------------------------------------------
 
@@ -306,7 +311,7 @@ CREATE TABLE IF NOT EXISTS `product_variants` (
     `stock` int(11) NOT NULL DEFAULT 0,
     PRIMARY KEY (`id`),
     KEY `product_id` (`product_id`)
-    ) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+    ) ENGINE=InnoDB AUTO_INCREMENT=54 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `product_variants`
@@ -347,8 +352,18 @@ INSERT INTO `product_variants` (`id`, `product_id`, `size`, `stock`) VALUES
                                                                          (32, 12, 'One Size', 30),
                                                                          (33, 13, 'One Size', 11),
                                                                          (34, 14, 'One Size', 16),
-                                                                         (35, 15, 'One Size', 6),
-                                                                         (36, 16, 'One Size', 22);
+                                                                         (35, 15, 'Size 6', 6),
+                                                                         (36, 16, 'One Size', 22),
+                                                                         (44, 24, 'Size 5', 25),
+                                                                         (45, 24, 'Size 6', 30),
+                                                                         (46, 24, 'Size 7', 30),
+                                                                         (47, 24, 'Size 8', 26),
+                                                                         (48, 24, 'Size 9', 10),
+                                                                         (49, 25, 'One Size', 10),
+                                                                         (50, 15, 'Size 7', 4),
+                                                                         (51, 15, 'Size 8', 2),
+                                                                         (52, 15, 'Size 9', 5),
+                                                                         (53, 26, 'One Size', 6);
 
 -- --------------------------------------------------------
 
