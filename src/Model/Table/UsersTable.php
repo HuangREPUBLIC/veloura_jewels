@@ -70,6 +70,24 @@ class UsersTable extends Table
         $validator
             ->inList('role', ['admin', 'staff', 'customer'], 'Invalid role selected');
 
+        $validator
+            ->scalar('first_name')
+            ->maxLength('first_name', 50)
+            ->allowEmptyString('first_name')
+            ->add('first_name', 'validName', [
+                'rule'    => ['custom', '/^[a-zA-Z]{2,}$/'],
+                'message' => 'First name must be at least 2 letters and contain only letters.',
+            ]);
+
+        $validator
+            ->scalar('last_name')
+            ->maxLength('last_name', 50)
+            ->allowEmptyString('last_name')
+            ->add('last_name', 'validName', [
+                'rule'    => ['custom', '/^[a-zA-Z]{2,}$/'],
+                'message' => 'Last name must be at least 2 letters and contain only letters.',
+            ]);
+
         return $validator;
     }
 
@@ -83,13 +101,21 @@ class UsersTable extends Table
     {
         $validator
             ->scalar('first_name')
-            ->maxLength('first_name', 100)
-            ->allowEmptyString('first_name');
+            ->maxLength('first_name', 50)
+            ->allowEmptyString('first_name')
+            ->add('first_name', 'validName', [
+                'rule'    => ['custom', '/^[a-zA-Z]{2,}$/'],
+                'message' => 'First name must be at least 2 letters and contain only letters.',
+            ]);
 
         $validator
             ->scalar('last_name')
-            ->maxLength('last_name', 100)
-            ->allowEmptyString('last_name');
+            ->maxLength('last_name', 50)
+            ->allowEmptyString('last_name')
+            ->add('last_name', 'validName', [
+                'rule'    => ['custom', '/^[a-zA-Z]{2,}$/'],
+                'message' => 'Last name must be at least 2 letters and contain only letters.',
+            ]);
 
         $validator
             ->scalar('phone')
