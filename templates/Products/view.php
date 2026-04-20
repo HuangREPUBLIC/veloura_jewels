@@ -54,10 +54,7 @@ if (!empty($product->categories)) {
         </div>
 
         <table class="view-table">
-            <tr>
-                <th><?= __('Id') ?></th>
-                <td><?= $this->Number->format($product->id) ?></td>
-            </tr>
+
             <tr>
                 <th><?= __('Name') ?></th>
                 <td><?= h($product->name) ?></td>

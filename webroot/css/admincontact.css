@@ -22,9 +22,9 @@ h3.page-title {
 .table-responsive {
     background: transparent;
     border: none;
-    border-radius: 0;
-    overflow: visible;
-    padding: 0 !important;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 0;
     box-shadow: none;
     margin-top: 0.5rem;
 }
@@ -555,19 +555,6 @@ a.btn-new-product:hover {
 }
 
 /* ===========================================
-   Responsive
-   =========================================== */
-
-@media (max-width: 900px) {
-    .dashboard-summary { grid-template-columns: repeat(2, 1fr); }
-    .dashboard-grid    { grid-template-columns: 1fr; }
-}
-
-@media (max-width: 480px) {
-    .dashboard-summary { grid-template-columns: 1fr; }
-}
-
-/* ===========================================
    Status pills (Orders)
    =========================================== */
 
@@ -1038,4 +1025,40 @@ table.dataTable thead .sorting_desc:after {
 .dataTables_wrapper .dataTables_paginate {
     margin-top: 18px;
     color: #8a744f;
+}
+
+
+/* responsive */
+@media (max-width: 900px) {
+    .dashboard-summary { grid-template-columns: repeat(2, 1fr); }
+    .dashboard-grid    { grid-template-columns: 1fr; }
+
+    .dt-layout-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+
+    .dt-search input[type="search"] { width: 100%; }
+
+    .products.index.content { padding: 20px; }
+}
+
+@media (max-width: 480px) {
+    .dashboard-summary { grid-template-columns: 1fr; }
+
+    .admin-wrapper { padding: 12px; }
+    .admin-dashboard { padding: 1rem; }
+
+    .page-header-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
+    }
+
+    .view-table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .view-table th { width: 100px; font-size: 0.7rem; }
+
+    #productsTable thead th,
+    #productsTable tbody td { padding: 12px 10px; }
 }

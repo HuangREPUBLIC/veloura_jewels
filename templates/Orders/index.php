@@ -19,7 +19,6 @@ $this->assign('title', 'Orders');
             <table id="ordersTable" class="display">
                 <thead>
                 <tr>
-                    <th>ID</th>
                     <th>Customer</th>
                     <th>Status</th>
                     <th>Total</th>
@@ -30,7 +29,6 @@ $this->assign('title', 'Orders');
                 <tbody>
                 <?php foreach ($orders as $order): ?>
                     <tr>
-                        <td>#<?= h($order->id) ?></td>
                         <td><?= h($order->customer_email) ?></td>
                         <td>
                             <?php
@@ -61,7 +59,7 @@ $this->assign('title', 'Orders');
         $('#ordersTable').DataTable({
             order: [[4, 'desc']],
             language: { lengthMenu: '_MENU_ Entries Per Page', search: 'Search:' },
-            columnDefs: [{ targets: [0,1,2,3,4], searchable: true }]
+            columnDefs: [{ targets: [0,1,2,3], searchable: true }]
         });
     });
 </script>

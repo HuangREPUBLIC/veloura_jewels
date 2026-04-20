@@ -44,7 +44,6 @@ function catPillClass(string $name): string {
             <table id="productsTable" class="display">
                 <thead>
                 <tr>
-                    <th>ID</th>
                     <th>Name</th>
                     <th>Purchase Price</th>
                     <th>Sale Price</th>
@@ -57,7 +56,7 @@ function catPillClass(string $name): string {
                 <tbody>
                 <?php foreach ($products as $product): ?>
                     <tr>
-                        <td><?= $this->Number->format($product->id) ?></td>
+
 
                         <td class="product-cell">
                             <div class="product-text">
@@ -119,7 +118,7 @@ function catPillClass(string $name): string {
         $('#productsTable').DataTable({
             order: [[0, 'desc']],
             language: { lengthMenu: '_MENU_ Entries Per Page', search: 'Search:' },
-            columnDefs: [{ targets: [0,1,2,3,4,5,6,7], searchable: true }]
+            columnDefs: [{ targets: [0,1,2,3,4,5,6], searchable: true }]
         });
     });
 </script>

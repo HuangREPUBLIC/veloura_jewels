@@ -10,6 +10,10 @@ use Cake\Core\Configure;
 <?php $this->Html->css('contact', ['block' => true]); ?>
 
 <?php
+$identity = $this->request->getAttribute('identity');
+?>
+
+<?php
 $this->Html->script('https://challenges.cloudflare.com/turnstile/v0/api.js', [
     'block' => true,
     'async' => true,
@@ -37,20 +41,25 @@ $this->Html->meta([
                 <?= $this->Form->control('first_name', [
                     'label' => 'First Name',
                     'placeholder' => 'Your first name',
-                    'required' => true
+                    'required' => true,
+                    'value' => $identity ? $identity->get('first_name') : null,
+
                 ]) ?>
 
                 <?= $this->Form->control('last_name', [
                     'label' => 'Last Name',
                     'placeholder' => 'Your last name',
-                    'required' => true
+                    'required' => true,
+                    'value' => $identity ? $identity->get('last_name') : null,
                 ]) ?>
             </div>
 
             <?= $this->Form->control('email', [
                 'label' => 'Your Email',
                 'placeholder' => 'Your email address',
-                'required' => true
+                'required' => true,
+                'value' => $identity ? $identity->get('email') : null,
+
             ]) ?>
 
             <?= $this->Form->control('subject', [
