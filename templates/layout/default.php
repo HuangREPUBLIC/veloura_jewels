@@ -34,6 +34,14 @@ $cakeDescription = 'Veloura Jewels';
     <?= $this->fetch('script') ?>
 </head>
 <body>
+
+<?php
+$cart = $this->request->getSession()->read('Cart') ?? [];
+$count = count($cart);
+$identity = $this->request->getAttribute('identity');
+$role = $identity ? $identity->get('role') : null;
+?>
+
 <header class="navbar">
     <div class="navbar-brand">
         <?= $this->Html->link(
@@ -41,24 +49,30 @@ $cakeDescription = 'Veloura Jewels';
             '/',
             ['escape' => false]
         ) ?>
+
+        <button class="nav-hamburger" id="navHamburger" onclick="toggleMobileMenu()" title="Menu" aria-label="Toggle menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
     </div>
 
-    <nav class="navbar-links">
+
+    <nav class="navbar-links" id="navLinks">
+        <?php if (in_array($role, ['admin', 'staff'])): ?>
         <?= $this->Html->link('Home', '/') ?>
         <?= $this->Html->link('Jewelry', '/jewelry') ?>
         <?= $this->Html->link('HomeDecor', '/home-decor') ?>
-        <?= $this->Html->link('Contact', '/contact') ?>
-
+        <?php else : ?>
+            <?= $this->Html->link('Home', '/') ?>
+            <?= $this->Html->link('Jewelry', '/jewelry') ?>
+            <?= $this->Html->link('HomeDecor', '/home-decor') ?>
+            <?= $this->Html->link('Contact', '/contact') ?>
+        <?php endif ?>
     </nav>
 
-    <div class="navbar-right">
-        <?php
-        $cart = $this->request->getSession()->read('Cart') ?? [];
-        $count = count($cart);
-        $identity = $this->request->getAttribute('identity');
-        $role = $identity ? $identity->get('role') : null;
-        ?>
 
+    <div class="navbar-right">
         <!-- Search icon (no function yet) -->
         <button class="nav-icon-btn" title="Search">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
@@ -149,159 +163,27 @@ $cakeDescription = 'Veloura Jewels';
     </div>
 </footer>
 
-<?php
-$_chatController = $this->request->getParam('controller');
-$_chatAction     = $this->request->getParam('action');
-$_showChat = (
-    ($_chatController === 'Pages'              && $_chatAction === 'display') ||
-    ($_chatController === 'ContactSubmissions' && $_chatAction === 'add')     ||
-    ($_chatController === 'Jewelry'            && $_chatAction === 'index')   ||
-    ($_chatController === 'Jewelry'            && $_chatAction === 'home_decor')   ||
-    ($_chatController === 'Jewelry'            && $_chatAction === 'cart')    ||
-    ($_chatController === 'Jewelry'            && $_chatAction === 'view')    ||
-    ($_chatController === 'Jewelry'            && $_chatAction === 'checkout')    ||
-    ($_chatController === 'Jewelry'            && $_chatAction === 'success')    ||
-    ($_chatController === 'Jewelry'            && $_chatAction === 'cancel')    ||
-    ($_chatController === 'Profile'            && $_chatAction === 'index')    ||
-    ($_chatController === 'Profile'            && $_chatAction === 'edit')    ||
-    ($_chatController === 'Profile'            && $_chatAction === 'orders')    ||
-    ($_chatController === 'Auth'               && $_chatAction === 'changePassword')
-);
-?>
-<?php if ($_showChat): ?>
-    <button class="live-chat-btn" onclick="toggleChat()">
-        <svg class="chat-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                  d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
-        </svg>
-        <span class="chat-label">Live Chat</span>
-        <span class="chat-dot"></span>
-    </button>
-
-    <div class="live-chat-popup" id="chatPopup">
-        <div class="chat-popup-header">
-            <div class="chat-popup-header-left">
-                <div class="chat-popup-avatar">
-                    <img src="<?= $this->Url->image('icon.png') ?>" alt="Veloura Jewels" style="width:28px;height:28px;object-fit:contain;border-radius:50%;">
-                </div>
-                <div>
-                    <div class="chat-popup-title">Veloura Jewels</div>
-                    <div class="chat-popup-subtitle">Jewelry Advisor</div>
-                </div>
-            </div>
-            <button class="chat-popup-close" onclick="toggleChat()">✕</button>
-        </div>
-
-        <div class="chat-popup-body" id="chatMessages">
-            <div class="chat-bubble chat-bubble-bot">
-                👋 Hi there! Welcome to Veloura Jewels. How can I help you today?
-            </div>
-        </div>
-
-        <div class="chat-popup-input-area">
-            <input type="file" id="chatFileInput" style="display:none" onchange="handleFileAttach(this)">
-            <input type="text" id="chatInput" class="chat-input" placeholder="Type a message..."
-                   autocomplete="off" onkeydown="if(event.key==='Enter') sendChatMessage()">
-            <button class="chat-send-btn" onclick="sendChatMessage()">
-                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" width="18" height="18">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                          d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
-                </svg>
-            </button>
-            <button class="chat-attach-btn" onclick="document.getElementById('chatFileInput').click()" title="Attach file">
-                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" width="18" height="18">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                          d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"/>
-                </svg>
-            </button>
-        </div>
-    </div>
-
-    <script>
-        var _chatHistory = [];
-        var _chatEndpoint = '<?= $this->Url->build(['controller' => 'Chat', 'action' => 'message']) ?>';
-        var _csrfToken = '<?= $this->request->getAttribute('csrfToken') ?>';
-
-        function toggleChat() {
-            document.getElementById('chatPopup').classList.toggle('open');
-            if (document.getElementById('chatPopup').classList.contains('open')) {
-                document.getElementById('chatInput').focus();
-            }
-        }
-
-        function appendBubble(text, role) {
-            var body = document.getElementById('chatMessages');
-            var div = document.createElement('div');
-            div.className = 'chat-bubble ' + (role === 'user' ? 'chat-bubble-user' : 'chat-bubble-bot');
-            div.textContent = text;
-            body.appendChild(div);
-            body.scrollTop = body.scrollHeight;
-            return div;
-        }
-
-        function sendChatMessage() {
-            var input = document.getElementById('chatInput');
-            var message = input.value.trim();
-            if (!message) return;
-
-            input.value = '';
-            input.disabled = true;
-            document.querySelector('.chat-send-btn').disabled = true;
-
-            appendBubble(message, 'user');
-            var typing = appendBubble('...', 'bot');
-            typing.classList.add('chat-bubble-typing');
-
-            fetch(_chatEndpoint, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-Requested-With': 'XMLHttpRequest',
-                    'X-CSRF-Token': _csrfToken
-                },
-                body: JSON.stringify({ message: message, history: _chatHistory })
-            })
-                .then(function(r) { return r.json(); })
-                .then(function(data) {
-                    typing.remove();
-                    var reply = data.reply || 'Sorry, something went wrong. Please try again.';
-                    appendBubble(reply, 'bot');
-                    _chatHistory.push({ role: 'user', content: message });
-                    _chatHistory.push({ role: 'assistant', content: reply });
-                    if (_chatHistory.length > 20) _chatHistory = _chatHistory.slice(-20);
-                })
-                .catch(function() {
-                    typing.remove();
-                    appendBubble('Connection error. Please try again.', 'bot');
-                })
-                .finally(function() {
-                    input.disabled = false;
-                    document.querySelector('.chat-send-btn').disabled = false;
-                    input.focus();
-                });
-
-        }
-        function handleFileAttach(input) {
-            if (!input.files || !input.files[0]) return;
-            var file = input.files[0];
-            appendBubble('📎 ' + file.name, 'user');
-
-            input.value = '';
-        }
-    </script>
-<?php endif; ?>
-
 <script>
     function toggleNavDropdown() {
         document.getElementById('navDropdown').classList.toggle('open');
     }
+
+    function toggleMobileMenu() {
+        document.getElementById('navLinks').classList.toggle('open');
+        document.getElementById('navHamburger').classList.toggle('open');
+    }
+
     document.addEventListener('click', function(e) {
         var wrap = document.querySelector('.nav-dropdown-wrap');
         if (wrap && !wrap.contains(e.target)) {
             document.getElementById('navDropdown').classList.remove('open');
         }
+        var navbar = document.querySelector('.navbar');
+        if (navbar && !navbar.contains(e.target)) {
+            document.getElementById('navLinks').classList.remove('open');
+            document.getElementById('navHamburger').classList.remove('open');
+        }
     });
 </script>
-
 </body>
 </html>
