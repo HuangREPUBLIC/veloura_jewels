@@ -69,8 +69,6 @@ if (!empty($product->categories)) {
                         Jewelry
                     <?php elseif ($productType === 'home_decor'): ?>
                         Home Decor
-                    <?php else: ?>
-                        -
                     <?php endif; ?>
                 </td>
             </tr>
@@ -80,8 +78,6 @@ if (!empty($product->categories)) {
                     <?php
                     if (!empty($product->categories)) {
                         echo implode(', ', collection($product->categories)->extract('name')->toList());
-                    } else {
-                        echo '-';
                     }
                     ?>
                 </td>
@@ -112,8 +108,6 @@ if (!empty($product->categories)) {
                                 <?php endif; ?>
                             </div>
                         <?php endforeach; ?>
-                    <?php else: ?>
-                        -
                     <?php endif; ?>
                 </td>
             </tr>
@@ -139,8 +133,6 @@ if (!empty($product->categories)) {
                                      style="width:100px;height:100px;object-fit:cover;border-radius:8px;border:1px solid #ddd9cf;">
                             <?php endforeach; ?>
                         </div>
-                    <?php else: ?>
-                        -
                     <?php endif; ?>
                 </td>
             </tr>
