@@ -81,6 +81,69 @@ img {
     max-width: 100%;
 }
 
+/* ── 404 / Error Page ── */
+.error-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 60vh;
+    text-align: center;
+    padding: 4rem 1.5rem;
+}
+
+.error-page__code {
+    font-size: clamp(6rem, 15vw, 10rem);
+    font-weight: 300;
+    letter-spacing: -0.04em;
+    color: #d6cdb8;
+    line-height: 1;
+    margin: 0 0 1.5rem;
+    font-family: 'Cormorant Garamond', Georgia, serif;
+}
+
+.error-page__title {
+    font-size: 1.15rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #3d3d3a;
+    margin: 0 0 1rem;
+}
+
+.error-page__divider {
+    width: 40px;
+    height: 1px;
+    background: #786C3B;
+    margin: 0 auto 1.5rem;
+}
+
+.error-page__message {
+    font-size: 0.95rem;
+    color: #7a7a72;
+    max-width: 420px;
+    line-height: 1.8;
+    margin: 0 0 2.5rem;
+}
+
+.error-page__btn {
+    display: inline-block;
+    padding: 0.85rem 2.4rem;
+    background: #786C3B;
+    color: #fff;
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background 0.2s ease;
+}
+
+.error-page__btn:hover {
+    background: #5a5029;
+    color: #fff;
+}
+
 .message {
     padding: 1rem;
     border-radius: 8px;
