@@ -174,13 +174,21 @@ class ProductsController extends AppController
         $uploadDir = WWW_ROOT . 'img' . DS . 'products' . DS;
         if (!is_dir($uploadDir)) mkdir($uploadDir, 0755, true);
 
+        $allowedMimes = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
+        $maxSize = 5 * 1024 * 1024; // 5MB
+
         foreach ($uploads as $upload) {
             if ($upload->getError() !== UPLOAD_ERR_OK) continue;
+            if ($upload->getSize() > $maxSize) continue;
 
             $originalName = $upload->getClientFilename();
             $ext = strtolower(pathinfo($originalName, PATHINFO_EXTENSION));
 
             if (!in_array($ext, ['jpg', 'jpeg', 'png', 'webp', 'gif'])) continue;
+
+            $tmpPath = $upload->getStream()->getMetadata('uri');
+            $finfo = new \finfo(FILEINFO_MIME_TYPE);
+            if (!in_array($finfo->file($tmpPath), $allowedMimes)) continue;
 
             $filename = preg_replace('/[^a-z0-9_\-\.]/i', '_', $originalName);
             $upload->moveTo($uploadDir . $filename);

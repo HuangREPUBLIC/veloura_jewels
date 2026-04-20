@@ -84,7 +84,7 @@ class ProductsTable extends Table
             ->notEmptyString('sale_price');
 
         $validator
-            ->scalar('supplier_email')
+            ->email('supplier_email')
             ->maxLength('supplier_email', 320)
             ->allowEmptyString('supplier_email');
 
