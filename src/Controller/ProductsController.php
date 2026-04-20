@@ -4,6 +4,8 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use Cake\Event\EventInterface;
+use Cake\Log\Log;
+use Cake\Datasource\Exception\RecordNotFoundException;
 
 class ProductsController extends AppController
 {
@@ -174,13 +176,21 @@ class ProductsController extends AppController
         $uploadDir = WWW_ROOT . 'img' . DS . 'products' . DS;
         if (!is_dir($uploadDir)) mkdir($uploadDir, 0755, true);
 
+        $allowedMimes = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
+        $maxSize = 5 * 1024 * 1024; // 5MB
+
         foreach ($uploads as $upload) {
             if ($upload->getError() !== UPLOAD_ERR_OK) continue;
+            if ($upload->getSize() > $maxSize) continue;
 
             $originalName = $upload->getClientFilename();
             $ext = strtolower(pathinfo($originalName, PATHINFO_EXTENSION));
 
             if (!in_array($ext, ['jpg', 'jpeg', 'png', 'webp', 'gif'])) continue;
+
+            $tmpPath = $upload->getStream()->getMetadata('uri');
+            $finfo = new \finfo(FILEINFO_MIME_TYPE);
+            if (!in_array($finfo->file($tmpPath), $allowedMimes)) continue;
 
             $filename = preg_replace('/[^a-z0-9_\-\.]/i', '_', $originalName);
             $upload->moveTo($uploadDir . $filename);
@@ -205,8 +215,19 @@ class ProductsController extends AppController
         }
 
         $this->request->allowMethod(['post', 'delete']);
-        $product = $this->Products->get($id);
+
+        try {
+            $product = $this->Products->get($id);
+        } catch (RecordNotFoundException $e) {
+            $this->Flash->error(__('Product not found.'));
+            return $this->redirect(['action' => 'index']);
+        }
+
+        $adminId = $identity->get('id');
+        $adminEmail = $identity->get('email');
+
         if ($this->Products->delete($product)) {
+            Log::write('info', "Product deleted: id={$product->id}, name=\"{$product->name}\" by admin id={$adminId} ({$adminEmail})");
             $this->Flash->success(__('The product has been deleted.'));
         } else {
             $this->Flash->error(__('The product could not be deleted. Please, try again.'));

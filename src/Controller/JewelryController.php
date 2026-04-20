@@ -6,6 +6,7 @@ namespace App\Controller;
 use Cake\Event\EventInterface;
 use Cake\Core\Configure;
 use Cake\Http\Exception\BadRequestException;
+use Cake\Datasource\Exception\RecordNotFoundException;
 use Stripe\StripeClient;
 use Stripe\Webhook;
 
@@ -412,8 +413,14 @@ class JewelryController extends AppController
             $variantsTable = $this->fetchTable('ProductVariants');
 
             foreach ($cart as $key => $item) {
-                $product = $this->Products->get($item['product_id'], contain: ['ProductImages']);
-                $variant = $variantsTable->get($item['variant_id']);
+                try {
+                    $product = $this->Products->get($item['product_id'], contain: ['ProductImages']);
+                    $variant = $variantsTable->get($item['variant_id']);
+                } catch (RecordNotFoundException $e) {
+                    unset($cart[$key]);
+                    $session->write('Cart', $cart);
+                    continue;
+                }
 
                 $qty = (int)$item['quantity'];
                 if ($qty > $variant->stock) $qty = $variant->stock;
