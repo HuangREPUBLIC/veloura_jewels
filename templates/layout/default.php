@@ -61,16 +61,17 @@ $role = $identity ? $identity->get('role') : null;
     </div>
 
 
+    <?php $currentPath = $this->request->getPath(); ?>
     <nav class="navbar-links" id="navLinks">
         <?php if (in_array($role, ['admin', 'staff'])): ?>
-        <?= $this->Html->link('Home', '/') ?>
-        <?= $this->Html->link('Jewelry', '/jewelry') ?>
-        <?= $this->Html->link('Home Decor', '/home-decor') ?>
+        <?= $this->Html->link('Home', '/', ['class' => $currentPath === '/' ? 'active' : '']) ?>
+        <?= $this->Html->link('Jewelry', '/jewelry', ['class' => str_starts_with($currentPath, '/jewelry') ? 'active' : '']) ?>
+        <?= $this->Html->link('Home Decor', '/home-decor', ['class' => str_starts_with($currentPath, '/home-decor') ? 'active' : '']) ?>
         <?php else : ?>
-            <?= $this->Html->link('Home', '/') ?>
-            <?= $this->Html->link('Jewelry', '/jewelry') ?>
-            <?= $this->Html->link('Home Decor', '/home-decor') ?>
-            <?= $this->Html->link('Contact', '/contact') ?>
+            <?= $this->Html->link('Home', '/', ['class' => $currentPath === '/' ? 'active' : '']) ?>
+            <?= $this->Html->link('Jewelry', '/jewelry', ['class' => str_starts_with($currentPath, '/jewelry') ? 'active' : '']) ?>
+            <?= $this->Html->link('Home Decor', '/home-decor', ['class' => str_starts_with($currentPath, '/home-decor') ? 'active' : '']) ?>
+            <?= $this->Html->link('Contact', '/contact', ['class' => str_starts_with($currentPath, '/contact') ? 'active' : '']) ?>
         <?php endif ?>
     </nav>
 

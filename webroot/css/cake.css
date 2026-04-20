@@ -153,13 +153,35 @@ main > .row { margin-bottom: 4rem; }
     text-decoration: none;
     padding: 0.45rem 1rem;
     border-radius: 5px;
-    transition: color 0.2s ease, background 0.2s ease;
+    transition: color 0.2s ease;
+    position: relative;
+}
+
+.navbar-links a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 1rem;
+    right: 1rem;
+    height: 1.5px;
+    background: var(--oakwood);
+    transform: scaleX(0);
+    transition: transform 0.25s ease;
+    transform-origin: center;
 }
 
 .navbar-links a:hover {
     color: var(--oakwood);
-    background: rgba(120, 108, 59, 0.07);
     text-decoration: none;
+}
+
+.navbar-links a:hover::after,
+.navbar-links a.active::after {
+    transform: scaleX(1);
+}
+
+.navbar-links a.active {
+    color: var(--oakwood);
 }
 
 .navbar-right {
