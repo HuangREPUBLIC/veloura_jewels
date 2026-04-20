@@ -6,11 +6,14 @@
  * @var int $totalUsers
  * @var int $totalEnquiries
  * @var int $totalOrders
+ * @var string $role
  * @var \Cake\ORM\ResultSet $lowStockProducts
  */
 $this->assign('title', 'Admin Dashboard');
 ?>
 <?php $this->Html->css('admincontact', ['block' => true]); ?>
+<?php $role = $this->request->getAttribute('identity')->get('role'); ?>
+
 
 <div class="admin-wrapper">
     <div class="admin-dashboard">
@@ -85,11 +88,14 @@ $this->assign('title', 'Admin Dashboard');
                         <div class="low-stock-row">
                             <div class="low-stock-row-top">
                                 <span class="low-stock-name"><?= h($product->name) ?></span>
+
+                                <?php if ($role === 'admin'): ?>
                                 <?= $this->Html->link(
                                     'Restock',
                                     ['controller' => 'Products', 'action' => 'edit', $product->id],
                                     ['class' => 'low-stock-btn']
                                 ) ?>
+                                <?php endif ?>
                             </div>
                             <div class="low-stock-pills">
                                 <?php foreach ($product->product_variants as $v): ?>

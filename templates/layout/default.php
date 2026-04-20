@@ -43,11 +43,7 @@ $role = $identity ? $identity->get('role') : null;
 ?>
 
 <header class="navbar">
-    <button class="nav-hamburger" id="navHamburger" onclick="toggleMobileMenu()" title="Menu" aria-label="Toggle menu">
-        <span></span>
-        <span></span>
-        <span></span>
-    </button>
+
 
     <div class="navbar-brand">
         <?= $this->Html->link(
@@ -55,6 +51,13 @@ $role = $identity ? $identity->get('role') : null;
             '/',
             ['escape' => false]
         ) ?>
+
+        <button class="nav-hamburger" id="navHamburger" onclick="toggleMobileMenu()" title="Menu" aria-label="Toggle menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
     </div>
 
 
