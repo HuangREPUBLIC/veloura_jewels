@@ -131,9 +131,7 @@ td.actions button.btn-delete:hover {
     color: #fff !important;
 }
 
-/* ===========================================
-   Action buttons (view/edit/delete rows)
-   =========================================== */
+/* action buttons */
 
 .action-buttons {
     display: flex;
@@ -171,9 +169,7 @@ td.actions button.btn-delete:hover {
     color: #fff;
 }
 
-/* ===========================================
-   Message box (submission detail view)
-   =========================================== */
+/* message box */
 
 .message-box {
     padding: 1rem 1.2rem;
@@ -185,9 +181,7 @@ td.actions button.btn-delete:hover {
     line-height: 1.6;
 }
 
-/* ===========================================
-   Dashboard shell
-   =========================================== */
+/* dashboard shell */
 
 .admin-dashboard {
     display: block;
@@ -218,9 +212,7 @@ td.actions button.btn-delete:hover {
     font-weight: 400;
 }
 
-/* ===========================================
-   Summary stat cards (top row)
-   =========================================== */
+/* summary stat cards */
 
 .dashboard-summary {
     display: grid;
@@ -302,9 +294,7 @@ td.actions button.btn-delete:hover {
     line-height: 1.4;
 }
 
-/* ===========================================
-   Low stock warning block
-   =========================================== */
+/* low stock warning */
 
 .low-stock-warning {
     margin: 0 0 1.8rem;
@@ -395,9 +385,7 @@ td.actions button.btn-delete:hover {
 .pill-low  { background: #fde68a; color: #78350f; }
 .pill-zero { background: #fecaca; color: #7f1d1d; }
 
-/* ===========================================
-   Page header row (title + action button)
-   =========================================== */
+/* page header */
 
 .page-header-row {
     display: flex !important;
@@ -447,9 +435,7 @@ a.btn-new-product:hover {
     color: #fff;
 }
 
-/* ===========================================
-   DataTables overrides
-   =========================================== */
+/* datatables overrides */
 
 .dt-layout-row {
     display: flex;
@@ -554,9 +540,7 @@ a.btn-new-product:hover {
     color: var(--oakwood) !important;
 }
 
-/* ===========================================
-   Responsive
-   =========================================== */
+/* responsive */
 
 @media (max-width: 900px) {
     .dashboard-summary { grid-template-columns: repeat(2, 1fr); }
@@ -567,9 +551,7 @@ a.btn-new-product:hover {
     .dashboard-summary { grid-template-columns: 1fr; }
 }
 
-/* ===========================================
-   Status pills (Orders)
-   =========================================== */
+/* status pills */
 
 .status-pill {
     display: inline-block;
@@ -582,9 +564,7 @@ a.btn-new-product:hover {
 .status-pill-pending   { background: #fef9c3; color: #713f12; }
 .status-pill-cancelled { background: #fecaca; color: #7f1d1d; }
 
-/* ===========================================
-   Replied pills (Contact Submissions)
-   =========================================== */
+/* replied pills */
 
 .replied-yes {
     display: inline-block;
@@ -613,9 +593,7 @@ a.btn-new-product:hover {
 }
 .text-muted { color: #9ca3af; }
 
-/* ===========================================
-   Role pills
-   =========================================== */
+/* role pills */
 
 .role-pill {
     display: inline-block;
@@ -628,9 +606,7 @@ a.btn-new-product:hover {
 .role-pill-staff { background: #a8c8b0; color: #1e4228; }
 .role-pill-customer  { background: #aec8e8; color: #0f2d52; }
 
-/* ===========================================
-   Category pills — Jewelry (warm tones)
-   =========================================== */
+/* category pills */
 
 .cat-pill {
     display: inline-block;
@@ -669,9 +645,7 @@ a.btn-new-product:hover {
 .type-pill-jewelry   { background: #fef3c7; color: #78350f; }
 .type-pill-home-decor { background: #d1fae5; color: #065f46; }
 
-/* ===========================================
-   View page table card
-   =========================================== */
+/* view page table card */
 
 .view-table {
     width: 100%;
@@ -718,9 +692,7 @@ a.btn-new-product:hover {
     background: #ebe8de;
 }
 
-/* ===========================================
-   Contact submission detail
-   =========================================== */
+/* contact submission detail */
 
 .submission-message-block { margin: 1.5rem 0; }
 
@@ -733,9 +705,7 @@ a.btn-new-product:hover {
 
 .reply-context-table { margin-bottom: 1.5rem; }
 
-/* ===========================================
-   Product variant rows (add/edit product)
-   =========================================== */
+/* product variant rows */
 
 .btn-add-variant {
     display: inline-block;
@@ -790,9 +760,7 @@ a.btn-new-product:hover {
     color: #fff;
 }
 
-/* ===========================================
-   View products page
-   =========================================== */
+/* view products page */
 .admin-wrapper {
     background: var(--beige-light);
     padding: 24px;
