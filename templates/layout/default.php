@@ -65,11 +65,11 @@ $role = $identity ? $identity->get('role') : null;
         <?php if (in_array($role, ['admin', 'staff'])): ?>
         <?= $this->Html->link('Home', '/') ?>
         <?= $this->Html->link('Jewelry', '/jewelry') ?>
-        <?= $this->Html->link('HomeDecor', '/home-decor') ?>
+        <?= $this->Html->link('Home Decor', '/home-decor') ?>
         <?php else : ?>
             <?= $this->Html->link('Home', '/') ?>
             <?= $this->Html->link('Jewelry', '/jewelry') ?>
-            <?= $this->Html->link('HomeDecor', '/home-decor') ?>
+            <?= $this->Html->link('Home Decor', '/home-decor') ?>
             <?= $this->Html->link('Contact', '/contact') ?>
         <?php endif ?>
     </nav>
