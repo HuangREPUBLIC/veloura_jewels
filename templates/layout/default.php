@@ -72,6 +72,7 @@ $role = $identity ? $identity->get('role') : null;
             <?= $this->Html->link('Jewelry', '/jewelry', ['class' => str_starts_with($currentPath, '/jewelry') ? 'active' : '']) ?>
             <?= $this->Html->link('Home Decor', '/home-decor', ['class' => str_starts_with($currentPath, '/home-decor') ? 'active' : '']) ?>
             <?= $this->Html->link('Contact', '/contact', ['class' => str_starts_with($currentPath, '/contact') ? 'active' : '']) ?>
+            <?= $this->Html->link('FAQ', '/faq', ['class' => str_starts_with($currentPath, '/faq') ? 'active' : '']) ?>
         <?php endif ?>
     </nav>
 

@@ -72,7 +72,8 @@ return function (RouteBuilder $routes): void {
 
         //Contact Form Route
         $builder->connect('/contact', ['controller' => 'ContactSubmissions', 'action' => 'add']);
-
+        // FAQ Route
+        $builder->connect('/faq', ['controller' => 'Faq', 'action' => 'index']);
         //Login Route
         $builder->connect('/auth/login', ['controller' => 'Auth', 'action' => 'login']);
         $builder->connect('/auth/logout', ['controller' => 'Auth', 'action' => 'logout']);
