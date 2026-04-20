@@ -98,6 +98,7 @@ if (!empty($product->type)) {
                 'accept'   => 'image/*',
             ]);
             echo $this->Form->control('description', ['type' => 'textarea', 'label' => 'Description', 'required' => true]);
+            echo $this->Form->control('story', ['type' => 'textarea', 'label' => 'Story', 'required' => true]);
             ?>
 
             <!-- Size & Stock -->
