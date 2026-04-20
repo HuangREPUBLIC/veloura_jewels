@@ -35,16 +35,13 @@ if (!empty($product->categories)) {
         <div class="action-buttons">
             <?= $this->Html->link(__('← Back to Products'), ['action' => 'index']) ?>
 
-            <?php
-            $identity = $this->request->getAttribute('identity');
-            $currentRole = $identity ? $identity->get('role') : null;
-            ?>
+            <?php $role = $this->request->getAttribute('identity')->get('role'); ?>
 
-            <?php if (in_array($currentRole, ['admin', 'part_time', 'full_time'])): ?>
+            <?php if ($role === 'admin'): ?>
                 <?= $this->Html->link(__('Edit'), ['action' => 'edit', $product->id]) ?>
             <?php endif; ?>
 
-            <?php if (in_array($currentRole, ['admin', 'part_time', 'full_time'])): ?>
+            <?php if ($role === 'admin'): ?>
                 <?= $this->Form->postLink(
                     __('Delete'),
                     ['action' => 'delete', $product->id],
@@ -143,7 +140,7 @@ if (!empty($product->categories)) {
                             <?php endforeach; ?>
                         </div>
                     <?php else: ?>
-                        —
+                        -
                     <?php endif; ?>
                 </td>
             </tr>

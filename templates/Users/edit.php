@@ -31,19 +31,7 @@
                     'type'    => 'select',
                     'options' => [
                         'admin'     => 'Admin',
-                        'full_time' => 'Full-time Staff',
-                        'part_time' => 'Part-time Staff',
-                        'customer'  => 'Customer',
-                    ],
-                    'label'    => 'Role',
-                    'required' => true,
-                ]);
-            } elseif ($role === 'full_time') {
-                echo $this->Form->control('role', [
-                    'type'    => 'select',
-                    'options' => [
-                        'full_time' => 'Full-time Staff',
-                        'part_time' => 'Part-time Staff',
+                        'staff' => 'Staff',
                         'customer'  => 'Customer',
                     ],
                     'label'    => 'Role',

@@ -35,7 +35,7 @@ function catPillClass(string $name): string {
                 <p class="page-subtitle">Manage product listings and details</p>
             </div>
 
-            <?php if (in_array($role, ['admin', 'part_time', 'full_time'])): ?>
+            <?php if ($role === 'admin'): ?>
                 <?= $this->Html->link(__('Add New Product'), ['action' => 'add'], ['class' => 'btn-new-product']) ?>
             <?php endif; ?>
         </div>
@@ -95,10 +95,10 @@ function catPillClass(string $name): string {
                         <td class="supplier-email"><?= h($product->supplier_email) ?></td>
                         <td class="actions">
                             <?= $this->Html->link(__('View'), ['action' => 'view', $product->id], ['class' => 'btn-view']) ?>
-                            <?php if (in_array($role, ['admin', 'part_time', 'full_time'])): ?>
+                            <?php if ($role === 'admin'): ?>
                                 <?= $this->Html->link(__('Edit'), ['action' => 'edit', $product->id], ['class' => 'btn-edit']) ?>
                             <?php endif; ?>
-                            <?php if (in_array($role, ['admin', 'part_time', 'full_time'])): ?>
+                            <?php if ($role === 'admin'): ?>
                                 <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $product->id], [
                                     'method' => 'delete',
                                     'confirm' => __('Are you sure you want to delete # {0}?', $product->id),

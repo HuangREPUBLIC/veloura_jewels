@@ -68,7 +68,7 @@ class UsersTable extends Table
             ->notEmptyString('password');
 
         $validator
-            ->inList('role', ['admin', 'full_time', 'part_time', 'customer'], 'Invalid role selected');
+            ->inList('role', ['admin', 'staff', 'customer'], 'Invalid role selected');
 
         return $validator;
     }

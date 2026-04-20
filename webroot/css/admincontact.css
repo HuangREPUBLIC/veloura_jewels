@@ -627,8 +627,7 @@ a.btn-new-product:hover {
     font-weight: 600;
 }
 .role-pill-admin     { background: #c8bfa0; color: #3b3015; }
-.role-pill-full_time { background: #a8c8b0; color: #1e4228; }
-.role-pill-part_time { background: #a8c8b0; color: #1e4228; }
+.role-pill-staff { background: #a8c8b0; color: #1e4228; }
 .role-pill-customer  { background: #aec8e8; color: #0f2d52; }
 
 /* ===========================================

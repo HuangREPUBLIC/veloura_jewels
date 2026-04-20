@@ -6,6 +6,8 @@
 $this->assign('title', 'View User');
 ?>
 <?php $this->Html->css('admincontact', ['block' => true]); ?>
+<?php $role = $this->request->getAttribute('identity')->get('role'); ?>
+
 
 <div class="admin-wrapper">
     <div class="users view content">
@@ -16,14 +18,13 @@ $this->assign('title', 'View User');
 
             <?php
             $identity = $this->request->getAttribute('identity');
-            $currentRole = $identity ? $identity->get('role') : null;
             ?>
 
-            <?php if (in_array($currentRole, ['admin', 'full_time'])): ?>
+            <?php if ($role === 'admin'): ?>
                 <?= $this->Html->link(__('Edit'), ['action' => 'edit', $user->id]) ?>
             <?php endif; ?>
 
-            <?php if ($currentRole === 'admin'): ?>
+            <?php if ($role === 'admin'): ?>
                 <?= $this->Form->postLink(
                     __('Delete'),
                     ['action' => 'delete', $user->id],
