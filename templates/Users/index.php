@@ -6,16 +6,19 @@
 $this->assign('title', 'Users');
 $identity = $this->request->getAttribute('identity');
 ?>
-<?php $this->Html->css('admincontact', ['block' => true]); ?>
+<?= $this->Html->css('admincontact') ?>
 <?php $role = $this->request->getAttribute('identity')->get('role'); ?>
 
 
 <div class="admin-wrapper">
     <div class="users index content">
-        <?= $this->Html->link(__('← Back'), ['controller' => 'Users', 'action' => 'dashboard']) ?>
+        <?= $this->Html->link(__('← Back'), ['controller' => 'Users', 'action' => 'dashboard'], ['class' => 'back-link']) ?>
 
         <div class="page-header-row">
-            <h3 class="page-title"><?= __('Users') ?></h3>
+            <div>
+                <h3 class="page-title"><?= __('Users') ?></h3>
+                <p class="page-subtitle">Manage user accounts and roles</p>
+            </div>
         </div>
 
         <div class="table-responsive" style="padding: 10px">
@@ -37,10 +40,10 @@ $identity = $this->request->getAttribute('identity');
                         <td><span class="role-pill role-pill-<?= h($user->role) ?>"><?= h($user->role) ?></span></td>
                         <td><?= h($user->created) ?></td>
                         <td class="actions">
-                            <?= $this->Html->link(__('View'), ['action' => 'view', $user->id]) ?>
+                            <?= $this->Html->link(__('View'), ['action' => 'view', $user->id], ['class' => 'btn-view']) ?>
 
                             <?php if ($role === 'admin'): ?>
-                                <?= $this->Html->link(__('Edit'), ['action' => 'edit', $user->id]) ?>
+                                <?= $this->Html->link(__('Edit'), ['action' => 'edit', $user->id], ['class' => 'btn-edit']) ?>
                             <?php endif; ?>
 
                             <?php if ($role === 'admin'): ?>

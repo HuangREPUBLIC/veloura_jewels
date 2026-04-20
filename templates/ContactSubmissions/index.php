@@ -5,14 +5,17 @@
  */
 $this->assign('title', 'Contact Submissions');
 ?>
-<?php $this->Html->css('admincontact', ['block' => true]); ?>
+<?= $this->Html->css('admincontact') ?>
 
 <div class="admin-wrapper">
     <div class="contactSubmissions index content">
-        <?= $this->Html->link(__('← Back'), ['controller' => 'Users', 'action' => 'dashboard']) ?>
+        <?= $this->Html->link(__('← Back'), ['controller' => 'Users', 'action' => 'dashboard'], ['class' => 'back-link']) ?>
 
         <div class="page-header-row">
-            <h3 class="page-title"><?= __('Contact Submissions') ?></h3>
+            <div>
+                <h3 class="page-title"><?= __('Contact Submissions') ?></h3>
+                <p class="page-subtitle">View and respond to customer messages</p>
+            </div>
         </div>
 
         <div class="table-responsive" style="padding: 10px">
@@ -44,7 +47,7 @@ $this->assign('title', 'Contact Submissions');
                             <?php endif; ?>
                         </td>
                         <td class="actions">
-                            <?= $this->Html->link(__('View'), ['action' => 'view', $contactSubmission->id]) ?>
+                            <?= $this->Html->link(__('View'), ['action' => 'view', $contactSubmission->id], ['class' => 'btn-view']) ?>
                             <?= $this->Form->postLink(
                                 __('Delete'),
                                 ['action' => 'delete', $contactSubmission->id],

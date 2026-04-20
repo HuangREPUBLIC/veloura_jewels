@@ -9,10 +9,11 @@ $this->assign('title', 'Order ' . $order->id);
 
 <div class="admin-wrapper">
     <div class="orders view content">
+        <h3>Order <?= h($order->id) ?></h3>
 
-        <?= $this->Html->link(__('← Back'), ['action' => 'index']) ?>
-
-        <h3 class="page-title">Order <?= h($order->id) ?></h3>
+        <div class="action-buttons">
+            <?= $this->Html->link(__('← Back to Orders'), ['action' => 'index']) ?>
+        </div>
 
         <table class="view-table" style="margin-bottom: 2rem;">
             <tr>
@@ -55,7 +56,7 @@ $this->assign('title', 'Order ' . $order->id);
             </tr>
         </table>
 
-        <h3 class="page-title" style="font-size:1.1rem; margin-top: 1.8rem;">Order Items</h3>
+        <h4 style="margin: 1.5rem 0 0.8rem;"><?= __('Order Items') ?></h4>
 
         <?php if (!empty($order->order_items)): ?>
             <table class="view-table">
