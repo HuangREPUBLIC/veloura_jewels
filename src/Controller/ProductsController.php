@@ -98,7 +98,7 @@ class ProductsController extends AppController
 
         if (
             !$identity ||
-            !in_array($identity->get('role'), ['admin', 'staff'])
+            !in_array($identity->get('role'), ['admin'])
         ) {
             $this->Flash->error('You do not have permission to edit products.');
             return $this->redirect(['action' => 'index']);
@@ -198,7 +198,7 @@ class ProductsController extends AppController
 
         if (
             !$identity ||
-            !in_array($identity->get('role'), ['admin', 'staff'])
+            !in_array($identity->get('role'), ['admin'])
         ) {
             $this->Flash->error('You do not have permission to delete products.');
             return $this->redirect(['action' => 'index']);
