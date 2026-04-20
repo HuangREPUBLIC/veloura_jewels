@@ -43,18 +43,18 @@ $role = $identity ? $identity->get('role') : null;
 ?>
 
 <header class="navbar">
+    <button class="nav-hamburger" id="navHamburger" onclick="toggleMobileMenu()" title="Menu" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
     <div class="navbar-brand">
         <?= $this->Html->link(
             $this->Html->image('logo.png', ['alt' => 'Veloura Jewels', 'class' => 'navbar-logo']),
             '/',
             ['escape' => false]
         ) ?>
-
-        <button class="nav-hamburger" id="navHamburger" onclick="toggleMobileMenu()" title="Menu" aria-label="Toggle menu">
-            <span></span>
-            <span></span>
-            <span></span>
-        </button>
     </div>
 
 

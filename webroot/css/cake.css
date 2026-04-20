@@ -503,13 +503,13 @@ input[type='color'] {
         min-height: 66px;
     }
 
-    .navbar-brand { order: 1; }
-    .navbar-right { order: 3; margin-left: auto; margin-right: 0.25rem; }
-
     .nav-hamburger {
         display: flex;
-        order: 2;
+        order: 0;
     }
+
+    .navbar-brand { order: 1; }
+    .navbar-right { order: 2; margin-left: auto; }
 
     .navbar-links {
         display: none;
