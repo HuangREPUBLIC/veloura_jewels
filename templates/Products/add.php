@@ -123,13 +123,56 @@
         return html;
     }
 
+    function buildSizeField(name, type) {
+        var sizes = sizesByType[type] || [];
+        if (sizes.length === 1) {
+            return '<input type="hidden" name="' + name + '" value="' + sizes[0] + '">'
+                + '<span class="size-text-label" style="min-width:100px;">' + sizes[0] + '</span>';
+        }
+        return '<select name="' + name + '" class="size-select">' + buildSizeOptions(type, '') + '</select>';
+    }
+
     function updateAllSizeSelects(type) {
-        var selects = document.querySelectorAll('#variants-container select[name*="[size]"]');
-        selects.forEach(function(sel) {
-            var current = sel.value;
-            sel.innerHTML = buildSizeOptions(type, current);
-            // If home_decor, auto-select One Size
-            if (type === 'home_decor') sel.value = 'One Size';
+        var sizes = sizesByType[type] || [];
+        var rows = document.querySelectorAll('#variants-container .variant-row');
+        rows.forEach(function(row) {
+            var sel = row.querySelector('select[name*="[size]"]');
+            var hid = row.querySelector('input[type="hidden"][name*="[size]"]');
+            var lbl = row.querySelector('.size-text-label');
+
+            if (sizes.length === 1) {
+                if (sel) {
+                    var name = sel.name;
+                    var hidden = document.createElement('input');
+                    hidden.type = 'hidden';
+                    hidden.name = name;
+                    hidden.value = sizes[0];
+                    var span = document.createElement('span');
+                    span.className = 'size-text-label';
+                    span.style.minWidth = '100px';
+                    span.textContent = sizes[0];
+                    row.insertBefore(hidden, sel);
+                    row.insertBefore(span, sel);
+                    sel.remove();
+                } else if (hid) {
+                    hid.value = sizes[0];
+                    if (lbl) lbl.textContent = sizes[0];
+                }
+            } else {
+                if (hid) {
+                    var name = hid.name;
+                    var select = document.createElement('select');
+                    select.name = name;
+                    select.className = 'size-select';
+                    select.innerHTML = buildSizeOptions(type, '');
+                    row.insertBefore(select, hid);
+                    hid.remove();
+                    if (lbl) lbl.remove();
+                } else if (sel) {
+                    var current = sel.value;
+                    sel.innerHTML = buildSizeOptions(type, current);
+                }
+            }
         });
     }
 
@@ -138,10 +181,9 @@
         var container = document.getElementById('variants-container');
         var row = document.createElement('div');
         row.className = 'variant-row';
-        row.style = 'display:flex;gap:1rem;margin-bottom:0.5rem;align-items:center;';
+        row.style.cssText = 'display:flex;gap:1rem;margin-bottom:0.5rem;align-items:center;';
 
-        var opts = buildSizeOptions(type, type === 'home_decor' ? 'One Size' : '');
-        row.innerHTML = '<select name="product_variants[' + variantIndex + '][size]">' + opts + '</select>'
+        row.innerHTML = buildSizeField('product_variants[' + variantIndex + '][size]', type)
             + '<input type="number" name="product_variants[' + variantIndex + '][stock]" placeholder="Stock" min="0" style="width:80px;">'
             + '<button type="button" onclick="this.parentNode.remove()">✕</button>';
         container.appendChild(row);

@@ -40,6 +40,7 @@ class Product extends Entity
         'created' => false,
         'modified' => false,
         'description' => true,
+        'story' => true,
         'product_variants' => true,
     ];
 }

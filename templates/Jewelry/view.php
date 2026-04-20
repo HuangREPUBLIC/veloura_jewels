@@ -9,12 +9,20 @@ $this->Html->css('jewelry', ['block' => true]);
 
 $totalStock = 0;
 $hasStock = false;
+$inStockVariants = [];
 if (!empty($product->product_variants)) {
     foreach ($product->product_variants as $v) {
         $totalStock += $v->stock;
+        if ($v->stock > 0) {
+            $inStockVariants[] = $v;
+        }
     }
     $hasStock = $totalStock > 0;
 }
+$isOneSizeOnly = !empty($inStockVariants)
+    && count(array_unique(array_map(fn($v) => $v->size, $inStockVariants))) === 1
+    && $inStockVariants[0]->size === 'One Size';
+$oneSizeVariant = $isOneSizeOnly ? $inStockVariants[0] : null;
 ?>
 
 <div class="jewelry-page">
@@ -52,6 +60,11 @@ if (!empty($product->product_variants)) {
                 <p><?= nl2br(h($product->description)) ?></p>
             </div>
 
+            <div class="detail-description">
+                <h3>Story</h3>
+                <p><?= nl2br(h($product->story)) ?></p>
+            </div>
+
             <?php if ($hasStock): ?>
                 <?= $this->Form->create(null, [
                     'url'   => ['controller' => 'Jewelry', 'action' => 'addToCart'],
@@ -62,18 +75,23 @@ if (!empty($product->product_variants)) {
                 <div class="quantity-group">
                     <label class="quantity-label">Size</label>
                     <div class="qty-box">
-                        <select name="variant_id" id="variant-select">
-                            <option value="">-- Select --</option>
-                            <?php foreach ($product->product_variants as $v): ?>
-                                <?php if ($v->stock > 0): ?>
-                                    <option value="<?= $v->id ?>" data-stock="<?= $v->stock ?>">
-                                        <?= h($v->size) ?>
-                                    </option>
-                                <?php else: ?>
-                                    <option value="" disabled><?= h($v->size) ?> (Out of Stock)</option>
-                                <?php endif; ?>
-                            <?php endforeach; ?>
-                        </select>
+                        <?php if ($isOneSizeOnly): ?>
+                            <?= $this->Form->hidden('variant_id', ['value' => $oneSizeVariant->id]) ?>
+                            <span><?= h($oneSizeVariant->size) ?></span>
+                        <?php else: ?>
+                            <select name="variant_id" id="variant-select">
+                                <option value="">-- Select --</option>
+                                <?php foreach ($product->product_variants as $v): ?>
+                                    <?php if ($v->stock > 0): ?>
+                                        <option value="<?= $v->id ?>" data-stock="<?= $v->stock ?>">
+                                            <?= h($v->size) ?>
+                                        </option>
+                                    <?php else: ?>
+                                        <option value="" disabled><?= h($v->size) ?> (Out of Stock)</option>
+                                    <?php endif; ?>
+                                <?php endforeach; ?>
+                            </select>
+                        <?php endif; ?>
                     </div>
                 </div>
 
@@ -86,7 +104,7 @@ if (!empty($product->product_variants)) {
                             id="quantity"
                             name="quantity"
                             min="1"
-                            max="1"
+                            max="<?= $isOneSizeOnly ? $oneSizeVariant->stock : 1 ?>"
                             value="1"
                             class="jewelry-quantity-input"
                         >
@@ -98,7 +116,7 @@ if (!empty($product->product_variants)) {
                     <?= $this->Form->button('Add to Cart', [
                         'class' => 'jewelry-add-to-cart-btn',
                         'id'    => 'add-to-cart-btn',
-                        'disabled' => true
+                        'disabled' => !$isOneSizeOnly
                     ]) ?>
                 </div>
 
