@@ -1,9 +1,12 @@
 <?= $this->Html->css('faq') ?>
 
 <div class="faq-page">
-    <div class="faq-container">
-        <h1 class="faq-title">Frequently Asked Questions</h1>
+    <div class="faq-header">
+        <h2>Frequently Asked Questions</h2>
+        <p>Find answers to common questions about Veloura Jewels, our products, and how to get in touch.</p>
+    </div>
 
+    <div class="faq-container">
         <?php foreach ($faqs as $index => $faq): ?>
             <div class="faq-item">
                 <button class="faq-question" type="button" onclick="toggleFaq(<?= $index ?>)">
@@ -11,7 +14,7 @@
                     <span class="faq-icon" id="icon-<?= $index ?>">+</span>
                 </button>
 
-                <div class="faq-answer" id="answer-<?= $index ?>" style="display: none;">
+                <div class="faq-answer" id="answer-<?= $index ?>">
                     <p><?= h($faq['answer']) ?></p>
                 </div>
             </div>
@@ -24,12 +27,12 @@
         const answer = document.getElementById('answer-' + index);
         const icon = document.getElementById('icon-' + index);
 
-        if (answer.style.display === 'none') {
-            answer.style.display = 'block';
-            icon.textContent = '−';
-        } else {
+        if (answer.style.display === 'block') {
             answer.style.display = 'none';
             icon.textContent = '+';
+        } else {
+            answer.style.display = 'block';
+            icon.textContent = '−';
         }
     }
 </script>
