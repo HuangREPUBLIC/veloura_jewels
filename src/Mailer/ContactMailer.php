@@ -27,6 +27,7 @@ class ContactMailer extends Mailer
     public function confirmation(ContactSubmission $contactSubmission): void
     {
         $this
+            ->setFrom('test1@u26s1141.iedev.org', 'Veloura Jewels')
             ->setTo($contactSubmission->email)
             ->setSubject('We received your message - Veloura Jewels')
             ->setEmailFormat('text')
