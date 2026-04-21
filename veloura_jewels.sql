@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.3
+-- version 5.2.2
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Apr 21, 2026 at 02:47 PM
--- Server version: 11.8.6-MariaDB
--- PHP Version: 8.4.16
+-- Host: localhost:3306
+-- Generation Time: Apr 22, 2026 at 01:30 AM
+-- Server version: 11.4.10-MariaDB
+-- PHP Version: 8.4.19
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -17,11 +17,6 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8mb4 */;
 
---
--- Database: `veloura_jewels`
---
-CREATE DATABASE IF NOT EXISTS `veloura_jewels` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_uca1400_ai_ci;
-USE `veloura_jewels`;
 
 -- --------------------------------------------------------
 
@@ -154,7 +149,7 @@ CREATE TABLE IF NOT EXISTS `contact_submissions` (
     `created` datetime DEFAULT current_timestamp(),
     `modified` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp(),
     PRIMARY KEY (`id`)
-    ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+    ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 
 --
 -- Dumping data for table `contact_submissions`
@@ -163,7 +158,12 @@ CREATE TABLE IF NOT EXISTS `contact_submissions` (
 INSERT INTO `contact_submissions` (`id`, `first_name`, `last_name`, `email`, `subject`, `message`, `captcha_passed`, `is_replied`, `created`, `modified`) VALUES
                                                                                                                                                               (1, 'Jialin', 'Wu', 'jialinwu.island@gmail.com', '', '1', 0, 1, '2026-03-20 02:40:43', '2026-03-24 06:32:52'),
                                                                                                                                                               (3, '11', '11', '11@1.com', '', '1wassadsad', 0, 0, '2026-03-20 02:44:25', '2026-03-20 02:44:25'),
-                                                                                                                                                              (4, 'Hey', 'Test', 'Testing@mail.com', 'This is a test subject', 'I want to test the subject', 0, 1, '2026-03-24 06:23:08', '2026-04-16 12:00:12');
+                                                                                                                                                              (4, 'Hey', 'Test', 'Testing@mail.com', 'This is a test subject', 'I want to test the subject', 0, 1, '2026-03-24 06:23:08', '2026-04-16 12:00:12'),
+                                                                                                                                                              (5, 'Customer', 'Test', 'test1@u26s1141.iedev.org', 'testing email', 'TEST', 0, 0, '2026-04-22 00:40:01', '2026-04-22 00:40:01'),
+                                                                                                                                                              (6, 'Customer', 'we', 'test1@u26s1141.iedev.org', 'testing email', 'test', 0, 0, '2026-04-22 00:47:12', '2026-04-22 00:47:12'),
+                                                                                                                                                              (7, 'Customer', 'Test', 'test1@u26s1141.iedev.org', 'testing email', 'tesret', 0, 0, '2026-04-22 01:16:42', '2026-04-22 01:16:42'),
+                                                                                                                                                              (8, 'Customer', 'Test', 'test1@u26s1141.iedev.org', 'testing email', 'wwww', 0, 0, '2026-04-22 01:22:27', '2026-04-22 01:22:27'),
+                                                                                                                                                              (9, 'sami', 'Test', 'test1@u26s1141.iedev.org', 'devTesting', 'Testing if email works on dev version', 0, 0, '2026-04-22 01:27:19', '2026-04-22 01:27:19');
 
 -- --------------------------------------------------------
 
@@ -185,7 +185,7 @@ CREATE TABLE IF NOT EXISTS `orders` (
     `modified` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp(),
     PRIMARY KEY (`id`),
     KEY `user_id` (`user_id`)
-    ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+    ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `orders`
@@ -193,7 +193,11 @@ CREATE TABLE IF NOT EXISTS `orders` (
 
 INSERT INTO `orders` (`id`, `user_id`, `stripe_session_id`, `stripe_payment_intent_id`, `customer_email`, `status`, `total_amount`, `currency`, `created`, `modified`) VALUES
                                                                                                                                                                            (1, 6, 'cs_test_a1l4DTBWnxrajgwUpy7k24NjtJeZ16AnRqievRfTEJf36ArHdVZULwt3xz', NULL, 'admin@test.com', 'pending', 350.00, 'aud', '2026-04-20 16:37:29', '2026-04-20 16:37:30'),
-                                                                                                                                                                           (2, NULL, 'cs_test_a1gbuDPGowLYnBKhQN1Y9OruqENi12hJ5Po1dGTI1a7d6BtHs99HlcJttd', NULL, NULL, 'pending', 350.00, 'aud', '2026-04-20 16:44:00', '2026-04-20 16:44:01');
+                                                                                                                                                                           (2, NULL, 'cs_test_a1gbuDPGowLYnBKhQN1Y9OruqENi12hJ5Po1dGTI1a7d6BtHs99HlcJttd', NULL, NULL, 'pending', 350.00, 'aud', '2026-04-20 16:44:00', '2026-04-20 16:44:01'),
+                                                                                                                                                                           (3, 9, 'cs_test_a12fcQZo6hkBecnwREzjDPYP9fpvK04vzVLcIJ0TQcZi2aXNEh63GC2wU8', NULL, 'customer@gmail.com', 'pending', 350.00, 'aud', '2026-04-21 15:47:42', '2026-04-21 15:47:42'),
+                                                                                                                                                                           (4, 9, 'cs_test_a1lwmJTr15l36y9ylqeGWW9w7T0dT7jALdCS9FqwgNpHyp88rB9ymhEYri', NULL, 'customer@gmail.com', 'pending', 350.00, 'aud', '2026-04-21 23:00:16', '2026-04-21 23:00:16'),
+                                                                                                                                                                           (5, NULL, 'cs_test_a1StVwcss4jHslKJwI6c9WZ7A2YEqNzuzOuwaN42iz5EMLDQhpCIBnhLGi', NULL, NULL, 'pending', 780.00, 'aud', '2026-04-21 23:03:52', '2026-04-21 23:03:53'),
+                                                                                                                                                                           (6, 6, 'cs_test_a1TgqMv8Anz1NN2L05p0OBHkyytoxeH9GFYMSAxPoOdOiRqaKQzmRdeCkS', NULL, 'admin@test.com', 'pending', 780.00, 'aud', '2026-04-21 23:04:13', '2026-04-21 23:04:13');
 
 -- --------------------------------------------------------
 
@@ -218,7 +222,7 @@ CREATE TABLE IF NOT EXISTS `order_items` (
     KEY `order_id` (`order_id`),
     KEY `product_id` (`product_id`),
     KEY `variant_id` (`variant_id`)
-    ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+    ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `order_items`
@@ -226,7 +230,11 @@ CREATE TABLE IF NOT EXISTS `order_items` (
 
 INSERT INTO `order_items` (`id`, `order_id`, `product_id`, `variant_id`, `product_name`, `selected_size`, `unit_price`, `quantity`, `subtotal`, `created`, `modified`) VALUES
                                                                                                                                                                            (1, 1, 15, 35, 'Art Deco Pavé Bracelet', 'One Size', 350.00, 1, 350.00, '2026-04-20 16:37:29', '2026-04-20 16:37:29'),
-                                                                                                                                                                           (2, 2, 15, 35, 'Art Deco Pavé Bracelet', 'One Size', 350.00, 1, 350.00, '2026-04-20 16:44:00', '2026-04-20 16:44:00');
+                                                                                                                                                                           (2, 2, 15, 35, 'Art Deco Pavé Bracelet', 'One Size', 350.00, 1, 350.00, '2026-04-20 16:44:00', '2026-04-20 16:44:00'),
+                                                                                                                                                                           (3, 3, 15, 35, 'Art Deco Pavé Bracelet', 'One Size', 350.00, 1, 350.00, '2026-04-21 15:47:42', '2026-04-21 15:47:42'),
+                                                                                                                                                                           (4, 4, 15, 35, 'Art Deco Pavé Bracelet', 'One Size', 350.00, 1, 350.00, '2026-04-21 23:00:16', '2026-04-21 23:00:16'),
+                                                                                                                                                                           (5, 5, 7, 27, 'Art Deco Pavé Choker', 'One Size', 780.00, 1, 780.00, '2026-04-21 23:03:52', '2026-04-21 23:03:52'),
+                                                                                                                                                                           (6, 6, 7, 27, 'Art Deco Pavé Choker', 'One Size', 780.00, 1, 780.00, '2026-04-21 23:04:13', '2026-04-21 23:04:13');
 
 -- --------------------------------------------------------
 
@@ -258,7 +266,7 @@ INSERT INTO `products` (`id`, `name`, `purchase_price`, `sale_price`, `supplier_
                                                                                                                                            (3, 'Dainty Rose Gold Ring', 30.00, 120.00, 'supplier@luxgems.com.au', '2026-04-13 11:29:33', '2026-04-14 01:26:33', 'This ring is made with Alloy and 18k rose gold plated. It is microset with white cubic zirconia.\r\nThe APM Alloy is made of 95% recycled material. It is anti-tarnishing and Hypoallergenic.\r\nMaterial: Alloy made of 95% recycled material and 18k rose gold plated, white cubic zirconia, anti-tarnishing and Hypoallergenic\r\nAll our products are handcrafted and microset by hand in our ateliers\r\nColor: Rose gold', NULL),
                                                                                                                                            (4, 'Chunky Ice Ring', 100.00, 300.00, 'supplier@luxgems.com.au', '2026-04-13 11:29:33', '2026-04-14 01:38:58', 'Sterling silver intertwines with paths of brilliant stones to reflect the geometric patterns created by broken ice.\r\nAll our products are handcrafted in our ateliers\r\nMaterial: Sterling silver\r\nStone: White cubic zirconia\r\nColor: Silver', NULL),
                                                                                                                                            (5, 'LOVE Morse Code Ring', 30.00, 120.00, 'supplier@pearlsea.com.au', '2026-04-13 11:29:33', '2026-04-14 01:27:20', 'This collection is using Morse code as a secret Love language.\r\nThis ring is embellished with the code LOVE on it, and the word LOVE is also engraved inside.\r\nMaterial: APM Rose Alloy made of 95% recycled material and 18k gold plated (3 microns), white cubic zirconia, anti-tarnishing and anti-allergenic\r\nAll our products are handcrafted and microset by hand in our ateliers\r\nColor: Rose gold', NULL),
-                                                                                                                                           (6, 'Art Deco Adjustable Necklace', 70.00, 230.00, 'supplier@luxgems.com.au', '2026-04-13 11:29:33', '2026-04-14 01:28:09', 'This necklace is meticulously crafted for a perfect balance between bold structure and refined elegance.\r\nMaterial: Sterling silver\r\nStone: White cubic zirconia\r\nColor: Silver\r\nPendant size: Length 4.6 cm ; Width 0.7 cm\r\nTotal chain length: Adjustable to 48 cm maximum with sliding clasp', NULL),
+                                                                                                                                           (6, 'Art Deco Adjustable Necklace', 70.00, 230.00, 'supplier@luxgems.com.au', '2026-04-13 11:29:33', '2026-04-21 23:08:47', 'This necklace is meticulously crafted for a perfect balance between bold structure and refined elegance.\r\nMaterial: Sterling silver\r\nStone: White cubic zirconia\r\nColor: Silver\r\nPendant size: Length 4.6 cm ; Width 0.7 cm\r\nTotal chain length: Adjustable to 48 cm maximum with sliding clasp', NULL),
                                                                                                                                            (7, 'Art Deco Pavé Choker', 300.00, 780.00, 'supplier@goldcraft.com.au', '2026-04-13 11:29:33', '2026-04-14 01:28:26', 'This choker is meticulously crafted for a perfect balance between bold structure and refined elegance.\r\nMaterial: Sterling silver\r\nStone: Over 210 white cubic zirconia\r\nColor: Silver\r\nTotal chain length: 40 cm ; Width 0.8 cm', NULL),
                                                                                                                                            (8, 'Lilac Torsade Adjustable Necklace', 60.00, 210.00, 'supplier@gemstone.com.au', '2026-04-13 11:29:33', '2026-04-14 01:29:56', 'This necklace embodies elegance and versatility.\r\nMaterial: APM Yellow Alloy made of 95% recycled material and 18k yellow gold plated\r\nStone: Purple cubic zirconia\r\nColor: Yellow\r\nTotal chain length: Adjustable to 65 cm maximum with sliding clasp', NULL),
                                                                                                                                            (9, 'Lumière Pavé Choker', 180.00, 620.00, 'supplier@pearlsea.com.au', '2026-04-13 11:29:33', '2026-04-14 01:30:20', 'This minimalist and versatile choker perfectly captures the essence of spring.\r\nMaterial: Sterling silver\r\nStone: White cubic zirconia\r\nColor: Silver', NULL),
@@ -298,7 +306,7 @@ CREATE TABLE IF NOT EXISTS `product_images` (
   `filename` varchar(4096) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `product_id` (`product_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=107 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=108 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `product_images`
@@ -309,7 +317,6 @@ INSERT INTO `product_images` (`id`, `product_id`, `filename`) VALUES
 (22, 2, 'statement_torsade_pave___ring.png'),
 (23, 3, 'dainty_rose_gold_ring.png'),
 (25, 5, 'LOVE_morse_code_ring.png'),
-(26, 6, 'art_deco_adjustable_necklace.png'),
 (27, 7, 'art_deco_pave___choker.png'),
 (28, 8, 'lilac_torsade_adjustable_necklace.png'),
 (29, 9, 'lumiere-pave-choker.png'),
@@ -336,7 +343,8 @@ INSERT INTO `product_images` (`id`, `product_id`, `filename`) VALUES
 (100, 41, 'Screenshot_2026-04-21_133706.png'),
 (102, 42, 'Screenshot_2026-04-21_134141.png'),
 (103, 43, 'Screenshot_2026-04-21_134550.png'),
-(106, 44, 'Screenshot_2026-04-21_142317.png');
+(106, 44, 'Screenshot_2026-04-21_142317.png'),
+(107, 6, 'necklaces4.png');
 
 -- --------------------------------------------------------
 
