@@ -80,20 +80,36 @@ return [
     /*
      * Email configuration.
      *
-     * Host and credential configuration in case you are using SmtpTransport
+     * For LOCAL DEVELOPMENT: Use DebugTransport to preview emails in DebugKit
+     * without sending real emails. Uncomment the local block and comment out
+     * the MailTransport block.
      *
-     * See app.php for more configuration options.
+     * For CPANEL PRODUCTION: Use MailTransport with localhost. Uncomment the
+     * production block and comment out the DebugTransport block.
+     *
+     * NOTE: Never commit your actual app_local.php — only this example file.
      */
+
+// LOCAL DEVELOPMENT — emails appear in DebugKit Mail panel, nothing is sent
     'EmailTransport' => [
         'default' => [
-            'host' => 'localhost',
-            'port' => 25,
-            'username' => null,
-            'password' => null,
-            'client' => null,
-            'url' => env('EMAIL_TRANSPORT_DEFAULT_URL', null),
+            'className' => \Cake\Mailer\Transport\DebugTransport::class,
         ],
     ],
+
+// CPANEL PRODUCTION — uncomment this and comment out the block above
+//'EmailTransport' => [
+//    'default' => [
+//        'className' => \Cake\Mailer\Transport\MailTransport::class,
+//        'host' => 'localhost',
+//        'port' => 25,
+//        'username' => null,
+//        'password' => null,
+//        'client' => null,
+//        'url' => env('EMAIL_TRANSPORT_DEFAULT_URL', null),
+//    ],
+//],
+
     /*
      * Configurations for CAPTCHA services
      */
