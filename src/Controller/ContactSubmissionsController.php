@@ -5,6 +5,7 @@ namespace App\Controller;
 
 use Cake\Event\EventInterface;
 use Cake\Mailer\Mailer;
+use Cake\Mailer\MailerAwareTrait;
 
 /**
  * ContactSubmissions Controller
@@ -13,6 +14,7 @@ use Cake\Mailer\Mailer;
  */
 class ContactSubmissionsController extends AppController
 {
+    use MailerAwareTrait;
     public function initialize(): void
     {
         parent::initialize();
@@ -95,7 +97,18 @@ class ContactSubmissionsController extends AppController
             }
 
             if ($this->ContactSubmissions->save($contactSubmission)) {
-                $this->Flash->success(__('Thanks for reaching out! We will get back to you as soon as possible.'));
+                \Cake\Log\Log::error('DEBUG: About to send email to ' . $contactSubmission->email);
+                try {
+                    \Cake\Log\Log::error('DEBUG: Transport class = ' . get_class(\Cake\Mailer\TransportFactory::get('default')));
+                    $this->getMailer('Contact')->send('confirmation', [$contactSubmission]);
+                    \Cake\Log\Log::error('DEBUG: send() completed successfully');
+                    $this->Flash->success(__('Thanks for reaching out! We have received your message and sent a confirmation email.'));
+                } catch (\Exception $e) {
+                    \Cake\Log\Log::error('Confirmation email failed: ' . $e->getMessage());
+                    \Cake\Log\Log::error('Confirmation email trace: ' . $e->getTraceAsString());
+                    $this->Flash->success(__('Thanks for reaching out! We have received your message.'));
+                }
+
                 return $this->redirect(['action' => 'add']);
             }
 
