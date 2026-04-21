@@ -1,10 +1,10 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.2
+-- version 5.2.3
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:3306
--- Generation Time: Apr 21, 2026 at 01:23 AM
--- Server version: 11.4.10-MariaDB
+-- Host: localhost
+-- Generation Time: Apr 21, 2026 at 04:06 AM
+-- Server version: 12.2.2-MariaDB
 -- PHP Version: 8.4.19
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -16,7 +16,6 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8mb4 */;
-
 
 -- --------------------------------------------------------
 
@@ -62,7 +61,7 @@ CREATE TABLE IF NOT EXISTS `categories_products` (
     PRIMARY KEY (`id`),
     KEY `category_id` (`category_id`),
     KEY `product_id` (`product_id`)
-    ) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+    ) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `categories_products`
@@ -87,7 +86,10 @@ INSERT INTO `categories_products` (`id`, `category_id`, `product_id`) VALUES
                                                                           (21, 5, 16),
                                                                           (22, 4, 24),
                                                                           (23, 2, 25),
-                                                                          (24, 5, 26);
+                                                                          (24, 5, 26),
+                                                                          (25, 8, 27),
+                                                                          (26, 10, 28),
+                                                                          (27, 7, 29);
 
 -- --------------------------------------------------------
 
@@ -229,7 +231,7 @@ CREATE TABLE IF NOT EXISTS `products` (
     `description` text DEFAULT NULL,
     `story` text DEFAULT NULL,
     PRIMARY KEY (`id`)
-    ) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+    ) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `products`
@@ -254,7 +256,10 @@ INSERT INTO `products` (`id`, `name`, `purchase_price`, `sale_price`, `supplier_
                                                                                                                                            (16, 'Étoile Bloom Brooch', 90.00, 320.00, 'supplier@goldcraft.com.au', '2026-04-13 11:29:33', '2026-04-21 00:22:08', 'Material: Rhodium-plated white gold vermeil on sterling silver base, made from recycled materials\r\nStone: Cubic zirconia\r\nDimensions: 48 mm length, 32 mm width', NULL),
                                                                                                                                            (24, 'Rhodium Tennis Bracelet', 90.00, 300.00, 'supplier@gemstone.com.au', '2026-04-20 23:08:12', '2026-04-20 23:08:12', 'Material: Rhodium plated on premium white alloy, made from recycled materials\r\nStone: Swarovski crystals\r\nDimensions: 18cm length, 6cm width', NULL),
                                                                                                                                            (25, 'Elegant Silver Necklace', 85.00, 215.00, 'supplier@gemstone.com.au', '2026-04-20 23:17:07', '2026-04-20 23:17:07', 'Material: Rhodium plated on premium white alloy, made from recycled materials\r\nStone: Cubic zirconia\r\nDimensions: 45 cm chain length, 18 mm pendant width', NULL),
-                                                                                                                                           (26, 'Fleur Pastel Bloom Brooch', 68.00, 220.00, 'supplier@gemstone.com.au', '2026-04-21 00:42:02', '2026-04-21 00:44:51', 'Material: Rose gold vermeil on sterling silver base, made from recycled materials\r\nStone: Lab-created morganite, lavender quartz, peridot, and freshwater pearl accents\r\nDimensions: 46 mm length, 34 mm width', NULL);
+                                                                                                                                           (26, 'Fleur Pastel Bloom Brooch', 68.00, 220.00, 'supplier@gemstone.com.au', '2026-04-21 00:42:02', '2026-04-21 00:44:51', 'Material: Rose gold vermeil on sterling silver base, made from recycled materials\r\nStone: Lab-created morganite, lavender quartz, peridot, and freshwater pearl accents\r\nDimensions: 46 mm length, 34 mm width', NULL),
+                                                                                                                                           (27, 'Éloise Bouclé Cushion', 80.00, 240.00, 'supplier@lifestyle.com.au', '2026-04-21 04:18:36', '2026-04-21 04:22:19', 'Material: Premium bouclé fabric cover with soft microfiber cushion insert\r\nColor: Soft ivory cream\r\nDimensions: 50 cm x 50 cm\r\nStyle: Japandi, Minimalist, Alpine Chic\r\nFeatures: Textured boucle finish, plush comfort filling, removable cover with hidden zipper, perfect for living rooms, bedrooms, and lounge styling', 'a'),
+                                                                                                                                           (28, 'Sorelle Fringe Throw', 60.00, 260.00, 'supplier@homedecor.com.au', '2026-04-21 04:20:51', '2026-04-21 04:22:07', 'Material: Premium wool-blend fabric with soft-touch finish\r\nColor: Soft taupe grey\r\nDimensions: 130 cm x 170 cm\r\nStyle: Japandi, Minimalist, Alpine Chic\r\nFeatures: Lightweight yet warm, textured weave, hand-finished fringe edges, breathable and suitable for year-round use', 'a'),
+                                                                                                                                           (29, 'Lumière Ceramic Vase', 120.00, 400.00, 'supplier@homedecor.com.au', '2026-04-21 04:21:58', '2026-04-21 04:21:58', 'Material: High-fired ceramic with matte speckled glaze\r\nColor: Warm off-white with natural speckle detailing\r\nDimensions: 24 cm height, 18 cm diameter\r\nStyle: Japandi, Minimalist, Contemporary\r\nFeatures: Hand-finished texture, watertight interior, durable ceramic construction, ideal for dried or fresh arrangements as well as standalone décor', 'A');
 
 -- --------------------------------------------------------
 
@@ -269,7 +274,7 @@ CREATE TABLE IF NOT EXISTS `product_images` (
     `filename` varchar(4096) NOT NULL,
     PRIMARY KEY (`id`),
     KEY `product_id` (`product_id`)
-    ) ENGINE=InnoDB AUTO_INCREMENT=76 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+    ) ENGINE=InnoDB AUTO_INCREMENT=79 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `product_images`
@@ -295,7 +300,10 @@ INSERT INTO `product_images` (`id`, `product_id`, `filename`) VALUES
                                                                   (67, 3, 'rings4.png'),
                                                                   (72, 26, 'brooch2.png'),
                                                                   (74, 13, 'earrings4.png'),
-                                                                  (75, 13, 'earrings4.png');
+                                                                  (75, 13, 'earrings4.png'),
+                                                                  (76, 27, 'eloise_boucle_cushion.png'),
+                                                                  (77, 28, 'sorelle_ringe_throw.png'),
+                                                                  (78, 29, 'lumiere_ceramic_vase.png');
 
 -- --------------------------------------------------------
 
@@ -311,7 +319,7 @@ CREATE TABLE IF NOT EXISTS `product_variants` (
     `stock` int(11) NOT NULL DEFAULT 0,
     PRIMARY KEY (`id`),
     KEY `product_id` (`product_id`)
-    ) ENGINE=InnoDB AUTO_INCREMENT=54 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+    ) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `product_variants`
@@ -363,7 +371,10 @@ INSERT INTO `product_variants` (`id`, `product_id`, `size`, `stock`) VALUES
                                                                          (50, 15, 'Size 7', 4),
                                                                          (51, 15, 'Size 8', 2),
                                                                          (52, 15, 'Size 9', 5),
-                                                                         (53, 26, 'One Size', 6);
+                                                                         (53, 26, 'One Size', 6),
+                                                                         (54, 27, 'One Size', 5),
+                                                                         (55, 28, 'One Size', 3),
+                                                                         (56, 29, 'One Size', 6);
 
 -- --------------------------------------------------------
 
