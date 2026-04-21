@@ -2,10 +2,10 @@
 -- version 5.2.3
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Apr 21, 2026 at 04:06 AM
--- Server version: 12.2.2-MariaDB
--- PHP Version: 8.4.19
+-- Host: 127.0.0.1
+-- Generation Time: Apr 21, 2026 at 02:47 PM
+-- Server version: 11.8.6-MariaDB
+-- PHP Version: 8.4.16
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -16,6 +16,12 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `veloura_jewels`
+--
+CREATE DATABASE IF NOT EXISTS `veloura_jewels` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_uca1400_ai_ci;
+USE `veloura_jewels`;
 
 -- --------------------------------------------------------
 
@@ -61,7 +67,7 @@ CREATE TABLE IF NOT EXISTS `categories_products` (
     PRIMARY KEY (`id`),
     KEY `category_id` (`category_id`),
     KEY `product_id` (`product_id`)
-    ) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+    ) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `categories_products`
@@ -83,13 +89,22 @@ INSERT INTO `categories_products` (`id`, `category_id`, `product_id`) VALUES
                                                                           (13, 3, 13),
                                                                           (14, 3, 14),
                                                                           (15, 4, 15),
-                                                                          (21, 5, 16),
-                                                                          (22, 4, 24),
-                                                                          (23, 2, 25),
-                                                                          (24, 5, 26),
-                                                                          (25, 8, 27),
-                                                                          (26, 10, 28),
-                                                                          (27, 7, 29);
+                                                                          (16, 4, 16),
+                                                                          (28, 7, 30),
+                                                                          (29, 7, 31),
+                                                                          (30, 7, 32),
+                                                                          (31, 7, 33),
+                                                                          (32, 9, 34),
+                                                                          (33, 9, 35),
+                                                                          (34, 9, 36),
+                                                                          (35, 9, 37),
+                                                                          (36, 6, 38),
+                                                                          (37, 6, 39),
+                                                                          (38, 6, 40),
+                                                                          (39, 8, 41),
+                                                                          (40, 8, 42),
+                                                                          (41, 8, 43),
+                                                                          (42, 10, 44);
 
 -- --------------------------------------------------------
 
@@ -231,7 +246,7 @@ CREATE TABLE IF NOT EXISTS `products` (
     `description` text DEFAULT NULL,
     `story` text DEFAULT NULL,
     PRIMARY KEY (`id`)
-    ) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+    ) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `products`
@@ -239,27 +254,36 @@ CREATE TABLE IF NOT EXISTS `products` (
 
 INSERT INTO `products` (`id`, `name`, `purchase_price`, `sale_price`, `supplier_email`, `created`, `modified`, `description`, `story`) VALUES
                                                                                                                                            (1, 'Art Deco Ring', 50.00, 110.00, 'supplier@luxgems.com.au', '2026-04-13 11:29:33', '2026-04-16 12:20:04', 'This ring is meticulously crafted for a perfect balance between bold structure and refined elegance. The design and stone setting ensure a unique brilliance. Inspired by Art Deco aesthetic, each piece embodies timeless sophistication.\r\nAll our products are handcrafted in our ateliers\r\nMaterial: Sterling silver\r\nStone: White cubic zirconia\r\nWidth: 0.5 cm\r\nColor: Silver', NULL),
-                                                                                                                                           (2, 'Duo Luxe Two-Tone Ring', 85.00, 210.00, 'supplier@goldcraft.com.au', '2026-04-13 11:29:33', '2026-04-20 23:53:13', 'Material: Sterling silver with 18K gold recynil\r\nStones: Cubic zirconia\r\nDimensions: 6 mm width', NULL),
-                                                                                                                                           (3, 'Infinity Crossover Ring', 40.00, 130.00, 'supplier@luxgems.com.au', '2026-04-13 11:29:33', '2026-04-21 00:28:42', 'Material: 18K yellow gold vermeil and rhodium-plated white gold on sterling silver base, made from recycled materials\r\nStone: Pavé cubic zirconia\r\nDimensions: 7 mm width, comfort-fit band', NULL),
+                                                                                                                                           (2, 'Statement Torsade Pavé Ring', 85.00, 210.00, 'supplier@goldcraft.com.au', '2026-04-13 11:29:33', '2026-04-14 01:26:17', 'This ring embodies elegance and versatility. Its radiant shine echoes pure light, creating a captivating sparkle that draws attention.\r\nAll our products are handcrafted in our ateliers\r\nMaterial: APM Yellow Alloy made of 95% recycled material and 18k yellow gold plated, anti-tarnishing and hypoallergenic\r\nStone: White cubic zirconia\r\nWidth: 0.9 cm\r\nColor: Yellow', NULL),
+                                                                                                                                           (3, 'Dainty Rose Gold Ring', 30.00, 120.00, 'supplier@luxgems.com.au', '2026-04-13 11:29:33', '2026-04-14 01:26:33', 'This ring is made with Alloy and 18k rose gold plated. It is microset with white cubic zirconia.\r\nThe APM Alloy is made of 95% recycled material. It is anti-tarnishing and Hypoallergenic.\r\nMaterial: Alloy made of 95% recycled material and 18k rose gold plated, white cubic zirconia, anti-tarnishing and Hypoallergenic\r\nAll our products are handcrafted and microset by hand in our ateliers\r\nColor: Rose gold', NULL),
                                                                                                                                            (4, 'Chunky Ice Ring', 100.00, 300.00, 'supplier@luxgems.com.au', '2026-04-13 11:29:33', '2026-04-14 01:38:58', 'Sterling silver intertwines with paths of brilliant stones to reflect the geometric patterns created by broken ice.\r\nAll our products are handcrafted in our ateliers\r\nMaterial: Sterling silver\r\nStone: White cubic zirconia\r\nColor: Silver', NULL),
-                                                                                                                                           (5, 'Eternal Spark White Gold Ring', 30.00, 120.00, 'supplier@pearlsea.com.au', '2026-04-13 11:29:33', '2026-04-20 23:54:01', 'Material: Rhodium plated on premium white alloy, made from recycled\r\nStones: Cubic zirconia\r\nBand Width: 3 mm', NULL),
-                                                                                                                                           (6, 'Éclat Lariat Necklace', 70.00, 189.96, 'supplier@luxgems.com.au', '2026-04-13 11:29:33', '2026-04-20 23:57:50', 'Material: 18K yellow gold vermeil on sterling silver, made from recycled materials\r\nStone: Cubic zirconia\r\nDimensions: 45 cm chain length, 32 mm drop pendant length', NULL),
+                                                                                                                                           (5, 'LOVE Morse Code Ring', 30.00, 120.00, 'supplier@pearlsea.com.au', '2026-04-13 11:29:33', '2026-04-14 01:27:20', 'This collection is using Morse code as a secret Love language.\r\nThis ring is embellished with the code LOVE on it, and the word LOVE is also engraved inside.\r\nMaterial: APM Rose Alloy made of 95% recycled material and 18k gold plated (3 microns), white cubic zirconia, anti-tarnishing and anti-allergenic\r\nAll our products are handcrafted and microset by hand in our ateliers\r\nColor: Rose gold', NULL),
+                                                                                                                                           (6, 'Art Deco Adjustable Necklace', 70.00, 230.00, 'supplier@luxgems.com.au', '2026-04-13 11:29:33', '2026-04-14 01:28:09', 'This necklace is meticulously crafted for a perfect balance between bold structure and refined elegance.\r\nMaterial: Sterling silver\r\nStone: White cubic zirconia\r\nColor: Silver\r\nPendant size: Length 4.6 cm ; Width 0.7 cm\r\nTotal chain length: Adjustable to 48 cm maximum with sliding clasp', NULL),
                                                                                                                                            (7, 'Art Deco Pavé Choker', 300.00, 780.00, 'supplier@goldcraft.com.au', '2026-04-13 11:29:33', '2026-04-14 01:28:26', 'This choker is meticulously crafted for a perfect balance between bold structure and refined elegance.\r\nMaterial: Sterling silver\r\nStone: Over 210 white cubic zirconia\r\nColor: Silver\r\nTotal chain length: 40 cm ; Width 0.8 cm', NULL),
-                                                                                                                                           (8, 'Eternal Dawn Necklace', 60.00, 210.00, 'supplier@gemstone.com.au', '2026-04-13 11:29:33', '2026-04-20 21:01:31', 'Material: 14k White Gold plated on 925 Sterling Silver\r\nStone: High-grade teardrop Cubic Zirconia\r\nDimensions: 320 mm length, 5 mm width (pendant)\r\n', NULL),
-                                                                                                                                           (9, 'Lumière Choker', 180.00, 620.00, 'supplier@pearlsea.com.au', '2026-04-13 11:29:33', '2026-04-20 23:50:33', 'This minimalist and versatile choker perfectly captures the essence of spring.\r\nMaterial: Sterling silver\r\nStone: White cubic zirconia\r\nColor: Silver', NULL),
-                                                                                                                                           (10, 'Blush Halo Pendant Necklace', 140.00, 460.00, 'supplier@gemstone.com.au', '2026-04-13 11:29:33', '2026-04-20 23:52:38', 'Material: 18K rose gold vermeil on sterling silver, made from recycled materials Stone: Lab-created pink sapphire and cubic zirconia Dimensions: 45 cm chain length, 18 mm pendant width', NULL),
-                                                                                                                                           (11, 'Celeste Drop Earrings', 100.00, 380.00, 'supplier@luxgems.com.au', '2026-04-13 11:29:33', '2026-04-21 00:18:09', 'Material: Rhodium-plated white gold vermeil on sterling silver, made from recycled materials\r\nStone: Cubic zirconia\r\nDimensions: 42 mm length, 12 mm width', NULL),
-                                                                                                                                           (12, 'Aurelia Twist Hoops', 55.00, 185.00, 'supplier@goldcraft.com.au', '2026-04-13 11:29:33', '2026-04-21 00:13:54', 'Material: 18K yellow gold vermeil on sterling silver, made from recycled materials\r\nStone: Cubic zirconia\r\nDimensions: 28 mm diameter, 6 mm width', NULL),
-                                                                                                                                           (13, 'Luna Twist Hoops', 95.00, 275.00, 'supplier@gemstone.com.au', '2026-04-13 11:29:33', '2026-04-21 00:49:31', 'Material: Rhodium-plated white gold vermeil on sterling silver base, made from recycled materials\r\nStone: Pavé cubic zirconia\r\nDimensions: 24 mm diameter, 5 mm width', NULL),
-                                                                                                                                           (14, 'Cascading Drop Earrings', 75.00, 280.00, 'supplier@pearlsea.com.au', '2026-04-13 11:29:33', '2026-04-20 23:11:26', 'Material: Platinum and rhodium plated on patented white alloy, made from recycled materials\r\nStone: Cubic zirconia\r\nDimensions: 39 mm length, 20 mm width', NULL),
-                                                                                                                                           (15, 'Éclat Lariat Bracelet', 50.00, 180.00, 'supplier@luxgems.com.au', '2026-04-13 11:29:33', '2026-04-21 00:08:35', 'Material: 18K yellow gold vermeil on sterling silver, made from recycled materials\r\nStone: Cubic zirconia\r\nDimensions: 45 cm chain length, 32 mm drop pendant length', NULL),
-                                                                                                                                           (16, 'Étoile Bloom Brooch', 90.00, 320.00, 'supplier@goldcraft.com.au', '2026-04-13 11:29:33', '2026-04-21 00:22:08', 'Material: Rhodium-plated white gold vermeil on sterling silver base, made from recycled materials\r\nStone: Cubic zirconia\r\nDimensions: 48 mm length, 32 mm width', NULL),
-                                                                                                                                           (24, 'Rhodium Tennis Bracelet', 90.00, 300.00, 'supplier@gemstone.com.au', '2026-04-20 23:08:12', '2026-04-20 23:08:12', 'Material: Rhodium plated on premium white alloy, made from recycled materials\r\nStone: Swarovski crystals\r\nDimensions: 18cm length, 6cm width', NULL),
-                                                                                                                                           (25, 'Elegant Silver Necklace', 85.00, 215.00, 'supplier@gemstone.com.au', '2026-04-20 23:17:07', '2026-04-20 23:17:07', 'Material: Rhodium plated on premium white alloy, made from recycled materials\r\nStone: Cubic zirconia\r\nDimensions: 45 cm chain length, 18 mm pendant width', NULL),
-                                                                                                                                           (26, 'Fleur Pastel Bloom Brooch', 68.00, 220.00, 'supplier@gemstone.com.au', '2026-04-21 00:42:02', '2026-04-21 00:44:51', 'Material: Rose gold vermeil on sterling silver base, made from recycled materials\r\nStone: Lab-created morganite, lavender quartz, peridot, and freshwater pearl accents\r\nDimensions: 46 mm length, 34 mm width', NULL),
-                                                                                                                                           (27, 'Éloise Bouclé Cushion', 80.00, 240.00, 'supplier@lifestyle.com.au', '2026-04-21 04:18:36', '2026-04-21 04:22:19', 'Material: Premium bouclé fabric cover with soft microfiber cushion insert\r\nColor: Soft ivory cream\r\nDimensions: 50 cm x 50 cm\r\nStyle: Japandi, Minimalist, Alpine Chic\r\nFeatures: Textured boucle finish, plush comfort filling, removable cover with hidden zipper, perfect for living rooms, bedrooms, and lounge styling', 'a'),
-                                                                                                                                           (28, 'Sorelle Fringe Throw', 60.00, 260.00, 'supplier@homedecor.com.au', '2026-04-21 04:20:51', '2026-04-21 04:22:07', 'Material: Premium wool-blend fabric with soft-touch finish\r\nColor: Soft taupe grey\r\nDimensions: 130 cm x 170 cm\r\nStyle: Japandi, Minimalist, Alpine Chic\r\nFeatures: Lightweight yet warm, textured weave, hand-finished fringe edges, breathable and suitable for year-round use', 'a'),
-                                                                                                                                           (29, 'Lumière Ceramic Vase', 120.00, 400.00, 'supplier@homedecor.com.au', '2026-04-21 04:21:58', '2026-04-21 04:21:58', 'Material: High-fired ceramic with matte speckled glaze\r\nColor: Warm off-white with natural speckle detailing\r\nDimensions: 24 cm height, 18 cm diameter\r\nStyle: Japandi, Minimalist, Contemporary\r\nFeatures: Hand-finished texture, watertight interior, durable ceramic construction, ideal for dried or fresh arrangements as well as standalone décor', 'A');
+                                                                                                                                           (8, 'Lilac Torsade Adjustable Necklace', 60.00, 210.00, 'supplier@gemstone.com.au', '2026-04-13 11:29:33', '2026-04-14 01:29:56', 'This necklace embodies elegance and versatility.\r\nMaterial: APM Yellow Alloy made of 95% recycled material and 18k yellow gold plated\r\nStone: Purple cubic zirconia\r\nColor: Yellow\r\nTotal chain length: Adjustable to 65 cm maximum with sliding clasp', NULL),
+                                                                                                                                           (9, 'Lumière Pavé Choker', 180.00, 620.00, 'supplier@pearlsea.com.au', '2026-04-13 11:29:33', '2026-04-14 01:30:20', 'This minimalist and versatile choker perfectly captures the essence of spring.\r\nMaterial: Sterling silver\r\nStone: White cubic zirconia\r\nColor: Silver', NULL),
+                                                                                                                                           (10, 'Maille Marine Chain Necklace', 140.00, 410.00, 'supplier@gemstone.com.au', '2026-04-13 11:29:33', '2026-04-14 01:30:35', 'Material: Rose Alloy made of 95% recycled material and 18k gold plated, white cubic zirconia\r\nColor: Rose gold\r\nTotal chain length: 45 cm', NULL),
+                                                                                                                                           (11, 'Statement Art Deco Drop Earrings', 150.00, 430.00, 'supplier@luxgems.com.au', '2026-04-13 11:29:33', '2026-04-14 01:38:02', 'These earrings are meticulously crafted for a perfect balance between bold structure and refined elegance.\r\nMaterial: Sterling silver\r\nStone: White cubic zirconia\r\nColor: Silver\r\nLength: 7.1 cm ; Width : 2.2 cm', NULL),
+                                                                                                                                           (12, 'Torsade Pavé Hoop Earrings', 55.00, 210.00, 'supplier@goldcraft.com.au', '2026-04-13 11:29:33', '2026-04-14 01:37:09', 'These earrings embody elegance and versatility.\r\nMaterial: APM Yellow Alloy made of 95% recycled material and 18k yellow gold plated\r\nStone: White cubic zirconia\r\nColor: Yellow\r\nLength: 2.1 cm ; Width : 0.7 cm', NULL),
+                                                                                                                                           (13, 'Dainty Rose Gold Hoop Earrings', 95.00, 275.00, 'supplier@gemstone.com.au', '2026-04-13 11:29:33', '2026-04-14 01:36:32', 'Material: Alloy made of 95% recycled material and 18k gold plated, white cubic zirconia\r\nColor: Rose gold\r\nSize: Small (Length: 2.8 cm ; Width : 0.5 cm)', NULL),
+                                                                                                                                           (14, 'Asymmetric Cross Earrings', 65.00, 240.00, 'supplier@pearlsea.com.au', '2026-04-13 11:29:33', '2026-04-14 01:36:10', 'Material: Platinum and rhodium plated on patented white alloy, made from recycled materials\r\nStone: Cubic zirconia\r\nDimensions: 39 mm length, 20 mm width', NULL),
+                                                                                                                                           (15, 'Art Deco Pavé Bracelet', 90.00, 350.00, 'supplier@luxgems.com.au', '2026-04-13 11:29:33', '2026-04-14 01:35:53', 'This bracelet is meticulously crafted for a perfect balance between bold structure and refined elegance.\r\nMaterial: Sterling silver\r\nStone: White cubic zirconia\r\nColor: Silver', NULL),
+                                                                                                                                           (16, 'Lilac Lumière Pavé Bracelet', 90.00, 300.00, 'supplier@goldcraft.com.au', '2026-04-13 11:29:33', '2026-04-14 01:32:10', 'Material: Platinum and rhodium plated on patented white alloy\r\nStone: Lilac cubic zirconia\r\nDimensions: 4 mm width', NULL),
+                                                                                                                                           (30, 'Asian Vase', 20.00, 50.00, 'supplier@gemstone.com.au', '2026-04-21 12:27:05', '2026-04-21 12:50:23', 'Colour: White and Blue\r\nMaterial: Stoneware, Coloured Glaze\r\nDimensions: 14cm (H), 15cm (W)', 'A centuries-old Chinese stoneware vase emerges from the kiln with a luminous glaze, each brushstroke capturing the quiet discipline of its maker. Once destined for an imperial hall, it now carries the whispered history of dynasties through its delicate form.'),
+                                                                                                                                           (31, 'Rustic Vase', 10.00, 20.00, 'supplier@gemstone.com.au', '2026-04-21 12:36:45', '2026-04-21 12:36:45', 'Colour: Grey and Brown\r\nMaterial: Stoneware\r\nDimensions: 16cm (H), 10cm (W)', 'A rustic stone vase takes shape under the steady rhythm of a mason\'s chisel, each strike revealing the raw, weathered character hidden within the rock. Its rough-hewn surface carries the quiet story of earth, craft, and time converging into a single, enduring form.'),
+(32, 'Ancient Vase', 20.00, 60.00, 'supplier@gemstone.com.au', '2026-04-21 12:40:21', '2026-04-21 12:48:54', 'Colour: Yellow and Black\r\nMaterial: Ceramic\r\nDimensions: 25cm (H), 15cm (W)', 'An ancient Greek ceramic vase emerges from the potter\'s wheel with mythic scenes circling its surface, each figure painted in bold strokes meant to outlast generations. Fired in the heat of a smoky kiln, it becomes both a vessel and a storyteller, carrying the spirit of a civilization that shaped the Western world.'),
+                                                                                                                                           (33, 'Flowery Vase', 12.00, 28.00, 'supplier@gemstone.com.au', '2026-04-21 12:44:52', '2026-04-21 12:47:35', 'Colour: Blue and White\r\nMaterial: Ceramic\r\nDimensions: 20cm (H), 12cm (W)', 'A flowery ceramic vase blooms into existence as the artist layers soft petals and curling leaves across its surface, each stroke turning clay into a quiet garden. Once fired, it carries the warmth of the kiln and the gentle poetry of nature captured in glaze.'),
+                                                                                                                                           (34, 'Waves Painting', 10.00, 22.00, 'supplier@gemstone.com.au', '2026-04-21 12:58:01', '2026-04-21 12:58:01', 'Colour: Blue and Brown\r\nMaterial: Medium-density fibreboard (MDF), canvas and metal\r\nDimensions: 90cm (H) x 60cm (W) x 2.5cm (D)\r\nWeight: 3.1kg', 'A wave painting rises from the canvas as the artist layers sweeping strokes of deep blues and foaming whites, capturing the moment water gathers its strength. In its final form, the piece feels alive—an instant of motion frozen just before the sea breaks into thunder.'),
+                                                                                                                                           (35, 'Golden Blue Heart Painting', 20.00, 54.00, 'supplier@gemstone.com.au', '2026-04-21 13:03:00', '2026-04-21 13:03:00', 'Colour: Blue and Gold\r\nMaterials: Medium-density fibreboard (MDF), canvas and metal\r\nDimensions: 42cm (H), 32cm (W), 3cm(D)', 'A half-blue, half-gold heart painting comes to life as the artist blends cool serenity with radiant warmth, letting the two colors meet in a luminous seam that feels almost electric. In its final form, the heart becomes a quiet symbol of contrast—softness and brilliance held together in a single, glowing shape.'),
+                                                                                                                                           (36, 'Flower Painting', 16.00, 27.00, 'supplier@gemstone.com.au', '2026-04-21 13:07:44', '2026-04-21 13:07:44', 'Colour: Red, Yellow, Green and Blue\r\nMaterials: Fibreboard, canvas and metal\r\nDimensions: 55cm (H) x 75cm (W) x 2.5cm (D)', 'A painting of red and yellow flowers comes alive as the artist layers bold crimson petals against warm golden blooms, letting the colors spark like sunlight meeting flame. When the final brushstroke lands, the piece radiates a vibrant energy—an ode to nature at its most spirited.'),
+                                                                                                                                           (37, 'Butterfly Landing Painting', 20.00, 62.00, 'supplier@gemstone.com.au', '2026-04-21 13:14:02', '2026-04-21 13:14:02', 'Colour: Orange, Blue, Green, Yellow and Purple\r\nMaterials: Medium-density fibreboard (MDF), canvas and metal\r\nDimensions: 70cm (H) x 100cm (W) x 3cm (D)', 'A multi-coloured butterfly landing on an orange flower takes shape on the canvas as the artist layers shimmering blues, pinks, and golds across delicate wings, letting them glow against the warm burst of petals. In its final moment, the painting feels like a breath held in nature—a fleeting touch of beauty captured before the butterfly lifts away.'),
+                                                                                                                                           (38, 'Simple Candle', 3.00, 8.00, 'supplier@gemstone.com.au', '2026-04-21 13:18:47', '2026-04-21 13:19:53', 'Colour: White\r\nMaterial: Metal and Paraffin\r\nDimensions: 7.5cm (H) x 7.5cm (Dia.)', 'A simple candle in a metal bowl takes shape as molten wax is poured and left to cool, the soft flame later rising to cast warm light against the bowl\'s cool, reflective surface. In its finished form, it feels like a quiet moment captured warmth held gently inside something forged from fire.'),
+(39, 'Cauldron Candle', 13.00, 28.00, 'supplier@gemstone.com.au', '2026-04-21 13:24:31', '2026-04-21 13:29:01', 'Colour: Black and White\r\nMaterial: Paraffin and Stone\r\nDimensions: 10cm (H) x 7.5cm (Dia.)', 'A candle in a stone cauldron takes form as wax is slowly poured into the carved vessel, the rough stone holding the warmth like an ancient hearth. When the flame is finally lit, it glows against the rugged surface, turning the cauldron into a quiet well of fire and shadow.'),
+(40, 'Bamboo Candle', 9.00, 23.00, 'supplier@gemstone.com.au', '2026-04-21 13:34:51', '2026-04-21 13:34:51', 'Colour: Brown\r\nMaterial: Bamboo and Paraffin\r\nDimensions: 7.5cm (H) x 7.5cm (Dia.)', 'A bamboo candle comes to life as warm wax is poured into a hollowed stalk, the natural grain of the bamboo turning the simple vessel into something quietly elegant. When lit, the flame glows through the soft brown walls, creating a gentle harmony between fire and earth.'),
+(41, 'Round Cushion', 8.00, 20.00, 'supplier@gemstone.com.au', '2026-04-21 13:39:18', '2026-04-21 13:40:51', 'Colour: Red\r\nMaterial: Velvet and Cotton\r\nDimensions: 20cm (H), 20cm (W), 6cm (D)', 'A round red cushion comes to life as soft fabric is stretched over plush filling, its vibrant color giving the simple shape a warm, inviting presence. Once finished, it feels like a small circle of comfort—bold, bright, and ready to soften any space it touches.'),
+(42, 'Classic Cushion', 6.00, 12.00, 'supplier@gemstone.com.au', '2026-04-21 13:43:41', '2026-04-21 13:43:41', 'Colour: White\r\nMaterial: Polyester\r\nDimensions: 42cm (L) x 42cm (W)', 'A classic square white cushion comes together as crisp fabric is stitched around soft filling, its clean lines giving it a timeless, effortless elegance. Once finished, it becomes a quiet anchor in any room—simple, bright, and ready to soften the space with understated comfort.'),
+(43, 'Butterfly Cushion', 11.00, 20.00, 'supplier@gemstone.com.au', '2026-04-21 14:01:23', '2026-04-21 14:01:23', 'Colour: Pink\r\nMaterial: Polyester\r\nDimensions: 30cm (L) x 35cm (W)', 'A pink butterfly cushion comes to life as soft blush fabric is stitched around plush filling, then adorned with a delicate winged motif that seems ready to flutter off its surface. Once finished, it feels like a small burst of sweetness—gentle, whimsical, and made to brighten any cozy corner.'),
+(44, 'Crocheted Blanket', 15.00, 32.00, 'supplier@gemstone.com.au', '2026-04-21 14:18:41', '2026-04-21 14:23:59', 'Colour: Rainbow\r\nMaterial: Wool\r\nDimensions: 240cm (L) x 220cm (W)', 'A rainbow crocheted blanket begins as strands of yarn pulled through looping stitches, each color joining the next in a soft, steady rhythm that feels almost musical. When the final row is tied off, it becomes a warm spectrum of comfort—handmade joy woven into every hue.');
 
 -- --------------------------------------------------------
 
@@ -269,41 +293,50 @@ INSERT INTO `products` (`id`, `name`, `purchase_price`, `sale_price`, `supplier_
 
 DROP TABLE IF EXISTS `product_images`;
 CREATE TABLE IF NOT EXISTS `product_images` (
-                                                `id` int(11) NOT NULL AUTO_INCREMENT,
-    `product_id` int(11) NOT NULL,
-    `filename` varchar(4096) NOT NULL,
-    PRIMARY KEY (`id`),
-    KEY `product_id` (`product_id`)
-    ) ENGINE=InnoDB AUTO_INCREMENT=79 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `product_id` int(11) NOT NULL,
+  `filename` varchar(4096) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `product_id` (`product_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=107 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `product_images`
 --
 
 INSERT INTO `product_images` (`id`, `product_id`, `filename`) VALUES
-                                                                  (21, 1, 'art_deco_ring.png'),
-                                                                  (27, 7, 'art_deco_pave___choker.png'),
-                                                                  (29, 9, 'lumiere-pave-choker.png'),
-                                                                  (41, 4, 'chunky_rce_ring.png'),
-                                                                  (47, 8, 'necklace1.png'),
-                                                                  (51, 24, 'bracelet2.png'),
-                                                                  (52, 14, 'earrings1.png'),
-                                                                  (54, 25, 'necklaces3.png'),
-                                                                  (55, 5, 'rings2.png'),
-                                                                  (56, 2, 'rings3.png'),
-                                                                  (57, 10, 'necklaces2.png'),
-                                                                  (58, 6, 'necklaces4.png'),
-                                                                  (63, 15, 'bracelet3.png'),
-                                                                  (64, 12, 'earrings2.png'),
-                                                                  (65, 11, 'earrings3.png'),
-                                                                  (66, 16, 'brooch1.png'),
-                                                                  (67, 3, 'rings4.png'),
-                                                                  (72, 26, 'brooch2.png'),
-                                                                  (74, 13, 'earrings4.png'),
-                                                                  (75, 13, 'earrings4.png'),
-                                                                  (76, 27, 'eloise_boucle_cushion.png'),
-                                                                  (77, 28, 'sorelle_ringe_throw.png'),
-                                                                  (78, 29, 'lumiere_ceramic_vase.png');
+(21, 1, 'art_deco_ring.png'),
+(22, 2, 'statement_torsade_pave___ring.png'),
+(23, 3, 'dainty_rose_gold_ring.png'),
+(25, 5, 'LOVE_morse_code_ring.png'),
+(26, 6, 'art_deco_adjustable_necklace.png'),
+(27, 7, 'art_deco_pave___choker.png'),
+(28, 8, 'lilac_torsade_adjustable_necklace.png'),
+(29, 9, 'lumiere-pave-choker.png'),
+(30, 10, 'maille-marine-chain-necklace.png'),
+(35, 16, 'lilac-lumiere-pave-bracelet.png'),
+(36, 15, 'art-deco-pave-bracelet.png'),
+(37, 14, 'asymmetric-cross-earrings.png'),
+(38, 13, 'dainty-rose-gold-hoop-earrings.png'),
+(39, 12, 'torsade-hoop-earrings.png'),
+(40, 11, 'art-deco-statement-drop-earrings.png'),
+(41, 4, 'chunky_rce_ring.png'),
+(82, 28, 'Screenshot_2026-04-21_122051.png'),
+(84, 31, 'tiemaoanh-ceramic-vase-7254826_1920.jpg'),
+(88, 33, 'Screenshot_2026-04-21_124706.png'),
+(89, 32, 'Screenshot_2026-04-21_124825.png'),
+(90, 30, 'Screenshot_2026-04-21_124956.png'),
+(91, 34, 'Screenshot_2026-04-21_125329.png'),
+(92, 35, 'Screenshot_2026-04-21_125908.png'),
+(93, 36, 'Screenshot_2026-04-21_130457.png'),
+(94, 37, 'Screenshot_2026-04-21_131058.png'),
+(96, 38, 'Screenshot_2026-04-21_131926.png'),
+(98, 39, 'Screenshot_2026-04-21_132817.png'),
+(99, 40, 'Screenshot_2026-04-21_133242.png'),
+(100, 41, 'Screenshot_2026-04-21_133706.png'),
+(102, 42, 'Screenshot_2026-04-21_134141.png'),
+(103, 43, 'Screenshot_2026-04-21_134550.png'),
+(106, 44, 'Screenshot_2026-04-21_142317.png');
 
 -- --------------------------------------------------------
 
@@ -313,68 +346,70 @@ INSERT INTO `product_images` (`id`, `product_id`, `filename`) VALUES
 
 DROP TABLE IF EXISTS `product_variants`;
 CREATE TABLE IF NOT EXISTS `product_variants` (
-                                                  `id` int(11) NOT NULL AUTO_INCREMENT,
-    `product_id` int(11) NOT NULL,
-    `size` varchar(20) NOT NULL,
-    `stock` int(11) NOT NULL DEFAULT 0,
-    PRIMARY KEY (`id`),
-    KEY `product_id` (`product_id`)
-    ) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `product_id` int(11) NOT NULL,
+  `size` varchar(20) NOT NULL,
+  `stock` int(11) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id`),
+  KEY `product_id` (`product_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=72 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `product_variants`
 --
 
 INSERT INTO `product_variants` (`id`, `product_id`, `size`, `stock`) VALUES
-                                                                         (1, 1, 'Size 5', 6),
-                                                                         (2, 1, 'Size 6', 6),
-                                                                         (3, 1, 'Size 7', 8),
-                                                                         (4, 1, 'Size 8', 8),
-                                                                         (5, 1, 'Size 9', 10),
-                                                                         (6, 2, 'Size 5', 5),
-                                                                         (7, 2, 'Size 6', 5),
-                                                                         (8, 2, 'Size 7', 5),
-                                                                         (9, 2, 'Size 8', 5),
-                                                                         (10, 2, 'Size 9', 5),
-                                                                         (11, 3, 'Size 5', 1),
-                                                                         (12, 3, 'Size 6', 1),
-                                                                         (13, 3, 'Size 7', 1),
-                                                                         (14, 3, 'Size 8', 1),
-                                                                         (15, 3, 'Size 9', 1),
-                                                                         (16, 4, 'Size 5', 1),
-                                                                         (17, 4, 'Size 6', 1),
-                                                                         (18, 4, 'Size 7', 1),
-                                                                         (19, 4, 'Size 8', 0),
-                                                                         (20, 4, 'Size 9', 0),
-                                                                         (21, 5, 'Size 5', 4),
-                                                                         (22, 5, 'Size 6', 4),
-                                                                         (23, 5, 'Size 7', 4),
-                                                                         (24, 5, 'Size 8', 3),
-                                                                         (25, 5, 'Size 9', 3),
-                                                                         (26, 6, 'One Size', 4),
-                                                                         (27, 7, 'One Size', 14),
-                                                                         (28, 8, 'One Size', 20),
-                                                                         (29, 9, 'One Size', 7),
-                                                                         (30, 10, 'One Size', 9),
-                                                                         (31, 11, 'One Size', 12),
-                                                                         (32, 12, 'One Size', 30),
-                                                                         (33, 13, 'One Size', 11),
-                                                                         (34, 14, 'One Size', 16),
-                                                                         (35, 15, 'Size 6', 6),
-                                                                         (36, 16, 'One Size', 22),
-                                                                         (44, 24, 'Size 5', 25),
-                                                                         (45, 24, 'Size 6', 30),
-                                                                         (46, 24, 'Size 7', 30),
-                                                                         (47, 24, 'Size 8', 26),
-                                                                         (48, 24, 'Size 9', 10),
-                                                                         (49, 25, 'One Size', 10),
-                                                                         (50, 15, 'Size 7', 4),
-                                                                         (51, 15, 'Size 8', 2),
-                                                                         (52, 15, 'Size 9', 5),
-                                                                         (53, 26, 'One Size', 6),
-                                                                         (54, 27, 'One Size', 5),
-                                                                         (55, 28, 'One Size', 3),
-                                                                         (56, 29, 'One Size', 6);
+(1, 1, 'Size 5', 6),
+(2, 1, 'Size 6', 6),
+(3, 1, 'Size 7', 8),
+(4, 1, 'Size 8', 8),
+(5, 1, 'Size 9', 10),
+(6, 2, 'Size 5', 5),
+(7, 2, 'Size 6', 5),
+(8, 2, 'Size 7', 5),
+(9, 2, 'Size 8', 5),
+(10, 2, 'Size 9', 5),
+(11, 3, 'Size 5', 1),
+(12, 3, 'Size 6', 1),
+(13, 3, 'Size 7', 1),
+(14, 3, 'Size 8', 1),
+(15, 3, 'Size 9', 1),
+(16, 4, 'Size 5', 1),
+(17, 4, 'Size 6', 1),
+(18, 4, 'Size 7', 1),
+(19, 4, 'Size 8', 0),
+(20, 4, 'Size 9', 0),
+(21, 5, 'Size 5', 4),
+(22, 5, 'Size 6', 4),
+(23, 5, 'Size 7', 4),
+(24, 5, 'Size 8', 3),
+(25, 5, 'Size 9', 3),
+(26, 6, 'One Size', 4),
+(27, 7, 'One Size', 14),
+(28, 8, 'One Size', 20),
+(29, 9, 'One Size', 7),
+(30, 10, 'One Size', 9),
+(31, 11, 'One Size', 12),
+(32, 12, 'One Size', 30),
+(33, 13, 'One Size', 11),
+(34, 14, 'One Size', 16),
+(35, 15, 'One Size', 6),
+(36, 16, 'One Size', 22),
+(57, 30, 'One Size', 2),
+(58, 31, 'One Size', 5),
+(59, 32, 'One Size', 1),
+(60, 33, 'One Size', 2),
+(61, 34, 'One Size', 10),
+(62, 35, 'One Size', 4),
+(63, 36, 'One Size', 3),
+(64, 37, 'One Size', 1),
+(65, 38, 'One Size', 18),
+(66, 39, 'One Size', 9),
+(67, 40, 'One Size', 7),
+(68, 41, 'One Size', 5),
+(69, 42, 'One Size', 25),
+(70, 43, 'One Size', 6),
+(71, 44, 'One Size', 2);
 
 -- --------------------------------------------------------
 
@@ -384,29 +419,29 @@ INSERT INTO `product_variants` (`id`, `product_id`, `size`, `stock`) VALUES
 
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS `users` (
-                                       `id` int(11) NOT NULL AUTO_INCREMENT,
-    `email` varchar(255) NOT NULL,
-    `password` varchar(255) NOT NULL,
-    `first_name` varchar(100) DEFAULT NULL,
-    `last_name` varchar(100) DEFAULT NULL,
-    `phone` varchar(20) DEFAULT NULL,
-    `address` varchar(500) DEFAULT NULL,
-    `nonce` varchar(255) DEFAULT NULL,
-    `nonce_expiry` datetime DEFAULT NULL,
-    `created` datetime DEFAULT NULL,
-    `modified` datetime DEFAULT NULL,
-    `role` varchar(255) NOT NULL DEFAULT 'customer',
-    PRIMARY KEY (`id`)
-    ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `email` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `first_name` varchar(100) DEFAULT NULL,
+  `last_name` varchar(100) DEFAULT NULL,
+  `phone` varchar(20) DEFAULT NULL,
+  `address` varchar(500) DEFAULT NULL,
+  `nonce` varchar(255) DEFAULT NULL,
+  `nonce_expiry` datetime DEFAULT NULL,
+  `created` datetime DEFAULT NULL,
+  `modified` datetime DEFAULT NULL,
+  `role` varchar(255) NOT NULL DEFAULT 'customer',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 
 --
 -- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`id`, `email`, `password`, `first_name`, `last_name`, `phone`, `address`, `nonce`, `nonce_expiry`, `created`, `modified`, `role`) VALUES
-                                                                                                                                                           (6, 'admin@test.com', '$2y$12$3j848N59AYD3s84DOpqA7eI0Cu6aqLosTj9aGuR.8b4ysY2kaNMg6', 'Admin', 'Test', NULL, NULL, NULL, NULL, '2026-03-24 04:04:54', '2026-03-24 04:04:54', 'admin'),
-                                                                                                                                                           (9, 'customer@gmail.com', '$2y$12$dpFy6UEE5lMm7GcYFM9KHewxxP6lHS1UUxqlARKrLqYpgupBvZAPq', 'Customer', 'Test', NULL, NULL, NULL, NULL, '2026-04-16 13:19:40', '2026-04-16 13:19:40', 'customer'),
-                                                                                                                                                           (10, 'staff@gmail.com', '$2y$12$7UeOSrqwNufTAgpnq0aFCuR0MqwCn1EUSN.GtTMrkePbB/kErewh6', 'Staff', 'Test', NULL, NULL, NULL, NULL, '2026-04-16 13:20:17', '2026-04-16 13:20:17', 'staff');
+(6, 'admin@test.com', '$2y$12$3j848N59AYD3s84DOpqA7eI0Cu6aqLosTj9aGuR.8b4ysY2kaNMg6', 'Admin', 'Test', NULL, NULL, NULL, NULL, '2026-03-24 04:04:54', '2026-03-24 04:04:54', 'admin'),
+(9, 'customer@gmail.com', '$2y$12$dpFy6UEE5lMm7GcYFM9KHewxxP6lHS1UUxqlARKrLqYpgupBvZAPq', 'Customer', 'Test', NULL, NULL, NULL, NULL, '2026-04-16 13:19:40', '2026-04-16 13:19:40', 'customer'),
+(10, 'staff@gmail.com', '$2y$12$7UeOSrqwNufTAgpnq0aFCuR0MqwCn1EUSN.GtTMrkePbB/kErewh6', 'Staff', 'Test', NULL, NULL, NULL, NULL, '2026-04-16 13:20:17', '2026-04-16 13:20:17', 'staff');
 
 --
 -- Constraints for dumped tables
@@ -416,26 +451,26 @@ INSERT INTO `users` (`id`, `email`, `password`, `first_name`, `last_name`, `phon
 -- Constraints for table `categories_products`
 --
 ALTER TABLE `categories_products`
-    ADD CONSTRAINT `categories_products_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`),
+  ADD CONSTRAINT `categories_products_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`),
   ADD CONSTRAINT `categories_products_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `contact_replies`
 --
 ALTER TABLE `contact_replies`
-    ADD CONSTRAINT `fk_contact_replies_submission` FOREIGN KEY (`contact_submission_id`) REFERENCES `contact_submissions` (`id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `fk_contact_replies_submission` FOREIGN KEY (`contact_submission_id`) REFERENCES `contact_submissions` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `orders`
 --
 ALTER TABLE `orders`
-    ADD CONSTRAINT `fk_orders_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE SET NULL;
+  ADD CONSTRAINT `fk_orders_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE SET NULL;
 
 --
 -- Constraints for table `order_items`
 --
 ALTER TABLE `order_items`
-    ADD CONSTRAINT `fk_order_items_order` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `fk_order_items_order` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `fk_order_items_product` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`),
   ADD CONSTRAINT `fk_order_items_variant` FOREIGN KEY (`variant_id`) REFERENCES `product_variants` (`id`) ON DELETE SET NULL;
 
@@ -443,13 +478,13 @@ ALTER TABLE `order_items`
 -- Constraints for table `product_images`
 --
 ALTER TABLE `product_images`
-    ADD CONSTRAINT `product_images_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `product_images_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `product_variants`
 --
 ALTER TABLE `product_variants`
-    ADD CONSTRAINT `fk_variants_product` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `fk_variants_product` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
