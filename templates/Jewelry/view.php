@@ -2,6 +2,7 @@
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Product $product
+ * @var string $section 'jewelry' or 'home_decor'
  */
 
 $this->assign('title', $product->name);
@@ -26,7 +27,8 @@ $oneSizeVariant = $isOneSizeOnly ? $inStockVariants[0] : null;
 ?>
 
 <div class="jewelry-page">
-    <?= $this->Html->link(__('← Back'), ['action' => 'index'], ['class' => 'jewelry-back-link']) ?>
+    <?php $backUrl = $section === 'home_decor' ? '/home-decor' : '/jewelry'; ?>
+    <?= $this->Html->link(__('← Back'), $backUrl, ['class' => 'jewelry-back-link']) ?>
     <div class="product-detail">
         <div class="product-detail-image">
             <?php if (!empty($product->product_images)): ?>

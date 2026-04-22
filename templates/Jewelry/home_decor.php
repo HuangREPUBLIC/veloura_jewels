@@ -125,7 +125,7 @@ $currentParams = array_filter([
     <?php else: ?>
         <div class="product-grid">
             <?php foreach ($products as $product): ?>
-                <a href="<?= $this->Url->build('/jewelry/view/' . $product->id) ?>" class="product-card-link">
+                <a href="<?= $this->Url->build('/home-decor/view/' . $product->id) ?>" class="product-card-link">
                     <div class="product-card">
                         <div class="product-image-wrapper">
                             <?php if (!empty($product->product_images)): ?>
