@@ -24,7 +24,7 @@ $cakeDescription = 'Veloura Jewels';
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <?= $this->Html->css(['normalize.min', 'fonts', 'default-styles', 'cake', 'login', 'live-chat']) ?>
+    <?= $this->Html->css(['normalize.min', 'fonts', 'default-styles', 'cake', 'login']) ?>
 
     <link rel="stylesheet" href="https://cdn.datatables.net/2.2.2/css/dataTables.dataTables.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

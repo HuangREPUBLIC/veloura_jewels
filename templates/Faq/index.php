@@ -1,4 +1,4 @@
-<?= $this->Html->css('faq') ?>
+<?php $this->Html->css('faq', ['block' => true]); ?>
 
 <div class="faq-page">
     <div class="faq-header">

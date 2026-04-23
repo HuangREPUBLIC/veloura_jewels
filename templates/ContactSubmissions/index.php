@@ -5,7 +5,7 @@
  */
 $this->assign('title', 'Contact Submissions');
 ?>
-<?= $this->Html->css('admincontact') ?>
+<?php $this->Html->css('admincontact', ['block' => true]); ?>
 
 <div class="admin-wrapper">
     <div class="contactSubmissions index content">

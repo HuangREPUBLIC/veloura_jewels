@@ -6,7 +6,7 @@
 $this->assign('title', 'Users');
 $identity = $this->request->getAttribute('identity');
 ?>
-<?= $this->Html->css('admincontact') ?>
+<?php $this->Html->css('admincontact', ['block' => true]); ?>
 <?php $role = $this->request->getAttribute('identity')->get('role'); ?>
 
 

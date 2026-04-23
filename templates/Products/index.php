@@ -20,7 +20,7 @@ function catPillClass(string $name): string {
     return 'cat-pill-' . ($map[strtolower($name)] ?? 'default');
 }
 ?>
-<?= $this->Html->css('admincontact') ?>
+<?php $this->Html->css('admincontact', ['block' => true]); ?>
 
 <?php $role = $this->request->getAttribute('identity')->get('role'); ?>
 
