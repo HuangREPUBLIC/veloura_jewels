@@ -936,7 +936,7 @@ td.actions button.btn-delete:hover {
 
 /* Responsive */
 
-@media (max-width: 900px) {
+@media (max-width: 768px) {
     .dashboard-summary { grid-template-columns: repeat(2, 1fr); }
     .dashboard-grid    { grid-template-columns: 1fr; }
 
@@ -954,7 +954,7 @@ td.actions button.btn-delete:hover {
     .contactSubmissions.index.content { padding: 20px; }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 768px) {
     .dashboard-summary { grid-template-columns: 1fr; }
 
     .admin-wrapper { padding: 12px; }
