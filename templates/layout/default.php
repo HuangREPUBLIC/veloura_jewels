@@ -110,7 +110,7 @@ $role = $identity ? $identity->get('role') : null;
                     ) ?>
 
                 <?php elseif ($role === 'customer'): ?>
-                    <span class="nav-dropdown-label">My Account</span>
+                    <span class="nav-dropdown-label">Hi, <?= h($identity->get('first_name')) ?></span>
                     <?= $this->Html->link(
                     '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg> Profile',
                     ['controller' => 'Profile', 'action' => 'index'],
@@ -124,7 +124,7 @@ $role = $identity ? $identity->get('role') : null;
                     ) ?>
 
                 <?php else: ?>
-                    <span class="nav-dropdown-label">Admin</span>
+                    <span class="nav-dropdown-label"> Hi, <?= h($identity->get('first_name')) ?> </span>
                     <?= $this->Html->link(
                     '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg> Dashboard',
                     ['controller' => 'Users', 'action' => 'dashboard'],
