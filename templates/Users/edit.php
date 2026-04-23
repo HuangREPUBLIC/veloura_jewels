@@ -36,6 +36,7 @@
                     ],
                     'label'    => 'Role',
                     'required' => true,
+                    'disabled' => $user->id === $identity->get('id'),
                 ]);
             }
             ?>

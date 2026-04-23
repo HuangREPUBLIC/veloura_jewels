@@ -24,13 +24,13 @@ $this->assign('title', 'View User');
                 <?= $this->Html->link(__('Edit'), ['action' => 'edit', $user->id]) ?>
             <?php endif; ?>
 
-            <?php if ($role === 'admin'): ?>
+            <?php if ($role === 'admin' && $user->id !== $identity->get('id')): ?>
                 <?= $this->Form->postLink(
                     __('Delete'),
                     ['action' => 'delete', $user->id],
                     [
                         'confirm' => __('Are you sure you want to delete # {0}?', $user->id),
-                        'class' => 'btn-delete'
+                        'class' => 'btn-delete',
                     ]
                 ) ?>
             <?php endif; ?>
