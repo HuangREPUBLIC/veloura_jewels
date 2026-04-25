@@ -1,3 +1,39 @@
+:root {
+    --color-cakephp-red: #d33c43;
+    --color-cakephp-gray: #404041;
+    --color-cakephp-blue: #2f85ae;
+    --color-cakephp-lightblue: #34bdd7;
+    --color-lightgray: #606c76;
+    --color-white: #fff;
+    --color-main-bg: #f5f7fa;
+    --color-links: #786c3b;
+    --color-links-active: #5a5029;
+    --color-headings: #1c1c1a;
+    --color-message-success-bg: #e3fcec;
+    --color-message-success-text: #1f9d55;
+    --color-message-success-border: #51d88a;
+    --color-message-warning-bg: #fffabc;
+    --color-message-warning-text: #8d7b00;
+    --color-message-warning-border: #d3b800;
+    --color-message-error-bg: #fcebea;
+    --color-message-error-text: #cc1f1a;
+    --color-message-error-border: #ef5753;
+    --color-message-info-bg: #eff8ff;
+    --color-message-info-text: #2779bd;
+    --color-message-info-border: #6cb2eb;
+    --beige: #dad7c5;
+    --beige-light: #f0ede4;
+    --sage: #bce3c5;
+    --earth-yellow: #e1a95e;
+    --oakwood: #786c3b;
+    --oakwood-dark: #5a5029;
+    --oakwood-rgb: 120, 108, 59;
+
+    --font-display: 'Raleway', 'Helvetica Neue', sans-serif;
+    --font-body: 'Raleway', 'Helvetica Neue', sans-serif;
+    --font-admin: Arial, 'Helvetica Neue', Helvetica, sans-serif;
+}
+
 *, *:after, *:before {
     box-sizing: inherit;
 }
@@ -9,11 +45,14 @@ html {
 
 body {
     font-family: var(--font-body);
-    color: #3d3d3a;
     font-size: 1rem;
     font-weight: 400;
-    letter-spacing: 0.01em;
     line-height: 1.65;
+    letter-spacing: 0.01em;
+    color: #3d3d3a;
+    background: var(--color-main-bg);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -32,15 +71,6 @@ h6 { font-size: 1.6rem; }
 
 p {
     margin-top: 0;
-}
-
-a {
-    color: #786c3b;
-    text-decoration: none;
-}
-
-a:hover {
-    color: #5a5029;
 }
 
 input,
@@ -81,7 +111,7 @@ img {
     max-width: 100%;
 }
 
-/* ── 404 / Error Page ── */
+/* 404 / Error Page */
 .error-page {
     display: flex;
     flex-direction: column;
@@ -130,7 +160,7 @@ img {
     display: inline-block;
     padding: 0.85rem 2.4rem;
     background: #786C3B;
-    color: #fff;
+    color: var(--color-white);
     font-size: 0.78rem;
     font-weight: 500;
     letter-spacing: 0.16em;
@@ -141,21 +171,6 @@ img {
 
 .error-page__btn:hover {
     background: #5a5029;
-    color: #fff;
+    color: var(--color-white);
 }
 
-.message {
-    padding: 1rem;
-    border-radius: 8px;
-    margin-bottom: 1rem;
-}
-
-.message.success {
-    background: #e6f7e6;
-    color: #2d7a2d;
-}
-
-.message.error {
-    background: #fdecea;
-    color: #b23b3b;
-}

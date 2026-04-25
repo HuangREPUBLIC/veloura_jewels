@@ -1,7 +1,5 @@
-html { font-size: 100%; }
-
 .faq-page {
-    background-color: #DAD7C5;
+    background-color: var(--beige);
     min-height: 100vh;
     padding: 1.5rem 1.2rem;
 }
@@ -29,7 +27,7 @@ html { font-size: 100%; }
 }
 
 .faq-item {
-    background-color: #fff;
+    background-color: var(--color-white);
     border-radius: 12px;
     box-shadow: 0 8px 20px rgba(0,0,0,0.05);
     margin-bottom: 1rem;
@@ -39,7 +37,7 @@ html { font-size: 100%; }
 .faq-question {
     width: 100%;
     padding: 1rem 1.2rem;
-    background: #fff;
+    background: var(--color-white);
     color: #333;
     border: none;
     font-size: 1rem;
@@ -70,7 +68,7 @@ html { font-size: 100%; }
 }
 
 .faq-icon {
-    color: #786C3B;
+    color: var(--oakwood);
     font-size: 1.4rem;
     font-weight: 600;
     margin-left: 1rem;

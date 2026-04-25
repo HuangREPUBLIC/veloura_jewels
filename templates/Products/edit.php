@@ -6,6 +6,7 @@
  * @var string $categoriesJson
  * @var array $types
  */
+$this->Html->css('login', ['block' => true]);
 
 // Determine current type from the product's existing category
 $currentType = '';
@@ -17,7 +18,6 @@ if (!empty($product->type)) {
     $currentType = $product->type;
 }
 ?>
-<?php $this->Html->css('admincontact', ['block' => true]); ?>
 
 <div class="login-page">
     <div class="users form content login-card--wide">

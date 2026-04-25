@@ -4,6 +4,7 @@
  * @var \App\Model\Entity\User $user
  */
 $this->assign('title', 'Create Account');
+$this->Html->css('login', ['block' => true]);
 ?>
 <div class="login-page">
     <div class="users form content login-card--wide">

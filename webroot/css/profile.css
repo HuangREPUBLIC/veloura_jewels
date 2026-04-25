@@ -1,23 +1,20 @@
-/*
-   PROFILE — Veloura Jewels
-   Matches the oakwood / Raleway design language
-  */
+/* Profile */
 
-/* ---- Page shell ---- */
+/* Page shell */
 .profile-page {
     max-width: 112rem;
     margin: 0 auto;
     padding: 3rem 2rem 5rem;
 }
 
-/* ---- Hero ---- */
+/* Hero */
 .profile-hero {
     display: flex;
     align-items: center;
     gap: 2rem;
     padding: 2.5rem 3rem;
-    background: #fff;
-    border: 1px solid rgba(120, 108, 59, 0.14);
+    background: var(--color-white);
+    border: 1px solid rgba(var(--oakwood-rgb), 0.14);
     border-radius: 10px;
     margin-bottom: 2.5rem;
     box-shadow: 0 1px 4px rgba(0,0,0,0.04);
@@ -28,7 +25,7 @@
     height: 72px;
     border-radius: 50%;
     background: var(--oakwood);
-    color: #fff;
+    color: var(--color-white);
     font-family: var(--font-display);
     font-size: 1.8rem;
     font-weight: 600;
@@ -59,17 +56,17 @@
     margin: 0;
 }
 
-/* ---- Body grid ---- */
+/* Body grid */
 .profile-body {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 1.8rem;
 }
 
-/* ---- Cards ---- */
+/* Cards */
 .profile-card {
-    background: #fff;
-    border: 1px solid rgba(120, 108, 59, 0.14);
+    background: var(--color-white);
+    border: 1px solid rgba(var(--oakwood-rgb), 0.14);
     border-radius: 10px;
     padding: 2rem 2.2rem;
     box-shadow: 0 1px 4px rgba(0,0,0,0.04);
@@ -85,7 +82,7 @@
     justify-content: space-between;
     margin-bottom: 1.5rem;
     padding-bottom: 1rem;
-    border-bottom: 1px solid rgba(120, 108, 59, 0.1);
+    border-bottom: 1px solid rgba(var(--oakwood-rgb), 0.1);
 }
 
 .profile-card-header h2 {
@@ -98,7 +95,7 @@
     margin: 0;
 }
 
-/* ---- Info grid ---- */
+/* Info grid */
 .profile-info-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -131,7 +128,7 @@
     font-style: italic;
 }
 
-/* ---- Security row ---- */
+/* Security row */
 .profile-security-row {
     display: flex;
     align-items: center;
@@ -142,7 +139,7 @@
     margin: 0;
 }
 
-/* ---- Buttons & links ---- */
+/* Buttons & links */
 .profile-link-btn {
     font-family: var(--font-display);
     font-size: 0.72rem;
@@ -160,7 +157,7 @@
 
 .profile-link-btn:hover {
     background: var(--oakwood);
-    color: #fff;
+    color: var(--color-white);
     text-decoration: none;
 }
 
@@ -172,7 +169,7 @@
     font-weight: 600;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: #fff;
+    color: var(--color-white);
     background: var(--oakwood);
     padding: 0.6rem 1.4rem;
     border-radius: 5px;
@@ -182,7 +179,7 @@
 
 .profile-shop-btn:hover {
     background: var(--oakwood-dark);
-    color: #fff;
+    color: var(--color-white);
     text-decoration: none;
 }
 
@@ -198,14 +195,14 @@
     text-decoration: underline;
 }
 
-/* ---- Empty state ---- */
+/* Empty state */
 .profile-empty-orders {
     text-align: center;
     padding: 2.5rem 1rem;
     color: #888;
 }
 
-/* ---- Orders table ---- */
+/* Orders table */
 .profile-orders-table-wrap {
     overflow-x: auto;
 }
@@ -224,14 +221,14 @@
     text-transform: uppercase;
     color: #999;
     padding: 0.7rem 1rem;
-    border-bottom: 1px solid rgba(120, 108, 59, 0.14);
+    border-bottom: 1px solid rgba(var(--oakwood-rgb), 0.14);
     text-align: left;
     white-space: nowrap;
 }
 
 .profile-orders-table td {
     padding: 0.9rem 1rem;
-    border-bottom: 1px solid #f0ede4;
+    border-bottom: 1px solid var(--beige-light);
     color: #3d3d3a;
     vertical-align: middle;
 }
@@ -241,7 +238,7 @@
 }
 
 .profile-orders-table tfoot td {
-    border-top: 2px solid rgba(120, 108, 59, 0.2);
+    border-top: 2px solid rgba(var(--oakwood-rgb), 0.2);
     border-bottom: none;
     font-weight: 600;
     padding: 1rem;
@@ -276,7 +273,7 @@
     word-break: break-all;
 }
 
-/* ---- Status badges ---- */
+/* Status badges */
 .order-status {
     display: inline-block;
     padding: 0.25rem 0.75rem;
@@ -288,13 +285,13 @@
     font-family: var(--font-body);
 }
 
-.order-status--pending   { background: #fffabc; color: #8d7b00; }
-.order-status--paid      { background: #e3fcec; color: #1f9d55; }
-.order-status--shipped   { background: #eff8ff; color: #2779bd; }
-.order-status--completed { background: #f0ede4; color: var(--oakwood); }
-.order-status--cancelled { background: #fcebea; color: #cc1f1a; }
+.order-status--pending   { background: var(--color-message-warning-bg); color: var(--color-message-warning-text); }
+.order-status--paid      { background: var(--color-message-success-bg); color: var(--color-message-success-text); }
+.order-status--shipped   { background: var(--color-message-info-bg); color: var(--color-message-info-text); }
+.order-status--completed { background: var(--beige-light); color: var(--oakwood); }
+.order-status--cancelled { background: var(--color-message-error-bg); color: var(--color-message-error-text); }
 
-/* ---- Form pages ---- */
+/* Form pages */
 .profile-form-wrap {
     max-width: 700px;
     margin: 0 auto;
@@ -373,7 +370,7 @@
 .profile-form-group textarea:focus {
     outline: none;
     border-color: var(--oakwood);
-    background: #fff;
+    background: var(--color-white);
 }
 
 .profile-form-actions {
@@ -381,7 +378,7 @@
     align-items: center;
     gap: 1rem;
     padding-top: 1.5rem;
-    border-top: 1px solid rgba(120, 108, 59, 0.1);
+    border-top: 1px solid rgba(var(--oakwood-rgb), 0.1);
 }
 
 .profile-save-btn {
@@ -392,7 +389,7 @@
     text-transform: uppercase;
     padding: 0.65rem 2rem;
     background: var(--oakwood);
-    color: #fff;
+    color: var(--color-white);
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -416,7 +413,7 @@
     text-decoration: none;
 }
 
-/* ---- Status filter tabs ---- */
+/* Status filter tabs */
 .profile-status-tabs {
     display: flex;
     gap: 0.5rem;
@@ -432,7 +429,7 @@
     text-transform: uppercase;
     padding: 0.4rem 1rem;
     border-radius: 20px;
-    border: 1.5px solid rgba(120, 108, 59, 0.25);
+    border: 1.5px solid rgba(var(--oakwood-rgb), 0.25);
     color: #888;
     text-decoration: none;
     transition: all 0.2s ease;
@@ -447,10 +444,10 @@
 .profile-status-tab.active {
     background: var(--oakwood);
     border-color: var(--oakwood);
-    color: #fff;
+    color: var(--color-white);
 }
 
-/* ---- Order meta grid ---- */
+/* Order meta grid */
 .order-meta-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -463,7 +460,7 @@
     gap: 0.4rem;
 }
 
-/* ---- Pagination ---- */
+/* Pagination */
 .profile-pagination {
     display: flex;
     justify-content: center;
@@ -480,11 +477,11 @@
 }
 
 .profile-pagination a:hover {
-    background: rgba(120, 108, 59, 0.08);
+    background: rgba(var(--oakwood-rgb), 0.08);
     text-decoration: none;
 }
 
-/* ---- Responsive ---- */
+/* Responsive */
 @media (max-width: 768px) {
     .profile-hero { flex-direction: column; text-align: center; padding: 2rem 1.5rem; }
     .profile-body { grid-template-columns: 1fr; }

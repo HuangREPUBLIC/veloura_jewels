@@ -4,6 +4,7 @@
  */
 
 $this->assign('title', 'Forget Password');
+$this->Html->css('login', ['block' => true]);
 ?>
 
 <div class="login-page">

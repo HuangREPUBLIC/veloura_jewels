@@ -4,6 +4,7 @@
  */
 use Cake\Core\Configure;
 $this->assign('title', 'Login');
+$this->Html->css('login', ['block' => true]);
 ?>
 
 <?php

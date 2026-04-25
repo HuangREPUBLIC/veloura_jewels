@@ -1,7 +1,5 @@
-html { font-size: 100% ; }
-
 .contact-page {
-    background-color: #DAD7C5;
+    background-color: var(--beige);
     min-height: 100vh;
     padding: 1.5rem 1.2rem;
 }
@@ -27,8 +25,9 @@ html { font-size: 100% ; }
     max-width: 38rem;
     padding: 1.4rem;
     margin: 0 auto;
-    background-color: #fff;
+    background-color: var(--color-white);
     border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.05);
 }
 
 .contact-page fieldset {
@@ -46,8 +45,8 @@ html { font-size: 100% ; }
 .contact-page .contact-submit-btn {
     width: 100%;
     padding: 0.9rem;
-    background-color: #786C3B;
-    color: #fff;
+    background-color: var(--oakwood);
+    color: var(--color-white);
     border: none;
     border-radius: 10px;
     font-size: 1rem;
@@ -59,7 +58,7 @@ html { font-size: 100% ; }
 }
 
 .contact-page .contact-submit-btn:hover {
-    background-color: #5a5029;
+    background-color: var(--oakwood-dark);
 }
 
 .contact-page .contact-submit-btn:disabled {
@@ -69,7 +68,7 @@ html { font-size: 100% ; }
 .contact-page .contact-reset-btn {
     width: 100%;
     padding: 0.8rem;
-    background: #fff;
+    background: var(--color-white);
     color: #333;
     border: 1px solid #ccc;
     border-radius: 10px;
@@ -89,7 +88,4 @@ html { font-size: 100% ; }
 .contact-page label {
     font-size: 0.95rem;
     margin-bottom: 0.3rem;
-}
-.contactSubmissions.form.content {
-    box-shadow: 0 8px 20px rgba(0,0,0,0.05);
 }

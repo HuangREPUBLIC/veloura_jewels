@@ -58,9 +58,9 @@
 .home-page .home-btn-outline {
     display: inline-block;
     padding: 0.6rem 1.6rem;
-    border: 2px solid #786C3B;
+    border: 2px solid var(--oakwood);
     border-radius: 4px;
-    color: #786C3B;
+    color: var(--oakwood);
     text-decoration: none;
     font-size: 0.95rem;
     transition: all 0.2s ease;
@@ -70,7 +70,7 @@
 
 .home-page .home-btn-outline:hover {
     background-color: var(--oakwood);
-    color: #fff;
+    color: var(--color-white);
 }
 
 .home-page .about {
@@ -78,7 +78,7 @@
     align-items: flex-start;
     padding: 4rem;
     gap: 4rem;
-    background-color: #fff;
+    background-color: var(--color-white);
 }
 
 .home-page .about-left {
@@ -88,7 +88,7 @@
 .home-page .about-left h2 {
     font-size: 2.8rem;
     font-weight: 800;
-    color: #786C3B;
+    color: var(--oakwood);
     line-height: 1.1;
     margin-bottom: 0.5rem;
 }
@@ -121,7 +121,7 @@
 
 .home-page .get-in-touch h2 {
     font-size: 2.2rem;
-    color: #786C3B;
+    color: var(--oakwood);
     margin-bottom: 1rem;
 }
 

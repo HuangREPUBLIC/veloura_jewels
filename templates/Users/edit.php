@@ -3,8 +3,8 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\User $user
  */
+$this->Html->css('login', ['block' => true]);
 ?>
-<?php $this->Html->css('admincontact', ['block' => true]); ?>
 
 <div class="login-page">
     <div class="users form content">
