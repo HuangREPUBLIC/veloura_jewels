@@ -118,6 +118,31 @@ $currentParams = array_filter([
         <?= $this->Form->end() ?>
     </div>
 
+<script>
+(function () {
+    var dropdowns = document.querySelectorAll('.jewelry-page .filter-dropdown');
+
+    dropdowns.forEach(function (dd) {
+        var btn = dd.querySelector('.filter-dropdown-btn');
+        if (!btn) return;
+        btn.addEventListener('click', function (e) {
+            e.stopPropagation();
+            var isOpen = dd.classList.contains('open');
+            dropdowns.forEach(function (other) { other.classList.remove('open'); });
+            if (!isOpen) dd.classList.add('open');
+        });
+    });
+
+    document.addEventListener('click', function () {
+        dropdowns.forEach(function (dd) { dd.classList.remove('open'); });
+    });
+
+    document.querySelectorAll('.jewelry-page .filter-dropdown-menu').forEach(function (menu) {
+        menu.addEventListener('click', function (e) { e.stopPropagation(); });
+    });
+})();
+</script>
+
     <?php if ($products->isEmpty()): ?>
         <div class="empty-state">
             <p>No products found. <a href="<?= $this->Url->build(['controller' => 'Jewelry', 'action' => 'index']) ?>">Clear filters</a></p>
