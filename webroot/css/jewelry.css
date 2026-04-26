@@ -119,7 +119,7 @@
     font-size: 0.9rem;
     font-weight: 500;
     letter-spacing: 0.04em;
-    color: #8a6d3b;
+    color: var(--color-price);
     margin: 0;
 }
 
@@ -192,7 +192,7 @@
     font-family: var(--font-body);
     font-size: 1.3rem;
     font-weight: 600;
-    color: #8a6d3b;
+    color: var(--color-price);
     margin-bottom: 1rem;
     letter-spacing: 0.02em;
 }

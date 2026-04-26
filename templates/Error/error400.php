@@ -21,12 +21,12 @@ $this->assign('title', 'Page Not Found');
 ?>
 
 <div class="error-page">
-    <p class="error-page__code">404</p>
-    <p class="error-page__title">Page Not Found</p>
-    <div class="error-page__divider"></div>
-    <p class="error-page__message">
+    <p class="error-page-code">404</p>
+    <p class="error-page-title">Page Not Found</p>
+    <div class="error-page-divider"></div>
+    <p class="error-page-message">
         We could not find the page you were looking for.<br>
         Please use the navigation or the button below to go back to our website.
     </p>
-    <?= $this->Html->link('Back to Homepage', '/', ['class' => 'error-page__btn']) ?>
+    <?= $this->Html->link('Back to Homepage', '/', ['class' => 'error-page-btn']) ?>
 </div>

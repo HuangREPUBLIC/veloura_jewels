@@ -195,12 +195,12 @@
 }
 
 .action-buttons .btn-delete {
-    border: 1.5px solid #dc2626;
-    color: #dc2626;
+    border: 1.5px solid var(--color-danger);
+    color: var(--color-danger);
 }
 
 .action-buttons .btn-delete:hover {
-    background-color: #dc2626;
+    background-color: var(--color-danger);
     color: var(--color-white);
 }
 
@@ -249,16 +249,16 @@
 
 .variant-row button {
     padding: 0.4rem 0.7rem;
-    border: 1.5px solid #dc2626;
+    border: 1.5px solid var(--color-danger);
     border-radius: 6px;
     background: var(--color-white);
-    color: #dc2626;
+    color: var(--color-danger);
     cursor: pointer;
     font-size: 0.82rem;
     transition: all 0.18s ease;
 }
 
 .variant-row button:hover {
-    background: #dc2626;
+    background: var(--color-danger);
     color: var(--color-white);
 }
