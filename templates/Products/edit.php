@@ -46,12 +46,17 @@ if (!empty($product->type)) {
                             <?= h($label) ?>
                         </option>
                     <?php endforeach; ?>
+                    <option value="__new__">+ Add new type...</option>
                 </select>
+                <div id="new-type-input" style="display:none;margin-top:0.5rem;">
+                    <input type="text" name="new_type_name" id="new-type-name"
+                           placeholder="New type name"
+                           style="width:100%;box-sizing:border-box;">
+                </div>
             </div>
 
             <!-- Category: filtered by type -->
             <?php
-            // Current selected category ids
             $selectedCatIds = [];
             if (!empty($product->categories)) {
                 foreach ($product->categories as $cat) {
@@ -61,12 +66,19 @@ if (!empty($product->type)) {
             $selectedCatIdsJson = json_encode($selectedCatIds);
             ?>
             <div class="input">
-                <label for="categories-select">Categories <span style="color:red">*</span></label>
-                <select name="categories[_ids][]" id="categories-select" required <?= empty($currentType) ? 'disabled' : '' ?>>
+                <label for="categories-select">Category <span style="color:red">*</span></label>
+                <select name="categories[_ids][]" id="categories-select" required
+                        <?= empty($currentType) ? 'disabled' : '' ?>
+                        onchange="onCategoryChange(this.value)">
                     <?php if (empty($currentType)): ?>
                         <option value="">-- Select a type first --</option>
                     <?php endif; ?>
                 </select>
+                <div id="new-category-input" style="display:none;margin-top:0.5rem;">
+                    <input type="text" name="new_category_name" id="new-category-name"
+                           placeholder="New category name"
+                           style="width:100%;box-sizing:border-box;">
+                </div>
             </div>
 
             <!-- Existing images -->
@@ -161,12 +173,30 @@ if (!empty($product->type)) {
     })();
 
     function onTypeChange(type) {
+        var newTypeDiv   = document.getElementById('new-type-input');
+        var newTypeInput = document.getElementById('new-type-name');
+
+        if (type === '__new__') {
+            newTypeDiv.style.display = 'block';
+            newTypeInput.required = true;
+        } else {
+            newTypeDiv.style.display = 'none';
+            newTypeInput.required = false;
+            newTypeInput.value = '';
+        }
+
         populateCategories(type, []);
         updateAllSizeSelects(type);
     }
 
     function populateCategories(type, preselected) {
-        var select = document.getElementById('categories-select');
+        var select      = document.getElementById('categories-select');
+        var newCatDiv   = document.getElementById('new-category-input');
+        var newCatInput = document.getElementById('new-category-name');
+
+        newCatDiv.style.display = 'none';
+        newCatInput.required = false;
+        newCatInput.value = '';
         select.innerHTML = '';
 
         if (!type) {
@@ -175,20 +205,48 @@ if (!empty($product->type)) {
             return;
         }
 
-        var filtered = allCategories.filter(function(c) { return c.type === type; });
         select.disabled = false;
-        select.innerHTML = '<option value="">-- Select a category --</option>';
-        filtered.forEach(function(c) {
-            var opt = document.createElement('option');
-            opt.value = c.id;
-            opt.textContent = c.name;
-            if (preselected.indexOf(c.id) !== -1) opt.selected = true;
-            select.appendChild(opt);
-        });
+
+        if (type !== '__new__') {
+            select.innerHTML = '<option value="">-- Select a category --</option>';
+            var filtered = allCategories.filter(function(c) { return c.type === type; });
+            filtered.forEach(function(c) {
+                var opt = document.createElement('option');
+                opt.value = c.id;
+                opt.textContent = c.name;
+                if (preselected.indexOf(c.id) !== -1) opt.selected = true;
+                select.appendChild(opt);
+            });
+        }
+
+        var newOpt = document.createElement('option');
+        newOpt.value = '__new__';
+        newOpt.textContent = '+ Add new category...';
+        select.appendChild(newOpt);
+
+        if (type === '__new__') {
+            select.value = '__new__';
+            newCatDiv.style.display = 'block';
+            newCatInput.required = true;
+        }
+    }
+
+    function onCategoryChange(value) {
+        var newCatDiv   = document.getElementById('new-category-input');
+        var newCatInput = document.getElementById('new-category-name');
+
+        if (value === '__new__') {
+            newCatDiv.style.display = 'block';
+            newCatInput.required = true;
+        } else {
+            newCatDiv.style.display = 'none';
+            newCatInput.required = false;
+            newCatInput.value = '';
+        }
     }
 
     function buildSizeOptions(type, selectedValue) {
-        var sizes = sizesByType[type] || [];
+        var sizes = sizesByType[type] || ['One Size'];
         var html = '';
         sizes.forEach(function(s) {
             var sel = (s === selectedValue) ? ' selected' : '';
@@ -198,7 +256,7 @@ if (!empty($product->type)) {
     }
 
     function buildSizeField(name, type) {
-        var sizes = sizesByType[type] || [];
+        var sizes = sizesByType[type] || ['One Size'];
         if (sizes.length === 1) {
             return '<input type="hidden" name="' + name + '" value="' + sizes[0] + '">'
                 + '<span class="size-text-label" style="min-width:100px;">' + sizes[0] + '</span>';
@@ -207,7 +265,7 @@ if (!empty($product->type)) {
     }
 
     function updateAllSizeSelects(type) {
-        var sizes = sizesByType[type] || [];
+        var sizes = sizesByType[type] || ['One Size'];
         var rows = document.querySelectorAll('#variants-container .variant-row');
         rows.forEach(function(row) {
             var sel = row.querySelector('select.size-select');

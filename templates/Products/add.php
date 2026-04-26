@@ -34,15 +34,27 @@ $this->Html->css('login', ['block' => true]);
                     <?php foreach ($types as $key => $label): ?>
                         <option value="<?= h($key) ?>"><?= h($label) ?></option>
                     <?php endforeach; ?>
+                    <option value="__new__">+ Add new type...</option>
                 </select>
+                <div id="new-type-input" style="display:none;margin-top:0.5rem;">
+                    <input type="text" name="new_type_name" id="new-type-name"
+                           placeholder="New type name"
+                           style="width:100%;box-sizing:border-box;">
+                </div>
             </div>
 
             <!-- Category: filtered by type -->
             <div class="input">
-                <label for="categories-select">Categories <span style="color:red">*</span></label>
-                <select name="categories[_ids][]" id="categories-select" required disabled>
+                <label for="categories-select">Category <span style="color:red">*</span></label>
+                <select name="categories[_ids][]" id="categories-select" required disabled
+                        onchange="onCategoryChange(this.value)">
                     <option value="">-- Select a type first --</option>
                 </select>
+                <div id="new-category-input" style="display:none;margin-top:0.5rem;">
+                    <input type="text" name="new_category_name" id="new-category-name"
+                           placeholder="New category name"
+                           style="width:100%;box-sizing:border-box;">
+                </div>
             </div>
 
             <?php
@@ -88,13 +100,30 @@ $this->Html->css('login', ['block' => true]);
     };
 
     function onTypeChange(type) {
+        var newTypeDiv   = document.getElementById('new-type-input');
+        var newTypeInput = document.getElementById('new-type-name');
+
+        if (type === '__new__') {
+            newTypeDiv.style.display = 'block';
+            newTypeInput.required = true;
+        } else {
+            newTypeDiv.style.display = 'none';
+            newTypeInput.required = false;
+            newTypeInput.value = '';
+        }
+
         updateCategories(type);
         updateAllSizeSelects(type);
     }
 
     function updateCategories(type) {
-        var select = document.getElementById('categories-select');
-        select.innerHTML = '';
+        var select      = document.getElementById('categories-select');
+        var newCatDiv   = document.getElementById('new-category-input');
+        var newCatInput = document.getElementById('new-category-name');
+
+        newCatDiv.style.display = 'none';
+        newCatInput.required = false;
+        newCatInput.value = '';
 
         if (!type) {
             select.disabled = true;
@@ -102,19 +131,49 @@ $this->Html->css('login', ['block' => true]);
             return;
         }
 
-        var filtered = allCategories.filter(function(c) { return c.type === type; });
         select.disabled = false;
-        select.innerHTML = '<option value="">-- Select a category --</option>';
-        filtered.forEach(function(c) {
-            var opt = document.createElement('option');
-            opt.value = c.id;
-            opt.textContent = c.name;
-            select.appendChild(opt);
-        });
+        select.innerHTML = '';
+
+        if (type !== '__new__') {
+            select.innerHTML = '<option value="">-- Select a category --</option>';
+            var filtered = allCategories.filter(function(c) { return c.type === type; });
+            filtered.forEach(function(c) {
+                var opt = document.createElement('option');
+                opt.value = c.id;
+                opt.textContent = c.name;
+                select.appendChild(opt);
+            });
+        }
+
+        var newOpt = document.createElement('option');
+        newOpt.value = '__new__';
+        newOpt.textContent = '+ Add new category...';
+        select.appendChild(newOpt);
+
+        // For a brand-new type there are no existing categories; auto-show the new-category input
+        if (type === '__new__') {
+            select.value = '__new__';
+            newCatDiv.style.display = 'block';
+            newCatInput.required = true;
+        }
+    }
+
+    function onCategoryChange(value) {
+        var newCatDiv   = document.getElementById('new-category-input');
+        var newCatInput = document.getElementById('new-category-name');
+
+        if (value === '__new__') {
+            newCatDiv.style.display = 'block';
+            newCatInput.required = true;
+        } else {
+            newCatDiv.style.display = 'none';
+            newCatInput.required = false;
+            newCatInput.value = '';
+        }
     }
 
     function buildSizeOptions(type, selectedValue) {
-        var sizes = sizesByType[type] || [];
+        var sizes = sizesByType[type] || ['One Size'];
         var html = '<option value="">-- Size --</option>';
         sizes.forEach(function(s) {
             var sel = (s === selectedValue) ? ' selected' : '';
@@ -124,7 +183,7 @@ $this->Html->css('login', ['block' => true]);
     }
 
     function buildSizeField(name, type) {
-        var sizes = sizesByType[type] || [];
+        var sizes = sizesByType[type] || ['One Size'];
         if (sizes.length === 1) {
             return '<input type="hidden" name="' + name + '" value="' + sizes[0] + '">'
                 + '<span class="size-text-label" style="min-width:100px;">' + sizes[0] + '</span>';
@@ -133,7 +192,7 @@ $this->Html->css('login', ['block' => true]);
     }
 
     function updateAllSizeSelects(type) {
-        var sizes = sizesByType[type] || [];
+        var sizes = sizesByType[type] || ['One Size'];
         var rows = document.querySelectorAll('#variants-container .variant-row');
         rows.forEach(function(row) {
             var sel = row.querySelector('select[name*="[size]"]');

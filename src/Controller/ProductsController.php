@@ -60,7 +60,39 @@ class ProductsController extends AppController
 
         $product = $this->Products->newEmptyEntity();
         if ($this->request->is('post')) {
-            $product = $this->Products->patchEntity($product, $this->request->getData(), [
+            $data = $this->request->getData();
+
+            // Resolve new type: convert '__new__' placeholder to a slug derived from new_type_name
+            $typeValue = $data['type'] ?? '';
+            if ($typeValue === '__new__') {
+                $rawName = trim($data['new_type_name'] ?? '');
+                $typeValue = $rawName !== ''
+                    ? strtolower(trim(preg_replace('/[^a-zA-Z0-9]+/', '_', $rawName), '_'))
+                    : '';
+                $data['type'] = $typeValue;
+            }
+
+            // Resolve new category: create it in the DB if '__new__' placeholder is selected
+            $categoryIds = (array)($data['categories']['_ids'] ?? []);
+            if (in_array('__new__', $categoryIds)) {
+                $newCatName = trim($data['new_category_name'] ?? '');
+                if ($newCatName !== '' && $typeValue !== '') {
+                    $newCat = $this->Products->Categories->newEntity([
+                        'name' => $newCatName,
+                        'type' => $typeValue,
+                    ]);
+                    $savedCat = $this->Products->Categories->save($newCat);
+                    if ($savedCat) {
+                        $categoryIds = array_values(array_filter($categoryIds, fn($id) => $id !== '__new__'));
+                        $categoryIds[] = $savedCat->id;
+                        $data['categories']['_ids'] = $categoryIds;
+                    }
+                } else {
+                    $data['categories']['_ids'] = array_values(array_filter($categoryIds, fn($id) => $id !== '__new__'));
+                }
+            }
+
+            $product = $this->Products->patchEntity($product, $data, [
                 'associated' => ['ProductVariants', 'Categories']
             ]);
             if ($this->Products->save($product, ['associated' => ['ProductVariants', 'Categories']])) {
@@ -90,7 +122,15 @@ class ProductsController extends AppController
             'type' => $cat->type,
         ], $categoriesRaw));
 
-        $types = ['jewelry' => 'Jewelry', 'home_decor' => 'Home Decor'];
+        $types = [];
+        foreach (array_unique(array_map(fn($cat) => $cat->type, $categoriesRaw)) as $key) {
+            if (!empty($key)) {
+                $types[$key] = ucwords(str_replace('_', ' ', $key));
+            }
+        }
+        if (empty($types)) {
+            $types = ['jewelry' => 'Jewelry', 'home_decor' => 'Home Decor'];
+        }
         $this->set(compact('product', 'categories', 'categoriesJson', 'types'));
     }
 
@@ -108,7 +148,39 @@ class ProductsController extends AppController
 
         $product = $this->Products->get($id, contain: ['Categories', 'ProductVariants', 'ProductImages']);
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $product = $this->Products->patchEntity($product, $this->request->getData(), [
+            $data = $this->request->getData();
+
+            // Resolve new type
+            $typeValue = $data['type'] ?? '';
+            if ($typeValue === '__new__') {
+                $rawName = trim($data['new_type_name'] ?? '');
+                $typeValue = $rawName !== ''
+                    ? strtolower(trim(preg_replace('/[^a-zA-Z0-9]+/', '_', $rawName), '_'))
+                    : '';
+                $data['type'] = $typeValue;
+            }
+
+            // Resolve new category
+            $categoryIds = (array)($data['categories']['_ids'] ?? []);
+            if (in_array('__new__', $categoryIds)) {
+                $newCatName = trim($data['new_category_name'] ?? '');
+                if ($newCatName !== '' && $typeValue !== '') {
+                    $newCat = $this->Products->Categories->newEntity([
+                        'name' => $newCatName,
+                        'type' => $typeValue,
+                    ]);
+                    $savedCat = $this->Products->Categories->save($newCat);
+                    if ($savedCat) {
+                        $categoryIds = array_values(array_filter($categoryIds, fn($id) => $id !== '__new__'));
+                        $categoryIds[] = $savedCat->id;
+                        $data['categories']['_ids'] = $categoryIds;
+                    }
+                } else {
+                    $data['categories']['_ids'] = array_values(array_filter($categoryIds, fn($id) => $id !== '__new__'));
+                }
+            }
+
+            $product = $this->Products->patchEntity($product, $data, [
                 'associated' => ['ProductVariants', 'Categories']
             ]);
             if ($this->Products->save($product, ['associated' => ['ProductVariants', 'Categories']])) {
@@ -154,7 +226,15 @@ class ProductsController extends AppController
             'type' => $cat->type,
         ], $categoriesRaw));
 
-        $types = ['jewelry' => 'Jewelry', 'home_decor' => 'Home Decor'];
+        $types = [];
+        foreach (array_unique(array_map(fn($cat) => $cat->type, $categoriesRaw)) as $key) {
+            if (!empty($key)) {
+                $types[$key] = ucwords(str_replace('_', ' ', $key));
+            }
+        }
+        if (empty($types)) {
+            $types = ['jewelry' => 'Jewelry', 'home_decor' => 'Home Decor'];
+        }
         $this->set(compact('product', 'categories', 'categoriesJson', 'types'));
     }
 
