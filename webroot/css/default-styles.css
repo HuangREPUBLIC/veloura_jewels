@@ -28,6 +28,15 @@
     --oakwood: #786c3b;
     --oakwood-dark: #5a5029;
     --oakwood-rgb: 120, 108, 59;
+    --beige-light-rgb: 240, 237, 228;
+
+    --color-body: #3d3d3a;
+    --color-ink: #2a2a26;
+    --color-text-muted: #6b6457;
+    --color-price: #8a6d3b;
+    --color-danger: #dc2626;
+    --admin-ink: #111827;
+    --admin-ink-mid: #374151;
 
     --font-display: 'Raleway', 'Helvetica Neue', sans-serif;
     --font-body: 'Raleway', 'Helvetica Neue', sans-serif;
@@ -49,7 +58,7 @@ body {
     font-weight: 400;
     line-height: 1.65;
     letter-spacing: 0.01em;
-    color: #3d3d3a;
+    color: var(--color-body);
     background: var(--color-main-bg);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -122,7 +131,7 @@ img {
     padding: 4rem 1.5rem;
 }
 
-.error-page__code {
+.error-page-code {
     font-size: clamp(6rem, 15vw, 10rem);
     font-weight: 300;
     letter-spacing: -0.04em;
@@ -132,23 +141,23 @@ img {
     font-family: 'Cormorant Garamond', Georgia, serif;
 }
 
-.error-page__title {
+.error-page-title {
     font-size: 1.15rem;
     font-weight: 500;
     letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: #3d3d3a;
+    color: var(--color-body);
     margin: 0 0 1rem;
 }
 
-.error-page__divider {
+.error-page-divider {
     width: 40px;
     height: 1px;
-    background: #786C3B;
+    background: var(--oakwood);
     margin: 0 auto 1.5rem;
 }
 
-.error-page__message {
+.error-page-message {
     font-size: 0.95rem;
     color: #7a7a72;
     max-width: 420px;
@@ -156,10 +165,10 @@ img {
     margin: 0 0 2.5rem;
 }
 
-.error-page__btn {
+.error-page-btn {
     display: inline-block;
     padding: 0.85rem 2.4rem;
-    background: #786C3B;
+    background: var(--oakwood);
     color: var(--color-white);
     font-size: 0.78rem;
     font-weight: 500;
@@ -169,8 +178,8 @@ img {
     transition: background 0.2s ease;
 }
 
-.error-page__btn:hover {
-    background: #5a5029;
+.error-page-btn:hover {
+    background: var(--oakwood-dark);
     color: var(--color-white);
 }
 
