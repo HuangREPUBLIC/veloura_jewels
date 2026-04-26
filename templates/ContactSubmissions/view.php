@@ -6,13 +6,14 @@
 $this->assign('title', 'View Submission');
 ?>
 <?php $this->Html->css('admincontact', ['block' => true]); ?>
+<?php $this->Html->css('login', ['block' => true]); ?>
 
 <div class="admin-wrapper">
     <div class="contactSubmissions view content">
         <h3><?= h($contactSubmission->first_name . ' ' . $contactSubmission->last_name) ?></h3>
 
         <div class="action-buttons">
-            <?= $this->Html->link(__('← Back to Submissions'), ['action' => 'index']) ?>
+            <?= $this->Html->link(__('← Back'), ['action' => 'index']) ?>
             <?= $this->Html->link(__('Reply'), ['action' => 'reply', $contactSubmission->id]) ?>
             <?= $this->Form->postLink(
                 __('Delete'),

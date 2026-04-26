@@ -6,13 +6,14 @@
 $this->assign('title', 'Order ' . $order->id);
 ?>
 <?php $this->Html->css('admincontact', ['block' => true]); ?>
+<?php $this->Html->css('login', ['block' => true]); ?>
 
 <div class="admin-wrapper">
     <div class="orders view content">
         <h3>Order <?= h($order->id) ?></h3>
 
         <div class="action-buttons">
-            <?= $this->Html->link(__('← Back to Orders'), ['action' => 'index']) ?>
+            <?= $this->Html->link(__('← Back'), ['action' => 'index']) ?>
         </div>
 
         <table class="view-table" style="margin-bottom: 2rem;">

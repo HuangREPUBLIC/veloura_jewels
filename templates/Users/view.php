@@ -6,6 +6,7 @@
 $this->assign('title', 'View User');
 ?>
 <?php $this->Html->css('admincontact', ['block' => true]); ?>
+<?php $this->Html->css('login', ['block' => true]); ?>
 <?php $role = $this->request->getAttribute('identity')->get('role'); ?>
 
 
@@ -14,7 +15,7 @@ $this->assign('title', 'View User');
         <h3><?= h($user->email) ?></h3>
 
         <div class="action-buttons">
-            <?= $this->Html->link(__('← Back to Users'), ['action' => 'index']) ?>
+            <?= $this->Html->link(__('← Back'), ['action' => 'index']) ?>
 
             <?php
             $identity = $this->request->getAttribute('identity');

@@ -27,13 +27,14 @@ if (!empty($product->categories)) {
 }
 ?>
 <?php $this->Html->css('admincontact', ['block' => true]); ?>
+<?php $this->Html->css('login', ['block' => true]); ?>
 
 <div class="admin-wrapper">
     <div class="products view content">
         <h3><?= h($product->name) ?></h3>
 
         <div class="action-buttons">
-            <?= $this->Html->link(__('← Back to Products'), ['action' => 'index']) ?>
+            <?= $this->Html->link(__('← Back'), ['action' => 'index']) ?>
 
             <?php $role = $this->request->getAttribute('identity')->get('role'); ?>
 
@@ -62,11 +63,7 @@ if (!empty($product->categories)) {
             <tr>
                 <th><?= __('Type') ?></th>
                 <td>
-                    <?php if ($productType === 'jewelry'): ?>
-                        Jewelry
-                    <?php elseif ($productType === 'home_decor'): ?>
-                        Home Decor
-                    <?php endif; ?>
+                    <?= $productType !== '' ? h(ucwords(str_replace('_', ' ', $productType))) : '-' ?>
                 </td>
             </tr>
             <tr>
