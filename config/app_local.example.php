@@ -142,7 +142,4 @@ return [
         'publishableKey' => 'pk_test_51TKAcBCXA1QjjN9dliULLDTjU2TXKht26Bh16rsWZYsWCqwfOuwNfVb32k9GuIfBQ8jm1YqwQhh9CZIvwVLAIp3y00W3Cua6up',
         'webhookSecret' => 'whsec_d9f9803e6d7ef8aa0b14564f997815e6c254649a5b88840ffe10a0a8095d2f3b',
     ],
-    'Groq' => [
-        'apiKey' => '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',
-    ],
 ];
