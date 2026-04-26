@@ -22,6 +22,7 @@ $this->assign('title', 'Orders');
                     <th>Customer</th>
                     <th>Status</th>
                     <th>Total</th>
+                    <th>Profit</th>
                     <th>Date</th>
                     <th class="actions"><?= __('Actions') ?></th>
                 </tr>
@@ -42,6 +43,18 @@ $this->assign('title', 'Orders');
                             <span class="status-pill <?= $cls ?>"><?= h(ucfirst($order->status)) ?></span>
                         </td>
                         <td>$<?= number_format((float)$order->total_amount, 2) ?> <?= strtoupper(h($order->currency)) ?></td>
+                        <?php
+                        $orderProfit = 0;
+                        foreach ($order->order_items as $item) {
+                            if ($item->product) {
+                                $orderProfit += ($item->unit_price - $item->product->purchase_price) * $item->quantity;
+                            }
+                        }
+                        $profitColor = $orderProfit >= 0 ? '#2e7d32' : '#c62828';
+                        ?>
+                        <td style="color: <?= $profitColor ?>; font-weight: 600;">
+                            $<?= number_format($orderProfit, 2) ?> <?= strtoupper(h($order->currency)) ?>
+                        </td>
                         <td><?= h($order->created) ?></td>
                         <td class="actions">
                             <?= $this->Html->link(__('View'), ['action' => 'view', $order->id]) ?>
@@ -59,7 +72,7 @@ $this->assign('title', 'Orders');
         $('#ordersTable').DataTable({
             order: [[4, 'desc']],
             language: { lengthMenu: '_MENU_ Entries Per Page', search: 'Search:' },
-            columnDefs: [{ targets: [0,1,2,3], searchable: true }]
+            columnDefs: [{ targets: [0,1,2,3,4], searchable: true }]
         });
     });
 </script>

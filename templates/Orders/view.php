@@ -39,14 +39,30 @@ $this->assign('title', 'Order ' . $order->id);
                 <th><?= __('Total Amount') ?></th>
                 <td>$<?= number_format((float)$order->total_amount, 2) ?> <?= strtoupper(h($order->currency)) ?></td>
             </tr>
+            <?php
+            $totalProfit = 0;
+            foreach ($order->order_items as $item) {
+                if ($item->product) {
+                    $totalProfit += ($item->unit_price - $item->product->purchase_price) * $item->quantity;
+                }
+            }
+            $profitColor = $totalProfit >= 0 ? '#2e7d32' : '#c62828';
+            ?>
+            <tr>
+                <th><?= __('Total Profit') ?></th>
+                <td style="color: <?= $profitColor ?>; font-weight: 600;">
+                    $<?= number_format($totalProfit, 2) ?> <?= strtoupper(h($order->currency)) ?>
+                </td>
+            </tr>
             <tr>
                 <th><?= __('Stripe Session ID') ?></th>
-                <td><?= h($order->stripe_session_id) ?: '-' ?></td>
+                <td><?= h($order->stripe_session_id) ?: '' ?></td>
             </tr>
             <tr>
                 <th><?= __('Payment Intent ID') ?></th>
-                <td><?= h($order->stripe_payment_intent_id) ?: '-' ?></td>
+                <td><?= h($order->stripe_payment_intent_id) ?: '' ?></td>
             </tr>
+
             <tr>
                 <th><?= __('Created') ?></th>
                 <td><?= h($order->created) ?></td>
@@ -65,19 +81,30 @@ $this->assign('title', 'Order ' . $order->id);
                 <tr>
                     <th><?= __('Product') ?></th>
                     <th><?= __('Size') ?></th>
+                    <th><?= __('Purchase Price') ?></th>
                     <th><?= __('Unit Price') ?></th>
                     <th><?= __('Quantity') ?></th>
                     <th><?= __('Subtotal') ?></th>
+                    <th><?= __('Profit') ?></th>
                 </tr>
                 </thead>
                 <tbody>
                 <?php foreach ($order->order_items as $item): ?>
+                    <?php
+                    $purchasePrice = $item->product ? (float)$item->product->purchase_price : null;
+                    $itemProfit = $purchasePrice !== null ? ($item->unit_price - $purchasePrice) * $item->quantity : null;
+                    $itemProfitColor = ($itemProfit !== null && $itemProfit >= 0) ? '#2e7d32' : '#c62828';
+                    ?>
                     <tr>
                         <td><?= h($item->product_name) ?></td>
-                        <td><?= h($item->selected_size) ?: '-' ?></td>
+                        <td><?= h($item->selected_size) ?: '' ?></td>
+                        <td><?= $purchasePrice !== null ? '$' . number_format($purchasePrice, 2) : '' ?></td>
                         <td>$<?= number_format((float)$item->unit_price, 2) ?></td>
                         <td><?= h($item->quantity) ?></td>
                         <td>$<?= number_format((float)$item->subtotal, 2) ?></td>
+                        <td style="color: <?= $itemProfitColor ?>; font-weight: 600;">
+                            <?= $itemProfit !== null ? '$' . number_format($itemProfit, 2) : '' ?>
+                        </td>
                     </tr>
                 <?php endforeach; ?>
                 </tbody>

@@ -63,7 +63,7 @@ if (!empty($product->categories)) {
             <tr>
                 <th><?= __('Type') ?></th>
                 <td>
-                    <?= $productType !== '' ? h(ucwords(str_replace('_', ' ', $productType))) : '-' ?>
+                    <?= $productType !== '' ? h(ucwords(str_replace('_', ' ', $productType))) : '' ?>
                 </td>
             </tr>
             <tr>
@@ -115,11 +115,11 @@ if (!empty($product->categories)) {
             </tr>
             <tr>
                 <th><?= __('Product Description') ?></th>
-                <td><?= !empty($product->description) ? nl2br(h($product->description)) : '-' ?></td>
+                <td><?= !empty($product->description) ? nl2br(h($product->description)) : '' ?></td>
             </tr>
             <tr>
                 <th><?= __('Story') ?></th>
-                <td><?= !empty($product->story) ? nl2br(h($product->story)) : '-' ?></td>
+                <td><?= !empty($product->story) ? nl2br(h($product->story)) : '' ?></td>
             </tr>
             <tr>
                 <th><?= __('Images') ?></th>

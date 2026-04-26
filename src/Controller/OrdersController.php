@@ -31,6 +31,7 @@ class OrdersController extends AppController
         }
 
         $orders = $this->Orders->find()
+            ->contain(['OrderItems' => ['Products']])
             ->orderBy(['Orders.created' => 'DESC'])
             ->all();
 
@@ -49,7 +50,7 @@ class OrdersController extends AppController
             return $this->redirect('/');
         }
 
-        $order = $this->Orders->get($id, contain: ['OrderItems']);
+        $order = $this->Orders->get($id, contain: ['OrderItems' => ['Products']]);
 
         $this->set(compact('order'));
     }
