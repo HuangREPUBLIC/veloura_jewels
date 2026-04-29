@@ -20,8 +20,37 @@ $this->assign('title', 'Admin Dashboard');
 
         <div class="dashboard-hero">
             <h1>Admin Dashboard</h1>
-            <p>Welcome, <?= h($authUser->email) ?></p>
+            <p>Hi, <?= h($authUser->first_name) ?></p>
         </div>
+
+        <?php if ($role === 'staff'): ?>
+        <div class="dashboard-schedule">
+            <div class="dashboard-schedule-header">
+                <span class="dashboard-schedule-title">My Schedule</span>
+                <span class="dashboard-schedule-range"><?= $weekRange ?></span>
+            </div>
+            <div class="dashboard-schedule-grid">
+                <?php
+                    $todayStr = (new \DateTime('today'))->format('Y-m-d');
+                    foreach ($upcomingDays as $day):
+                        $dateStr  = $day->format('Y-m-d');
+                        $isToday  = $dateStr === $todayStr;
+                        $shift    = $schedule[$dateStr] ?? null;
+                ?>
+                <div class="dashboard-schedule-day <?= $isToday ? 'dashboard-schedule-day--today' : '' ?> <?= $shift ? 'dashboard-schedule-day--on' : 'dashboard-schedule-day--off' ?>">
+                    <span class="dashboard-schedule-label"><?= $day->format('D') ?></span>
+                    <span class="dashboard-schedule-date"><?= $day->format('j') ?></span>
+                    <?php if ($shift): ?>
+                        <span class="dashboard-schedule-time"><?= $shift->start_time->format('H:i') ?></span>
+                        <span class="dashboard-schedule-time"><?= $shift->end_time->format('H:i') ?></span>
+                    <?php else: ?>
+                        <span class="dashboard-schedule-off">Off</span>
+                    <?php endif; ?>
+                </div>
+                <?php endforeach; ?>
+            </div>
+        </div>
+        <?php endif; ?>
 
         <div class="dashboard-summary">
             <a href="<?= $this->Url->build(['controller' => 'Products', 'action' => 'index']) ?>" class="dashboard-card">
@@ -88,7 +117,6 @@ $this->assign('title', 'Admin Dashboard');
                         <div class="low-stock-row">
                             <div class="low-stock-row-top">
                                 <span class="low-stock-name"><?= h($product->name) ?></span>
-
                                 <?php if ($role === 'admin'): ?>
                                 <?= $this->Html->link(
                                     'Restock',

@@ -52,6 +52,8 @@ return function (RouteBuilder $routes): void {
     $routes->scope('/', function (RouteBuilder $builder): void {
 
         $builder->connect('/', ['controller' => 'Pages', 'action' => 'display', 'home']);
+        $builder->connect('/story', ['controller' => 'Pages', 'action' => 'story']);
+        $builder->connect('/location', ['controller' => 'Pages', 'action' => 'location']);
 
         $builder->connect('/pages/*', 'Pages::display');
 
@@ -85,6 +87,12 @@ return function (RouteBuilder $routes): void {
         //Dashboard Route
         $builder->connect('/dashboard', ['controller' => 'Users', 'action' => 'dashboard']);
 
+        // Schedule management
+        $builder->connect('/users/schedule', ['controller' => 'Users', 'action' => 'schedule']);
+        $builder->connect('/users/schedule/{id}', ['controller' => 'Users', 'action' => 'schedule'])
+            ->setPass(['id'])
+            ->setPatterns(['id' => '\d+']);
+
         //Logout Route
         $builder->connect('/logout', ['controller' => 'Users', 'action' => 'logout']);
 
@@ -93,8 +101,9 @@ return function (RouteBuilder $routes): void {
         $builder->connect('/profile/edit', ['controller' => 'Profile', 'action' => 'edit']);
         $builder->connect('/profile/change-password', ['controller' => 'Profile', 'action' => 'changePassword']);
         $builder->connect('/profile/orders', ['controller' => 'Profile', 'action' => 'orders']);
-        $builder->connect('/profile/orders/:id', ['controller' => 'Profile', 'action' => 'orderDetail'])
-            ->setPass(['id']);
+        $builder->connect('/profile/orders/{id}', ['controller' => 'Profile', 'action' => 'orderDetail'])
+            ->setPass(['id'])
+            ->setPatterns(['id' => '\d+']);
 
         //Chat bot Route
         $builder->connect('/chat/message', ['controller' => 'Chat', 'action' => 'message']);

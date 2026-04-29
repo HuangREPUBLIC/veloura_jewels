@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.2
+-- version 5.2.3
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:3306
--- Generation Time: Apr 22, 2026 at 01:30 AM
--- Server version: 11.4.10-MariaDB
--- PHP Version: 8.4.19
+-- Host: localhost
+-- Generation Time: Apr 28, 2026 at 08:55 PM
+-- Server version: 12.2.2-MariaDB
+-- PHP Version: 8.4.18
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -17,6 +17,30 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8mb4 */;
 
+--
+-- Database: `veloura_jewels`
+--
+CREATE DATABASE IF NOT EXISTS `veloura_jewels` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_uca1400_ai_ci;
+USE `veloura_jewels`;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `cake_migrations`
+--
+
+DROP TABLE IF EXISTS `cake_migrations`;
+CREATE TABLE IF NOT EXISTS `cake_migrations` (
+                                                 `id` int(11) NOT NULL AUTO_INCREMENT,
+    `version` bigint(20) NOT NULL,
+    `migration_name` varchar(100) DEFAULT NULL,
+    `plugin` varchar(100) DEFAULT NULL,
+    `start_time` timestamp NULL DEFAULT NULL,
+    `end_time` timestamp NULL DEFAULT NULL,
+    `breakpoint` tinyint(1) NOT NULL DEFAULT 0,
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `version_plugin_unique` (`version`,`plugin`)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -422,6 +446,26 @@ INSERT INTO `product_variants` (`id`, `product_id`, `size`, `stock`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `schedules`
+--
+
+DROP TABLE IF EXISTS `schedules`;
+CREATE TABLE IF NOT EXISTS `schedules` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `week_start` date NOT NULL COMMENT 'Monday of the scheduled week',
+  `day_of_week` tinyint(4) NOT NULL COMMENT '0=Sun,1=Mon,2=Tue,3=Wed,4=Thu,5=Fri,6=Sat',
+  `start_time` time NOT NULL,
+  `end_time` time NOT NULL,
+  `created` datetime DEFAULT NULL,
+  `modified` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `unique_staff_week_day` (`user_id`,`week_start`,`day_of_week`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `users`
 --
 
@@ -493,6 +537,12 @@ ALTER TABLE `product_images`
 --
 ALTER TABLE `product_variants`
   ADD CONSTRAINT `fk_variants_product` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `schedules`
+--
+ALTER TABLE `schedules`
+  ADD CONSTRAINT `fk_schedule_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

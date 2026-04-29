@@ -19,6 +19,10 @@ $identity = $this->request->getAttribute('identity');
                 <h3 class="page-title"><?= __('Users') ?></h3>
                 <p class="page-subtitle">Manage user accounts and roles</p>
             </div>
+
+            <?php if ($role === 'admin'): ?>
+                <?= $this->Html->link('Schedule', ['controller' => 'Users', 'action' => 'schedule'], ['class' => 'btn-new-product']) ?>
+            <?php endif; ?>
         </div>
 
         <div class="table-responsive" style="padding: 10px">
@@ -65,6 +69,20 @@ $identity = $this->request->getAttribute('identity');
         </div>
     </div>
 </div>
+
+<script>
+function toggleScheduleDropdown() {
+    const menu = document.getElementById('scheduleDropdown');
+    menu.classList.toggle('schedule-dropdown-menu--open');
+}
+
+document.addEventListener('click', function(e) {
+    if (!e.target.closest('.schedule-dropdown-wrap')) {
+        const menu = document.getElementById('scheduleDropdown');
+        if (menu) menu.classList.remove('schedule-dropdown-menu--open');
+    }
+});
+</script>
 
 <script>
     $(document).ready(function() {

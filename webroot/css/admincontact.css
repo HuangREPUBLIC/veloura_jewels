@@ -24,12 +24,12 @@
     border-radius: 14px;
 }
 
-.admin-wrapper h1 { font-size: 1.7rem; font-weight: 700; letter-spacing: -0.03em; color: #111827; margin: 0; }
-.admin-wrapper h2 { font-size: 1.4rem; font-weight: 700; letter-spacing: -0.02em; color: #111827; }
-.admin-wrapper h3 { font-size: 1rem; font-weight: 600; letter-spacing: -0.01em; color: #111827; margin-bottom: 0.5rem; }
-.admin-wrapper h4 { font-size: 0.9rem; font-weight: 600; color: #374151; }
+.admin-wrapper h1 { font-size: 1.7rem; font-weight: 700; letter-spacing: -0.03em; color: var(--admin-ink); margin: 0; }
+.admin-wrapper h2 { font-size: 1.4rem; font-weight: 700; letter-spacing: -0.02em; color: var(--admin-ink); }
+.admin-wrapper h3 { font-size: 1rem; font-weight: 600; letter-spacing: -0.01em; color: var(--admin-ink); margin-bottom: 0.5rem; }
+.admin-wrapper h4 { font-size: 0.9rem; font-weight: 600; color: var(--admin-ink-mid); }
 .admin-wrapper h5,
-.admin-wrapper h6 { font-size: 0.82rem; font-weight: 600; color: #374151; }
+.admin-wrapper h6 { font-size: 0.82rem; font-weight: 600; color: var(--admin-ink-mid); }
 
 /* Page title */
 
@@ -208,7 +208,7 @@ tbody td {
     background-size: 11px;
     box-sizing: border-box;
     color: var(--admin-text);
-    transition: border-color 0.15s ease;
+    transition: border-color 0.2s ease;
 }
 
 .dt-length select:focus {
@@ -228,7 +228,7 @@ tbody td {
     background: var(--color-white) url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%239ca3af' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><circle cx='11' cy='11' r='8'/><path d='m21 21-4.35-4.35'/></svg>") no-repeat 10px center;
     box-sizing: border-box;
     color: var(--admin-text);
-    transition: border-color 0.15s ease;
+    transition: border-color 0.2s ease;
 }
 
 .dt-search input[type="search"]:focus {
@@ -248,7 +248,7 @@ tbody td {
     border-radius: 6px;
     box-sizing: border-box;
     border: 1.5px solid transparent;
-    transition: all 0.15s ease;
+    transition: all 0.2s ease;
 }
 
 .dt-paging .dt-paging-button.current {
@@ -363,7 +363,7 @@ td.actions button {
     font-weight: 600 !important;
     border-radius: 5px !important;
     text-decoration: none !important;
-    transition: all 0.15s ease;
+    transition: all 0.2s ease;
     cursor: pointer;
     background: none !important;
     line-height: 1 !important;
@@ -387,13 +387,13 @@ td.actions a:not(.btn-delete):hover {
 
 td.actions .btn-delete,
 td.actions button.btn-delete {
-    color: #b91c1c !important;
-    border: 1.5px solid #b91c1c !important;
+    color: var(--color-message-error-text) !important;
+    border: 1.5px solid var(--color-message-error-text) !important;
 }
 
 td.actions .btn-delete:hover,
 td.actions button.btn-delete:hover {
-    background: #b91c1c !important;
+    background: var(--color-message-error-text) !important;
     color: var(--color-white) !important;
 }
 
@@ -433,9 +433,9 @@ td.actions button.btn-delete:hover {
 }
 
 .btn-delete {
-    border: 1.5px solid #b91c1c;
+    border: 1.5px solid var(--color-message-error-text);
     background: transparent;
-    color: #b91c1c !important;
+    color: var(--color-message-error-text) !important;
 }
 
 .btn-delete:hover { background: #f7e6e6; }
@@ -518,7 +518,7 @@ td.actions button.btn-delete:hover {
 
 .supplier-email { color: var(--admin-text); }
 
-.stock-low { color: #b94c4c; font-weight: 600; }
+.stock-low { color: var(--color-message-error-text); font-weight: 600; }
 .text-muted { color: #9ca3af; }
 
 /* Dashboard */
@@ -537,18 +537,105 @@ td.actions button.btn-delete:hover {
     border-bottom: 1px solid rgba(var(--oakwood-rgb), 0.12);
 }
 
+/* Staff weekly schedule */
+.dashboard-schedule {
+    margin-bottom: 1.8rem;
+    padding: 1.2rem 1.6rem;
+    background: var(--color-white);
+    border: 1px solid rgba(var(--oakwood-rgb), 0.12);
+    border-radius: 10px;
+}
+
+.dashboard-schedule-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.dashboard-schedule-title {
+    font-family: var(--font-display);
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--admin-ink);
+}
+
+.dashboard-schedule-range {
+    font-size: 0.78rem;
+    color: var(--admin-ink-mid);
+}
+
+.dashboard-schedule-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 0.5rem;
+}
+
+.dashboard-schedule-day {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.6rem 0.4rem;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.dashboard-schedule-day--on {
+    background: rgba(var(--oakwood-rgb), 0.07);
+}
+
+.dashboard-schedule-day--off {
+    background: var(--beige-light);
+    opacity: 0.6;
+}
+
+.dashboard-schedule-day--today {
+    outline: 2px solid var(--oakwood);
+    outline-offset: -2px;
+    opacity: 1;
+}
+
+.dashboard-schedule-label {
+    font-family: var(--font-display);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--admin-ink);
+}
+
+.dashboard-schedule-date {
+    font-size: 0.78rem;
+    color: var(--admin-ink-mid);
+}
+
+.dashboard-schedule-time {
+    font-size: 0.75rem;
+    color: var(--oakwood-dark);
+    font-weight: 600;
+}
+
+.dashboard-schedule-off {
+    font-size: 0.72rem;
+    color: var(--gray-600);
+    font-style: italic;
+}
+
 .dashboard-hero h1 {
     margin: 0 0 0.3rem 0;
     font-size: 1.7rem;
     font-weight: 700;
-    color: #111827;
+    color: var(--admin-ink);
     letter-spacing: -0.03em;
 }
 
 .dashboard-hero p {
     margin: 0;
-    font-size: 0.85rem;
-    color: #6b7280;
+    font-size: 1.05rem;
+    color: var(--admin-ink-mid);
     font-weight: 400;
 }
 
@@ -603,7 +690,7 @@ td.actions button.btn-delete:hover {
 .dashboard-summary .dashboard-content h3 {
     font-size: 0.72rem;
     font-weight: 600;
-    color: #6b7280;
+    color: var(--color-lightgray);
     text-transform: uppercase;
     letter-spacing: 0.08em;
     margin: 0 0 0.2rem;
@@ -612,7 +699,7 @@ td.actions button.btn-delete:hover {
 .dashboard-summary .dashboard-content p {
     font-size: 1.8rem;
     font-weight: 700;
-    color: #111827;
+    color: var(--admin-ink);
     margin: 0;
     line-height: 1.1;
 }
@@ -620,14 +707,14 @@ td.actions button.btn-delete:hover {
 .dashboard-grid .dashboard-content h3 {
     font-size: 0.95rem;
     font-weight: 600;
-    color: #111827;
+    color: var(--admin-ink);
     margin: 0 0 0.2rem;
 }
 
 .dashboard-grid .dashboard-content p {
     font-size: 0.82rem;
     font-weight: 400;
-    color: #6b7280;
+    color: var(--color-lightgray);
     margin: 0;
     line-height: 1.4;
 }
@@ -687,6 +774,12 @@ td.actions button.btn-delete:hover {
     color: var(--admin-text);
 }
 
+.low-stock-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
 .low-stock-btn {
     display: inline-block;
     padding: 3px 12px;
@@ -697,7 +790,7 @@ td.actions button.btn-delete:hover {
     font-weight: 600;
     text-decoration: none;
     white-space: nowrap;
-    transition: background 0.18s ease;
+    transition: background 0.2s ease;
 }
 
 .low-stock-btn:hover {
@@ -706,15 +799,13 @@ td.actions button.btn-delete:hover {
     text-decoration: none;
 }
 
-.low-stock-pills {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 5px;
-}
-
-.low-stock-pill {
+.low-stock-pill,
+.status-pill,
+.replied-yes,
+.replied-no,
+.role-pill {
     display: inline-block;
-    padding: 2px 9px;
+    padding: 2px 10px;
     border-radius: 20px;
     font-size: 0.74rem;
     font-weight: 600;
@@ -725,44 +816,13 @@ td.actions button.btn-delete:hover {
 
 /* Status pills */
 
-.status-pill {
-    display: inline-block;
-    padding: 2px 10px;
-    border-radius: 20px;
-    font-size: 0.74rem;
-    font-weight: 600;
-}
 .status-pill-paid      { background: #bbf7d0; color: #14532d; }
 .status-pill-pending   { background: #fef9c3; color: #713f12; }
 .status-pill-cancelled { background: #fecaca; color: #7f1d1d; }
 
-.replied-yes {
-    display: inline-block;
-    padding: 2px 10px;
-    border-radius: 20px;
-    font-size: 0.74rem;
-    font-weight: 600;
-    background: #bbf7d0;
-    color: #14532d;
-}
+.replied-yes { background: #bbf7d0; color: #14532d; }
+.replied-no  { background: #e5e7eb; color: var(--color-lightgray); }
 
-.replied-no {
-    display: inline-block;
-    padding: 2px 10px;
-    border-radius: 20px;
-    font-size: 0.74rem;
-    font-weight: 600;
-    background: #e5e7eb;
-    color: #6b7280;
-}
-
-.role-pill {
-    display: inline-block;
-    padding: 2px 10px;
-    border-radius: 20px;
-    font-size: 0.74rem;
-    font-weight: 600;
-}
 .role-pill-admin    { background: #c8bfa0; color: #3b3015; }
 .role-pill-staff    { background: #a8c8b0; color: #1e4228; }
 .role-pill-customer { background: #aec8e8; color: #0f2d52; }
@@ -792,9 +852,138 @@ td.actions button.btn-delete:hover {
 .cat-pill-wall-art  { background: #ede9fe; color: #4c1d95; }
 .cat-pill-throws    { background: #fce7f3; color: #831843; }
 
+/* Orders — stat cards */
+
+.orders-stat-cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin: 16px 0 20px;
+}
+
+.orders-stat-card {
+    background: var(--admin-surface);
+    border: 1px solid var(--admin-border);
+    border-radius: 12px;
+    padding: 14px 16px;
+}
+
+.orders-stat-card .stat-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-lightgray);
+    margin-bottom: 5px;
+}
+
+.orders-stat-card .stat-profit {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--color-message-success-text);
+}
+
+.orders-stat-card .stat-sales {
+    font-size: 0.78rem;
+    color: var(--color-lightgray);
+    margin-top: 2px;
+}
+
+/* Orders — filter controls */
+
+.orders-filter-section {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    margin-bottom: 16px;
+}
+
+.orders-filter-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: 2px;
+}
+
+.orders-filter-row::-webkit-scrollbar { display: none; }
+
+.orders-filter-label {
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--oakwood);
+    white-space: nowrap;
+    flex-shrink: 0;
+    min-width: 50px;
+}
+
+.filter-btn {
+    padding: 4px 13px;
+    border: 1.5px solid var(--admin-border);
+    border-radius: 20px;
+    background: var(--admin-surface);
+    cursor: pointer;
+    font-size: 0.78rem;
+    font-family: inherit;
+    color: var(--admin-text);
+    white-space: nowrap;
+    flex-shrink: 0;
+    transition: all 0.2s ease;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.filter-btn:hover {
+    border-color: var(--oakwood);
+    color: var(--oakwood);
+}
+
+.filter-btn.active {
+    background: var(--oakwood);
+    color: var(--color-white);
+    border-color: var(--oakwood);
+}
+
+.date-range-sep {
+    width: 1px;
+    height: 18px;
+    background: var(--admin-border);
+    flex-shrink: 0;
+    margin: 0 2px;
+}
+
+.date-range-to {
+    font-size: 0.78rem;
+    color: var(--color-lightgray);
+    flex-shrink: 0;
+}
+
+.date-field {
+    height: 28px;
+    padding: 0 8px;
+    border: 1.5px solid var(--admin-border);
+    border-radius: 8px;
+    font-size: 0.78rem;
+    font-family: inherit;
+    color: var(--admin-text);
+    background: var(--admin-surface);
+    flex-shrink: 0;
+    transition: border-color 0.2s ease;
+    cursor: pointer;
+}
+
+.date-field:focus { outline: none; border-color: var(--oakwood); }
+.date-field::-webkit-calendar-picker-indicator { opacity: 0.5; cursor: pointer; }
+.date-field::-webkit-calendar-picker-indicator:hover { opacity: 1; }
+
 /* Responsive */
 
 @media (max-width: 768px) {
+    .orders-stat-cards { grid-template-columns: repeat(2, 1fr); }
+
     .dashboard-summary { grid-template-columns: 1fr; }
     .dashboard-grid    { grid-template-columns: 1fr; }
 
@@ -831,4 +1020,60 @@ td.actions button.btn-delete:hover {
     #ordersTable tbody td,
     #contactFormsTable thead th,
     #contactFormsTable tbody td { padding: 12px 10px !important; }
+}
+
+/* Schedule dropdown */
+
+.schedule-dropdown-wrap {
+    position: relative;
+}
+
+.schedule-dropdown-trigger {
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+    border: none;
+    gap: 0;
+}
+
+.schedule-dropdown-menu {
+    display: none;
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    min-width: 200px;
+    background: var(--color-white);
+    border: 1px solid rgba(var(--oakwood-rgb), 0.15);
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.10);
+    z-index: 100;
+    overflow: hidden;
+    flex-direction: column;
+}
+
+.schedule-dropdown-menu--open {
+    display: flex;
+}
+
+.schedule-dropdown-item {
+    display: block;
+    padding: 0.75rem 1.1rem;
+    font-size: 0.9rem;
+    color: #333;
+    text-decoration: none;
+    transition: background 0.15s;
+}
+
+.schedule-dropdown-item:hover {
+    background: rgba(var(--oakwood-rgb), 0.07);
+    color: var(--oakwood);
+    text-decoration: none;
+}
+
+.schedule-dropdown-empty {
+    display: block;
+    padding: 0.75rem 1.1rem;
+    font-size: 0.88rem;
+    color: #aaa;
+    font-style: italic;
 }

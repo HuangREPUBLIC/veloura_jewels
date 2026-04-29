@@ -3,7 +3,7 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Order $order
  */
-$this->assign('title', 'Order #' . $order->id);
+$this->assign('title', 'My Order');
 $this->Html->css('profile', ['block' => true]);
 ?>
 
@@ -12,7 +12,7 @@ $this->Html->css('profile', ['block' => true]);
 
         <div class="profile-form-header">
             <?= $this->Html->link('← Back to Orders', ['action' => 'orders'], ['class' => 'profile-back-link']) ?>
-            <h1>Order #<?= h($order->id) ?></h1>
+            <h1>My Order</h1>
         </div>
 
         <!-- Order Meta -->
