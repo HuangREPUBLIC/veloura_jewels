@@ -21,7 +21,7 @@ $identity = $this->request->getAttribute('identity');
             </div>
 
             <?php if ($role === 'admin'): ?>
-                <?= $this->Html->link('Schedule', ['controller' => 'Users', 'action' => 'schedule'], ['class' => 'btn-new-product']) ?>
+                <?= $this->Html->link('Schedule', ['controller' => 'Schedule', 'action' => 'add'], ['class' => 'btn-new-product']) ?>
             <?php endif; ?>
         </div>
 
