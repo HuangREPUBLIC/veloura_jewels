@@ -13,6 +13,9 @@ use Cake\ORM\Entity;
  * @property string $purchase_price
  * @property string $sale_price
  * @property string|null $supplier_email
+ * @property string|null $description
+ * @property string|null $story
+ * @property bool $featured
  * @property \Cake\I18n\DateTime $created
  * @property \Cake\I18n\DateTime $modified
  * @property \App\Model\Entity\ProductImage[] $product_images
@@ -42,5 +45,6 @@ class Product extends Entity
         'description' => true,
         'story' => true,
         'product_variants' => true,
+        'featured' => true,
     ];
 }

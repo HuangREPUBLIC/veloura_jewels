@@ -21,9 +21,15 @@ if (!empty($product->type)) {
 
 <div class="login-page">
     <div class="users form content login-card--wide">
-        <?= $this->Html->link(__('← Back'), ['action' => 'index']) ?>
+        <?php
+        $backUrl = ($from ?? '') === 'dashboard'
+            ? ['controller' => 'Users', 'action' => 'dashboard']
+            : ['action' => 'index'];
+        ?>
+        <?= $this->Html->link(__('← Back'), $backUrl) ?>
 
         <?= $this->Form->create($product, ['enctype' => 'multipart/form-data']) ?>
+        <?= $this->Form->hidden('from', ['value' => $from ?? '']) ?>
         <fieldset>
             <legend><?= __('Edit Product') ?></legend>
 
@@ -46,13 +52,7 @@ if (!empty($product->type)) {
                             <?= h($label) ?>
                         </option>
                     <?php endforeach; ?>
-                    <option value="__new__">+ Add new type...</option>
                 </select>
-                <div id="new-type-input" style="display:none;margin-top:0.5rem;">
-                    <input type="text" name="new_type_name" id="new-type-name"
-                           placeholder="New type name"
-                           style="width:100%;box-sizing:border-box;">
-                </div>
             </div>
 
             <!-- Category: filtered by type -->
@@ -173,18 +173,6 @@ if (!empty($product->type)) {
     })();
 
     function onTypeChange(type) {
-        var newTypeDiv   = document.getElementById('new-type-input');
-        var newTypeInput = document.getElementById('new-type-name');
-
-        if (type === '__new__') {
-            newTypeDiv.style.display = 'block';
-            newTypeInput.required = true;
-        } else {
-            newTypeDiv.style.display = 'none';
-            newTypeInput.required = false;
-            newTypeInput.value = '';
-        }
-
         populateCategories(type, []);
         updateAllSizeSelects(type);
     }
@@ -206,29 +194,20 @@ if (!empty($product->type)) {
         }
 
         select.disabled = false;
-
-        if (type !== '__new__') {
-            select.innerHTML = '<option value="">-- Select a category --</option>';
-            var filtered = allCategories.filter(function(c) { return c.type === type; });
-            filtered.forEach(function(c) {
-                var opt = document.createElement('option');
-                opt.value = c.id;
-                opt.textContent = c.name;
-                if (preselected.indexOf(c.id) !== -1) opt.selected = true;
-                select.appendChild(opt);
-            });
-        }
+        select.innerHTML = '<option value="">-- Select a category --</option>';
+        var filtered = allCategories.filter(function(c) { return c.type === type; });
+        filtered.forEach(function(c) {
+            var opt = document.createElement('option');
+            opt.value = c.id;
+            opt.textContent = c.name;
+            if (preselected.indexOf(c.id) !== -1) opt.selected = true;
+            select.appendChild(opt);
+        });
 
         var newOpt = document.createElement('option');
         newOpt.value = '__new__';
         newOpt.textContent = '+ Add new category...';
         select.appendChild(newOpt);
-
-        if (type === '__new__') {
-            select.value = '__new__';
-            newCatDiv.style.display = 'block';
-            newCatInput.required = true;
-        }
     }
 
     function onCategoryChange(value) {

@@ -261,6 +261,7 @@ CREATE TABLE IF NOT EXISTS `products` (
     `modified` datetime DEFAULT NULL,
     `description` text DEFAULT NULL,
     `story` text DEFAULT NULL,
+    `featured` boolean NOT NULL DEFAULT 0,
     PRIMARY KEY (`id`)
     ) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 

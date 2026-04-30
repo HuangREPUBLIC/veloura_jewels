@@ -97,6 +97,9 @@ class ProductsTable extends Table
             ->scalar('story')
             ->requirePresence('story', 'create')
             ->notEmptyString('story');
+        $validator
+            ->boolean('featured')
+            ->notEmptyString('featured');
 
         return $validator;
     }

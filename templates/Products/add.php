@@ -34,13 +34,7 @@ $this->Html->css('login', ['block' => true]);
                     <?php foreach ($types as $key => $label): ?>
                         <option value="<?= h($key) ?>"><?= h($label) ?></option>
                     <?php endforeach; ?>
-                    <option value="__new__">+ Add new type...</option>
                 </select>
-                <div id="new-type-input" style="display:none;margin-top:0.5rem;">
-                    <input type="text" name="new_type_name" id="new-type-name"
-                           placeholder="New type name"
-                           style="width:100%;box-sizing:border-box;">
-                </div>
             </div>
 
             <!-- Category: filtered by type -->
@@ -100,18 +94,6 @@ $this->Html->css('login', ['block' => true]);
     };
 
     function onTypeChange(type) {
-        var newTypeDiv   = document.getElementById('new-type-input');
-        var newTypeInput = document.getElementById('new-type-name');
-
-        if (type === '__new__') {
-            newTypeDiv.style.display = 'block';
-            newTypeInput.required = true;
-        } else {
-            newTypeDiv.style.display = 'none';
-            newTypeInput.required = false;
-            newTypeInput.value = '';
-        }
-
         updateCategories(type);
         updateAllSizeSelects(type);
     }
@@ -132,30 +114,19 @@ $this->Html->css('login', ['block' => true]);
         }
 
         select.disabled = false;
-        select.innerHTML = '';
-
-        if (type !== '__new__') {
-            select.innerHTML = '<option value="">-- Select a category --</option>';
-            var filtered = allCategories.filter(function(c) { return c.type === type; });
-            filtered.forEach(function(c) {
-                var opt = document.createElement('option');
-                opt.value = c.id;
-                opt.textContent = c.name;
-                select.appendChild(opt);
-            });
-        }
+        select.innerHTML = '<option value="">-- Select a category --</option>';
+        var filtered = allCategories.filter(function(c) { return c.type === type; });
+        filtered.forEach(function(c) {
+            var opt = document.createElement('option');
+            opt.value = c.id;
+            opt.textContent = c.name;
+            select.appendChild(opt);
+        });
 
         var newOpt = document.createElement('option');
         newOpt.value = '__new__';
         newOpt.textContent = '+ Add new category...';
         select.appendChild(newOpt);
-
-        // For a brand-new type there are no existing categories; auto-show the new-category input
-        if (type === '__new__') {
-            select.value = '__new__';
-            newCatDiv.style.display = 'block';
-            newCatInput.required = true;
-        }
     }
 
     function onCategoryChange(value) {

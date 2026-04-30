@@ -61,16 +61,7 @@ class ProductsController extends AppController
         $product = $this->Products->newEmptyEntity();
         if ($this->request->is('post')) {
             $data = $this->request->getData();
-
-            // Resolve new type: convert '__new__' placeholder to a slug derived from new_type_name
             $typeValue = $data['type'] ?? '';
-            if ($typeValue === '__new__') {
-                $rawName = trim($data['new_type_name'] ?? '');
-                $typeValue = $rawName !== ''
-                    ? strtolower(trim(preg_replace('/[^a-zA-Z0-9]+/', '_', $rawName), '_'))
-                    : '';
-                $data['type'] = $typeValue;
-            }
 
             // Resolve new category: create it in the DB if '__new__' placeholder is selected
             $categoryIds = (array)($data['categories']['_ids'] ?? []);
@@ -146,19 +137,13 @@ class ProductsController extends AppController
             return $this->redirect(['action' => 'index']);
         }
 
+        $from = $this->request->getQuery('from');
+
         $product = $this->Products->get($id, contain: ['Categories', 'ProductVariants', 'ProductImages']);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $data = $this->request->getData();
-
-            // Resolve new type
+            $from = $data['from'] ?? $from;
             $typeValue = $data['type'] ?? '';
-            if ($typeValue === '__new__') {
-                $rawName = trim($data['new_type_name'] ?? '');
-                $typeValue = $rawName !== ''
-                    ? strtolower(trim(preg_replace('/[^a-zA-Z0-9]+/', '_', $rawName), '_'))
-                    : '';
-                $data['type'] = $typeValue;
-            }
 
             // Resolve new category
             $categoryIds = (array)($data['categories']['_ids'] ?? []);
@@ -202,10 +187,15 @@ class ProductsController extends AppController
                     }
                 }
                 $this->Flash->success(__('The product has been saved.'));
+                if ($from === 'dashboard') {
+                    return $this->redirect(['controller' => 'Users', 'action' => 'dashboard']);
+                }
                 return $this->redirect(['action' => 'index']);
             }
             $this->Flash->error(__('The product could not be saved. Please, try again.'));
         }
+
+        $this->set('from', $from);
 
         // Return categories with their type so JS can filter by type
         $categoriesRaw = $this->Products->Categories->find()
@@ -280,6 +270,25 @@ class ProductsController extends AppController
             $imageEntity->filename   = $filename;
             $productImagesTable->save($imageEntity);
         }
+    }
+
+    public function toggleFeatured($id = null)
+    {
+        $this->request->allowMethod(['post']);
+
+        $identity = $this->Authentication->getIdentity();
+        if (!$identity || $identity->get('role') !== 'admin') {
+            return $this->response->withStatus(403)
+                ->withType('application/json')
+                ->withStringBody(json_encode(['error' => 'Forbidden']));
+        }
+
+        $product = $this->Products->get($id);
+        $product->featured = !$product->featured;
+        $this->Products->save($product);
+
+        return $this->response->withType('application/json')
+            ->withStringBody(json_encode(['featured' => (bool)$product->featured]));
     }
 
     public function delete($id = null)

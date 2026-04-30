@@ -120,7 +120,7 @@ $this->assign('title', 'Admin Dashboard');
                                 <?php if ($role === 'admin'): ?>
                                 <?= $this->Html->link(
                                     'Restock',
-                                    ['controller' => 'Products', 'action' => 'edit', $product->id],
+                                    ['controller' => 'Products', 'action' => 'edit', $product->id, '?' => ['from' => 'dashboard']],
                                     ['class' => 'low-stock-btn']
                                 ) ?>
                                 <?php endif ?>
