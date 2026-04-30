@@ -63,19 +63,19 @@ $role = $identity ? $identity->get('role') : null;
 
     <?php $currentPath = $this->request->getPath(); ?>
     <nav class="navbar-links" id="navLinks">
-        <?php if (in_array($role, ['admin', 'staff'])): ?>
         <?= $this->Html->link('Home', '/', ['class' => $currentPath === '/' ? 'active' : '']) ?>
         <?= $this->Html->link('Jewelry', '/jewelry', ['class' => str_starts_with($currentPath, '/jewelry') ? 'active' : '']) ?>
         <?= $this->Html->link('Home Decor', '/home-decor', ['class' => str_starts_with($currentPath, '/home-decor') ? 'active' : '']) ?>
-        <?= $this->Html->link('FAQ', '/faq', ['class' => str_starts_with($currentPath, '/faq') ? 'active' : '']) ?>
+
+        <?php if (in_array($role, ['admin', 'staff'])): ?>
+            <?= $this->Html->link('Dashboard', '/dashboard', ['class' => str_starts_with($currentPath, '/dashboard') ? 'active' : '']) ?>
 
         <?php else : ?>
-            <?= $this->Html->link('Home', '/', ['class' => $currentPath === '/' ? 'active' : '']) ?>
-            <?= $this->Html->link('Jewelry', '/jewelry', ['class' => str_starts_with($currentPath, '/jewelry') ? 'active' : '']) ?>
-            <?= $this->Html->link('Home Decor', '/home-decor', ['class' => str_starts_with($currentPath, '/home-decor') ? 'active' : '']) ?>
             <?= $this->Html->link('Contact', '/contact', ['class' => str_starts_with($currentPath, '/contact') ? 'active' : '']) ?>
-            <?= $this->Html->link('FAQ', '/faq', ['class' => str_starts_with($currentPath, '/faq') ? 'active' : '']) ?>
         <?php endif ?>
+        <!--<?= $this->Html->link('Location', '/location', ['class' => str_starts_with($currentPath, '/location') ? 'active' : '']) ?> -->
+        <?= $this->Html->link('FAQ', '/faq', ['class' => str_starts_with($currentPath, '/faq') ? 'active' : '']) ?>
+
     </nav>
 
 
@@ -200,11 +200,12 @@ $role = $identity ? $identity->get('role') : null;
         </div>
 
         <div class="footer-col">
-            <h6 class="footer-heading">Collections</h6>
+            <h6 class="footer-heading">Explore</h6>
             <ul class="footer-nav">
                 <li><?= $this->Html->link('Jewelry', ['controller' => 'Jewelry', 'action' => 'index']) ?></li>
-                <li><?= $this->Html->link('Home Décor', $this->Url->build('/home-decor')) ?></li>
-                <li><?= $this->Html->link('View Cart', ['controller' => 'Jewelry', 'action' => 'cart']) ?></li>
+                <li><?= $this->Html->link('Home Décor', ['controller' => 'Jewelry', 'action' => 'home_decor']) ?></li>
+                <li><?= $this->Html->link('Story', ['controller' => 'Pages', 'action' => 'story']) ?></li>
+                <li><?= $this->Html->link('Location', ['controller' => 'Pages', 'action' => 'location']) ?></li>
             </ul>
         </div>
 
@@ -224,9 +225,19 @@ $role = $identity ? $identity->get('role') : null;
                 <button type="submit" class="footer-newsletter-btn">Subscribe</button>
             </form>
             <p class="footer-contact-detail" id="newsletterThanks" style="display:none">Thanks for subscribing!</p>
-            <p class="footer-contact-detail">Opening hours: 10:00AM – 6:00PM</p>
-            <p class="footer-contact-detail">123 456 7890</p>
-            <p class="footer-contact-detail">88 Elizabeth Road, Melbourne VIC 3000</p>
+            <p class="footer-newsletter-disclaimer">No spam. Unsubscribe anytime.</p>
+            <p class="footer-contact-detail">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                : 10:00AM – 6:00PM
+            </p>
+            <p class="footer-contact-detail">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10a19.79 19.79 0 01-3-8.57A2 2 0 012 1.28h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 9.09a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+                : 123 456 7890
+            </p>
+            <p class="footer-contact-detail">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                : 88 Elizabeth Road, Melbourne VIC 3000
+            </p>
         </div>
 
     </div>

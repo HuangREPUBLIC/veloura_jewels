@@ -26,25 +26,6 @@ USE `veloura_jewels`;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `cake_migrations`
---
-
-DROP TABLE IF EXISTS `cake_migrations`;
-CREATE TABLE IF NOT EXISTS `cake_migrations` (
-                                                 `id` int(11) NOT NULL AUTO_INCREMENT,
-    `version` bigint(20) NOT NULL,
-    `migration_name` varchar(100) DEFAULT NULL,
-    `plugin` varchar(100) DEFAULT NULL,
-    `start_time` timestamp NULL DEFAULT NULL,
-    `end_time` timestamp NULL DEFAULT NULL,
-    `breakpoint` tinyint(1) NOT NULL DEFAULT 0,
-    PRIMARY KEY (`id`),
-    UNIQUE KEY `version_plugin_unique` (`version`,`plugin`)
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `categories`
 --
 
@@ -86,7 +67,7 @@ CREATE TABLE IF NOT EXISTS `categories_products` (
     PRIMARY KEY (`id`),
     KEY `category_id` (`category_id`),
     KEY `product_id` (`product_id`)
-    ) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+    ) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `categories_products`
@@ -123,7 +104,10 @@ INSERT INTO `categories_products` (`id`, `category_id`, `product_id`) VALUES
                                                                           (39, 8, 41),
                                                                           (40, 8, 42),
                                                                           (41, 8, 43),
-                                                                          (42, 10, 44);
+                                                                          (42, 10, 44),
+                                                                          (43, 6, 45),
+                                                                          (44, 10, 46),
+                                                                          (45, 8, 47);
 
 -- --------------------------------------------------------
 
@@ -278,29 +262,29 @@ CREATE TABLE IF NOT EXISTS `products` (
     `description` text DEFAULT NULL,
     `story` text DEFAULT NULL,
     PRIMARY KEY (`id`)
-    ) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+    ) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `products`
 --
 
 INSERT INTO `products` (`id`, `name`, `purchase_price`, `sale_price`, `supplier_email`, `created`, `modified`, `description`, `story`) VALUES
-                                                                                                                                           (1, 'Art Deco Ring', 50.00, 110.00, 'supplier@luxgems.com.au', '2026-04-13 11:29:33', '2026-04-16 12:20:04', 'This ring is meticulously crafted for a perfect balance between bold structure and refined elegance. The design and stone setting ensure a unique brilliance. Inspired by Art Deco aesthetic, each piece embodies timeless sophistication.\r\nAll our products are handcrafted in our ateliers\r\nMaterial: Sterling silver\r\nStone: White cubic zirconia\r\nWidth: 0.5 cm\r\nColor: Silver', NULL),
-                                                                                                                                           (2, 'Statement Torsade Pavé Ring', 85.00, 210.00, 'supplier@goldcraft.com.au', '2026-04-13 11:29:33', '2026-04-14 01:26:17', 'This ring embodies elegance and versatility. Its radiant shine echoes pure light, creating a captivating sparkle that draws attention.\r\nAll our products are handcrafted in our ateliers\r\nMaterial: APM Yellow Alloy made of 95% recycled material and 18k yellow gold plated, anti-tarnishing and hypoallergenic\r\nStone: White cubic zirconia\r\nWidth: 0.9 cm\r\nColor: Yellow', NULL),
-                                                                                                                                           (3, 'Dainty Rose Gold Ring', 30.00, 120.00, 'supplier@luxgems.com.au', '2026-04-13 11:29:33', '2026-04-14 01:26:33', 'This ring is made with Alloy and 18k rose gold plated. It is microset with white cubic zirconia.\r\nThe APM Alloy is made of 95% recycled material. It is anti-tarnishing and Hypoallergenic.\r\nMaterial: Alloy made of 95% recycled material and 18k rose gold plated, white cubic zirconia, anti-tarnishing and Hypoallergenic\r\nAll our products are handcrafted and microset by hand in our ateliers\r\nColor: Rose gold', NULL),
-                                                                                                                                           (4, 'Chunky Ice Ring', 100.00, 300.00, 'supplier@luxgems.com.au', '2026-04-13 11:29:33', '2026-04-14 01:38:58', 'Sterling silver intertwines with paths of brilliant stones to reflect the geometric patterns created by broken ice.\r\nAll our products are handcrafted in our ateliers\r\nMaterial: Sterling silver\r\nStone: White cubic zirconia\r\nColor: Silver', NULL),
-                                                                                                                                           (5, 'LOVE Morse Code Ring', 30.00, 120.00, 'supplier@pearlsea.com.au', '2026-04-13 11:29:33', '2026-04-14 01:27:20', 'This collection is using Morse code as a secret Love language.\r\nThis ring is embellished with the code LOVE on it, and the word LOVE is also engraved inside.\r\nMaterial: APM Rose Alloy made of 95% recycled material and 18k gold plated (3 microns), white cubic zirconia, anti-tarnishing and anti-allergenic\r\nAll our products are handcrafted and microset by hand in our ateliers\r\nColor: Rose gold', NULL),
-                                                                                                                                           (6, 'Art Deco Adjustable Necklace', 70.00, 230.00, 'supplier@luxgems.com.au', '2026-04-13 11:29:33', '2026-04-21 23:08:47', 'This necklace is meticulously crafted for a perfect balance between bold structure and refined elegance.\r\nMaterial: Sterling silver\r\nStone: White cubic zirconia\r\nColor: Silver\r\nPendant size: Length 4.6 cm ; Width 0.7 cm\r\nTotal chain length: Adjustable to 48 cm maximum with sliding clasp', NULL),
-                                                                                                                                           (7, 'Art Deco Pavé Choker', 300.00, 780.00, 'supplier@goldcraft.com.au', '2026-04-13 11:29:33', '2026-04-14 01:28:26', 'This choker is meticulously crafted for a perfect balance between bold structure and refined elegance.\r\nMaterial: Sterling silver\r\nStone: Over 210 white cubic zirconia\r\nColor: Silver\r\nTotal chain length: 40 cm ; Width 0.8 cm', NULL),
-                                                                                                                                           (8, 'Lilac Torsade Adjustable Necklace', 60.00, 210.00, 'supplier@gemstone.com.au', '2026-04-13 11:29:33', '2026-04-14 01:29:56', 'This necklace embodies elegance and versatility.\r\nMaterial: APM Yellow Alloy made of 95% recycled material and 18k yellow gold plated\r\nStone: Purple cubic zirconia\r\nColor: Yellow\r\nTotal chain length: Adjustable to 65 cm maximum with sliding clasp', NULL),
-                                                                                                                                           (9, 'Lumière Pavé Choker', 180.00, 620.00, 'supplier@pearlsea.com.au', '2026-04-13 11:29:33', '2026-04-14 01:30:20', 'This minimalist and versatile choker perfectly captures the essence of spring.\r\nMaterial: Sterling silver\r\nStone: White cubic zirconia\r\nColor: Silver', NULL),
-                                                                                                                                           (10, 'Maille Marine Chain Necklace', 140.00, 410.00, 'supplier@gemstone.com.au', '2026-04-13 11:29:33', '2026-04-14 01:30:35', 'Material: Rose Alloy made of 95% recycled material and 18k gold plated, white cubic zirconia\r\nColor: Rose gold\r\nTotal chain length: 45 cm', NULL),
-                                                                                                                                           (11, 'Statement Art Deco Drop Earrings', 150.00, 430.00, 'supplier@luxgems.com.au', '2026-04-13 11:29:33', '2026-04-14 01:38:02', 'These earrings are meticulously crafted for a perfect balance between bold structure and refined elegance.\r\nMaterial: Sterling silver\r\nStone: White cubic zirconia\r\nColor: Silver\r\nLength: 7.1 cm ; Width : 2.2 cm', NULL),
-                                                                                                                                           (12, 'Torsade Pavé Hoop Earrings', 55.00, 210.00, 'supplier@goldcraft.com.au', '2026-04-13 11:29:33', '2026-04-14 01:37:09', 'These earrings embody elegance and versatility.\r\nMaterial: APM Yellow Alloy made of 95% recycled material and 18k yellow gold plated\r\nStone: White cubic zirconia\r\nColor: Yellow\r\nLength: 2.1 cm ; Width : 0.7 cm', NULL),
-                                                                                                                                           (13, 'Dainty Rose Gold Hoop Earrings', 95.00, 275.00, 'supplier@gemstone.com.au', '2026-04-13 11:29:33', '2026-04-14 01:36:32', 'Material: Alloy made of 95% recycled material and 18k gold plated, white cubic zirconia\r\nColor: Rose gold\r\nSize: Small (Length: 2.8 cm ; Width : 0.5 cm)', NULL),
-                                                                                                                                           (14, 'Asymmetric Cross Earrings', 65.00, 240.00, 'supplier@pearlsea.com.au', '2026-04-13 11:29:33', '2026-04-14 01:36:10', 'Material: Platinum and rhodium plated on patented white alloy, made from recycled materials\r\nStone: Cubic zirconia\r\nDimensions: 39 mm length, 20 mm width', NULL),
-                                                                                                                                           (15, 'Art Deco Pavé Bracelet', 90.00, 350.00, 'supplier@luxgems.com.au', '2026-04-13 11:29:33', '2026-04-14 01:35:53', 'This bracelet is meticulously crafted for a perfect balance between bold structure and refined elegance.\r\nMaterial: Sterling silver\r\nStone: White cubic zirconia\r\nColor: Silver', NULL),
-                                                                                                                                           (16, 'Lilac Lumière Pavé Bracelet', 90.00, 300.00, 'supplier@goldcraft.com.au', '2026-04-13 11:29:33', '2026-04-14 01:32:10', 'Material: Platinum and rhodium plated on patented white alloy\r\nStone: Lilac cubic zirconia\r\nDimensions: 4 mm width', NULL),
+(1, 'Art Deco Ring', 50.00, 110.00, 'supplier@luxgems.com.au', '2026-04-13 11:29:33', '2026-04-22 18:42:39', 'This ring is meticulously crafted for a perfect balance between bold structure and refined elegance. The design and stone setting ensure a unique brilliance. Inspired by Art Deco aesthetic, each piece embodies timeless sophistication.\r\nAll our products are handcrafted in our ateliers\r\nMaterial: Sterling silver\r\nStone: White cubic zirconia\r\nWidth: 0.5 cm\r\nColor: Silver', 'In a precise atelier, the Art Deco Ring is crafted with sharp geometric lines, each facet carefully shaped and aligned by hand to reflect the elegance of the 1920s. The final setting is polished to enhance its symmetry and brilliance, resulting in a timeless statement piece.\r\n'),
+(2, 'Statement Torsade Pavé Ring', 85.00, 210.00, 'supplier@goldcraft.com.au', '2026-04-13 11:29:33', '2026-04-22 18:43:16', 'This ring embodies elegance and versatility. Its radiant shine echoes pure light, creating a captivating sparkle that draws attention.\r\nAll our products are handcrafted in our ateliers\r\nMaterial: APM Yellow Alloy made of 95% recycled material and 18k yellow gold plated, anti-tarnishing and hypoallergenic\r\nStone: White cubic zirconia\r\nWidth: 0.9 cm\r\nColor: Yellow', 'In a meticulous atelier, the Statement Torsade Pavé Ring is formed by twisting fine metal into a bold spiral, then hand-setting pavé stones along its curves for continuous brilliance. The design is carefully polished to emphasize its sculptural form and luminous detail.\r\n'),
+(3, 'Dainty Rose Gold Ring', 30.00, 120.00, 'supplier@luxgems.com.au', '2026-04-13 11:29:33', '2026-04-22 18:43:55', 'This ring is made with Alloy and 18k rose gold plated. It is microset with white cubic zirconia.\r\nThe APM Alloy is made of 95% recycled material. It is anti-tarnishing and Hypoallergenic.\r\nMaterial: Alloy made of 95% recycled material and 18k rose gold plated, white cubic zirconia, anti-tarnishing and Hypoallergenic\r\nAll our products are handcrafted and microset by hand in our ateliers\r\nColor: Rose gold', 'In a refined workshop, the Dainty Rose Gold Ring is carefully shaped and polished to achieve a soft, warm glow that highlights its delicate form. Each piece is finished by hand to ensure a smooth, minimalist elegance designed for everyday wear.\r\n'),
+(4, 'Chunky Ice Ring', 100.00, 300.00, 'supplier@luxgems.com.au', '2026-04-13 11:29:33', '2026-04-22 18:44:40', 'Sterling silver intertwines with paths of brilliant stones to reflect the geometric patterns created by broken ice.\r\nAll our products are handcrafted in our ateliers\r\nMaterial: Sterling silver\r\nStone: White cubic zirconia\r\nColor: Silver', 'In a bold atelier, the Chunky Ice Ring is cast with substantial volume and carefully sculpted edges, then polished to a high, glass-like shine for maximum impact. Each piece is finished by hand to enhance its crisp, modern brilliance and sculptural presence.\r\n'),
+(5, 'LOVE Morse Code Ring', 30.00, 120.00, 'supplier@pearlsea.com.au', '2026-04-13 11:29:33', '2026-04-22 18:45:31', 'This collection is using Morse code as a secret Love language.\r\nThis ring is embellished with the code LOVE on it, and the word LOVE is also engraved inside.\r\nMaterial: APM Rose Alloy made of 95% recycled material and 18k gold plated (3 microns), white cubic zirconia, anti-tarnishing and anti-allergenic\r\nAll our products are handcrafted and microset by hand in our ateliers\r\nColor: Rose gold', 'In a precise atelier, the LOVE Morse Code Ring is crafted with tiny, carefully placed stones and metal beads that encode the word \"LOVE\" in subtle rhythmic patterning. Each ring is hand-finished to ensure the message is both discreet and beautifully refined in its minimalist design.\r\n'),
+(6, 'Art Deco Adjustable Necklace', 70.00, 230.00, 'supplier@luxgems.com.au', '2026-04-13 11:29:33', '2026-04-22 18:39:09', 'This necklace is meticulously crafted for a perfect balance between bold structure and refined elegance.\r\nMaterial: Sterling silver\r\nStone: White cubic zirconia\r\nColor: Silver\r\nPendant size: Length 4.6 cm ; Width 0.7 cm\r\nTotal chain length: Adjustable to 48 cm maximum with sliding clasp', 'In a precision-led atelier, the Art Deco Adjustable Necklace is crafted with clean geometric lines, each element carefully shaped and assembled by hand. The adjustable mechanism is seamlessly integrated, ensuring both versatility and refined elegance in a timeless design.\r\n'),
+(7, 'Art Deco Pavé Choker', 300.00, 780.00, 'supplier@goldcraft.com.au', '2026-04-13 11:29:33', '2026-04-22 18:39:48', 'This choker is meticulously crafted for a perfect balance between bold structure and refined elegance.\r\nMaterial: Sterling silver\r\nStone: Over 210 white cubic zirconia\r\nColor: Silver\r\nTotal chain length: 40 cm ; Width 0.8 cm', 'In a meticulous atelier, the Art Deco Pavé Choker is crafted with precise geometric forms, each tiny stone hand-set to create a seamless ribbon of light. The piece is carefully assembled to sit elegantly at the neckline, capturing the bold symmetry of the Art Deco era.\r\n'),
+(8, 'Lilac Torsade Adjustable Necklace', 60.00, 210.00, 'supplier@gemstone.com.au', '2026-04-13 11:29:33', '2026-04-22 18:40:35', 'This necklace embodies elegance and versatility.\r\nMaterial: APM Yellow Alloy made of 95% recycled material and 18k yellow gold plated\r\nStone: Purple cubic zirconia\r\nColor: Yellow\r\nTotal chain length: Adjustable to 65 cm maximum with sliding clasp', 'In a refined atelier, the Lilac Torsade Adjustable Necklace is crafted by delicately twisting metal into a graceful spiral, then accented with soft lilac tones that catch the light. The adjustable design is seamlessly integrated, blending versatility with elegant, handcrafted detail.\r\n'),
+(9, 'Lumière Pavé Choker', 180.00, 620.00, 'supplier@pearlsea.com.au', '2026-04-13 11:29:33', '2026-04-22 18:41:14', 'This minimalist and versatile choker perfectly captures the essence of spring.\r\nMaterial: Sterling silver\r\nStone: White cubic zirconia\r\nColor: Silver', 'In a precision-focused atelier, the Lumière Pavé Choker is meticulously assembled as artisans hand-set each stone to create a continuous band of brilliance. The finished piece is carefully polished to enhance its radiant glow, embodying refined craftsmanship and modern elegance.\r\n'),
+(10, 'Maille Marine Chain Necklace', 140.00, 410.00, 'supplier@gemstone.com.au', '2026-04-13 11:29:33', '2026-04-22 18:42:04', 'Material: Rose Alloy made of 95% recycled material and 18k gold plated, white cubic zirconia\r\nColor: Rose gold\r\nTotal chain length: 45 cm', 'In a skilled workshop, the Maille Marine Chain Necklace is crafted by interlinking polished metal loops in a classic marine-inspired pattern, each connection carefully secured by hand. The piece is then refined to a smooth finish, highlighting its strength, rhythm, and understated elegance.\r\n'),
+(11, 'Statement Art Deco Drop Earrings', 150.00, 430.00, 'supplier@luxgems.com.au', '2026-04-13 11:29:33', '2026-04-22 18:35:57', 'These earrings are meticulously crafted for a perfect balance between bold structure and refined elegance.\r\nMaterial: Sterling silver\r\nStone: White cubic zirconia\r\nColor: Silver\r\nLength: 7.1 cm ; Width : 2.2 cm', 'In a precision-driven atelier, the Statement Art Deco Drop Earrings take shape as artisans cut and assemble bold geometric elements, then hand-set each stone in crisp, symmetrical lines. The result is a striking pair that channels 1920s glamour through meticulous craftsmanship and modern refinement.'),
+(12, 'Torsade Pavé Hoop Earrings', 55.00, 210.00, 'supplier@goldcraft.com.au', '2026-04-13 11:29:33', '2026-04-22 18:36:57', 'These earrings embody elegance and versatility.\r\nMaterial: APM Yellow Alloy made of 95% recycled material and 18k yellow gold plated\r\nStone: White cubic zirconia\r\nColor: Yellow\r\nLength: 2.1 cm ; Width : 0.7 cm', 'In a meticulous workshop, the Torsade Pavé Hoop Earrings are formed by twisting fine metal strands into an elegant spiral, then hand-setting each tiny stone along the curves for a seamless sparkle. The process blends structural precision with delicate craftsmanship, creating hoops that shimmer with every turn.\r\n'),
+(13, 'Dainty Rose Gold Hoop Earrings', 95.00, 275.00, 'supplier@gemstone.com.au', '2026-04-13 11:29:33', '2026-04-22 18:37:40', 'Material: Alloy made of 95% recycled material and 18k gold plated, white cubic zirconia\r\nColor: Rose gold\r\nSize: Small (Length: 2.8 cm ; Width : 0.5 cm)', 'In a refined workshop, the Dainty Rose Gold Hoop Earrings are carefully shaped from fine metal and polished to a soft, warm glow. Each pair is finished with precise detailing to achieve a lightweight, elegant design made for everyday wear.\r\n'),
+(14, 'Asymmetric Cross Earrings', 65.00, 240.00, 'supplier@pearlsea.com.au', '2026-04-13 11:29:33', '2026-04-22 18:38:27', 'Material: Platinum and rhodium plated on patented white alloy, made from recycled materials\r\nStone: Cubic zirconia\r\nDimensions: 39 mm length, 20 mm width', 'In a contemporary atelier, the Asymmetric Cross Earrings are thoughtfully crafted with mismatched silhouettes, each piece shaped and balanced by hand for a modern edge. The design comes together through careful finishing, highlighting contrast and individuality in every detail.\r\n'),
+(15, 'Art Deco Pavé Bracelet', 90.00, 350.00, 'supplier@luxgems.com.au', '2026-04-13 11:29:33', '2026-04-22 18:33:29', 'This bracelet is meticulously crafted for a perfect balance between bold structure and refined elegance.\r\nMaterial: Sterling silver\r\nStone: White cubic zirconia\r\nColor: Silver', 'Under the glow of a 1920s ballroom chandelier, the Art Deco pavé bracelet caught every flicker of light, each stone set like a secret carefully placed in time. It wasn\'t just jewelry—it was a quiet declaration of elegance that outlived the night and everyone in it.'),
+(16, 'Lilac Lumière Pavé Bracelet', 90.00, 300.00, 'supplier@goldcraft.com.au', '2026-04-13 11:29:33', '2026-04-22 18:34:56', 'Material: Platinum and rhodium plated on patented white alloy\r\nStone: Lilac cubic zirconia\r\nDimensions: 4 mm width', 'In a quiet atelier, the Lilac Lumière Pavé Bracelet is brought to life as artisans delicately set each lilac-hued stone to capture a soft, radiant glow. Every detail is carefully crafted to reflect light with a gentle shimmer, evoking elegance in every movement.\r\n'),
                                                                                                                                            (30, 'Asian Vase', 20.00, 50.00, 'supplier@gemstone.com.au', '2026-04-21 12:27:05', '2026-04-21 12:50:23', 'Colour: White and Blue\r\nMaterial: Stoneware, Coloured Glaze\r\nDimensions: 14cm (H), 15cm (W)', 'A centuries-old Chinese stoneware vase emerges from the kiln with a luminous glaze, each brushstroke capturing the quiet discipline of its maker. Once destined for an imperial hall, it now carries the whispered history of dynasties through its delicate form.'),
                                                                                                                                            (31, 'Rustic Vase', 10.00, 20.00, 'supplier@gemstone.com.au', '2026-04-21 12:36:45', '2026-04-21 12:36:45', 'Colour: Grey and Brown\r\nMaterial: Stoneware\r\nDimensions: 16cm (H), 10cm (W)', 'A rustic stone vase takes shape under the steady rhythm of a mason\'s chisel, each strike revealing the raw, weathered character hidden within the rock. Its rough-hewn surface carries the quiet story of earth, craft, and time converging into a single, enduring form.'),
 (32, 'Ancient Vase', 20.00, 60.00, 'supplier@gemstone.com.au', '2026-04-21 12:40:21', '2026-04-21 12:48:54', 'Colour: Yellow and Black\r\nMaterial: Ceramic\r\nDimensions: 25cm (H), 15cm (W)', 'An ancient Greek ceramic vase emerges from the potter\'s wheel with mythic scenes circling its surface, each figure painted in bold strokes meant to outlast generations. Fired in the heat of a smoky kiln, it becomes both a vessel and a storyteller, carrying the spirit of a civilization that shaped the Western world.'),
@@ -315,7 +299,10 @@ INSERT INTO `products` (`id`, `name`, `purchase_price`, `sale_price`, `supplier_
 (41, 'Round Cushion', 8.00, 20.00, 'supplier@gemstone.com.au', '2026-04-21 13:39:18', '2026-04-21 13:40:51', 'Colour: Red\r\nMaterial: Velvet and Cotton\r\nDimensions: 20cm (H), 20cm (W), 6cm (D)', 'A round red cushion comes to life as soft fabric is stretched over plush filling, its vibrant color giving the simple shape a warm, inviting presence. Once finished, it feels like a small circle of comfort—bold, bright, and ready to soften any space it touches.'),
 (42, 'Classic Cushion', 6.00, 12.00, 'supplier@gemstone.com.au', '2026-04-21 13:43:41', '2026-04-21 13:43:41', 'Colour: White\r\nMaterial: Polyester\r\nDimensions: 42cm (L) x 42cm (W)', 'A classic square white cushion comes together as crisp fabric is stitched around soft filling, its clean lines giving it a timeless, effortless elegance. Once finished, it becomes a quiet anchor in any room—simple, bright, and ready to soften the space with understated comfort.'),
 (43, 'Butterfly Cushion', 11.00, 20.00, 'supplier@gemstone.com.au', '2026-04-21 14:01:23', '2026-04-21 14:01:23', 'Colour: Pink\r\nMaterial: Polyester\r\nDimensions: 30cm (L) x 35cm (W)', 'A pink butterfly cushion comes to life as soft blush fabric is stitched around plush filling, then adorned with a delicate winged motif that seems ready to flutter off its surface. Once finished, it feels like a small burst of sweetness—gentle, whimsical, and made to brighten any cozy corner.'),
-(44, 'Crocheted Blanket', 15.00, 32.00, 'supplier@gemstone.com.au', '2026-04-21 14:18:41', '2026-04-21 14:23:59', 'Colour: Rainbow\r\nMaterial: Wool\r\nDimensions: 240cm (L) x 220cm (W)', 'A rainbow crocheted blanket begins as strands of yarn pulled through looping stitches, each color joining the next in a soft, steady rhythm that feels almost musical. When the final row is tied off, it becomes a warm spectrum of comfort—handmade joy woven into every hue.');
+(44, 'Crocheted Blanket', 15.00, 32.00, 'supplier@gemstone.com.au', '2026-04-21 14:18:41', '2026-04-21 14:23:59', 'Colour: Rainbow\r\nMaterial: Wool\r\nDimensions: 240cm (L) x 220cm (W)', 'A rainbow crocheted blanket begins as strands of yarn pulled through looping stitches, each color joining the next in a soft, steady rhythm that feels almost musical. When the final row is tied off, it becomes a warm spectrum of comfort—handmade joy woven into every hue.'),
+(45, 'Crimson Candle', 4.00, 10.00, 'supplier@gemstone.com.au', '2026-04-22 18:49:04', '2026-04-22 19:29:01', 'Colour: Crimson Red\r\nMaterial: Paraffin\r\nDimensions: 29cm (H), 9cm (D)', 'In a small artisanal studio, the crimson candle is hand-poured in layers, blending richly pigmented wax to achieve its deep, glowing red hue. Each candle is carefully cured and finished to ensure a clean burn and a bold, atmospheric presence.\r\n'),
+(46, 'Sunshine Blanket', 12.00, 33.00, 'supplier@gemstone.com.au', '2026-04-22 18:51:08', '2026-04-22 18:51:08', 'Colour: Yellow\r\nMaterial: Fleece synthetic wool\r\nDimensions: 200cm (H), 150cm (W)', 'In a cozy textile workshop, the Sunshine Blanket is woven with soft, lightweight fibers designed to capture warmth and comfort in every thread. Each piece is carefully finished in a bright, uplifting tone that evokes the feeling of gentle morning light.\r\n'),
+(47, 'Mosaic Cushion', 9.00, 17.00, 'supplier@gemstone.com.au', '2026-04-22 18:55:02', '2026-04-22 18:56:35', 'Colur: Orange\r\nMaterial: Polyester fabric\r\nDimensions: 60cm (H), 48cm (W)', 'In a carefully curated textile studio, the cushion is assembled by layering rich orange fabrics with bold mosaic-inspired prints, each panel precisely cut and aligned for visual rhythm. It is then hand-finished to ensure a balanced contrast between vibrant pattern and smooth, solid tones for a modern, expressive accent piece.\r\n');
 
 -- --------------------------------------------------------
 
@@ -330,7 +317,7 @@ CREATE TABLE IF NOT EXISTS `product_images` (
   `filename` varchar(4096) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `product_id` (`product_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=108 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=113 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `product_images`
@@ -368,7 +355,10 @@ INSERT INTO `product_images` (`id`, `product_id`, `filename`) VALUES
 (102, 42, 'Screenshot_2026-04-21_134141.png'),
 (103, 43, 'Screenshot_2026-04-21_134550.png'),
 (106, 44, 'Screenshot_2026-04-21_142317.png'),
-(107, 6, 'necklaces4.png');
+(107, 6, 'necklaces4.png'),
+(108, 46, 'Screenshot_2026-04-21_122051.png'),
+(109, 47, 'cushion-1164088_1280.png'),
+(111, 45, '000e9227-bd1b-43c0-b41e-9e6dae1d0162.png');
 
 -- --------------------------------------------------------
 
@@ -384,7 +374,7 @@ CREATE TABLE IF NOT EXISTS `product_variants` (
   `stock` int(11) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   KEY `product_id` (`product_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=72 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=77 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `product_variants`
@@ -441,7 +431,10 @@ INSERT INTO `product_variants` (`id`, `product_id`, `size`, `stock`) VALUES
 (68, 41, 'One Size', 5),
 (69, 42, 'One Size', 25),
 (70, 43, 'One Size', 6),
-(71, 44, 'One Size', 2);
+(71, 44, 'One Size', 2),
+(72, 45, 'One Size', 8),
+(73, 46, 'One Size', 0),
+(74, 47, 'One Size', 22);
 
 -- --------------------------------------------------------
 

@@ -105,8 +105,6 @@ return function (RouteBuilder $routes): void {
             ->setPass(['id'])
             ->setPatterns(['id' => '\d+']);
 
-        //Chat bot Route
-        $builder->connect('/chat/message', ['controller' => 'Chat', 'action' => 'message']);
 
         $builder->fallbacks();
     });
