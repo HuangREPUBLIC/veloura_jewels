@@ -87,9 +87,14 @@ return function (RouteBuilder $routes): void {
         //Dashboard Route
         $builder->connect('/dashboard', ['controller' => 'Users', 'action' => 'dashboard']);
 
+        // Product featured toggle
+        $builder->connect('/products/toggle-featured/{id}', ['controller' => 'Products', 'action' => 'toggleFeatured'])
+            ->setPass(['id'])
+            ->setPatterns(['id' => '\d+']);
+
         // Schedule management
-        $builder->connect('/users/schedule', ['controller' => 'Users', 'action' => 'schedule']);
-        $builder->connect('/users/schedule/{id}', ['controller' => 'Users', 'action' => 'schedule'])
+        $builder->connect('/schedule/add', ['controller' => 'Schedule', 'action' => 'add']);
+        $builder->connect('/schedule/add/{id}', ['controller' => 'Schedule', 'action' => 'add'])
             ->setPass(['id'])
             ->setPatterns(['id' => '\d+']);
 

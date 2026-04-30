@@ -17,7 +17,7 @@ $this->Html->css('login', ['block' => true]);
 <div class="login-page">
     <div class="users form content login-card--wide">
 
-        <?= $this->Html->link(__('← Back'), ['action' => 'index']) ?>
+        <?= $this->Html->link(__('← Back'), ['controller' => 'Users', 'action' => 'index']) ?>
 
         <legend>Schedule</legend>
 
@@ -49,7 +49,7 @@ $this->Html->css('login', ['block' => true]);
 
         <?php if ($staff): ?>
         <!-- Weekly time picker form -->
-        <?= $this->Form->create(null, ['url' => ['action' => 'schedule', $staff->id], 'method' => 'post']) ?>
+        <?= $this->Form->create(null, ['url' => ['action' => 'add', $staff->id], 'method' => 'post']) ?>
         <input type="hidden" name="week_start" value="<?= h($weekStartStr) ?>">
 
         <p class="form-hint" style="margin-top:1.4rem;">
@@ -111,7 +111,7 @@ $this->Html->css('login', ['block' => true]);
 </div>
 
 <script>
-var scheduleUrl  = '<?= $this->Url->build(['controller' => 'Users', 'action' => 'schedule']) ?>';
+var scheduleUrl  = '<?= $this->Url->build(['controller' => 'Schedule', 'action' => 'add']) ?>';
 var currentStaff = <?= $staff ? $staff->id : 'null' ?>;
 var currentWeek  = '<?= h($weekStartStr) ?>';
 
