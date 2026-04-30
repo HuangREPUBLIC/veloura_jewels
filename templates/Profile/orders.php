@@ -34,14 +34,13 @@ $statuses = ['pending', 'paid', 'shipped', 'completed', 'cancelled'];
             <?php if (empty($orders) || (is_object($orders) && $orders->isEmpty())): ?>
                 <div class="profile-empty-orders">
                     <p>No orders found<?= $statusFilter ? ' with status "' . ucfirst(h($statusFilter)) . '"' : '' ?>.</p>
-                    <?= $this->Html->link('Browse Jewelry', ['controller' => 'Jewelry', 'action' => 'index'], ['class' => 'profile-shop-btn']) ?>
                 </div>
             <?php else: ?>
                 <div class="profile-orders-table-wrap">
                     <table class="profile-orders-table">
                         <thead>
                         <tr>
-                            <th>Order #</th>
+                            <th>Order</th>
                             <th>Date</th>
                             <th>Items</th>
                             <th>Total</th>
