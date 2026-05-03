@@ -827,30 +827,6 @@ td.actions button.btn-delete:hover {
 .role-pill-staff    { background: #a8c8b0; color: #1e4228; }
 .role-pill-customer { background: #aec8e8; color: #0f2d52; }
 
-/* Category pills */
-
-.cat-pill {
-    display: inline-block;
-    padding: 8px 16px;
-    border-radius: 999px;
-    font-size: 0.85rem;
-    font-weight: 600;
-    margin: 1px 2px;
-    background: #E7E0CE;
-    color: #5E4B2C;
-}
-
-.cat-pill-rings     { background: #f5e6d0; color: #7a3e10; }
-.cat-pill-necklaces { background: #fce8c8; color: #7a4a08; }
-.cat-pill-earrings  { background: #fdecd8; color: #6b3a12; }
-.cat-pill-bracelets { background: #f0dfc8; color: #5e3510; }
-.cat-pill-brooches  { background: #e8d8b8; color: #503010; }
-
-.cat-pill-candles   { background: #fef3c7; color: #78350f; }
-.cat-pill-vases     { background: #d1fae5; color: #065f46; }
-.cat-pill-cushions  { background: #dbeafe; color: #1e3a8a; }
-.cat-pill-wall-art  { background: #ede9fe; color: #4c1d95; }
-.cat-pill-throws    { background: #fce7f3; color: #831843; }
 
 /* Orders — stat cards */
 
