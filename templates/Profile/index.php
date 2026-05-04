@@ -78,14 +78,13 @@ $this->Html->css('profile', ['block' => true]);
             <?php if ($recentOrders->isEmpty()): ?>
                 <div class="profile-empty-orders">
                     <p>You haven't placed any orders yet.</p>
-                    <?= $this->Html->link('Browse Jewelry', ['controller' => 'Jewelry', 'action' => 'index'], ['class' => 'profile-shop-btn']) ?>
                 </div>
             <?php else: ?>
                 <div class="profile-orders-table-wrap">
                     <table class="profile-orders-table">
                         <thead>
                         <tr>
-                            <th>Order #</th>
+                            <th>Order</th>
                             <th>Date</th>
                             <th>Items</th>
                             <th>Total</th>
