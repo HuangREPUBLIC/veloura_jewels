@@ -32,11 +32,29 @@ $oneSizeVariant = $isOneSizeOnly ? $inStockVariants[0] : null;
     <div class="product-detail">
         <div class="product-detail-image">
             <?php if (!empty($product->product_images)): ?>
-                <img
-                    src="<?= $this->Url->image('products/' . h($product->product_images[0]->filename)) ?>"
-                    alt="<?= h($product->name) ?>"
-                    class="detail-image"
-                >
+                <div class="detail-gallery">
+                    <?php if (count($product->product_images) > 1): ?>
+                        <div class="detail-thumbs">
+                            <?php foreach ($product->product_images as $i => $img): ?>
+                                <button
+                                    type="button"
+                                    class="detail-thumb <?= $i === 0 ? 'active' : '' ?>"
+                                    data-src="<?= $this->Url->image('products/' . h($img->filename)) ?>"
+                                >
+                                    <img src="<?= $this->Url->image('products/' . h($img->filename)) ?>" alt="">
+                                </button>
+                            <?php endforeach; ?>
+                        </div>
+                    <?php endif; ?>
+                    <div class="detail-main-wrap">
+                        <img
+                            id="detail-main-img"
+                            src="<?= $this->Url->image('products/' . h($product->product_images[0]->filename)) ?>"
+                            alt="<?= h($product->name) ?>"
+                            class="detail-image"
+                        >
+                    </div>
+                </div>
             <?php else: ?>
                 <div class="detail-placeholder"><span>No Image</span></div>
             <?php endif; ?>
@@ -156,6 +174,19 @@ $oneSizeVariant = $isOneSizeOnly ? $inStockVariants[0] : null;
                 }
             });
         }
+
+        var mainImg = document.getElementById('detail-main-img');
+        document.querySelectorAll('.detail-thumb').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                document.querySelectorAll('.detail-thumb').forEach(function (b) { b.classList.remove('active'); });
+                btn.classList.add('active');
+                mainImg.classList.add('fading');
+                setTimeout(function () {
+                    mainImg.src = btn.getAttribute('data-src');
+                    mainImg.classList.remove('fading');
+                }, 220);
+            });
+        });
 
         document.querySelectorAll('.qty-box').forEach(function (wrapper) {
             var input = wrapper.querySelector('input[type="number"]');
