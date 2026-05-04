@@ -118,30 +118,30 @@ $currentParams = array_filter([
         <?= $this->Form->end() ?>
     </div>
 
-<script>
-(function () {
-    var dropdowns = document.querySelectorAll('.jewelry-page .filter-dropdown');
+    <script>
+        (function () {
+            var dropdowns = document.querySelectorAll('.jewelry-page .filter-dropdown');
 
-    dropdowns.forEach(function (dd) {
-        var btn = dd.querySelector('.filter-dropdown-btn');
-        if (!btn) return;
-        btn.addEventListener('click', function (e) {
-            e.stopPropagation();
-            var isOpen = dd.classList.contains('open');
-            dropdowns.forEach(function (other) { other.classList.remove('open'); });
-            if (!isOpen) dd.classList.add('open');
-        });
-    });
+            dropdowns.forEach(function (dd) {
+                var btn = dd.querySelector('.filter-dropdown-btn');
+                if (!btn) return;
+                btn.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    var isOpen = dd.classList.contains('open');
+                    dropdowns.forEach(function (other) { other.classList.remove('open'); });
+                    if (!isOpen) dd.classList.add('open');
+                });
+            });
 
-    document.addEventListener('click', function () {
-        dropdowns.forEach(function (dd) { dd.classList.remove('open'); });
-    });
+            document.addEventListener('click', function () {
+                dropdowns.forEach(function (dd) { dd.classList.remove('open'); });
+            });
 
-    document.querySelectorAll('.jewelry-page .filter-dropdown-menu').forEach(function (menu) {
-        menu.addEventListener('click', function (e) { e.stopPropagation(); });
-    });
-})();
-</script>
+            document.querySelectorAll('.jewelry-page .filter-dropdown-menu').forEach(function (menu) {
+                menu.addEventListener('click', function (e) { e.stopPropagation(); });
+            });
+        })();
+    </script>
 
     <?php if ($products->isEmpty()): ?>
         <div class="empty-state">
@@ -152,13 +152,20 @@ $currentParams = array_filter([
             <?php foreach ($products as $product): ?>
                 <a href="<?= $this->Url->build('/home-decor/view/' . $product->id) ?>" class="product-card-link">
                     <div class="product-card">
-                        <div class="product-image-wrapper">
+                        <div class="product-image-wrapper<?= !empty($product->product_images[1]) ? ' has-hover-image' : '' ?>">
                             <?php if (!empty($product->product_images)): ?>
                                 <img
                                     src="<?= $this->Url->image('products/' . h($product->product_images[0]->filename)) ?>"
                                     alt="<?= h($product->name) ?>"
-                                    class="product-image"
+                                    class="product-image product-image--primary"
                                 >
+                                <?php if (!empty($product->product_images[1])): ?>
+                                    <img
+                                        src="<?= $this->Url->image('products/' . h($product->product_images[1]->filename)) ?>"
+                                        alt="<?= h($product->name) ?>"
+                                        class="product-image product-image--hover"
+                                    >
+                                <?php endif; ?>
                             <?php else: ?>
                                 <div class="product-placeholder">
                                     <span>No Image</span>
