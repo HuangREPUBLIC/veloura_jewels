@@ -153,12 +153,13 @@ $currentParams = array_filter([
                 <a href="<?= $this->Url->build('/jewelry/view/' . $product->id) ?>" class="product-card-link">
                     <div class="product-card">
                         <div class="product-image-wrapper<?= !empty($product->product_images[1]) ? ' has-hover-image' : '' ?>">
-                            <?php if (!empty($product->featured) || $sortBy === 'bestsales'): ?>
+                            <?php if (!empty($product->featured) || !empty($product->is_bestsales)): ?>
                                 <div class="product-card-badges">
                                     <?php if (!empty($product->featured)): ?>
                                         <span class="product-badge product-badge--featured">Featured</span>
                                     <?php endif; ?>
-                                    <?php if ($sortBy === 'bestsales'): ?>
+
+                                    <?php if (!empty($product->is_bestsales)): ?>
                                         <span class="product-badge product-badge--bestsales">Best Sales</span>
                                     <?php endif; ?>
                                 </div>

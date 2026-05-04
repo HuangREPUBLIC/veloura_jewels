@@ -6,35 +6,39 @@
 $this->assign('title', 'View User');
 ?>
 <?php $this->Html->css('admincontact', ['block' => true]); ?>
-<?php $this->Html->css('login', ['block' => true]); ?>
 <?php $role = $this->request->getAttribute('identity')->get('role'); ?>
 
 
 <div class="admin-wrapper">
     <div class="users view content">
-        <h3><?= h($user->email) ?></h3>
+        <?= $this->Html->link(__('← Back'), ['action' => 'index'], ['class' => 'back-link']) ?>
 
-        <div class="action-buttons">
-            <?= $this->Html->link(__('← Back'), ['action' => 'index']) ?>
+        <div class="page-header-row">
+            <div>
+                <h3 class="page-title"><?= h($user->email) ?></h3>
+                <p class="page-subtitle">Review account details and access level</p>
+            </div>
 
             <?php
             $identity = $this->request->getAttribute('identity');
             ?>
 
-            <?php if ($role === 'admin'): ?>
-                <?= $this->Html->link(__('Edit'), ['action' => 'edit', $user->id]) ?>
-            <?php endif; ?>
+            <div class="action-buttons">
+                <?php if ($role === 'admin'): ?>
+                    <?= $this->Html->link(__('Edit'), ['action' => 'edit', $user->id], ['class' => 'btn-edit']) ?>
+                <?php endif; ?>
 
-            <?php if ($role === 'admin' && $user->id !== $identity->get('id')): ?>
-                <?= $this->Form->postLink(
-                    __('Delete'),
-                    ['action' => 'delete', $user->id],
-                    [
-                        'confirm' => __('Are you sure you want to delete # {0}?', $user->id),
-                        'class' => 'btn-delete',
-                    ]
-                ) ?>
-            <?php endif; ?>
+                <?php if ($role === 'admin' && $user->id !== $identity->get('id')): ?>
+                    <?= $this->Form->postLink(
+                        __('Delete'),
+                        ['action' => 'delete', $user->id],
+                        [
+                            'confirm' => __('Are you sure you want to delete # {0}?', $user->id),
+                            'class' => 'btn-delete',
+                        ]
+                    ) ?>
+                <?php endif; ?>
+            </div>
         </div>
 
         <table class="view-table">
@@ -60,7 +64,7 @@ $this->assign('title', 'View User');
             </tr>
             <tr>
                 <th><?= __('Role') ?></th>
-                <td><?= h($user->role) ?></td>
+                <td><span class="role-pill role-pill-<?= h($user->role) ?>"><?= h($user->role) ?></span></td>
             </tr>
             <tr>
                 <th><?= __('Created') ?></th>

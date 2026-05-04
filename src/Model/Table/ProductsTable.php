@@ -64,26 +64,33 @@ class ProductsTable extends Table
         return $query
             ->select(['total_sold' => 'SUM(order_items.quantity)'])
             ->enableAutoFields(true)
-            ->join(['order_items' => [
-                'table' => 'order_items',
-                'type' => 'INNER',
-                'conditions' => 'order_items.product_id = Products.id',
-            ]])
-            ->join(['categories_products' => [
-                'table' => 'categories_products',
-                'type' => 'INNER',
-                'conditions' => 'categories_products.product_id = Products.id',
-            ]])
-            ->join(['categories' => [
-                'table' => 'categories',
-                'type' => 'INNER',
-                'conditions' => ['categories.id = categories_products.category_id', 'categories.type' => $productType],
-            ]])
+            ->join([
+                'order_items' => [
+                    'table' => 'order_items',
+                    'type' => 'INNER',
+                    'conditions' => 'order_items.product_id = Products.id',
+                ],
+                'categories_products' => [
+                    'table' => 'categories_products',
+                    'type' => 'INNER',
+                    'conditions' => 'categories_products.product_id = Products.id',
+                ],
+                'categories' => [
+                    'table' => 'categories',
+                    'type' => 'INNER',
+                    'conditions' => [
+                        'categories.id = categories_products.category_id',
+                        'categories.type' => $productType
+                    ],
+                ],
+            ])
             ->groupBy('Products.id')
-            ->orderBy(['total_sold' => 'DESC', 'Products.id' => 'DESC'])
+            ->orderBy([
+                'total_sold' => 'DESC',
+                'Products.id' => 'DESC'
+            ])
             ->limit($limit);
     }
-
     /**
      * Default validation rules.
      *

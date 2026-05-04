@@ -6,26 +6,31 @@
 $this->assign('title', 'View Submission');
 ?>
 <?php $this->Html->css('admincontact', ['block' => true]); ?>
-<?php $this->Html->css('login', ['block' => true]); ?>
 
 <div class="admin-wrapper">
     <div class="contactSubmissions view content">
-        <h3><?= h($contactSubmission->first_name . ' ' . $contactSubmission->last_name) ?></h3>
+        <?= $this->Html->link(__('← Back'), ['action' => 'index'], ['class' => 'back-link']) ?>
 
-        <div class="action-buttons">
-            <?= $this->Html->link(__('← Back'), ['action' => 'index']) ?>
-            <?= $this->Html->link(__('Reply'), ['action' => 'reply', $contactSubmission->id]) ?>
-            <?= $this->Form->postLink(
-                __('Delete'),
-                ['action' => 'delete', $contactSubmission->id],
-                [
-                    'confirm' => __('Are you sure you want to delete # {0}?', $contactSubmission->id),
-                    'class'   => 'btn-delete',
-                ]
-            ) ?>
+        <div class="page-header-row">
+            <div>
+                <h3 class="page-title"><?= h($contactSubmission->first_name . ' ' . $contactSubmission->last_name) ?></h3>
+                <p class="page-subtitle">Review customer message and reply history</p>
+            </div>
+
+            <div class="action-buttons">
+                <?= $this->Html->link(__('Reply'), ['action' => 'reply', $contactSubmission->id], ['class' => 'btn-edit']) ?>
+                <?= $this->Form->postLink(
+                    __('Delete'),
+                    ['action' => 'delete', $contactSubmission->id],
+                    [
+                        'confirm' => __('Are you sure you want to delete # {0}?', $contactSubmission->id),
+                        'class'   => 'btn-delete',
+                    ]
+                ) ?>
+            </div>
         </div>
 
-        <table class="view-table" style="margin-bottom: 1.5rem;">
+        <table class="view-table admin-view-table-spaced">
             <tr>
                 <th><?= __('Email') ?></th>
                 <td><?= h($contactSubmission->email) ?></td>
@@ -55,7 +60,7 @@ $this->assign('title', 'View Submission');
         </div>
 
         <?php if (!empty($contactSubmission->contact_replies)): ?>
-            <h4 style="margin: 1.5rem 0 0.8rem;"><?= __('Replies') ?></h4>
+            <h4 class="admin-view-section-title"><?= __('Replies') ?></h4>
             <table class="view-table">
                 <thead>
                 <tr>

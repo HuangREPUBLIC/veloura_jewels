@@ -39,11 +39,28 @@ class PagesController extends AppController
         if ($page === 'home') {
             $productsTable = $this->fetchTable('Products');
 
+            $bestSalesJewelry = $productsTable
+                ->find('bestSales', productType: 'jewelry', limit: 4)
+                ->all();
+
+            $bestSalesHomeDecor = $productsTable
+                ->find('bestSales', productType: 'home_decor', limit: 4)
+                ->all();
+
+            $bestSalesIds = array_unique(array_merge(
+                collection($bestSalesJewelry)->extract('id')->toList(),
+                collection($bestSalesHomeDecor)->extract('id')->toList()
+            ));
+
             $featuredProducts = $productsTable->find()
                 ->contain(['ProductImages', 'Categories'])
                 ->orderBy(['Products.id' => 'DESC'])
                 ->limit(4)
                 ->all();
+
+            foreach ($featuredProducts as $product) {
+                $product->is_bestsales = in_array($product->id, $bestSalesIds);
+            }
 
             $this->set(compact('featuredProducts'));
         }

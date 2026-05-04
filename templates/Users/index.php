@@ -71,20 +71,6 @@ $identity = $this->request->getAttribute('identity');
 </div>
 
 <script>
-function toggleScheduleDropdown() {
-    const menu = document.getElementById('scheduleDropdown');
-    menu.classList.toggle('schedule-dropdown-menu--open');
-}
-
-document.addEventListener('click', function(e) {
-    if (!e.target.closest('.schedule-dropdown-wrap')) {
-        const menu = document.getElementById('scheduleDropdown');
-        if (menu) menu.classList.remove('schedule-dropdown-menu--open');
-    }
-});
-</script>
-
-<script>
     $(document).ready(function() {
         $('#usersTable').DataTable({
             order: [[3, 'desc']],

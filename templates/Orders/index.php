@@ -39,10 +39,17 @@ foreach ($orders as $order) {
 
 <div class="admin-wrapper">
     <div class="orders index content">
-        <?= $this->Html->link(__('← Back'), ['controller' => 'Users', 'action' => 'dashboard']) ?>
+        <?= $this->Html->link(__('← Back'), ['controller' => 'Users', 'action' => 'dashboard'], ['class' => 'back-link']) ?>
 
         <div class="page-header-row">
             <h3 class="page-title"><?= __('Orders') ?></h3>
+        </div>
+
+        <div class="orders-summary-header">
+            <div>
+                <h4>Revenue Summary</h4>
+                <p>Track sales and estimated profit across different time periods.</p>
+            </div>
         </div>
 
         <div class="orders-stat-cards">
@@ -53,36 +60,67 @@ foreach ($orders as $order) {
                                'All Time'   => $stats['all'],
                            ] as $label => $s): ?>
                 <div class="orders-stat-card">
-                    <div class="stat-label"><?= $label ?></div>
-                    <div class="stat-profit">$<?= number_format($s['profit'], 2) ?></div>
-                    <div class="stat-sales">Sales $<?= number_format($s['sales'], 2) ?> AUD</div>
+                    <div class="stat-top">
+                        <span class="stat-label"><?= $label ?></span>
+                        <span class="stat-currency">AUD</span>
+                    </div>
+
+                    <div class="stat-main">
+                        $<?= number_format($s['profit'], 2) ?>
+                    </div>
+
+                    <div class="stat-sub">
+                        Sales $<?= number_format($s['sales'], 2) ?>
+                    </div>
                 </div>
             <?php endforeach; ?>
         </div>
 
         <div class="orders-filter-section">
-            <div class="orders-filter-row">
-                <span class="orders-filter-label">Date</span>
-                <button class="filter-btn active" data-type="date" data-filter="all">All</button>
-                <button class="filter-btn" data-type="date" data-filter="today">Today</button>
-                <button class="filter-btn" data-type="date" data-filter="week">This Week</button>
-                <button class="filter-btn" data-type="date" data-filter="month">This Month</button>
-                <span class="date-range-sep"></span>
-                <input type="date" id="dateFrom" class="date-field" max="<?= date('Y-m-d') ?>">
-                <span class="date-range-to">to</span>
-                <input type="date" id="dateTo" class="date-field" max="<?= date('Y-m-d') ?>">
+            <div class="orders-filter-header">
+                <div>
+                    <h4>Order Filters</h4>
+                    <p>Filter orders by date, status and performance.</p>
+                </div>
             </div>
-            <div class="orders-filter-row">
-                <span class="orders-filter-label">Status</span>
-                <button class="filter-btn active" data-type="status" data-filter="all">All</button>
-                <button class="filter-btn" data-type="status" data-filter="paid">Paid</button>
-                <button class="filter-btn" data-type="status" data-filter="pending">Pending</button>
-                <button class="filter-btn" data-type="status" data-filter="cancelled">Cancelled</button>
-            </div>
-            <div class="orders-filter-row">
-                <span class="orders-filter-label">Sort by</span>
-                <button class="filter-btn active" data-type="sort" data-col="4" data-dir="desc">Newest</button>
-                <button class="filter-btn" data-type="sort" data-col="3" data-dir="desc">Most Profit</button>
+
+            <div class="orders-filter-grid">
+                <div class="orders-filter-group">
+                    <span class="orders-filter-label">Date</span>
+                    <div class="orders-filter-controls">
+                        <button class="filter-btn active" data-type="date" data-filter="all">All</button>
+                        <button class="filter-btn" data-type="date" data-filter="today">Today</button>
+                        <button class="filter-btn" data-type="date" data-filter="week">This Week</button>
+                        <button class="filter-btn" data-type="date" data-filter="month">This Month</button>
+                    </div>
+                </div>
+
+                <div class="orders-filter-group">
+                    <span class="orders-filter-label">Custom Range</span>
+                    <div class="orders-date-range">
+                        <input type="date" id="dateFrom" class="date-field" max="<?= date('Y-m-d') ?>">
+                        <span class="date-range-to">to</span>
+                        <input type="date" id="dateTo" class="date-field" max="<?= date('Y-m-d') ?>">
+                    </div>
+                </div>
+
+                <div class="orders-filter-group">
+                    <span class="orders-filter-label">Status</span>
+                    <div class="orders-filter-controls">
+                        <button class="filter-btn active" data-type="status" data-filter="all">All</button>
+                        <button class="filter-btn" data-type="status" data-filter="paid">Paid</button>
+                        <button class="filter-btn" data-type="status" data-filter="pending">Pending</button>
+                        <button class="filter-btn" data-type="status" data-filter="cancelled">Cancelled</button>
+                    </div>
+                </div>
+
+                <div class="orders-filter-group">
+                    <span class="orders-filter-label">Sort by</span>
+                    <div class="orders-filter-controls">
+                        <button class="filter-btn active" data-type="sort" data-col="4" data-dir="desc">Newest</button>
+                        <button class="filter-btn" data-type="sort" data-col="3" data-dir="desc">Most Profit</button>
+                    </div>
+                </div>
             </div>
         </div>
 

@@ -362,7 +362,14 @@ $role = $identity ? $identity->get('role') : null;
         }
         var items = results.map(function(r) {
             var hasHover = r.images.length > 1 ? ' has-hover-image' : '';
-            var badge = r.featured ? '<div class="product-card-badges"><span class="product-badge product-badge--featured">Featured</span></div>' : '';
+            var badges = [];
+            if (r.featured) {
+                badges.push('<span class="product-badge product-badge--featured">Featured</span>');
+            }
+            if (r.is_bestsales) {
+                badges.push('<span class="product-badge product-badge--bestsales">Best Sales</span>');
+            }
+            var badge = badges.length ? '<div class="product-card-badges">' + badges.join('') + '</div>' : '';
             var imgWrap = '<div class="search-suggest-img-wrap' + hasHover + '">'
                 + badge
                 + (r.images[0] ? '<img src="' + r.images[0] + '" alt="' + r.name + '" class="search-suggest-img search-suggest-img--primary">' : '<div class="search-suggest-img--empty"></div>')

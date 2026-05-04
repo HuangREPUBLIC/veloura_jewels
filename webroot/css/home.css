@@ -44,17 +44,6 @@
     color: var(--color-white);
 }
 
-.hp-btn--outline {
-    background: transparent;
-    color: var(--oakwood);
-    border-color: var(--oakwood);
-}
-
-.hp-btn--outline:hover {
-    background: var(--oakwood);
-    color: var(--color-white);
-}
-
 .hp-section-header {
     text-align: center;
     margin-bottom: 3rem;

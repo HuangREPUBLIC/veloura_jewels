@@ -111,13 +111,21 @@ $this->Html->css('login', ['block' => true]);
 </div>
 
 <script>
-var scheduleUrl  = '<?= $this->Url->build(['controller' => 'Schedule', 'action' => 'add']) ?>';
+var scheduleIndexUrl = '<?= $this->Url->build(['controller' => 'Schedule', 'action' => 'add']) ?>';
+var scheduleStaffUrlTemplate = '<?= $this->Url->build(['controller' => 'Schedule', 'action' => 'add', '__STAFF_ID__']) ?>';
 var currentStaff = <?= $staff ? $staff->id : 'null' ?>;
 var currentWeek  = '<?= h($weekStartStr) ?>';
 
+function scheduleUrlFor(staffId, weekStart) {
+    var url = staffId
+        ? scheduleStaffUrlTemplate.replace('__STAFF_ID__', encodeURIComponent(staffId))
+        : scheduleIndexUrl;
+
+    return url + '?week=' + encodeURIComponent(weekStart);
+}
+
 function switchStaff(id) {
-    if (!id) { window.location.href = scheduleUrl; return; }
-    window.location.href = scheduleUrl + '/' + id + '?week=' + currentWeek;
+    window.location.href = id ? scheduleUrlFor(id, currentWeek) : scheduleIndexUrl;
 }
 
 function switchWeek(weekValue) {
@@ -132,7 +140,7 @@ function switchWeek(weekValue) {
     var dateStr = monday.getUTCFullYear() + '-'
         + String(monday.getUTCMonth() + 1).padStart(2, '0') + '-'
         + String(monday.getUTCDate()).padStart(2, '0');
-    window.location.href = scheduleUrl + (currentStaff ? '/' + currentStaff : '') + '?week=' + dateStr;
+    window.location.href = scheduleUrlFor(currentStaff, dateStr);
 }
 
 function toggleDay(day) {

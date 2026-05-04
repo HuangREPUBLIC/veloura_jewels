@@ -19,12 +19,23 @@ class SearchController extends AppController
         $q = trim((string)$this->request->getQuery('q'));
         $products = [];
 
+        $productsTable = $this->fetchTable('Products');
+
         if ($q !== '') {
-            $products = $this->fetchTable('Products')->find()
+            $bestSalesIds = array_unique(array_merge(
+                collection($productsTable->find('bestSales', productType: 'jewelry', limit: 4)->all())->extract('id')->toList(),
+                collection($productsTable->find('bestSales', productType: 'home_decor', limit: 4)->all())->extract('id')->toList()
+            ));
+
+            $products = $productsTable->find()
                 ->contain(['ProductImages'])
                 ->where(['Products.name LIKE' => '%' . $q . '%'])
                 ->orderBy(['Products.name' => 'ASC'])
                 ->all();
+
+            foreach ($products as $product) {
+                $product->is_bestsales = in_array($product->id, $bestSalesIds);
+            }
         }
 
         $this->set(compact('products', 'q'));
@@ -33,14 +44,22 @@ class SearchController extends AppController
     public function suggest(): \Cake\Http\Response
     {
         $this->request->allowMethod(['get']);
+
         if (!$this->request->is('ajax')) {
             throw new \Cake\Http\Exception\NotFoundException();
         }
+
         $q = trim((string)$this->request->getQuery('q'));
         $results = [];
 
+        $productsTable = $this->fetchTable('Products');
+
         if (strlen($q) >= 2) {
-            $products = $this->fetchTable('Products')->find()
+            $bestSalesIds = array_unique(array_merge(
+                collection($productsTable->find('bestSales', productType: 'jewelry', limit: 4)->all())->extract('id')->toList(),
+                collection($productsTable->find('bestSales', productType: 'home_decor', limit: 4)->all())->extract('id')->toList()
+            ));
+            $products = $productsTable->find()
                 ->contain(['ProductImages'])
                 ->where(['Products.name LIKE' => '%' . $q . '%'])
                 ->orderBy(['Products.name' => 'ASC'])
@@ -48,18 +67,20 @@ class SearchController extends AppController
                 ->all();
 
             foreach ($products as $p) {
-                $url    = Router::url(['controller' => 'Jewelry', 'action' => 'view', $p->id]);
+                $url = Router::url(['controller' => 'Jewelry', 'action' => 'view', $p->id]);
+
                 $images = array_map(
                     fn($img) => Router::url('/img/products/' . $img->filename),
                     $p->product_images
                 );
 
                 $results[] = [
-                    'name'     => $p->name,
-                    'price'    => number_format((float)$p->sale_price, 2),
-                    'url'      => $url,
-                    'images'   => $images,
-                    'featured' => !empty($p->featured),
+                    'name'         => $p->name,
+                    'price'        => number_format((float)$p->sale_price, 2),
+                    'url'          => $url,
+                    'images'       => $images,
+                    'featured'     => !empty($p->featured),
+                    'is_bestsales' => in_array($p->id, $bestSalesIds),
                 ];
             }
         }

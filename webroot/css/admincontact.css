@@ -8,6 +8,7 @@
     --admin-border:        #ddd9cf;
     --admin-text:          #3f372f;
     --admin-text-dark:     #2a2320;
+    --admin-shadow:        0 10px 28px rgba(var(--oakwood-rgb), 0.07);
 }
 
 /* Base */
@@ -21,7 +22,8 @@
     font-size: 16px;
     padding: 24px;
     background: var(--admin-bg);
-    border-radius: 14px;
+    border-radius: 16px;
+    min-height: calc(100vh - 140px);
 }
 
 .admin-wrapper h1 { font-size: 1.7rem; font-weight: 700; letter-spacing: -0.03em; color: var(--admin-ink); margin: 0; }
@@ -64,15 +66,22 @@ h3.page-title {
 /* Back link */
 
 .back-link {
-    display: inline-block;
-    margin-bottom: 26px;
+    display: inline-flex;
+    align-items: center;
+    min-height: 34px;
+    margin-bottom: 22px;
     color: var(--oakwood);
     text-decoration: none;
-    font-size: 1.1rem;
-    font-weight: 500;
+    font-size: 0.86rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    border-bottom: 1px solid transparent;
 }
 
-.back-link:hover { color: var(--oakwood-dark); }
+.back-link:hover {
+    color: var(--oakwood-dark);
+    border-bottom-color: rgba(var(--oakwood-rgb), 0.32);
+}
 
 /* Index content card */
 
@@ -83,8 +92,8 @@ h3.page-title {
     background: var(--admin-surface);
     border: 1px solid var(--admin-border);
     border-radius: 24px;
-    padding: 32px 36px;
-    box-shadow: 0 6px 18px rgba(var(--oakwood-rgb), 0.05);
+    padding: 30px 34px;
+    box-shadow: var(--admin-shadow);
 }
 
 /* Add / new button */
@@ -92,14 +101,16 @@ h3.page-title {
 .btn-new-product {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     background: var(--oakwood);
     color: var(--color-white) !important;
     text-decoration: none;
-    padding: 14px 24px;
-    border-radius: 12px;
+    min-height: 40px;
+    padding: 0 20px;
+    border-radius: 10px;
     border: 1px solid var(--oakwood);
     font-weight: 600;
-    font-size: 0.95rem;
+    font-size: 0.88rem;
     transition: 0.2s ease;
 }
 
@@ -383,16 +394,16 @@ td.actions button {
     margin-right: 0.3rem;
     margin-top: 0 !important;
     margin-bottom: 0 !important;
-    padding: 0 0.7rem !important;
+    padding: 0 0.72rem !important;
     font-size: 0.75rem !important;
     font-weight: 600 !important;
-    border-radius: 5px !important;
+    border-radius: 999px !important;
     text-decoration: none !important;
     transition: all 0.2s ease;
     cursor: pointer;
     background: none !important;
     line-height: 1 !important;
-    height: 26px !important;
+    height: 28px !important;
     box-sizing: border-box !important;
     -webkit-appearance: none !important;
     appearance: none !important;
@@ -467,6 +478,77 @@ td.actions button.btn-delete:hover {
 
 /* View table */
 
+.products.view.content,
+.users.view.content,
+.orders.view.content,
+.contactSubmissions.view.content {
+    background: var(--admin-surface);
+    border: 1px solid var(--admin-border);
+    border-radius: 24px;
+    box-shadow: var(--admin-shadow);
+    padding: 30px 34px;
+}
+
+.admin-wrapper .view.content .page-header-row {
+    margin-bottom: 24px;
+}
+
+.admin-wrapper .view.content .action-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.55rem;
+    justify-content: flex-end;
+    margin: 0;
+}
+
+.admin-wrapper .view.content .action-buttons form {
+    display: inline;
+    margin: 0;
+    padding: 0;
+}
+
+.admin-wrapper .view.content .action-buttons a,
+.admin-wrapper .view.content .action-buttons .btn-delete {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 34px;
+    padding: 0.38rem 0.85rem;
+    border-radius: 8px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    text-decoration: none;
+    margin: 0;
+    cursor: pointer;
+    line-height: 1;
+    font-family: inherit;
+    transition: none;
+}
+
+.admin-wrapper .view.content .action-buttons a {
+    border: 1px solid var(--admin-border);
+    background: var(--color-white) !important;
+    color: var(--admin-text-dark) !important;
+}
+
+.admin-wrapper .view.content .action-buttons a:hover {
+    border-color: var(--admin-border);
+    background: var(--admin-surface-hover) !important;
+    color: var(--admin-text-dark) !important;
+}
+
+.admin-wrapper .view.content .action-buttons .btn-delete {
+    border: 1px solid var(--color-message-error-text);
+    background: transparent !important;
+    color: var(--color-message-error-text) !important;
+}
+
+.admin-wrapper .view.content .action-buttons .btn-delete:hover {
+    background: #f7e6e6 !important;
+    color: var(--color-message-error-text) !important;
+}
+
 .view-table {
     width: 100%;
     border-collapse: collapse;
@@ -481,7 +563,7 @@ td.actions button.btn-delete:hover {
 
 .view-table th {
     width: 200px;
-    padding: 0.85rem 1.2rem;
+    padding: 0.9rem 1.1rem;
     text-align: left;
     font-size: 0.75rem;
     font-weight: 700;
@@ -494,16 +576,69 @@ td.actions button.btn-delete:hover {
 }
 
 .view-table td {
-    padding: 0.85rem 1.2rem;
+    padding: 0.9rem 1.1rem;
     color: var(--admin-text);
     font-size: 0.9rem;
-    background: var(--admin-bg);
+    background: var(--admin-surface-alt);
     vertical-align: top;
     line-height: 1.6;
 }
 
-.view-table tr:hover .view-table td,
 .view-table tr:hover td { background: var(--admin-surface-hover); }
+
+.admin-view-table-spaced { margin-bottom: 1.5rem; }
+
+.admin-view-section-title {
+    margin: 1.5rem 0 0.8rem;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--admin-text-dark);
+}
+
+.admin-stock-list,
+.admin-view-images {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.admin-stock-item {
+    display: inline-flex;
+    align-items: center;
+    min-height: 26px;
+    padding: 0.18rem 0.62rem;
+    border-radius: 999px;
+    background: var(--admin-bg);
+    color: var(--admin-text);
+    font-size: 0.74rem;
+    font-weight: 600;
+    line-height: 1.2;
+    border: 1px solid var(--admin-border);
+}
+
+.admin-category-text {
+    color: var(--admin-text);
+    font-size: 0.88rem;
+}
+
+.admin-view-images {
+    margin-top: 0.2rem;
+}
+
+.admin-view-image {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 1px solid #ddd9cf;
+    background: var(--admin-bg);
+}
+
+.admin-profit-positive,
+.admin-profit-negative { font-weight: 700; }
+
+.admin-profit-positive { color: #2e7d32 !important; }
+.admin-profit-negative { color: #c62828 !important; }
 
 /* Message box */
 
@@ -552,23 +687,25 @@ td.actions button.btn-delete:hover {
     display: block;
     width: 100%;
     background: var(--admin-surface);
-    border-radius: 14px;
-    padding: 2rem 2rem 2.5rem;
+    border: 1px solid var(--admin-border);
+    border-radius: 24px;
+    padding: 30px 34px 36px;
+    box-shadow: var(--admin-shadow);
 }
 
 .dashboard-hero {
-    margin-bottom: 1.8rem;
-    padding-bottom: 1.4rem;
+    margin-bottom: 1.6rem;
+    padding-bottom: 1.35rem;
     border-bottom: 1px solid rgba(var(--oakwood-rgb), 0.12);
 }
 
 /* Staff weekly schedule */
 .dashboard-schedule {
     margin-bottom: 1.8rem;
-    padding: 1.2rem 1.6rem;
+    padding: 1.15rem 1.35rem;
     background: var(--color-white);
-    border: 1px solid rgba(var(--oakwood-rgb), 0.12);
-    border-radius: 10px;
+    border: 1px solid var(--admin-border);
+    border-radius: 16px;
 }
 
 .dashboard-schedule-header {
@@ -672,24 +809,45 @@ td.actions button.btn-delete:hover {
     width: 100%;
 }
 
-.dashboard-grid {
+.dashboard-tools-header {
+    margin: 1.8rem 0 0.9rem;
+    padding-top: 1.2rem;
+    border-top: 1px solid rgba(var(--oakwood-rgb), 0.12);
+}
+
+.dashboard-tools-header h2 {
+    margin: 0 0 0.25rem;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--admin-text-dark);
+}
+
+.dashboard-tools-header p {
+    margin: 0;
+    font-size: 0.84rem;
+    color: var(--color-lightgray);
+}
+
+.dashboard-tools-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 14px;
-    margin-top: 1.8rem;
-    width: 100%;
 }
 
 .dashboard-card {
     display: flex;
     align-items: center;
     gap: 1rem;
-    padding: 1.2rem 1.3rem;
+    width: 100%;
+    min-height: 92px;
+    padding: 1.1rem 1.2rem;
     background: var(--color-white);
     border: 1px solid var(--admin-border);
-    border-radius: 12px;
+    border-radius: 16px;
     text-decoration: none;
     color: inherit;
+    font-family: inherit;
+    text-align: left;
     transition: box-shadow 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
 }
 
@@ -705,7 +863,8 @@ td.actions button.btn-delete:hover {
     width: 46px;
     height: 46px;
     background: var(--admin-bg);
-    border-radius: 10px;
+    border: 1px solid rgba(var(--oakwood-rgb), 0.1);
+    border-radius: 14px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -729,14 +888,14 @@ td.actions button.btn-delete:hover {
     line-height: 1.1;
 }
 
-.dashboard-grid .dashboard-content h3 {
+.dashboard-tools-grid .dashboard-content h3 {
     font-size: 0.95rem;
     font-weight: 600;
     color: var(--admin-ink);
     margin: 0 0 0.2rem;
 }
 
-.dashboard-grid .dashboard-content p {
+.dashboard-tools-grid .dashboard-content p {
     font-size: 0.82rem;
     font-weight: 400;
     color: var(--color-lightgray);
@@ -748,10 +907,10 @@ td.actions button.btn-delete:hover {
 
 .low-stock-warning {
     margin: 0 0 1.8rem;
-    padding: 1.3rem 1.4rem;
+    padding: 1.25rem 1.35rem;
     background: #fffbeb;
     border: 1px solid #fcd34d;
-    border-radius: 12px;
+    border-radius: 16px;
 }
 
 .low-stock-warning h3 {
@@ -853,86 +1012,140 @@ td.actions button.btn-delete:hover {
 .role-pill-customer { background: #aec8e8; color: #0f2d52; }
 
 
+/* Orders — section headers */
+
+.orders-summary-header,
+.orders-filter-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin: 8px 0 14px;
+}
+
+.orders-summary-header h4,
+.orders-filter-header h4 {
+    margin: 0 0 4px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--admin-text-dark);
+}
+
+.orders-summary-header p,
+.orders-filter-header p {
+    margin: 0;
+    font-size: 0.78rem;
+    color: var(--color-lightgray);
+}
+
 /* Orders — stat cards */
 
 .orders-stat-cards {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 12px;
-    margin: 16px 0 20px;
+    gap: 14px;
+    margin: 0 0 24px;
 }
 
 .orders-stat-card {
-    background: var(--admin-surface);
+    background: linear-gradient(180deg, var(--admin-surface), var(--admin-surface-alt));
     border: 1px solid var(--admin-border);
-    border-radius: 12px;
-    padding: 14px 16px;
+    border-radius: 18px;
+    padding: 18px 18px 16px;
+    box-shadow: 0 4px 14px rgba(var(--oakwood-rgb), 0.04);
+}
+
+.orders-stat-card .stat-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
 }
 
 .orders-stat-card .stat-label {
-    font-size: 0.7rem;
+    font-size: 0.72rem;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: var(--color-lightgray);
-    margin-bottom: 5px;
+    letter-spacing: 0.08em;
+    color: var(--oakwood);
 }
 
-.orders-stat-card .stat-profit {
-    font-size: 1.15rem;
+.orders-stat-card .stat-currency {
+    font-size: 0.65rem;
     font-weight: 700;
-    color: var(--color-message-success-text);
-}
-
-.orders-stat-card .stat-sales {
-    font-size: 0.78rem;
+    letter-spacing: 0.08em;
     color: var(--color-lightgray);
-    margin-top: 2px;
+    background: var(--admin-bg);
+    border: 1px solid var(--admin-border);
+    border-radius: 999px;
+    padding: 3px 8px;
 }
 
-/* Orders — filter controls */
+.orders-stat-card .stat-main {
+    font-size: 1.55rem;
+    font-weight: 800;
+    line-height: 1.15;
+    color: var(--admin-text-dark);
+    letter-spacing: -0.03em;
+}
+
+.orders-stat-card .stat-sub {
+    margin-top: 7px;
+    font-size: 0.8rem;
+    color: var(--color-lightgray);
+}
+
+/* Orders — filter card */
 
 .orders-filter-section {
+    background: var(--admin-surface-alt);
+    border: 1px solid var(--admin-border);
+    border-radius: 18px;
+    padding: 18px;
+    margin-bottom: 22px;
+}
+
+.orders-filter-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1.1fr 1fr 0.9fr;
+    gap: 16px;
+    align-items: start;
+}
+
+.orders-filter-group {
     display: flex;
     flex-direction: column;
-    gap: 7px;
-    margin-bottom: 16px;
+    gap: 8px;
+    min-width: 0;
 }
-
-.orders-filter-row {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    padding-bottom: 2px;
-}
-
-.orders-filter-row::-webkit-scrollbar { display: none; }
 
 .orders-filter-label {
     font-size: 0.68rem;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.08em;
     color: var(--oakwood);
-    white-space: nowrap;
-    flex-shrink: 0;
-    min-width: 50px;
+}
+
+.orders-filter-controls,
+.orders-date-range {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    align-items: center;
 }
 
 .filter-btn {
-    padding: 4px 13px;
+    min-height: 30px;
+    padding: 5px 13px;
     border: 1.5px solid var(--admin-border);
-    border-radius: 20px;
+    border-radius: 999px;
     background: var(--admin-surface);
     cursor: pointer;
     font-size: 0.78rem;
     font-family: inherit;
+    font-weight: 600;
     color: var(--admin-text);
     white-space: nowrap;
-    flex-shrink: 0;
     transition: all 0.2s ease;
     -webkit-tap-highlight-color: transparent;
 }
@@ -940,6 +1153,7 @@ td.actions button.btn-delete:hover {
 .filter-btn:hover {
     border-color: var(--oakwood);
     color: var(--oakwood);
+    background: var(--admin-surface);
 }
 
 .filter-btn.active {
@@ -948,45 +1162,56 @@ td.actions button.btn-delete:hover {
     border-color: var(--oakwood);
 }
 
-.date-range-sep {
-    width: 1px;
-    height: 18px;
-    background: var(--admin-border);
-    flex-shrink: 0;
-    margin: 0 2px;
-}
-
 .date-range-to {
-    font-size: 0.78rem;
+    font-size: 0.76rem;
     color: var(--color-lightgray);
-    flex-shrink: 0;
 }
 
 .date-field {
-    height: 28px;
-    padding: 0 8px;
+    height: 32px;
+    max-width: 145px;
+    padding: 0 9px;
     border: 1.5px solid var(--admin-border);
-    border-radius: 8px;
+    border-radius: 10px;
     font-size: 0.78rem;
     font-family: inherit;
     color: var(--admin-text);
     background: var(--admin-surface);
-    flex-shrink: 0;
     transition: border-color 0.2s ease;
     cursor: pointer;
 }
 
-.date-field:focus { outline: none; border-color: var(--oakwood); }
-.date-field::-webkit-calendar-picker-indicator { opacity: 0.5; cursor: pointer; }
-.date-field::-webkit-calendar-picker-indicator:hover { opacity: 1; }
+.date-field:focus {
+    outline: none;
+    border-color: var(--oakwood);
+}
+
+.date-field::-webkit-calendar-picker-indicator {
+    opacity: 0.55;
+    cursor: pointer;
+}
+
+.date-field::-webkit-calendar-picker-indicator:hover {
+    opacity: 1;
+}
 
 /* Responsive */
 
 @media (max-width: 768px) {
-    .orders-stat-cards { grid-template-columns: repeat(2, 1fr); }
+    .orders-stat-cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
 
-    .dashboard-summary { grid-template-columns: 1fr; }
-    .dashboard-grid    { grid-template-columns: 1fr; }
+    .orders-filter-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .orders-filter-section {
+        padding: 14px;
+    }
+
+    .dashboard-summary,
+    .dashboard-tools-grid { grid-template-columns: 1fr; }
 
     .admin-wrapper { padding: 12px; }
     .admin-dashboard { padding: 1rem; }
@@ -1021,62 +1246,6 @@ td.actions button.btn-delete:hover {
     #ordersTable tbody td,
     #contactFormsTable thead th,
     #contactFormsTable tbody td { padding: 12px 10px !important; }
-}
-
-/* Schedule dropdown */
-
-.schedule-dropdown-wrap {
-    position: relative;
-}
-
-.schedule-dropdown-trigger {
-    display: inline-flex;
-    align-items: center;
-    cursor: pointer;
-    border: none;
-    gap: 0;
-}
-
-.schedule-dropdown-menu {
-    display: none;
-    position: absolute;
-    top: calc(100% + 8px);
-    right: 0;
-    min-width: 200px;
-    background: var(--color-white);
-    border: 1px solid rgba(var(--oakwood-rgb), 0.15);
-    border-radius: 12px;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.10);
-    z-index: 100;
-    overflow: hidden;
-    flex-direction: column;
-}
-
-.schedule-dropdown-menu--open {
-    display: flex;
-}
-
-.schedule-dropdown-item {
-    display: block;
-    padding: 0.75rem 1.1rem;
-    font-size: 0.9rem;
-    color: #333;
-    text-decoration: none;
-    transition: background 0.15s;
-}
-
-.schedule-dropdown-item:hover {
-    background: rgba(var(--oakwood-rgb), 0.07);
-    color: var(--oakwood);
-    text-decoration: none;
-}
-
-.schedule-dropdown-empty {
-    display: block;
-    padding: 0.75rem 1.1rem;
-    font-size: 0.88rem;
-    color: #aaa;
-    font-style: italic;
 }
 
 .featured-toggle {

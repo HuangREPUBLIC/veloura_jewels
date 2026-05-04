@@ -5,53 +5,38 @@
  */
 $this->assign('title', 'View Product');
 
-function catPillClass(string $name): string {
-    $map = [
-        'rings'     => 'rings',
-        'necklaces' => 'necklaces',
-        'earrings'  => 'earrings',
-        'bracelets' => 'bracelets',
-        'brooches'  => 'brooches',
-        'candles'   => 'candles',
-        'vases'     => 'vases',
-        'cushions'  => 'cushions',
-        'wall art'  => 'wall-art',
-        'throws'    => 'throws',
-    ];
-    return 'cat-pill-' . ($map[strtolower($name)] ?? 'default');
-}
-
 $productType = '';
 if (!empty($product->categories)) {
     $productType = $product->categories[0]->type ?? '';
 }
 ?>
 <?php $this->Html->css('admincontact', ['block' => true]); ?>
-<?php $this->Html->css('login', ['block' => true]); ?>
 
 <div class="admin-wrapper">
     <div class="products view content">
-        <h3><?= h($product->name) ?></h3>
+        <?= $this->Html->link(__('← Back'), ['action' => 'index'], ['class' => 'back-link']) ?>
 
-        <div class="action-buttons">
-            <?= $this->Html->link(__('← Back'), ['action' => 'index']) ?>
+        <div class="page-header-row">
+            <div>
+                <h3 class="page-title"><?= h($product->name) ?></h3>
+                <p class="page-subtitle">Review product details, stock and images</p>
+            </div>
 
             <?php $role = $this->request->getAttribute('identity')->get('role'); ?>
 
-            <?php if ($role === 'admin'): ?>
-                <?= $this->Html->link(__('Edit'), ['action' => 'edit', $product->id]) ?>
-            <?php endif; ?>
-
-            <?php if ($role === 'admin'): ?>
-                <?= $this->Form->postLink(
-                    __('Delete'),
-                    ['action' => 'delete', $product->id],
-                    [
-                        'confirm' => __('Are you sure you want to delete # {0}?', $product->id),
-                        'class'   => 'btn-delete',
-                    ]
-                ) ?>
-            <?php endif; ?>
+            <div class="action-buttons">
+                <?php if ($role === 'admin'): ?>
+                    <?= $this->Html->link(__('Edit'), ['action' => 'edit', $product->id], ['class' => 'btn-edit']) ?>
+                    <?= $this->Form->postLink(
+                        __('Delete'),
+                        ['action' => 'delete', $product->id],
+                        [
+                            'confirm' => __('Are you sure you want to delete # {0}?', $product->id),
+                            'class'   => 'btn-delete',
+                        ]
+                    ) ?>
+                <?php endif; ?>
+            </div>
         </div>
 
         <table class="view-table">
@@ -69,11 +54,11 @@ if (!empty($product->categories)) {
             <tr>
                 <th><?= __('Categories') ?></th>
                 <td>
-                    <?php
-                    if (!empty($product->categories)) {
-                        echo implode(', ', collection($product->categories)->extract('name')->toList());
-                    }
-                    ?>
+                    <?php if (!empty($product->categories)): ?>
+                        <span class="admin-category-text">
+                            <?= h(implode(', ', collection($product->categories)->extract('name')->toList())) ?>
+                        </span>
+                    <?php endif; ?>
                 </td>
             </tr>
             <tr>
@@ -92,16 +77,18 @@ if (!empty($product->categories)) {
                 <th><?= __('Size & Stock') ?></th>
                 <td>
                     <?php if (!empty($product->product_variants)): ?>
-                        <?php foreach ($product->product_variants as $variant): ?>
-                            <div>
-                                <?= h($variant->size) ?>:
-                                <?php if ($variant->stock < 5): ?>
-                                    <span class="stock-low"><?= $variant->stock ?></span>
-                                <?php else: ?>
-                                    <?= $variant->stock ?>
-                                <?php endif; ?>
-                            </div>
-                        <?php endforeach; ?>
+                        <div class="admin-stock-list">
+                            <?php foreach ($product->product_variants as $variant): ?>
+                                <span class="admin-stock-item">
+                                    <?= h($variant->size) ?>:
+                                    <?php if ($variant->stock < 5): ?>
+                                        <span class="stock-low"><?= $variant->stock ?></span>
+                                    <?php else: ?>
+                                        <?= $variant->stock ?>
+                                    <?php endif; ?>
+                                </span>
+                            <?php endforeach; ?>
+                        </div>
                     <?php endif; ?>
                 </td>
             </tr>
@@ -125,10 +112,11 @@ if (!empty($product->categories)) {
                 <th><?= __('Images') ?></th>
                 <td>
                     <?php if (!empty($product->product_images)): ?>
-                        <div style="display:flex;flex-wrap:wrap;gap:0.8rem;margin-top:0.4rem;">
+                        <div class="admin-view-images">
                             <?php foreach ($product->product_images as $img): ?>
                                 <img src="<?= $this->Url->image('products/' . h($img->filename)) ?>"
-                                     style="width:100px;height:100px;object-fit:cover;border-radius:8px;border:1px solid #ddd9cf;">
+                                     class="admin-view-image"
+                                     alt="<?= h($product->name) ?>">
                             <?php endforeach; ?>
                         </div>
                     <?php endif; ?>

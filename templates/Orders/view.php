@@ -6,17 +6,19 @@
 $this->assign('title', 'Order ' . $order->id);
 ?>
 <?php $this->Html->css('admincontact', ['block' => true]); ?>
-<?php $this->Html->css('login', ['block' => true]); ?>
 
 <div class="admin-wrapper">
     <div class="orders view content">
-        <h3>Order <?= h($order->id) ?></h3>
+        <?= $this->Html->link(__('← Back'), ['action' => 'index'], ['class' => 'back-link']) ?>
 
-        <div class="action-buttons">
-            <?= $this->Html->link(__('← Back'), ['action' => 'index']) ?>
+        <div class="page-header-row">
+            <div>
+                <h3 class="page-title">Order #<?= h($order->id) ?></h3>
+                <p class="page-subtitle">Review payment details, order items and estimated profit</p>
+            </div>
         </div>
 
-        <table class="view-table" style="margin-bottom: 2rem;">
+        <table class="view-table admin-view-table-spaced">
             <tr>
                 <th><?= __('Customer Email') ?></th>
                 <td><?= h($order->customer_email) ?></td>
@@ -46,11 +48,11 @@ $this->assign('title', 'Order ' . $order->id);
                     $totalProfit += ($item->unit_price - $item->product->purchase_price) * $item->quantity;
                 }
             }
-            $profitColor = $totalProfit >= 0 ? '#2e7d32' : '#c62828';
+            $profitClass = $totalProfit >= 0 ? 'admin-profit-positive' : 'admin-profit-negative';
             ?>
             <tr>
                 <th><?= __('Total Profit') ?></th>
-                <td style="color: <?= $profitColor ?>; font-weight: 600;">
+                <td class="<?= $profitClass ?>">
                     $<?= number_format($totalProfit, 2) ?> <?= strtoupper(h($order->currency)) ?>
                 </td>
             </tr>
@@ -73,7 +75,7 @@ $this->assign('title', 'Order ' . $order->id);
             </tr>
         </table>
 
-        <h4 style="margin: 1.5rem 0 0.8rem;"><?= __('Order Items') ?></h4>
+        <h4 class="admin-view-section-title"><?= __('Order Items') ?></h4>
 
         <?php if (!empty($order->order_items)): ?>
             <table class="view-table">
@@ -93,7 +95,7 @@ $this->assign('title', 'Order ' . $order->id);
                     <?php
                     $purchasePrice = $item->product ? (float)$item->product->purchase_price : null;
                     $itemProfit = $purchasePrice !== null ? ($item->unit_price - $purchasePrice) * $item->quantity : null;
-                    $itemProfitColor = ($itemProfit !== null && $itemProfit >= 0) ? '#2e7d32' : '#c62828';
+                    $itemProfitClass = ($itemProfit !== null && $itemProfit >= 0) ? 'admin-profit-positive' : 'admin-profit-negative';
                     ?>
                     <tr>
                         <td><?= h($item->product_name) ?></td>
@@ -102,7 +104,7 @@ $this->assign('title', 'Order ' . $order->id);
                         <td>$<?= number_format((float)$item->unit_price, 2) ?></td>
                         <td><?= h($item->quantity) ?></td>
                         <td>$<?= number_format((float)$item->subtotal, 2) ?></td>
-                        <td style="color: <?= $itemProfitColor ?>; font-weight: 600;">
+                        <td class="<?= $itemProfitClass ?>">
                             <?= $itemProfit !== null ? '$' . number_format($itemProfit, 2) : '' ?>
                         </td>
                     </tr>

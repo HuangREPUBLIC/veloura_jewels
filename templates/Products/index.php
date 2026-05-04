@@ -4,21 +4,6 @@
  * @var iterable<\App\Model\Entity\Product> $products
  */
 $this->assign('title', 'Products');
-function catPillClass(string $name): string {
-    $map = [
-        'rings'     => 'rings',
-        'necklaces' => 'necklaces',
-        'earrings'  => 'earrings',
-        'bracelets' => 'bracelets',
-        'brooches'  => 'brooches',
-        'candles'   => 'candles',
-        'vases'     => 'vases',
-        'cushions'  => 'cushions',
-        'wall art'  => 'wall-art',
-        'throws'    => 'throws',
-    ];
-    return 'cat-pill-' . ($map[strtolower($name)] ?? 'default');
-}
 ?>
 <?php $this->Html->css('admincontact', ['block' => true]); ?>
 
@@ -93,9 +78,9 @@ function catPillClass(string $name): string {
                         </td>
                         <td>
                             <?php if (!empty($product->categories)): ?>
-                                <?php foreach ($product->categories as $cat): ?>
-                                    <span class="cat-pill <?= catPillClass($cat->name) ?>"><?= h($cat->name) ?></span>
-                                <?php endforeach; ?>
+                                <span class="admin-category-text">
+                                    <?= h(implode(', ', collection($product->categories)->extract('name')->toList())) ?>
+                                </span>
                             <?php else: ?>
                                 -
                             <?php endif; ?>

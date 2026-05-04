@@ -34,9 +34,15 @@ $this->Html->css('jewelry', ['block' => true]);
                 <a href="<?= $this->Url->build(['controller' => 'Jewelry', 'action' => 'view', $product->id]) ?>" class="product-card-link">
                     <div class="product-card">
                         <div class="product-image-wrapper<?= !empty($product->product_images[1]) ? ' has-hover-image' : '' ?>">
-                            <?php if (!empty($product->featured)): ?>
+                            <?php if (!empty($product->featured) || !empty($product->is_bestsales)): ?>
                                 <div class="product-card-badges">
-                                    <span class="product-badge product-badge--featured">Featured</span>
+                                    <?php if (!empty($product->featured)): ?>
+                                        <span class="product-badge product-badge--featured">Featured</span>
+                                    <?php endif; ?>
+
+                                    <?php if (!empty($product->is_bestsales)): ?>
+                                        <span class="product-badge product-badge--bestsales">Best Sales</span>
+                                    <?php endif; ?>
                                 </div>
                             <?php endif; ?>
                             <?php if (!empty($product->product_images)): ?>
