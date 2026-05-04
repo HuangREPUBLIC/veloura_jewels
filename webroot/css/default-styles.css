@@ -41,6 +41,18 @@
     --font-display: 'Raleway', 'Helvetica Neue', sans-serif;
     --font-body: 'Raleway', 'Helvetica Neue', sans-serif;
     --font-admin: Arial, 'Helvetica Neue', Helvetica, sans-serif;
+
+    --gray-900: #222;
+    --gray-800: #333;
+    --gray-700: #555;
+    --gray-600: #666;
+    --gray-500: #888;
+    --gray-400: #999;
+    --gray-300: #bbb;
+    --gray-200: #ececec;
+    --gray-100: #f0f0f0;
+    --gray-50:  #f5f5f5;
+    --gray-input: #c8c8c8;
 }
 
 *, *:after, *:before {

@@ -45,13 +45,13 @@
 }
 
 .profile-hero-email {
-    color: #666;
+    color: var(--gray-600);
     font-size: 0.9rem;
     margin-bottom: 0.2rem;
 }
 
 .profile-hero-since {
-    color: #999;
+    color: var(--gray-400);
     font-size: 0.82rem;
     margin: 0;
 }
@@ -111,7 +111,7 @@
     font-size: 0.72rem;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: #999;
+    color: var(--gray-400);
     margin-bottom: 0.3rem;
     font-family: var(--font-body);
 }
@@ -124,7 +124,7 @@
 }
 
 .profile-empty {
-    color: #bbb;
+    color: var(--gray-300);
     font-style: italic;
 }
 
@@ -161,27 +161,6 @@
     text-decoration: none;
 }
 
-.profile-shop-btn {
-    display: inline-block;
-    margin-top: 1rem;
-    font-family: var(--font-display);
-    font-size: 0.76rem;
-    font-weight: 600;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--color-white);
-    background: var(--oakwood);
-    padding: 0.6rem 1.4rem;
-    border-radius: 5px;
-    text-decoration: none;
-    transition: background 0.2s ease;
-}
-
-.profile-shop-btn:hover {
-    background: var(--oakwood-dark);
-    color: var(--color-white);
-    text-decoration: none;
-}
 
 .profile-table-link {
     font-size: 0.8rem;
@@ -199,7 +178,7 @@
 .profile-empty-orders {
     text-align: center;
     padding: 2.5rem 1rem;
-    color: #888;
+    color: var(--gray-500);
 }
 
 /* Orders table */
@@ -219,7 +198,7 @@
     font-size: 0.68rem;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: #999;
+    color: var(--gray-400);
     padding: 0.7rem 1rem;
     border-bottom: 1px solid rgba(var(--oakwood-rgb), 0.14);
     text-align: left;
@@ -269,7 +248,7 @@
 
 .order-ref {
     font-size: 0.78rem;
-    color: #888;
+    color: var(--gray-500);
     word-break: break-all;
 }
 
@@ -346,7 +325,7 @@
     font-size: 0.72rem;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: #888;
+    color: var(--gray-500);
     font-family: var(--font-body);
 }
 
@@ -403,13 +382,13 @@
 .profile-cancel-btn {
     font-family: var(--font-body);
     font-size: 0.88rem;
-    color: #888;
+    color: var(--gray-500);
     text-decoration: none;
     transition: color 0.2s ease;
 }
 
 .profile-cancel-btn:hover {
-    color: #333;
+    color: var(--gray-800);
     text-decoration: none;
 }
 
@@ -430,7 +409,7 @@
     padding: 0.4rem 1rem;
     border-radius: 20px;
     border: 1.5px solid rgba(var(--oakwood-rgb), 0.25);
-    color: #888;
+    color: var(--gray-500);
     text-decoration: none;
     transition: all 0.2s ease;
 }
@@ -460,6 +439,10 @@
     gap: 0.4rem;
 }
 
+.order-meta-item .order-status {
+    align-self: flex-start;
+}
+
 /* Pagination */
 .profile-pagination {
     display: flex;
@@ -484,6 +467,8 @@
 /* Responsive */
 @media (max-width: 768px) {
     .profile-hero { flex-direction: column; text-align: center; padding: 2rem 1.5rem; }
+    .profile-hero-main { flex-direction: column; padding-right: 0; }
+    .profile-hero-schedule-wrap { border-left: none; border-top: 1px solid rgba(var(--oakwood-rgb), 0.14); padding-left: 0; padding-top: 1.5rem; width: 100%; flex: none; }
     .profile-body { grid-template-columns: 1fr; }
     .profile-card--full { grid-column: 1; }
     .profile-info-grid { grid-template-columns: 1fr; }
@@ -491,3 +476,5 @@
     .profile-form-group--full { grid-column: 1; }
     .profile-security-row { flex-direction: column; align-items: flex-start; gap: 1rem; }
 }
+
+
