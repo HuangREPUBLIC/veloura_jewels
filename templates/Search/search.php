@@ -35,7 +35,9 @@ $this->Html->css('jewelry', ['block' => true]);
                     <div class="product-card">
                         <div class="product-image-wrapper<?= !empty($product->product_images[1]) ? ' has-hover-image' : '' ?>">
                             <?php if (!empty($product->featured)): ?>
-                                <span class="product-badge--featured">Featured</span>
+                                <div class="product-card-badges">
+                                    <span class="product-badge product-badge--featured">Featured</span>
+                                </div>
                             <?php endif; ?>
                             <?php if (!empty($product->product_images)): ?>
                                 <img

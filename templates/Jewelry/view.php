@@ -87,8 +87,9 @@ $oneSizeVariant = $isOneSizeOnly ? $inStockVariants[0] : null;
 
             <?php if ($hasStock): ?>
                 <?= $this->Form->create(null, [
-                    'url'   => ['controller' => 'Jewelry', 'action' => 'addToCart'],
-                    'class' => 'add-to-cart-form'
+                    'url'        => ['controller' => 'Jewelry', 'action' => 'addToCart'],
+                    'class'      => 'add-to-cart-form',
+                    'novalidate' => true,
                 ]) ?>
                 <?= $this->Form->hidden('product_id', ['value' => $product->id]) ?>
 
@@ -117,18 +118,21 @@ $oneSizeVariant = $isOneSizeOnly ? $inStockVariants[0] : null;
 
                 <div class="quantity-group">
                     <label class="quantity-label" for="quantity">Quantity</label>
-                    <div class="qty-box">
-                        <button type="button" class="jewelry-qty-minus">−</button>
-                        <input
-                            type="number"
-                            id="quantity"
-                            name="quantity"
-                            min="1"
-                            max="<?= $isOneSizeOnly ? $oneSizeVariant->stock : 1 ?>"
-                            value="1"
-                            class="jewelry-quantity-input"
-                        >
-                        <button type="button" class="jewelry-qty-plus">+</button>
+                    <div class="qty-row">
+                        <div class="qty-box">
+                            <button type="button" class="jewelry-qty-minus">−</button>
+                            <input
+                                type="number"
+                                id="quantity"
+                                name="quantity"
+                                min="1"
+                                max="<?= $isOneSizeOnly ? $oneSizeVariant->stock : 1 ?>"
+                                value="1"
+                                class="jewelry-quantity-input"
+                            >
+                            <button type="button" class="jewelry-qty-plus">+</button>
+                        </div>
+                        <span id="qty-toast" class="qty-toast" role="alert" aria-live="assertive"></span>
                     </div>
                 </div>
 
@@ -143,11 +147,7 @@ $oneSizeVariant = $isOneSizeOnly ? $inStockVariants[0] : null;
                 <?= $this->Form->end() ?>
             <?php else: ?>
                 <div class="detail-actions">
-                    <?= $this->Html->link(
-                        'Back to Jewelry',
-                        ['controller' => 'Jewelry', 'action' => 'index'],
-                        ['class' => 'jewelry-btn-secondary']
-                    ) ?>
+                    <button class="jewelry-add-to-cart-btn" disabled>Add to Cart</button>
                 </div>
             <?php endif; ?>
         </div>
@@ -156,9 +156,20 @@ $oneSizeVariant = $isOneSizeOnly ? $inStockVariants[0] : null;
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        var select  = document.getElementById('variant-select');
+        var select   = document.getElementById('variant-select');
         var qtyInput = document.getElementById('quantity');
-        var addBtn  = document.getElementById('add-to-cart-btn');
+        var addBtn   = document.getElementById('add-to-cart-btn');
+        var toast    = document.getElementById('qty-toast');
+        var toastTimer;
+
+        function showQtyToast(msg) {
+            clearTimeout(toastTimer);
+            toast.textContent = msg;
+            toast.classList.add('qty-toast--show');
+            toastTimer = setTimeout(function () {
+                toast.classList.remove('qty-toast--show');
+            }, 2500);
+        }
 
         if (select) {
             select.addEventListener('change', function () {
@@ -171,6 +182,19 @@ $oneSizeVariant = $isOneSizeOnly ? $inStockVariants[0] : null;
                 } else {
                     qtyInput.max = 1;
                     addBtn.disabled = true;
+                }
+            });
+        }
+
+        if (qtyInput) {
+            qtyInput.addEventListener('input', function () {
+                var value = parseInt(this.value, 10);
+                var max   = parseInt(this.max || 999, 10);
+                if (isNaN(value) || value < 1) {
+                    this.value = 1;
+                } else if (value > max) {
+                    this.value = max;
+                    showQtyToast('Only ' + max + ' item' + (max === 1 ? '' : 's') + ' available');
                 }
             });
         }
@@ -203,7 +227,11 @@ $oneSizeVariant = $isOneSizeOnly ? $inStockVariants[0] : null;
             plus.addEventListener('click', function () {
                 var value = parseInt(input.value || 1, 10);
                 var max   = parseInt(input.max || 999, 10);
-                if (value < max) input.value = value + 1;
+                if (value < max) {
+                    input.value = value + 1;
+                } else {
+                    showQtyToast('Only ' + max + ' item' + (max === 1 ? '' : 's') + ' available');
+                }
             });
         });
     });

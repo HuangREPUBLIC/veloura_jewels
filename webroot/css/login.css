@@ -210,10 +210,16 @@
 
 /* Product variant rows (Products/add, edit) */
 
+#variants-container {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 0.4rem;
+}
+
 .btn-add-variant {
     display: inline-block;
-    margin-top: 0.6rem;
-    padding: 0.4rem 1rem;
+    margin-top: 0.2rem;
+    padding: 0.38rem 0.9rem;
     background: transparent;
     border: 1.5px solid var(--oakwood);
     border-radius: 6px;
@@ -229,38 +235,226 @@
     color: var(--color-white);
 }
 
+.variant-row {
+    display: flex;
+    gap: 0.6rem;
+    align-items: center;
+    background: #f7f8fa;
+    border: 1px solid #e5e7eb;
+    border-radius: 7px;
+    padding: 0.45rem 0.7rem;
+    margin-bottom: 0.4rem;
+}
+
+.size-text-label {
+    min-width: 90px;
+    font-size: 0.88rem;
+    color: var(--gray-800);
+}
+
 .variant-row select {
-    padding: 0.5rem 0.8rem;
-    border: 1.5px solid #d1d5db;
-    border-radius: 6px;
+    padding: 0.4rem 0.6rem;
+    border: 1px solid #d1d5db;
+    border-radius: 5px;
     font-size: 0.88rem;
     background: var(--color-white);
     cursor: pointer;
-    min-width: 120px;
+    min-width: 110px;
 }
 
 .variant-row input[type="number"] {
-    padding: 0.5rem 0.8rem;
-    border: 1.5px solid #d1d5db;
-    border-radius: 6px;
+    padding: 0.4rem 0.6rem;
+    border: 1px solid #d1d5db;
+    border-radius: 5px;
     font-size: 0.88rem;
-    width: 90px;
+    width: 70px;
 }
 
 .variant-row button {
-    padding: 0.4rem 0.7rem;
-    border: 1.5px solid var(--color-danger);
-    border-radius: 6px;
+    margin-left: auto;
+    padding: 0.3rem 0.55rem;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
     background: var(--color-white);
-    color: var(--color-danger);
+    color: #999;
     cursor: pointer;
-    font-size: 0.82rem;
-    transition: all 0.2s ease;
+    font-size: 0.8rem;
+    transition: all 0.15s ease;
+    line-height: 1;
+    flex-shrink: 0;
 }
 
 .variant-row button:hover {
+    border-color: var(--color-danger);
     background: var(--color-danger);
     color: var(--color-white);
+}
+
+/* Image upload zone (Products/add, edit) */
+
+.img-upload-zone {
+    border: 2px dashed #d1d5db;
+    border-radius: 8px;
+    padding: 0.8rem;
+    background: #fafafa;
+    transition: border-color 0.2s, background 0.2s;
+}
+
+.img-upload-zone.zone-hover {
+    border-color: var(--oakwood);
+    background: rgba(var(--oakwood-rgb), 0.04);
+}
+
+.img-upload-prompt {
+    text-align: center;
+    padding: 0.5rem;
+    color: var(--gray-600);
+    font-size: 0.88rem;
+    cursor: pointer;
+    user-select: none;
+}
+
+.img-upload-prompt:hover {
+    color: var(--oakwood);
+}
+
+.img-preview-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-top: 0.6rem;
+}
+
+.img-thumb {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    border-radius: 6px;
+    cursor: grab;
+    border: 2px solid transparent;
+    transition: border-color 0.15s, opacity 0.15s;
+    flex-shrink: 0;
+}
+
+.img-thumb img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 5px;
+    display: block;
+    pointer-events: none;
+}
+
+.img-thumb.dragging {
+    opacity: 0.35;
+    cursor: grabbing;
+}
+
+.img-thumb.drag-over {
+    border-color: var(--oakwood);
+}
+
+/* Remove button on new upload previews */
+.img-remove-btn {
+    position: absolute;
+    top: -7px;
+    right: -7px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #e53e3e;
+    color: #fff;
+    border: 2px solid #fff;
+    cursor: pointer;
+    font-size: 0.8rem;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    transition: background 0.15s;
+}
+
+.img-remove-btn:hover {
+    background: #c53030;
+}
+
+/* Existing image thumbnails (edit page) */
+
+.existing-images-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    margin-top: 0.4rem;
+}
+
+.img-existing-thumb {
+    position: relative;
+    width: 80px;
+    flex-shrink: 0;
+}
+
+.img-existing-thumb img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 6px;
+    border: 1.5px solid #e0e0e0;
+    display: block;
+    transition: opacity 0.2s;
+}
+
+.img-existing-thumb.marked-delete img {
+    opacity: 0.3;
+}
+
+.img-existing-thumb.marked-delete::after {
+    content: 'Delete';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+    background: rgba(197, 48, 48, 0.85);
+    color: #fff;
+    font-size: 0.65rem;
+    padding: 2px 0 3px;
+    border-radius: 0 0 5px 5px;
+    letter-spacing: 0.02em;
+    pointer-events: none;
+}
+
+/* Delete toggle button on existing image */
+.img-delete-btn {
+    position: absolute;
+    top: -7px;
+    right: -7px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #e53e3e;
+    color: #fff;
+    border: 2px solid #fff;
+    cursor: pointer;
+    font-size: 0.85rem;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    transition: background 0.15s;
+}
+
+.img-delete-btn:hover {
+    background: #c53030;
+}
+
+.img-delete-btn.undo {
+    background: #718096;
+}
+
+.img-delete-btn.undo:hover {
+    background: #4a5568;
 }
 
 /* Week range on schedule admin page */

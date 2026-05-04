@@ -48,7 +48,9 @@ $this->Html->css('home', ['block' => true]);
                     <a href="<?= $productUrl ?>" class="hp-product-card">
                         <div class="hp-product-card-img-wrap<?= !empty($product->product_images[1]) ? ' has-hover-image' : '' ?>">
                             <?php if (!empty($product->featured)): ?>
-                                <span class="product-badge--featured">Featured</span>
+                                <div class="product-card-badges">
+                                    <span class="product-badge product-badge--featured">Featured</span>
+                                </div>
                             <?php endif; ?>
                             <img src="<?= $imgSrc ?>" alt="<?= h($product->name) ?>" class="hp-product-card-img hp-product-card-img--primary" loading="lazy">
                             <?php if (!empty($product->product_images[1])): ?>

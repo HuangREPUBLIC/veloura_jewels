@@ -207,6 +207,7 @@
     opacity: 0;
 }
 
+
 .hp-product-card:hover .hp-product-card-img-wrap.has-hover-image .hp-product-card-img--hover {
     opacity: 1;
 }

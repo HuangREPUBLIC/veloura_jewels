@@ -88,7 +88,7 @@ $currentParams = array_filter([
             <!-- Sort Dropdown -->
             <div class="filter-dropdown filter-dropdown--right" id="filter-sort">
                 <?php
-                $sorts = ['newest' => 'Newest', 'price_asc' => 'Price: Low to High', 'price_desc' => 'Price: High to Low', 'featured' => 'Featured'];
+                $sorts = ['newest' => 'Newest', 'price_asc' => 'Price: Low to High', 'price_desc' => 'Price: High to Low', 'featured' => 'Featured', 'bestsales' => 'Best Sales'];
                 $sortLabel = $sorts[$sortBy] ?? 'Newest';
                 ?>
                 <button type="button" class="filter-dropdown-btn <?= $sortBy !== 'newest' ? 'is-active' : '' ?>">
@@ -153,8 +153,15 @@ $currentParams = array_filter([
                 <a href="<?= $this->Url->build('/jewelry/view/' . $product->id) ?>" class="product-card-link">
                     <div class="product-card">
                         <div class="product-image-wrapper<?= !empty($product->product_images[1]) ? ' has-hover-image' : '' ?>">
-                            <?php if (!empty($product->featured)): ?>
-                                <span class="product-badge--featured">Featured</span>
+                            <?php if (!empty($product->featured) || $sortBy === 'bestsales'): ?>
+                                <div class="product-card-badges">
+                                    <?php if (!empty($product->featured)): ?>
+                                        <span class="product-badge product-badge--featured">Featured</span>
+                                    <?php endif; ?>
+                                    <?php if ($sortBy === 'bestsales'): ?>
+                                        <span class="product-badge product-badge--bestsales">Best Sales</span>
+                                    <?php endif; ?>
+                                </div>
                             <?php endif; ?>
                             <?php if (!empty($product->product_images)): ?>
                                 <img

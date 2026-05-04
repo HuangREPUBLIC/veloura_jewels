@@ -57,6 +57,14 @@ class JewelryController extends AppController
         $maxPrice   = $this->request->getQuery('max_price');
         $sortBy     = $this->request->getQuery('sort') ?? 'newest';
 
+        if ($sortBy === 'bestsales') {
+            $products = $this->Products->find('bestSales', productType: 'jewelry', limit: 4)
+                ->contain(['ProductImages'])
+                ->all();
+            $this->set(compact('products', 'categories', 'categoryId', 'minPrice', 'maxPrice', 'sortBy'));
+            return;
+        }
+
         $sortOptions = [
             'newest'     => ['Products.id'         => 'DESC'],
             'price_asc'  => ['Products.sale_price' => 'ASC'],
@@ -64,11 +72,9 @@ class JewelryController extends AppController
             'featured'   => ['Products.id'         => 'DESC'],
         ];
 
-        $orderBy = $sortOptions[$sortBy] ?? $sortOptions['newest'];
-
         $query = $this->Products->find()
             ->contain(['ProductImages'])
-            ->orderBy($orderBy);
+            ->orderBy($sortOptions[$sortBy] ?? $sortOptions['newest']);
 
         if ($categoryId > 0) {
             $query->matching('Categories', function ($q) use ($categoryId) {
@@ -110,6 +116,14 @@ class JewelryController extends AppController
         $maxPrice   = $this->request->getQuery('max_price');
         $sortBy     = $this->request->getQuery('sort') ?? 'newest';
 
+        if ($sortBy === 'bestsales') {
+            $products = $this->Products->find('bestSales', productType: 'home_decor', limit: 4)
+                ->contain(['ProductImages'])
+                ->all();
+            $this->set(compact('products', 'categories', 'categoryId', 'minPrice', 'maxPrice', 'sortBy'));
+            return;
+        }
+
         $sortOptions = [
             'newest'     => ['Products.id'         => 'DESC'],
             'price_asc'  => ['Products.sale_price' => 'ASC'],
@@ -117,11 +131,9 @@ class JewelryController extends AppController
             'featured'   => ['Products.id'         => 'DESC'],
         ];
 
-        $orderBy = $sortOptions[$sortBy] ?? $sortOptions['newest'];
-
         $query = $this->Products->find()
             ->contain(['ProductImages'])
-            ->orderBy($orderBy);
+            ->orderBy($sortOptions[$sortBy] ?? $sortOptions['newest']);
 
         if ($categoryId > 0) {
             $query->matching('Categories', function ($q) use ($categoryId) {

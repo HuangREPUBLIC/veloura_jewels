@@ -362,10 +362,11 @@ $role = $identity ? $identity->get('role') : null;
         }
         var items = results.map(function(r) {
             var hasHover = r.images.length > 1 ? ' has-hover-image' : '';
+            var badge = r.featured ? '<div class="product-card-badges"><span class="product-badge product-badge--featured">Featured</span></div>' : '';
             var imgWrap = '<div class="search-suggest-img-wrap' + hasHover + '">'
+                + badge
                 + (r.images[0] ? '<img src="' + r.images[0] + '" alt="' + r.name + '" class="search-suggest-img search-suggest-img--primary">' : '<div class="search-suggest-img--empty"></div>')
                 + (r.images[1] ? '<img src="' + r.images[1] + '" alt="' + r.name + '" class="search-suggest-img search-suggest-img--hover">' : '')
-                + (r.featured ? '<span class="product-badge--featured">Featured</span>' : '')
                 + '</div>';
             return '<a href="' + r.url + '" class="search-suggest-item">'
                 + imgWrap
@@ -382,6 +383,36 @@ $role = $identity ? $identity->get('role') : null;
 
         box.innerHTML = '<div class="search-suggest-grid">' + items + '</div>' + viewAll;
     }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('.dt-search input[type="search"]').forEach(function (input) {
+            var wrap = document.createElement('div');
+            wrap.className = 'dt-search-wrap';
+            input.parentNode.insertBefore(wrap, input);
+            wrap.appendChild(input);
+
+            var btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'dt-search-clear';
+            btn.setAttribute('aria-label', 'Clear search');
+            btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>';
+            wrap.appendChild(btn);
+
+            function update() {
+                wrap.classList.toggle('has-value', input.value.length > 0);
+            }
+
+            input.addEventListener('input', update);
+            btn.addEventListener('click', function () {
+                input.value = '';
+                input.dispatchEvent(new Event('input', { bubbles: true }));
+                update();
+                input.focus();
+            });
+
+            update();
+        });
+    });
 </script>
 </body>
 </html>

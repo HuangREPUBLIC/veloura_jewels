@@ -13,7 +13,7 @@ $this->Html->css('login', ['block' => true]);
     <div class="users form content login-card--wide">
         <?= $this->Html->link(__('← Back'), ['action' => 'index']) ?>
 
-        <?= $this->Form->create($product, ['enctype' => 'multipart/form-data']) ?>
+        <?= $this->Form->create($product, ['enctype' => 'multipart/form-data', 'id' => 'product-form']) ?>
         <fieldset>
             <legend><?= __('Add Product') ?></legend>
 
@@ -28,7 +28,7 @@ $this->Html->css('login', ['block' => true]);
 
             <!-- Type must be selected first -->
             <div class="input">
-                <label for="type">Type <span style="color:red">*</span></label>
+                <label for="type-select">Type <span style="color:red">*</span></label>
                 <select name="type" id="type-select" required onchange="onTypeChange(this.value)">
                     <option value="">-- Select a type --</option>
                     <?php foreach ($types as $key => $label): ?>
@@ -51,31 +51,38 @@ $this->Html->css('login', ['block' => true]);
                 </div>
             </div>
 
-            <?php
-            echo $this->Form->control('product_images[]', [
-                'type'     => 'file',
-                'label'    => 'Images',
-                'multiple' => true,
-                'accept'   => 'image/*',
-            ]);
-            echo $this->Form->control('description', ['type' => 'textarea', 'label' => 'Product Description', 'required' => true]);
+            <!-- Images: drag to reorder, click or drop to add -->
+            <div class="input">
+                <label>Images</label>
+                <div class="img-upload-zone" id="img-upload-zone">
+                    <input type="file" id="real-file-input" name="product_images[]"
+                           multiple accept="image/*" style="display:none">
+                    <div class="img-upload-prompt"
+                         onclick="document.getElementById('real-file-input').click()">
+                        Click to select images &mdash; or drag &amp; drop files here
+                    </div>
+                    <div class="img-preview-grid" id="img-preview-grid"></div>
+                </div>
+            </div>
 
-            echo $this->Form->control('story', ['type' => 'textarea', 'label' => 'Story', 'required' => true]);
+            <?php
+            echo $this->Form->control('description', ['type' => 'textarea', 'label' => 'Product Description', 'required' => true]);
+            echo $this->Form->control('story',       ['type' => 'textarea', 'label' => 'Story',               'required' => true]);
             ?>
 
             <!-- Size & Stock: filtered by type -->
             <div class="input">
                 <label>Size &amp; Stock</label>
                 <div id="variants-container">
-                    <div class="variant-row" style="display:flex;gap:1rem;margin-bottom:0.5rem;align-items:center;">
+                    <div class="variant-row">
                         <select name="product_variants[0][size]" id="first-size-select">
                             <option value="">-- Select a type first --</option>
                         </select>
-                        <input type="number" name="product_variants[0][stock]" placeholder="Stock" min="0" style="width:80px;">
+                        <input type="number" name="product_variants[0][stock]" placeholder="Qty" min="0">
                         <button type="button" onclick="this.parentNode.remove()">✕</button>
                     </div>
                 </div>
-                <button type="button" class="btn-add-variant" onclick="addVariantRow()">Add Size</button>
+                <button type="button" class="btn-add-variant" onclick="addVariantRow()">+ Add Size</button>
             </div>
         </fieldset>
 
@@ -85,6 +92,101 @@ $this->Html->css('login', ['block' => true]);
 </div>
 
 <script>
+    // Image upload with drag-to-reorder
+    var fileList   = [];
+    var realInput  = document.getElementById('real-file-input');
+    var previewGrid = document.getElementById('img-preview-grid');
+    var uploadZone = document.getElementById('img-upload-zone');
+    var dragSrcIndex = null;
+
+    realInput.addEventListener('change', function() {
+        Array.from(this.files).forEach(function(f) { fileList.push(f); });
+        renderPreviews();
+        realInput.value = '';
+    });
+
+    uploadZone.addEventListener('dragover', function(e) {
+        if (Array.from(e.dataTransfer.types).indexOf('Files') !== -1) {
+            e.preventDefault();
+            this.classList.add('zone-hover');
+        }
+    });
+    uploadZone.addEventListener('dragleave', function(e) {
+        if (e.relatedTarget && this.contains(e.relatedTarget)) return;
+        this.classList.remove('zone-hover');
+    });
+    uploadZone.addEventListener('drop', function(e) {
+        if (Array.from(e.dataTransfer.types).indexOf('Files') !== -1) {
+            e.preventDefault();
+            this.classList.remove('zone-hover');
+            Array.from(e.dataTransfer.files).forEach(function(f) {
+                if (f.type.startsWith('image/')) fileList.push(f);
+            });
+            renderPreviews();
+        }
+    });
+
+    function renderPreviews() {
+        previewGrid.innerHTML = '';
+        fileList.forEach(function(file, i) {
+            var url = URL.createObjectURL(file);
+            var div = document.createElement('div');
+            div.className = 'img-thumb';
+            div.draggable = true;
+            div.dataset.index = i;
+            div.innerHTML = '<img src="' + url + '" alt="">'
+                + '<button type="button" class="img-remove-btn" data-i="' + i + '">×</button>';
+
+            div.querySelector('.img-remove-btn').addEventListener('click', function() {
+                fileList.splice(parseInt(this.dataset.i), 1);
+                renderPreviews();
+            });
+
+            div.addEventListener('dragstart', function(e) {
+                dragSrcIndex = parseInt(this.dataset.index);
+                this.classList.add('dragging');
+                e.dataTransfer.effectAllowed = 'move';
+            });
+            div.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                e.dataTransfer.dropEffect = 'move';
+                document.querySelectorAll('.img-thumb').forEach(function(el) {
+                    el.classList.remove('drag-over');
+                });
+                this.classList.add('drag-over');
+            });
+            div.addEventListener('drop', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                var targetIndex = parseInt(this.dataset.index);
+                if (dragSrcIndex !== null && dragSrcIndex !== targetIndex) {
+                    var moved = fileList.splice(dragSrcIndex, 1)[0];
+                    fileList.splice(targetIndex, 0, moved);
+                    renderPreviews();
+                }
+            });
+            div.addEventListener('dragend', function() {
+                document.querySelectorAll('.img-thumb').forEach(function(el) {
+                    el.classList.remove('dragging', 'drag-over');
+                });
+                dragSrcIndex = null;
+            });
+
+            previewGrid.appendChild(div);
+        });
+    }
+
+    // Before submit: set the file input to the reordered list
+    document.getElementById('product-form').addEventListener('submit', function() {
+        if (fileList.length > 0) {
+            var dt = new DataTransfer();
+            fileList.forEach(function(f) { dt.items.add(f); });
+            realInput.files = dt.files;
+        }
+    });
+
+    // Category / type logic
     var allCategories = <?= $categoriesJson ?>;
     var variantIndex  = 1;
 
@@ -115,14 +217,12 @@ $this->Html->css('login', ['block' => true]);
 
         select.disabled = false;
         select.innerHTML = '<option value="">-- Select a category --</option>';
-        var filtered = allCategories.filter(function(c) { return c.type === type; });
-        filtered.forEach(function(c) {
+        allCategories.filter(function(c) { return c.type === type; }).forEach(function(c) {
             var opt = document.createElement('option');
             opt.value = c.id;
             opt.textContent = c.name;
             select.appendChild(opt);
         });
-
         var newOpt = document.createElement('option');
         newOpt.value = '__new__';
         newOpt.textContent = '+ Add new category...';
@@ -132,7 +232,6 @@ $this->Html->css('login', ['block' => true]);
     function onCategoryChange(value) {
         var newCatDiv   = document.getElementById('new-category-input');
         var newCatInput = document.getElementById('new-category-name');
-
         if (value === '__new__') {
             newCatDiv.style.display = 'block';
             newCatInput.required = true;
@@ -147,8 +246,7 @@ $this->Html->css('login', ['block' => true]);
         var sizes = sizesByType[type] || ['One Size'];
         var html = '<option value="">-- Size --</option>';
         sizes.forEach(function(s) {
-            var sel = (s === selectedValue) ? ' selected' : '';
-            html += '<option value="' + s + '"' + sel + '>' + s + '</option>';
+            html += '<option value="' + s + '"' + (s === selectedValue ? ' selected' : '') + '>' + s + '</option>';
         });
         return html;
     }
@@ -157,15 +255,14 @@ $this->Html->css('login', ['block' => true]);
         var sizes = sizesByType[type] || ['One Size'];
         if (sizes.length === 1) {
             return '<input type="hidden" name="' + name + '" value="' + sizes[0] + '">'
-                + '<span class="size-text-label" style="min-width:100px;">' + sizes[0] + '</span>';
+                + '<span class="size-text-label">' + sizes[0] + '</span>';
         }
         return '<select name="' + name + '" class="size-select">' + buildSizeOptions(type, '') + '</select>';
     }
 
     function updateAllSizeSelects(type) {
         var sizes = sizesByType[type] || ['One Size'];
-        var rows = document.querySelectorAll('#variants-container .variant-row');
-        rows.forEach(function(row) {
+        document.querySelectorAll('#variants-container .variant-row').forEach(function(row) {
             var sel = row.querySelector('select[name*="[size]"]');
             var hid = row.querySelector('input[type="hidden"][name*="[size]"]');
             var lbl = row.querySelector('.size-text-label');
@@ -174,13 +271,9 @@ $this->Html->css('login', ['block' => true]);
                 if (sel) {
                     var name = sel.name;
                     var hidden = document.createElement('input');
-                    hidden.type = 'hidden';
-                    hidden.name = name;
-                    hidden.value = sizes[0];
+                    hidden.type = 'hidden'; hidden.name = name; hidden.value = sizes[0];
                     var span = document.createElement('span');
-                    span.className = 'size-text-label';
-                    span.style.minWidth = '100px';
-                    span.textContent = sizes[0];
+                    span.className = 'size-text-label'; span.textContent = sizes[0];
                     row.insertBefore(hidden, sel);
                     row.insertBefore(span, sel);
                     sel.remove();
@@ -192,15 +285,13 @@ $this->Html->css('login', ['block' => true]);
                 if (hid) {
                     var name = hid.name;
                     var select = document.createElement('select');
-                    select.name = name;
-                    select.className = 'size-select';
+                    select.name = name; select.className = 'size-select';
                     select.innerHTML = buildSizeOptions(type, '');
                     row.insertBefore(select, hid);
                     hid.remove();
                     if (lbl) lbl.remove();
                 } else if (sel) {
-                    var current = sel.value;
-                    sel.innerHTML = buildSizeOptions(type, current);
+                    sel.innerHTML = buildSizeOptions(type, sel.value);
                 }
             }
         });
@@ -208,15 +299,12 @@ $this->Html->css('login', ['block' => true]);
 
     function addVariantRow() {
         var type = document.getElementById('type-select').value;
-        var container = document.getElementById('variants-container');
         var row = document.createElement('div');
         row.className = 'variant-row';
-        row.style.cssText = 'display:flex;gap:1rem;margin-bottom:0.5rem;align-items:center;';
-
         row.innerHTML = buildSizeField('product_variants[' + variantIndex + '][size]', type)
-            + '<input type="number" name="product_variants[' + variantIndex + '][stock]" placeholder="Stock" min="0" style="width:80px;">'
+            + '<input type="number" name="product_variants[' + variantIndex + '][stock]" placeholder="Qty" min="0">'
             + '<button type="button" onclick="this.parentNode.remove()">✕</button>';
-        container.appendChild(row);
+        document.getElementById('variants-container').appendChild(row);
         variantIndex++;
     }
 </script>
