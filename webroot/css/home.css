@@ -446,3 +446,19 @@
         width: 100%;
     }
 }
+
+.product-badge--featured {
+    position: absolute;
+    top: 0.6rem;
+    left: 0.6rem;
+    z-index: 3;
+    padding: 0.2rem 0.55rem;
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    background: var(--oakwood);
+    color: var(--color-white);
+    border-radius: 2px;
+    pointer-events: none;
+}

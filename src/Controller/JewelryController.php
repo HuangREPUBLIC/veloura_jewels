@@ -58,10 +58,10 @@ class JewelryController extends AppController
         $sortBy     = $this->request->getQuery('sort') ?? 'newest';
 
         $sortOptions = [
-            'newest'    => ['Products.id'         => 'DESC'],
-            'price_asc' => ['Products.sale_price' => 'ASC'],
-            'price_desc'=> ['Products.sale_price' => 'DESC'],
-            'name_asc'  => ['Products.name'       => 'ASC'],
+            'newest'     => ['Products.id'         => 'DESC'],
+            'price_asc'  => ['Products.sale_price' => 'ASC'],
+            'price_desc' => ['Products.sale_price' => 'DESC'],
+            'featured'   => ['Products.id'         => 'DESC'],
         ];
 
         $orderBy = $sortOptions[$sortBy] ?? $sortOptions['newest'];
@@ -70,7 +70,6 @@ class JewelryController extends AppController
             ->contain(['ProductImages'])
             ->orderBy($orderBy);
 
-        // Always restrict to jewelry-type categories
         if ($categoryId > 0) {
             $query->matching('Categories', function ($q) use ($categoryId) {
                 return $q->where(['Categories.id' => $categoryId, 'Categories.type' => 'jewelry']);
@@ -87,6 +86,10 @@ class JewelryController extends AppController
 
         if ($maxPrice !== null && $maxPrice !== '') {
             $query->where(['Products.sale_price <=' => (float)$maxPrice]);
+        }
+
+        if ($sortBy === 'featured') {
+            $query->where(['Products.featured' => 1]);
         }
 
         $products = $query->all();
@@ -108,10 +111,10 @@ class JewelryController extends AppController
         $sortBy     = $this->request->getQuery('sort') ?? 'newest';
 
         $sortOptions = [
-            'newest'    => ['Products.id'         => 'DESC'],
-            'price_asc' => ['Products.sale_price' => 'ASC'],
-            'price_desc'=> ['Products.sale_price' => 'DESC'],
-            'name_asc'  => ['Products.name'       => 'ASC'],
+            'newest'     => ['Products.id'         => 'DESC'],
+            'price_asc'  => ['Products.sale_price' => 'ASC'],
+            'price_desc' => ['Products.sale_price' => 'DESC'],
+            'featured'   => ['Products.id'         => 'DESC'],
         ];
 
         $orderBy = $sortOptions[$sortBy] ?? $sortOptions['newest'];
@@ -120,7 +123,6 @@ class JewelryController extends AppController
             ->contain(['ProductImages'])
             ->orderBy($orderBy);
 
-        // Always restrict to home_decor-type categories
         if ($categoryId > 0) {
             $query->matching('Categories', function ($q) use ($categoryId) {
                 return $q->where(['Categories.id' => $categoryId, 'Categories.type' => 'home_decor']);
@@ -137,6 +139,10 @@ class JewelryController extends AppController
 
         if ($maxPrice !== null && $maxPrice !== '') {
             $query->where(['Products.sale_price <=' => (float)$maxPrice]);
+        }
+
+        if ($sortBy === 'featured') {
+            $query->where(['Products.featured' => 1]);
         }
 
         $products = $query->all();

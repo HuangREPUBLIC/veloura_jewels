@@ -40,7 +40,7 @@
 
 .jewelry-page .product-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
     gap: 1.5rem;
 }
 
@@ -993,6 +993,11 @@
     .jewelry-page .filter-bar-inner { flex-wrap: wrap; overflow: visible; }
     .jewelry-page .filter-dropdown--right { margin-left: 0; }
     .jewelry-page .filter-dropdown-menu { position: absolute; left: 0; min-width: 260px; }
+    .jewelry-page .product-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 480px) {
+    .jewelry-page .product-grid { grid-template-columns: 1fr; }
 }
 
 .jewelry-page .result-icon {
@@ -1034,3 +1039,19 @@
     border-color: var(--oakwood);
 }
 
+
+.product-badge--featured {
+    position: absolute;
+    top: 0.6rem;
+    left: 0.6rem;
+    z-index: 3;
+    padding: 0.2rem 0.55rem;
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    background: var(--oakwood);
+    color: var(--color-white);
+    border-radius: 2px;
+    pointer-events: none;
+}

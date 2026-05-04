@@ -44,20 +44,22 @@ class SearchController extends AppController
                 ->contain(['ProductImages'])
                 ->where(['Products.name LIKE' => '%' . $q . '%'])
                 ->orderBy(['Products.name' => 'ASC'])
-                ->limit(5)
+                ->limit(4)
                 ->all();
 
             foreach ($products as $p) {
-                $url = Router::url(['controller' => 'Jewelry', 'action' => 'view', $p->id]);
-                $image = !empty($p->product_images)
-                    ? Router::url('/img/products/' . $p->product_images[0]->filename)
-                    : null;
+                $url    = Router::url(['controller' => 'Jewelry', 'action' => 'view', $p->id]);
+                $images = array_map(
+                    fn($img) => Router::url('/img/products/' . $img->filename),
+                    $p->product_images
+                );
 
                 $results[] = [
-                    'name'  => $p->name,
-                    'price' => number_format((float)$p->sale_price, 2),
-                    'url'   => $url,
-                    'image' => $image,
+                    'name'     => $p->name,
+                    'price'    => number_format((float)$p->sale_price, 2),
+                    'url'      => $url,
+                    'images'   => $images,
+                    'featured' => !empty($p->featured),
                 ];
             }
         }

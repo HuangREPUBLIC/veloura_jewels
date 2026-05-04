@@ -361,13 +361,18 @@ $role = $identity ? $identity->get('role') : null;
             return;
         }
         var items = results.map(function(r) {
-            var img = r.image
-                ? '<img src="' + r.image + '" alt="' + r.name + '" class="search-suggest-img">'
-                : '<div class="search-suggest-img search-suggest-img--empty"></div>';
+            var hasHover = r.images.length > 1 ? ' has-hover-image' : '';
+            var imgWrap = '<div class="search-suggest-img-wrap' + hasHover + '">'
+                + (r.images[0] ? '<img src="' + r.images[0] + '" alt="' + r.name + '" class="search-suggest-img search-suggest-img--primary">' : '<div class="search-suggest-img--empty"></div>')
+                + (r.images[1] ? '<img src="' + r.images[1] + '" alt="' + r.name + '" class="search-suggest-img search-suggest-img--hover">' : '')
+                + (r.featured ? '<span class="product-badge--featured">Featured</span>' : '')
+                + '</div>';
             return '<a href="' + r.url + '" class="search-suggest-item">'
-                + img
+                + imgWrap
+                + '<div class="search-suggest-info">'
                 + '<span class="search-suggest-name">' + r.name + '</span>'
                 + '<span class="search-suggest-price">$' + r.price + '</span>'
+                + '</div>'
                 + '</a>';
         }).join('');
 
@@ -375,7 +380,7 @@ $role = $identity ? $identity->get('role') : null;
             + 'View all results for &ldquo;' + q + '&rdquo;'
             + '</a>';
 
-        box.innerHTML = items + viewAll;
+        box.innerHTML = '<div class="search-suggest-grid">' + items + '</div>' + viewAll;
     }
 </script>
 </body>

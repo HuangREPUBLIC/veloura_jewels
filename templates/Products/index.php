@@ -43,6 +43,7 @@ function catPillClass(string $name): string {
             <table id="productsTable" class="display">
                 <thead>
                 <tr>
+                    <th>Featured</th>
                     <th>Name</th>
                     <th>Purchase Price</th>
                     <th>Sale Price</th>
@@ -55,8 +56,17 @@ function catPillClass(string $name): string {
                 <tbody>
                 <?php foreach ($products as $product): ?>
                     <tr>
-
-
+                        <td style="text-align:center">
+                            <?php if ($role === 'admin'): ?>
+                                <button
+                                    class="featured-toggle <?= !empty($product->featured) ? 'is-featured' : '' ?>"
+                                    data-url="<?= $this->Url->build(['action' => 'toggleFeatured', $product->id]) ?>"
+                                    title="Toggle featured"
+                                >★</button>
+                            <?php else: ?>
+                                <?= !empty($product->featured) ? '★' : '☆' ?>
+                            <?php endif; ?>
+                        </td>
                         <td class="product-cell">
                             <div class="product-text">
                                 <span class="product-name"><?= h($product->name) ?></span>
@@ -115,9 +125,27 @@ function catPillClass(string $name): string {
 <script>
     $(document).ready(function() {
         $('#productsTable').DataTable({
-            order: [[0, 'desc']],
+            order: [[1, 'asc']],
             language: { lengthMenu: '_MENU_ Entries Per Page', search: 'Search:' },
-            columnDefs: [{ targets: [0,1,2,3,4,5,6], searchable: true }]
+            columnDefs: [
+                { targets: [0], orderable: false, searchable: false },
+                { targets: [1,2,3,4,5,6,7], searchable: true }
+            ]
+        });
+
+        var csrfToken = '<?= $this->request->getAttribute('csrfToken') ?>';
+
+        $('#productsTable').on('click', '.featured-toggle', function() {
+            var btn = $(this);
+            $.ajax({
+                url: btn.data('url'),
+                method: 'POST',
+                data: { _csrfToken: csrfToken },
+                dataType: 'json',
+                success: function(res) {
+                    btn.toggleClass('is-featured', res.featured);
+                }
+            });
         });
     });
 </script>

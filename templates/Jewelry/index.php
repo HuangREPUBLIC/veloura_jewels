@@ -88,7 +88,7 @@ $currentParams = array_filter([
             <!-- Sort Dropdown -->
             <div class="filter-dropdown filter-dropdown--right" id="filter-sort">
                 <?php
-                $sorts = ['newest' => 'Newest', 'price_asc' => 'Price: Low to High', 'price_desc' => 'Price: High to Low', 'name_asc' => 'Name: A–Z'];
+                $sorts = ['newest' => 'Newest', 'price_asc' => 'Price: Low to High', 'price_desc' => 'Price: High to Low', 'featured' => 'Featured'];
                 $sortLabel = $sorts[$sortBy] ?? 'Newest';
                 ?>
                 <button type="button" class="filter-dropdown-btn <?= $sortBy !== 'newest' ? 'is-active' : '' ?>">
@@ -153,6 +153,9 @@ $currentParams = array_filter([
                 <a href="<?= $this->Url->build('/jewelry/view/' . $product->id) ?>" class="product-card-link">
                     <div class="product-card">
                         <div class="product-image-wrapper<?= !empty($product->product_images[1]) ? ' has-hover-image' : '' ?>">
+                            <?php if (!empty($product->featured)): ?>
+                                <span class="product-badge--featured">Featured</span>
+                            <?php endif; ?>
                             <?php if (!empty($product->product_images)): ?>
                                 <img
                                     src="<?= $this->Url->image('products/' . h($product->product_images[0]->filename)) ?>"
