@@ -24,7 +24,7 @@ $cakeDescription = 'Veloura Jewels';
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <?= $this->Html->css(['normalize.min', 'fonts', 'default-styles', 'cake']) ?>
+    <?= $this->Html->css(['normalize.min', 'fonts', 'default-styles', 'cake', 'search']) ?>
 
     <link rel="stylesheet" href="https://cdn.datatables.net/2.2.2/css/dataTables.dataTables.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -73,15 +73,15 @@ $role = $identity ? $identity->get('role') : null;
         <?php else : ?>
             <?= $this->Html->link('Contact', '/contact', ['class' => str_starts_with($currentPath, '/contact') ? 'active' : '']) ?>
         <?php endif ?>
-        <!--<?= $this->Html->link('Location', '/location', ['class' => str_starts_with($currentPath, '/location') ? 'active' : '']) ?> -->
+        <?= $this->Html->link('Location', '/location', ['class' => str_starts_with($currentPath, '/location') ? 'active' : '']) ?>
         <?= $this->Html->link('FAQ', '/faq', ['class' => str_starts_with($currentPath, '/faq') ? 'active' : '']) ?>
 
     </nav>
 
 
     <div class="navbar-right">
-        <!-- Search icon (no function yet) -->
-        <button class="nav-icon-btn" title="Search">
+        <!-- Search icon -->
+        <button class="nav-icon-btn" title="Search" onclick="openSearch()">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
                 <circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="22" y2="22"/>
             </svg>
@@ -148,6 +148,33 @@ $role = $identity ? $identity->get('role') : null;
         </div>
     </div>
 </header>
+
+<div class="search-panel" id="searchPanel" style="display:none" aria-hidden="true">
+    <div class="search-panel-inner">
+        <form class="search-panel-form" action="<?= $this->Url->build(['controller' => 'Search', 'action' => 'search']) ?>" method="GET">
+            <svg class="search-panel-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="22" y2="22"/>
+            </svg>
+            <input
+                type="search"
+                name="q"
+                id="searchInput"
+                class="search-panel-input"
+                placeholder="Search our collection..."
+                autocomplete="off"
+                spellcheck="false"
+                value="<?= h($this->request->getQuery('q') ?? '') ?>"
+            >
+            <button type="button" class="search-panel-close" onclick="closeSearch()" aria-label="Close search">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+                </svg>
+            </button>
+        </form>
+        <div class="search-suggestions" id="searchSuggestions"></div>
+    </div>
+    <div class="search-panel-backdrop" onclick="closeSearch()"></div>
+</div>
 
 <main class="main-content">
     <?= $this->Flash->render() ?>
@@ -287,6 +314,69 @@ $role = $identity ? $identity->get('role') : null;
             document.getElementById('navHamburger').classList.remove('open');
         }
     });
+
+    var searchTimer;
+    var suggestUrl = <?= json_encode($this->Url->build(['controller' => 'Search', 'action' => 'suggest'])) ?>;
+    var searchUrl  = <?= json_encode($this->Url->build(['controller' => 'Search', 'action' => 'search'])) ?>;
+
+    function openSearch() {
+        var panel = document.getElementById('searchPanel');
+        panel.style.display = 'block';
+        panel.setAttribute('aria-hidden', 'false');
+        setTimeout(function() { document.getElementById('searchInput').focus(); }, 50);
+    }
+
+    function closeSearch() {
+        var panel = document.getElementById('searchPanel');
+        panel.style.display = 'none';
+        panel.setAttribute('aria-hidden', 'true');
+        document.getElementById('searchSuggestions').innerHTML = '';
+        document.getElementById('searchInput').value = '';
+        clearTimeout(searchTimer);
+    }
+
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') closeSearch();
+    });
+
+    document.getElementById('searchInput').addEventListener('input', function() {
+        clearTimeout(searchTimer);
+        var q = this.value.trim();
+        var box = document.getElementById('searchSuggestions');
+        if (q.length < 2) { box.innerHTML = ''; return; }
+
+        searchTimer = setTimeout(function() {
+            fetch(suggestUrl + '?q=' + encodeURIComponent(q), {
+                headers: { 'X-Requested-With': 'XMLHttpRequest' }
+            })
+                .then(function(r) { return r.json(); })
+                .then(function(data) { renderSuggestions(data.results, q); });
+        }, 220);
+    });
+
+    function renderSuggestions(results, q) {
+        var box = document.getElementById('searchSuggestions');
+        if (!results || results.length === 0) {
+            box.innerHTML = '<p class="search-no-results">No results for &ldquo;' + q + '&rdquo;</p>';
+            return;
+        }
+        var items = results.map(function(r) {
+            var img = r.image
+                ? '<img src="' + r.image + '" alt="' + r.name + '" class="search-suggest-img">'
+                : '<div class="search-suggest-img search-suggest-img--empty"></div>';
+            return '<a href="' + r.url + '" class="search-suggest-item">'
+                + img
+                + '<span class="search-suggest-name">' + r.name + '</span>'
+                + '<span class="search-suggest-price">$' + r.price + '</span>'
+                + '</a>';
+        }).join('');
+
+        var viewAll = '<a href="' + searchUrl + '?q=' + encodeURIComponent(q) + '" class="search-view-all">'
+            + 'View all results for &ldquo;' + q + '&rdquo;'
+            + '</a>';
+
+        box.innerHTML = items + viewAll;
+    }
 </script>
 </body>
 </html>

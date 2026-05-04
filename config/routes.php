@@ -74,6 +74,10 @@ return function (RouteBuilder $routes): void {
         $builder->connect('/stripe/webhook', ['controller' => 'Jewelry', 'action' => 'webhook']);
 
 
+        // Search routes
+        $builder->connect('/search', ['controller' => 'Search', 'action' => 'search']);
+        $builder->connect('/search/suggest', ['controller' => 'Search', 'action' => 'suggest']);
+
         //Contact Form Route
         $builder->connect('/contact', ['controller' => 'ContactSubmissions', 'action' => 'add']);
         // FAQ Route
