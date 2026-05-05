@@ -1,0 +1,577 @@
+/* ============================================================
+   schedule.css — Veloura Jewels staff scheduling UI
+   Loaded on all /schedule/* pages via $this->Html->css('schedule')
+   Colours reference the brand palette from default-styles.css:
+     --oakwood, --oakwood-dark, --oakwood-rgb
+     --beige, --beige-light, --sage, --earth-yellow
+     --gray-*, --color-white, --color-main-bg
+   ============================================================ */
+
+/* ── Page shell ── */
+.sched-page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 3rem;
+    font-family: var(--font-admin);
+}
+
+/* ── Header row ── */
+.sched-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1.8rem;
+}
+
+.sched-header-left {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.sched-header-right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+/* ── Week navigation ── */
+.sched-week-nav {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--color-white);
+    border: 1.5px solid #e5e5e5;
+    border-radius: 10px;
+    padding: 0.35rem 0.6rem;
+}
+
+.sched-nav-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 6px;
+    color: var(--oakwood);
+    font-size: 1.2rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background 0.15s;
+    flex-shrink: 0;
+}
+
+.sched-nav-btn:hover {
+    background: var(--beige-light);
+    color: var(--oakwood-dark);
+    text-decoration: none;
+}
+
+.sched-week-picker-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.1rem;
+}
+
+.sched-week-input {
+    border: none !important;
+    outline: none !important;
+    font-size: 0.82rem;
+    color: var(--gray-600);
+    background: transparent;
+    padding: 0;
+    cursor: pointer;
+    width: auto;
+}
+
+.sched-week-label {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--gray-800);
+    white-space: nowrap;
+}
+
+/* ── Header action buttons ── */
+.sched-header-actions {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.btn-primary-sched {
+    display: inline-block;
+    padding: 0.55rem 1.1rem;
+    background: var(--oakwood);
+    color: var(--color-white) !important;
+    border-radius: 8px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    text-decoration: none !important;
+    transition: background 0.2s;
+    white-space: nowrap;
+}
+
+.btn-primary-sched:hover {
+    background: var(--oakwood-dark);
+    color: var(--color-white) !important;
+}
+
+.btn-secondary-sched {
+    display: inline-block;
+    padding: 0.55rem 1.1rem;
+    background: var(--color-white);
+    color: var(--oakwood) !important;
+    border: 1.5px solid var(--oakwood);
+    border-radius: 8px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    text-decoration: none !important;
+    transition: background 0.2s, color 0.2s;
+    white-space: nowrap;
+}
+
+.btn-secondary-sched:hover {
+    background: var(--beige-light);
+    color: var(--oakwood-dark) !important;
+}
+
+/* ── Grid wrapper ── */
+.sched-grid-wrap {
+    background: var(--color-white);
+    border-radius: 14px;
+    border: 1.5px solid #e8e8e8;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+}
+
+/* ── Calendar grid layout ──
+   8 columns: 1 staff column + 7 day columns
+   Staff column is fixed-width; day columns share remaining space equally */
+.sched-grid {
+    display: grid;
+    grid-template-columns: 200px repeat(7, 1fr);
+    min-width: 780px;
+}
+
+/* ── Column headers ── */
+.sched-grid-header {
+    display: contents;
+}
+
+.sched-staff-col-head {
+    background: var(--beige-light);
+    padding: 0.75rem 1rem;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--gray-600);
+    border-bottom: 2px solid #e0ddd4;
+}
+
+.sched-day-head {
+    background: var(--beige-light);
+    padding: 0.75rem 0.5rem;
+    text-align: center;
+    border-bottom: 2px solid #e0ddd4;
+    border-left: 1px solid #e8e3dc;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.15rem;
+}
+
+.sched-day-head--today {
+    background: rgba(var(--oakwood-rgb), 0.08);
+    border-bottom-color: var(--oakwood);
+}
+
+.sched-day-name {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--gray-600);
+}
+
+.sched-day-num {
+    font-size: 1.15rem;
+    font-weight: 300;
+    color: var(--gray-800);
+    line-height: 1;
+}
+
+.sched-day-head--today .sched-day-name,
+.sched-day-head--today .sched-day-num {
+    color: var(--oakwood);
+}
+
+.sched-day-head--today .sched-day-num {
+    font-weight: 700;
+}
+
+/* ── Staff rows ── */
+.sched-grid-row {
+    display: contents;
+}
+
+.sched-grid-row:not(:last-child) .sched-staff-cell,
+.sched-grid-row:not(:last-child) .sched-day-cell {
+    border-bottom: 1px solid #f0ede8;
+}
+
+/* ── Staff name cell ── */
+.sched-staff-cell {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    padding: 0.75rem 1rem;
+    background: #fafaf8;
+}
+
+.sched-staff-avatar {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: var(--beige);
+    color: var(--oakwood);
+    font-size: 0.82rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.sched-staff-name {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--gray-800);
+    line-height: 1.3;
+}
+
+/* ── Day cells ── */
+.sched-day-cell {
+    padding: 0.5rem 0.4rem;
+    border-left: 1px solid #f0ede8;
+    min-height: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-white);
+    transition: background 0.15s;
+}
+
+.sched-day-cell--today {
+    background: rgba(var(--oakwood-rgb), 0.03);
+}
+
+/* ── Shift card ── */
+.sched-shift-card {
+    width: 100%;
+    background: rgba(var(--oakwood-rgb), 0.07);
+    border: 1.5px solid rgba(var(--oakwood-rgb), 0.18);
+    border-left: 3px solid var(--oakwood);
+    border-radius: 7px;
+    padding: 0.45rem 0.55rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    transition: box-shadow 0.15s;
+}
+
+.sched-shift-card:hover {
+    box-shadow: 0 2px 8px rgba(var(--oakwood-rgb), 0.15);
+}
+
+.sched-shift-times {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--oakwood);
+    letter-spacing: 0.01em;
+}
+
+.sched-shift-hours {
+    font-size: 0.72rem;
+    color: var(--gray-500);
+}
+
+/* Admin action buttons inside shift card */
+.sched-shift-actions {
+    display: flex;
+    gap: 0.3rem;
+    margin-top: 0.3rem;
+    flex-wrap: wrap;
+}
+
+.sched-shift-edit {
+    font-size: 0.68rem;
+    color: var(--oakwood);
+    text-decoration: none;
+    padding: 0.1rem 0.4rem;
+    border: 1px solid rgba(var(--oakwood-rgb), 0.3);
+    border-radius: 4px;
+    transition: background 0.15s;
+}
+
+.sched-shift-edit:hover {
+    background: var(--oakwood);
+    color: var(--color-white);
+    text-decoration: none;
+}
+
+.sched-shift-delete {
+    font-size: 0.68rem;
+    color: var(--color-danger);
+    background: none;
+    border: 1px solid rgba(220, 38, 38, 0.3);
+    border-radius: 4px;
+    padding: 0.1rem 0.4rem;
+    cursor: pointer;
+    font-family: inherit;
+    transition: background 0.15s;
+}
+
+.sched-shift-delete:hover {
+    background: var(--color-danger);
+    color: var(--color-white);
+}
+
+/* ── Day off cell ── */
+.sched-day-off {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 40px;
+}
+
+.sched-day-off-dash {
+    color: #ddd;
+    font-size: 1rem;
+}
+
+/* ── Add-shift "+" button (admin only on empty cells) ── */
+.sched-add-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: transparent;
+    border: 1.5px dashed #ccc;
+    color: #ccc;
+    font-size: 1.1rem;
+    text-decoration: none;
+    transition: border-color 0.15s, color 0.15s, background 0.15s;
+}
+
+.sched-add-btn:hover {
+    border-color: var(--oakwood);
+    color: var(--oakwood);
+    background: var(--beige-light);
+    text-decoration: none;
+}
+
+/* ── Empty state ── */
+.sched-empty {
+    padding: 3.5rem 2rem;
+    text-align: center;
+    color: var(--gray-500);
+}
+
+.sched-empty p {
+    margin-bottom: 1rem;
+    font-size: 0.95rem;
+}
+
+/* ── Weekly summary chips ── */
+.sched-summary {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-top: 1.2rem;
+}
+
+.sched-summary-chip {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--color-white);
+    border: 1.5px solid #e5e5e5;
+    border-radius: 20px;
+    padding: 0.35rem 0.9rem;
+    font-size: 0.82rem;
+}
+
+.sched-summary-name {
+    font-weight: 600;
+    color: var(--gray-800);
+}
+
+.sched-summary-stat {
+    color: var(--gray-500);
+}
+
+/* ── My Schedule (personal list view) ── */
+.my-sched-page {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 3rem;
+    font-family: var(--font-admin);
+}
+
+.my-sched-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.my-sched-title {
+    margin: 0.4rem 0 0.25rem;
+}
+
+.my-sched-subtitle {
+    font-size: 0.88rem;
+    color: var(--gray-500);
+    margin: 0;
+}
+
+.my-sched-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+/* Individual shift row */
+.my-sched-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: var(--color-white);
+    border: 1.5px solid #e8e8e8;
+    border-left: 4px solid var(--oakwood);
+    border-radius: 10px;
+    padding: 1rem 1.2rem;
+    transition: box-shadow 0.15s;
+}
+
+.my-sched-row:hover {
+    box-shadow: 0 2px 10px rgba(0,0,0,0.07);
+}
+
+.my-sched-row--today {
+    border-left-color: var(--earth-yellow);
+    background: rgba(225, 169, 94, 0.04);
+}
+
+.my-sched-row--past {
+    opacity: 0.55;
+    border-left-color: #ccc;
+}
+
+.my-sched-date-col {
+    min-width: 90px;
+}
+
+.my-sched-dow {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--oakwood);
+    display: block;
+}
+
+.my-sched-row--today .my-sched-dow {
+    color: var(--earth-yellow);
+}
+
+.my-sched-date {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--gray-800);
+    display: block;
+    line-height: 1.2;
+}
+
+.my-sched-times-col {
+    flex: 1;
+}
+
+.my-sched-times {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--gray-800);
+    display: block;
+}
+
+.my-sched-hours {
+    font-size: 0.8rem;
+    color: var(--gray-500);
+    display: block;
+}
+
+.my-sched-empty {
+    padding: 3rem 1rem;
+    text-align: center;
+    color: var(--gray-500);
+    background: var(--color-white);
+    border-radius: 14px;
+    border: 1.5px solid #e8e8e8;
+}
+
+.my-sched-empty p {
+    margin-bottom: 0.5rem;
+}
+
+/* ── View page (single shift detail) ── */
+.sched-view-page {
+    max-width: 560px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 3rem;
+    font-family: var(--font-admin);
+}
+
+/* ── Horizontal scroll wrapper for the grid on small screens ── */
+@media (max-width: 860px) {
+    .sched-grid-wrap {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .sched-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .sched-header-right {
+        width: 100%;
+        justify-content: flex-start;
+    }
+}
+
+@media (max-width: 540px) {
+    .sched-page,
+    .my-sched-page,
+    .sched-view-page {
+        padding: 1.2rem 1rem 2rem;
+    }
+
+    .my-sched-row {
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
+    .my-sched-date-col {
+        min-width: unset;
+    }
+}

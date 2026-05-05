@@ -97,8 +97,8 @@ return function (RouteBuilder $routes): void {
             ->setPatterns(['id' => '\d+']);
 
         // Schedule management
-        $builder->connect('/schedule/add', ['controller' => 'Schedule', 'action' => 'add']);
-        $builder->connect('/schedule/add/{id}', ['controller' => 'Schedule', 'action' => 'add'])
+        $builder->connect('/Schedule/add', ['controller' => 'Schedule', 'action' => 'add']);
+        $builder->connect('/Schedule/add/{id}', ['controller' => 'Schedule', 'action' => 'add'])
             ->setPass(['id'])
             ->setPatterns(['id' => '\d+']);
 
@@ -113,8 +113,6 @@ return function (RouteBuilder $routes): void {
         $builder->connect('/profile/orders/{id}', ['controller' => 'Profile', 'action' => 'orderDetail'])
             ->setPass(['id'])
             ->setPatterns(['id' => '\d+']);
-
-
         $builder->fallbacks();
     });
 

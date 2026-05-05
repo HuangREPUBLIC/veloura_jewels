@@ -186,7 +186,7 @@ class UsersController extends AppController
                 $weekStarts[$monday->format('Y-m-d')] = true;
             }
 
-            // Fetch all matching schedule rows
+            // Fetch all matching Schedule rows
             $scheduleMap = [];
             foreach ($schedulesTable->find()->where([
                 'user_id'       => $identity->get('id'),
