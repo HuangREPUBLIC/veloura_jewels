@@ -7,6 +7,7 @@ use Cake\ORM\Table;
 use Cake\Validation\Validator;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Query\SelectQuery;
+use Cake\Database\Expression\QueryExpression;
 
 
 class SchedulesTable extends Table
@@ -35,7 +36,21 @@ class SchedulesTable extends Table
 
         $validator
             ->date('week_start')
-            ->notEmptyDate('week_start');
+            ->notEmptyDate('week_start')
+            ->add('week_start', 'monday', [
+                'rule' => function ($value) {
+                    try {
+                        $date = $value instanceof \DateTimeInterface
+                            ? $value
+                            : new \DateTime((string)$value);
+                    } catch (\Exception $e) {
+                        return false;
+                    }
+
+                    return (int)$date->format('N') === 1;
+                },
+                'message' => 'Week start must be a Monday.',
+            ]);
 
         $validator
             ->integer('day_of_week')
@@ -82,6 +97,7 @@ class SchedulesTable extends Table
             ->contain(['Users'])
             ->where(['Schedules.week_start' => $weekStart])
             ->orderByAsc('Users.first_name')
+            ->orderByAsc('Users.last_name')
             ->orderByAsc('Schedules.day_of_week')
             ->orderByAsc('Schedules.start_time');
     }
@@ -95,15 +111,15 @@ class SchedulesTable extends Table
     public function findUpcomingForUser(SelectQuery $query, int $userId): SelectQuery
     {
         $today = (new \DateTime('today'))->format('Y-m-d');
-
-        $shiftDateExpr = "DATE_ADD(Schedules.week_start, INTERVAL Schedules.day_of_week - 1 DAY)";
+        $shiftDateSql = 'DATE_ADD(Schedules.week_start, INTERVAL Schedules.day_of_week - 1 DAY)';
+        $query->bind(':today', $today, 'date');
 
         return $query
             ->contain(['Users'])
-            ->where([
-                'Schedules.user_id' => $userId,
-                "$shiftDateExpr >=" => $today,
-            ])
+            ->where(['Schedules.user_id' => $userId])
+            ->where(function (QueryExpression $exp) use ($shiftDateSql): QueryExpression {
+                return $exp->add($shiftDateSql . ' >= :today');
+            })
             ->orderByAsc('Schedules.week_start')
             ->orderByAsc('Schedules.day_of_week')
             ->orderByAsc('Schedules.start_time');

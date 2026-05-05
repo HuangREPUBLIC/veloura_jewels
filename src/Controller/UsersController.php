@@ -200,12 +200,12 @@ class UsersController extends AppController
             foreach ($upcomingDays as $day) {
                 $isoDow  = (int)$day->format('N');
                 $monday  = (clone $day)->modify('-' . ($isoDow - 1) . ' days');
-                $appDow  = (int)$day->format('w'); // 0=Sun … 6=Sat
+                $appDow  = (int)$day->format('N'); // 1=Mon ... 7=Sun
                 $key     = $monday->format('Y-m-d') . ':' . $appDow;
                 $schedule[$day->format('Y-m-d')] = $scheduleMap[$key] ?? null;
             }
 
-            $weekRange = $upcomingDays[0]->format('j M') . ' – ' . $upcomingDays[6]->format('j M Y');
+            $weekRange = $upcomingDays[0]->format('j M') . ' - ' . $upcomingDays[6]->format('j M Y');
         }
 
         $this->set(compact('totalProducts', 'totalUsers', 'totalEnquiries', 'totalOrders', 'lowStockProducts', 'schedule', 'upcomingDays', 'weekRange'));

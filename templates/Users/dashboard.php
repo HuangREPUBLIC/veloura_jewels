@@ -11,12 +11,12 @@
 
 $this->assign('title', 'Admin Dashboard');
 $this->Html->css('admincontact', ['block' => true]);
+$this->Html->css('schedule', ['block' => true]);
 
 $role = $authUser->get('role');
+$todayStr = (new DateTime('today'))->format('Y-m-d');
 
-// Cards for Orders, Products, Users, CMS, Staff Schedule & Contacts
 $cards = [
-    // Row 1
     [
         'title' => 'Total Products',
         'value' => $totalProducts,
@@ -36,7 +36,6 @@ $cards = [
         'icon'  => '<path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>'
     ],
 
-    // Row 2
     [
         'title' => 'Staff Schedule',
         'value' => null,
@@ -61,19 +60,17 @@ $cards = [
 <div class="admin-wrapper">
     <div class="admin-dashboard">
 
-        <!-- HEADER -->
         <div class="dashboard-hero">
             <h1>Admin Dashboard</h1>
             <p>Hi, <?= h($authUser->first_name) ?></p>
         </div>
 
-        <!-- CARDS -->
         <div class="dashboard-summary">
             <?php foreach ($cards as $card): ?>
                 <a href="<?= $this->Url->build($card['url']) ?>" class="dashboard-card">
 
                     <div class="dashboard-icon">
-                        <svg width="22" height="22" viewBox="0 0 24 24"
+                        <svg width="26" height="26" viewBox="0 0 24 24"
                              fill="none" stroke="#786c3b" stroke-width="1.8"
                              stroke-linecap="round" stroke-linejoin="round">
                             <?= $card['icon'] ?>
@@ -85,8 +82,6 @@ $cards = [
 
                         <?php if ($card['value'] !== null): ?>
                             <p><?= $card['value'] ?></p>
-                        <?php else: ?>
-                            <p class="card-subtext">Open</p>
                         <?php endif; ?>
                     </div>
 
@@ -94,56 +89,76 @@ $cards = [
             <?php endforeach; ?>
         </div>
 
-        <!-- LOW STOCK -->
-        <?php if (!$lowStockProducts->isEmpty()): ?>
-            <div class="low-stock-warning">
-                <h3>Low Stock Products</h3>
+        <?php if ($role === 'staff' && !empty($upcomingDays)): ?>
+            <div class="dashboard-schedule">
+                <div class="dashboard-schedule-header">
+                    <span class="dashboard-schedule-title">My Schedule</span>
+                    <span class="dashboard-schedule-range"><?= h($weekRange) ?></span>
+                    <?= $this->Html->link('View all', ['controller' => 'Schedule', 'action' => 'index'], ['class' => 'dashboard-schedule-link']) ?>
+                </div>
 
-                <?php foreach ($lowStockProducts as $product): ?>
-                    <div class="low-stock-row">
-
-                        <div class="low-stock-row-top">
-                            <span><?= h($product->name) ?></span>
-
-                            <?php if ($role === 'admin'): ?>
-                                <?= $this->Html->link(
-                                    'Restock',
-                                    ['controller'=>'Products','action'=>'edit',$product->id],
-                                    ['class'=>'low-stock-btn']
-                                ) ?>
+                <div class="dashboard-schedule-grid">
+                    <?php foreach ($upcomingDays as $day): ?>
+                        <?php
+                        $dateStr = $day->format('Y-m-d');
+                        $shift = $schedule[$dateStr] ?? null;
+                        $isToday = $dateStr === $todayStr;
+                        ?>
+                        <div class="dashboard-schedule-day <?= $isToday ? 'dashboard-schedule-day--today' : '' ?> <?= $shift ? 'dashboard-schedule-day--on' : 'dashboard-schedule-day--off' ?>">
+                            <span class="dashboard-schedule-label"><?= h($day->format('D')) ?></span>
+                            <span class="dashboard-schedule-date"><?= h($day->format('j M')) ?></span>
+                            <?php if ($shift): ?>
+                                <span class="dashboard-schedule-time"><?= h($shift->time_range) ?></span>
+                            <?php else: ?>
+                                <span class="dashboard-schedule-off">Off</span>
                             <?php endif; ?>
                         </div>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        <?php endif; ?>
 
-                        <div class="low-stock-pills">
-                            <?php foreach ($product->product_variants as $v): ?>
-                                <?php if ($v->stock < 5): ?>
-                                    <span class="<?= $v->stock === 0 ? 'pill-zero' : 'pill-low' ?>">
-                            <?= h($v->size) ?>: <?= $v->stock ?>
-                        </span>
-                                <?php endif; ?>
-                            <?php endforeach; ?>
-                        </div>
-
+        <?php if (!$lowStockProducts->isEmpty()): ?>
+            <div class="low-stock-warning">
+                <div class="low-stock-header">
+                    <div>
+                        <h3>Low Stock Products</h3>
                     </div>
-                <?php endforeach; ?>
+                </div>
+
+                <div class="low-stock-list">
+                    <?php foreach ($lowStockProducts as $product): ?>
+                        <div class="low-stock-row">
+
+                            <div class="low-stock-row-top">
+                                <span class="low-stock-name"><?= h($product->name) ?></span>
+
+                                <?php if ($role === 'admin'): ?>
+                                    <?= $this->Html->link(
+                                        'Restock',
+                                        ['controller'=>'Products','action'=>'edit',$product->id],
+                                        ['class'=>'low-stock-btn']
+                                    ) ?>
+                                <?php endif; ?>
+                            </div>
+
+                            <div class="low-stock-pills">
+                                <?php foreach ($product->product_variants as $v): ?>
+                                    <?php if ($v->stock < 5): ?>
+                                        <span class="low-stock-pill <?= $v->stock === 0 ? 'pill-zero' : 'pill-low' ?>">
+                                            <?= h($v->size) ?>: <?= $v->stock ?>
+                                        </span>
+                                    <?php endif; ?>
+                                <?php endforeach; ?>
+                            </div>
+
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+
 
             </div>
         <?php endif; ?>
 
     </div>
 </div>
-
-<style>
-    .dashboard-summary {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 1.5rem;
-    }
-
-    .dashboard-card {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-        text-decoration: none;
-    }
-</style>

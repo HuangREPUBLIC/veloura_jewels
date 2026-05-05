@@ -5,10 +5,14 @@ namespace App\Controller;
 
 use App\Model\Entity\Schedule;
 use Cake\Event\EventInterface;
-use Cake\Http\Exception\NotFoundException;
 
 class ScheduleController extends AppController
 {
+    public function initialize(): void
+    {
+        parent::initialize();
+        $this->Schedules = $this->fetchTable('Schedules');
+    }
 
     /**
      * Role-based access. Customers are not allowed.
@@ -16,9 +20,6 @@ class ScheduleController extends AppController
      */
     public function beforeFilter(EventInterface $event)
     {
-        parent::initialize();
-        $this->Schedules = $this->fetchTable('Schedules');
-
         parent::beforeFilter($event);
 
         $identity = $this->Authentication->getIdentity();
@@ -33,7 +34,7 @@ class ScheduleController extends AppController
             return $this->redirect('/');
         }
 
-        $adminOnly = ['manage', 'add', 'view', 'delete'];
+        $adminOnly = ['shifts', 'delete'];
         if (in_array($this->request->getParam('action'), $adminOnly, true) && $role !== 'admin') {
             $this->Flash->error('You do not have permission to manage schedules.');
             return $this->redirect(['action' => 'index']);
@@ -43,62 +44,30 @@ class ScheduleController extends AppController
     }
 
     /**
-     * Read-only week calendar — visible to all logged-in staff and admins.
+     * Weekly schedule grid. Admins see all staff with edit controls; staff see read-only.
      */
     public function index(): void
     {
+        $isAdmin  = $this->Authentication->getIdentity()->get('role') === 'admin';
         $weekData = $this->resolveWeek($this->request->getQuery('week'));
         $shifts   = $this->Schedules->find('forWeek', weekStart: $weekData['weekStartStr'])->all();
 
-        $this->set([
-                'shiftsByUserDay' => $this->groupShiftsByUserAndDay($shifts),
-                'staffOrder'      => $this->extractStaffOrder($shifts),
-                'isAdminView'     => false,
-            ] + $weekData);
-    }
-
-    /**
-     * Admin-only week calendar — same data as index() but with edit/delete actions.
-     * Reuses templates/Schedule/index.php with isAdminView=true.
-     */
-    public function manage(): void
-    {
-        $weekData = $this->resolveWeek($this->request->getQuery('week'));
-        $shifts   = $this->Schedules->find('forWeek', weekStart: $weekData['weekStartStr'])->all();
+        if ($isAdmin) {
+            $staffList  = $this->Schedules->Users->find()
+                ->where(['role' => 'staff'])
+                ->orderByAsc('first_name')
+                ->orderByAsc('last_name')
+                ->all();
+            $staffOrder = $this->indexUsersById($staffList);
+        } else {
+            $staffOrder = $this->extractStaffOrder($shifts);
+        }
 
         $this->set([
                 'shiftsByUserDay' => $this->groupShiftsByUserAndDay($shifts),
-                'staffOrder'      => $this->extractStaffOrder($shifts),
-                'isAdminView'     => true,
+                'staffOrder'      => $staffOrder,
+                'isAdminView'     => $isAdmin,
             ] + $weekData);
-
-        $this->render('index');
-    }
-
-    /**
-     * Personal upcoming shifts — the logged-in user's own shifts, today onwards.
-     */
-    public function mySchedule(): void
-    {
-        $userId = (int)$this->Authentication->getIdentity()->get('id');
-
-        $shifts = $this->Schedules
-            ->find('upcomingForUser', userId: $userId)
-            ->all();
-
-        $this->set([
-            'shifts' => $shifts,
-            'staff'  => $this->Schedules->Users->get($userId),
-        ]);
-    }
-
-    /**
-     * Single shift detail (admin).
-     */
-    public function view(int $id): void
-    {
-        $shift = $this->Schedules->get($id, contain: ['Users']);
-        $this->set(compact('shift'));
     }
 
 
@@ -109,7 +78,7 @@ class ScheduleController extends AppController
      * staff member's existing rows for that week and re-insert whatever is currently ticked.
      * Past weeks are blocked from being edited.
      */
-    public function add(?int $id = null)
+    public function shifts(?int $id = null)
     {
         $weekData = $this->resolveWeek($this->request->getQuery('week'));
 
@@ -117,6 +86,7 @@ class ScheduleController extends AppController
         $staffList  = $usersTable->find()
             ->where(['role' => 'staff'])
             ->orderByAsc('first_name')
+            ->orderByAsc('last_name')
             ->all();
 
         $staff    = null;
@@ -147,7 +117,7 @@ class ScheduleController extends AppController
                     $this->Flash->error('Saved with issues: ' . implode(' ', $result['errors']));
                 }
 
-                return $this->redirect(['action' => 'add', $id, '?' => ['week' => $saveWeek]]);
+                return $this->redirect(['action' => 'shifts', $id, '?' => ['week' => $saveWeek]]);
             }
 
             $rows = $this->Schedules->find()
@@ -183,10 +153,10 @@ class ScheduleController extends AppController
         }
 
         $weekStart = $shift->week_start->format('Y-m-d');
-        return $this->redirect(['action' => 'manage', '?' => ['week' => $weekStart]]);
+        return $this->redirect(['action' => 'index', '?' => ['week' => $weekStart]]);
     }
 
-    // ---------- Helpers ----------
+    // Helpers
 
     /**
      * Resolve the week being viewed. Defaults to the current week.
@@ -209,7 +179,7 @@ class ScheduleController extends AppController
         return [
             'weekStartStr'     => $weekStart->format('Y-m-d'),
             'weekEndStr'       => $weekEnd->format('Y-m-d'),
-            'weekRange'        => $weekStart->format('j M') . ' – ' . $weekEnd->format('j M Y'),
+            'weekRange'        => $weekStart->format('j M') . ' - ' . $weekEnd->format('j M Y'),
             'minWeekInput'     => $thisMonday->format('Y-\WW'),
             'currentWeekInput' => $weekStart->format('Y-\WW'),
             'thisMonday'       => $thisMonday,
@@ -298,6 +268,18 @@ class ScheduleController extends AppController
             if (!isset($out[$shift->user_id])) {
                 $out[$shift->user_id] = $shift->user;
             }
+        }
+        return $out;
+    }
+
+    /**
+     * Build a [userId => User] map from an already ordered user result set.
+     */
+    private function indexUsersById(iterable $users): array
+    {
+        $out = [];
+        foreach ($users as $user) {
+            $out[$user->id] = $user;
         }
         return $out;
     }

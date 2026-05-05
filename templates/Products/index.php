@@ -16,7 +16,6 @@ $this->assign('title', 'Products');
         <div class="page-header-row">
             <div>
                 <h3 class="page-title"><?= __('Products') ?></h3>
-                <p class="page-subtitle">Manage product listings and details</p>
             </div>
 
             <?php if ($role === 'admin'): ?>

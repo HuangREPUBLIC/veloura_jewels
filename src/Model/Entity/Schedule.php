@@ -22,7 +22,7 @@ class Schedule extends Entity
 
     /**
      * Day-of-week index used in this app: Mon=1 ... Sun=7.
-     * (Matches PHP's date('w'), but we display Mon-first.)
+     * (Matches PHP's date('N').)
      */
     public const DAY_NAMES = [
         1 => 'Monday',
@@ -58,14 +58,14 @@ class Schedule extends Entity
     }
 
     /**
-     * "08:00 – 18:30" formatted range.
+     * "08:00 - 18:30" formatted range.
      */
     protected function _getTimeRange(): string
     {
         if (!$this->start_time instanceof Time || !$this->end_time instanceof Time) {
             return '';
         }
-        return $this->start_time->format('H:i') . ' – ' . $this->end_time->format('H:i');
+        return $this->start_time->format('H:i') . ' - ' . $this->end_time->format('H:i');
     }
 
     /**

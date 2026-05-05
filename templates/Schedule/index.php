@@ -1,27 +1,23 @@
 <?php
 use App\Model\Entity\Schedule;
 
-/** Setup */
 $this->assign('title', $isAdminView ? 'Manage Schedule' : 'Team Schedule');
 $this->Html->css('schedule', ['block' => true]);
 
 $todayStr = (new DateTime('today'))->format('Y-m-d');
-$action   = $isAdminView ? 'manage' : 'index';
 ?>
 
 <div class="sched-page">
 
-    <!-- ================= HEADER ================= -->
     <div class="sched-header">
 
         <div class="sched-header-left">
-            <?= $this->Html->link('← Back', ['controller' => 'Users', 'action' => 'dashboard'], ['class' => 'back-link']) ?>
+            <?= $this->Html->link(__('← Back'), ['controller' => 'Users', 'action' => 'dashboard'], ['class' => 'back-link']) ?>
             <h3 class="page-title"><?= $this->fetch('title') ?></h3>
         </div>
 
         <div class="sched-header-right">
 
-            <!-- Week Navigation -->
             <?php
             $currentMonday = new DateTime($weekStartStr);
             $prevWeek = (clone $currentMonday)->modify('-7 days')->format('Y-m-d');
@@ -29,34 +25,22 @@ $action   = $isAdminView ? 'manage' : 'index';
             ?>
 
             <div class="sched-week-nav">
-                <?= $this->Html->link('‹', ['action' => $action, '?' => ['week' => $prevWeek]], ['class' => 'sched-nav-btn']) ?>
+                <?= $this->Html->link('Prev', ['action' => 'index', '?' => ['week' => $prevWeek]], ['class' => 'sched-nav-btn']) ?>
 
                 <div class="sched-week-picker-wrap">
                     <input type="week"
                            value="<?= h($currentWeekInput) ?>"
                            onchange="switchWeek(this.value)"
                            class="sched-week-input">
-                    <span><?= h($weekRange) ?></span>
+                    <span class="sched-week-label"><?= h($weekRange) ?></span>
                 </div>
 
-                <?= $this->Html->link('›', ['action' => $action, '?' => ['week' => $nextWeek]], ['class' => 'sched-nav-btn']) ?>
-            </div>
-
-            <!-- Actions -->
-            <div class="sched-header-actions">
-                <?= $this->Html->link('My Shifts', ['action' => 'mySchedule'], ['class' => 'btn-secondary-sched']) ?>
-
-                <?php if ($isAdminView): ?>
-                    <?= $this->Html->link('+ Add Shifts', ['action' => 'add'], ['class' => 'btn-primary-sched']) ?>
-                <?php elseif ($this->request->getAttribute('identity')->get('role') === 'admin'): ?>
-                    <?= $this->Html->link('Manage', ['action' => 'manage', '?' => ['week' => $weekStartStr]], ['class' => 'btn-primary-sched']) ?>
-                <?php endif; ?>
+                <?= $this->Html->link('Next', ['action' => 'index', '?' => ['week' => $nextWeek]], ['class' => 'sched-nav-btn']) ?>
             </div>
 
         </div>
     </div>
 
-    <!-- ================= GRID ================= -->
     <div class="sched-grid-wrap">
 
         <?php if (empty($staffOrder)): ?>
@@ -64,7 +48,7 @@ $action   = $isAdminView ? 'manage' : 'index';
             <div class="sched-empty">
                 <p>No shifts scheduled.</p>
                 <?php if ($isAdminView): ?>
-                    <?= $this->Html->link('Add shifts →', ['action' => 'add'], ['class' => 'btn-primary-sched']) ?>
+                    <?= $this->Html->link('Add shifts', ['action' => 'shifts'], ['class' => 'btn-primary-sched']) ?>
                 <?php endif; ?>
             </div>
 
@@ -72,7 +56,6 @@ $action   = $isAdminView ? 'manage' : 'index';
 
             <div class="sched-grid">
 
-                <!-- Header Row -->
                 <div class="sched-grid-header">
                     <div class="sched-staff-col-head">Staff Member</div>
 
@@ -81,13 +64,12 @@ $action   = $isAdminView ? 'manage' : 'index';
                         $isToday = $dateStr === $todayStr;
                         ?>
                         <div class="sched-day-head <?= $isToday ? 'sched-day-head--today' : '' ?>">
-                            <span><?= Schedule::DAY_NAMES_SHORT[$dayNum] ?></span>
-                            <span><?= $date->format('j') ?></span>
+                            <span class="sched-day-name"><?= Schedule::DAY_NAMES_SHORT[$dayNum] ?></span>
+                            <span class="sched-day-num"><?= $date->format('j') ?></span>
                         </div>
                     <?php endforeach; ?>
                 </div>
 
-                <!-- Staff Rows -->
                 <?php foreach ($staffOrder as $userId => $user): ?>
 
                     <?php
@@ -97,13 +79,11 @@ $action   = $isAdminView ? 'manage' : 'index';
 
                     <div class="sched-grid-row">
 
-                        <!-- Staff Info -->
                         <div class="sched-staff-cell">
                             <div class="sched-staff-avatar"><?= h($initial) ?></div>
                             <span class="sched-staff-name"><?= h($fullName) ?></span>
                         </div>
 
-                        <!-- Days -->
                         <?php foreach ($dayDates as $dayNum => $date):
                             $shift   = $shiftsByUserDay[$userId][$dayNum] ?? null;
                             $isToday = $date->format('Y-m-d') === $todayStr;
@@ -113,13 +93,13 @@ $action   = $isAdminView ? 'manage' : 'index';
                                 <?php if ($shift): ?>
 
                                     <div class="sched-shift-card">
-                                        <span><?= h($shift->time_range) ?></span>
-                                        <span><?= number_format($shift->hours, 1) ?>h</span>
+                                        <span class="sched-shift-times"><?= h($shift->time_range) ?></span>
+                                        <span class="sched-shift-hours"><?= number_format($shift->hours, 1) ?>h</span>
 
                                         <?php if ($isAdminView): ?>
                                             <div class="sched-shift-actions">
-                                                <?= $this->Html->link('Edit', ['action' => 'add', $userId, '?' => ['week' => $weekStartStr]]) ?>
-                                                <?= $this->Form->postLink('✕', ['action' => 'delete', $shift->id]) ?>
+                                                <?= $this->Html->link('Edit', ['action' => 'shifts', $userId, '?' => ['week' => $weekStartStr]], ['class' => 'sched-shift-edit']) ?>
+                                                <?= $this->Form->postLink('Delete', ['action' => 'delete', $shift->id], ['class' => 'sched-shift-delete', 'confirm' => 'Delete this shift?']) ?>
                                             </div>
                                         <?php endif; ?>
                                     </div>
@@ -128,9 +108,9 @@ $action   = $isAdminView ? 'manage' : 'index';
 
                                     <div class="sched-day-off">
                                         <?php if ($isAdminView): ?>
-                                            <?= $this->Html->link('+', ['action' => 'add', $userId, '?' => ['week' => $weekStartStr]]) ?>
+                                            <?= $this->Html->link('Add', ['action' => 'shifts', $userId, '?' => ['week' => $weekStartStr]], ['class' => 'sched-add-btn']) ?>
                                         <?php else: ?>
-                                            —
+                                            <span class="sched-day-off-dash">-</span>
                                         <?php endif; ?>
                                     </div>
 
@@ -147,7 +127,6 @@ $action   = $isAdminView ? 'manage' : 'index';
         <?php endif; ?>
     </div>
 
-    <!-- ================= SUMMARY ================= -->
     <?php if (!empty($staffOrder)): ?>
 
         <div class="sched-summary">
@@ -170,7 +149,7 @@ $action   = $isAdminView ? 'manage' : 'index';
 
                 <div class="sched-summary-chip">
                     <strong><?= h($user->first_name ?: $user->email) ?></strong>
-                    <span><?= $shiftCount ?> shifts · <?= number_format($totalHours, 1) ?>h</span>
+                    <span class="sched-summary-stat"><?= $shiftCount ?> shifts / <?= number_format($totalHours, 1) ?>h</span>
                 </div>
 
             <?php endforeach; ?>
@@ -194,6 +173,6 @@ $action   = $isAdminView ? 'manage' : 'index';
 
         const dateStr = monday.toISOString().slice(0,10);
 
-        window.location.href = `<?= $this->Url->build(['controller'=>'Schedule','action'=>$action]) ?>?week=${dateStr}`;
+        window.location.href = `<?= $this->Url->build(['controller'=>'Schedule','action'=>'index']) ?>?week=${dateStr}`;
     }
 </script>

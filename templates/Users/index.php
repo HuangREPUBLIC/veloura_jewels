@@ -17,11 +17,10 @@ $identity = $this->request->getAttribute('identity');
         <div class="page-header-row">
             <div>
                 <h3 class="page-title"><?= __('Users') ?></h3>
-                <p class="page-subtitle">Manage user accounts and roles</p>
             </div>
 
             <?php if ($role === 'admin'): ?>
-                <?= $this->Html->link('Schedule', ['controller' => 'Schedule', 'action' => 'add'], ['class' => 'btn-new-product']) ?>
+                <?= $this->Html->link('Schedule', ['controller' => 'Schedule', 'action' => 'index'], ['class' => 'btn-new-product']) ?>
             <?php endif; ?>
         </div>
 

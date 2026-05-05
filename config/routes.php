@@ -96,9 +96,12 @@ return function (RouteBuilder $routes): void {
             ->setPass(['id'])
             ->setPatterns(['id' => '\d+']);
 
-        // Schedule management
-        $builder->connect('/Schedule/add', ['controller' => 'Schedule', 'action' => 'add']);
-        $builder->connect('/Schedule/add/{id}', ['controller' => 'Schedule', 'action' => 'add'])
+        // Staff schedule routes
+        $builder->connect('/schedule', ['controller' => 'Schedule', 'action' => 'index']);
+        $builder->connect('/schedule/delete/{id}', ['controller' => 'Schedule', 'action' => 'delete'])
+            ->setPass(['id'])
+            ->setPatterns(['id' => '\d+']);
+        $builder->connect('/schedule/shifts/{id}', ['controller' => 'Schedule', 'action' => 'shifts'])
             ->setPass(['id'])
             ->setPatterns(['id' => '\d+']);
 

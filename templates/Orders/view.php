@@ -14,7 +14,6 @@ $this->assign('title', 'Order ' . $order->id);
         <div class="page-header-row">
             <div>
                 <h3 class="page-title">Order #<?= h($order->id) ?></h3>
-                <p class="page-subtitle">Review payment details, order items and estimated profit</p>
             </div>
         </div>
 
