@@ -186,7 +186,7 @@ $role = $identity ? $identity->get('role') : null;
 
         <div class="footer-col footer-col--brand">
             <?= $this->Html->link(
-                $this->Html->image('logo.png', ['alt' => 'Veloura Jewels', 'class' => 'footer-logo']),
+                $this->Html->image('icon.png', ['alt' => 'Veloura Jewels', 'class' => 'footer-logo']),
                 '/',
                 ['escape' => false]
             ) ?>
@@ -224,6 +224,11 @@ $role = $identity ? $identity->get('role') : null;
                     </a>
                 </li>
             </ul>
+
+            <div style="pointer-events: none;">
+                <div class="trustpilot-widget" data-locale="en-NZ" data-template-id="5419b637fa0340045cd0c936" data-businessunit-id="5c8ad751be6c490001d050ce" data-style-height="20px" data-style-width="230px" data-theme="light" data-style-alignment="left"></div>
+            </div>
+            <script type="text/javascript" src="//widget.trustpilot.com/bootstrap/v5/tp.widget.bootstrap.min.js" async></script>
         </div>
 
         <div class="footer-col">
@@ -251,7 +256,7 @@ $role = $identity ? $identity->get('role') : null;
                 <input type="email" name="email" placeholder="Your email address" class="footer-newsletter-input" required>
                 <button type="submit" class="footer-newsletter-btn">Subscribe</button>
             </form>
-            <p class="footer-contact-detail" id="newsletterThanks" style="display:none">Thanks for subscribing!</p>
+            <p class="footer-subscribe-thanks" id="newsletterThanks" style="display:none">Thanks for subscribing!</p>
             <p class="footer-newsletter-disclaimer">No spam. Unsubscribe anytime.</p>
             <p class="footer-contact-detail">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
