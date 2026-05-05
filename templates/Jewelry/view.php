@@ -67,11 +67,11 @@ $oneSizeVariant = $isOneSizeOnly ? $inStockVariants[0] : null;
 
             <p class="detail-stock">
                 <?php if ($totalStock <= 0): ?>
-                    <span style="color:#dc2626;">Out of Stock</span>
+                    <span class="stock-pill stock-pill--out">Out of Stock</span>
                 <?php elseif ($totalStock < 5): ?>
-                    <span style="color:#b7860b;">Low Stock</span>
+                    <span class="stock-pill stock-pill--low">Low Stock</span>
                 <?php else: ?>
-                    <span style="color:#16a34a;">In Stock</span>
+                    <span class="stock-pill stock-pill--in">In Stock</span>
                 <?php endif; ?>
             </p>
 
@@ -98,7 +98,7 @@ $oneSizeVariant = $isOneSizeOnly ? $inStockVariants[0] : null;
                     <div class="qty-box">
                         <?php if ($isOneSizeOnly): ?>
                             <?= $this->Form->hidden('variant_id', ['value' => $oneSizeVariant->id]) ?>
-                            <span><?= h($oneSizeVariant->size) ?></span>
+                            <span class="one-size-pill"><?= h($oneSizeVariant->size) ?></span>
                         <?php else: ?>
                             <select name="variant_id" id="variant-select">
                                 <option value="">-- Select --</option>

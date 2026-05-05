@@ -33,10 +33,10 @@ $this->Html->css('jewelry', ['block' => true]);
 
                     <div class="cart-item-info">
                         <h3><?= h($product->name) ?></h3>
-                        <p>Size: <?= h($product->variant->size) ?></p>
-                        <p>Price: $<?= number_format((float)$product->sale_price, 2) ?></p>
-                        <p>Quantity: <?= (int)$product->quantity ?></p>
-                        <p>Subtotal: $<?= number_format((float)$product->subtotal, 2) ?></p>
+                        <p class="cart-price">Size: <?= h($product->variant->size) ?></p>
+                        <p class="cart-price">Price: $<?= number_format((float)$product->sale_price, 2) ?></p>
+                        <p class="cart-price">Quantity: <?= (int)$product->quantity ?></p>
+                        <p class="cart-subtotal">Subtotal: $<?= number_format((float)$product->subtotal, 2) ?></p>
                     </div>
                 </div>
             <?php endforeach; ?>
@@ -53,7 +53,7 @@ $this->Html->css('jewelry', ['block' => true]);
                 <?= $this->Form->create(null, ['url' => ['controller' => 'Jewelry', 'action' => 'createCheckoutSession']]) ?>
                 <?= $this->Form->button('Pay', ['class' => 'jewelry-cart-primary-btn']) ?>
                 <?= $this->Form->end() ?>
-                <a href="<?= $this->Url->build('/cart') ?>" class="jewelry-cart-secondary-btn jewelry-cart-link">Back to Cart</a>
+                <a href="<?= $this->Url->build('/cart') ?>" class="jewelry-cart-secondary-btn">Back to Cart</a>
             </div>
         </aside>
     </div>

@@ -18,9 +18,6 @@ $this->Html->css('jewelry', ['block' => true]);
     <?php if (empty($products)): ?>
         <div class="empty-state">
             <p>Your cart is currently empty.</p>
-            <div style="margin-top: 1rem;">
-                <a href="<?= $this->Url->build('/jewelry') ?>" class="jewelry-cart-primary-btn">Continue Shopping</a>
-            </div>
         </div>
     <?php else: ?>
         <div class="cart-layout">

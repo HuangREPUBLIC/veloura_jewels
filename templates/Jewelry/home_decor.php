@@ -12,14 +12,6 @@
 $this->assign('title', 'Home Decor');
 $this->Html->css('jewelry', ['block' => true]);
 ?>
-<?php
-// Build current query params for sort links (preserves category + price filters)
-$currentParams = array_filter([
-    'category'  => $categoryId ?: null,
-    'min_price' => $minPrice,
-    'max_price' => $maxPrice,
-]);
-?>
 
 <div class="jewelry-page">
     <section class="jewelry-hero">
@@ -32,14 +24,13 @@ $currentParams = array_filter([
         <?= $this->Form->create(null, [
             'type' => 'get',
             'url' => ['controller' => 'Jewelry', 'action' => 'home_decor'],
-            'class' => 'jewelry-filter-form'
         ]) ?>
 
         <div class="filter-bar-inner">
 
             <!-- Category Dropdown -->
             <div class="filter-dropdown" id="filter-category">
-                <button type="button" class="filter-dropdown-btn <?= $categoryId > 0 ? 'is-active' : '' ?>">
+                <button type="button" class="filter-dropdown-btn <?= $categoryId > 0 ? 'is-active' : '' ?>" aria-expanded="false" aria-controls="filter-category-menu">
                     Category
                     <?php if ($categoryId > 0): ?>
                         <?php foreach ($categories as $cat): ?>
@@ -50,7 +41,7 @@ $currentParams = array_filter([
                     <?php endif; ?>
                     <svg class="filter-chevron" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
                 </button>
-                <div class="filter-dropdown-menu">
+                <div class="filter-dropdown-menu" id="filter-category-menu">
                     <a href="<?= $this->Url->build(['controller' => 'Jewelry', 'action' => 'home_decor', '?' => array_filter(['min_price' => $minPrice, 'max_price' => $maxPrice, 'sort' => $sortBy !== 'newest' ? $sortBy : null])]) ?>"
                        class="filter-dropdown-item <?= $categoryId === 0 ? 'active' : '' ?>">All</a>
                     <?php foreach ($categories as $cat): ?>
@@ -64,14 +55,14 @@ $currentParams = array_filter([
 
             <!-- Price Dropdown -->
             <div class="filter-dropdown" id="filter-price">
-                <button type="button" class="filter-dropdown-btn <?= ($minPrice || $maxPrice) ? 'is-active' : '' ?>">
+                <button type="button" class="filter-dropdown-btn <?= ($minPrice || $maxPrice) ? 'is-active' : '' ?>" aria-expanded="false" aria-controls="filter-price-menu">
                     Price
                     <?php if ($minPrice || $maxPrice): ?>
                         <span class="filter-active-label">: $<?= $minPrice ?: '0' ?> — $<?= $maxPrice ?: '∞' ?></span>
                     <?php endif; ?>
                     <svg class="filter-chevron" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
                 </button>
-                <div class="filter-dropdown-menu filter-dropdown-menu--price">
+                <div class="filter-dropdown-menu filter-dropdown-menu--price" id="filter-price-menu">
                     <?= $this->Form->hidden('category', ['value' => $categoryId ?: '']) ?>
                     <?= $this->Form->hidden('sort', ['value' => $sortBy]) ?>
                     <div class="price-dropdown-row">
@@ -91,11 +82,11 @@ $currentParams = array_filter([
                 $sorts = ['newest' => 'Newest', 'price_asc' => 'Price: Low to High', 'price_desc' => 'Price: High to Low', 'featured' => 'Featured', 'bestsales' => 'Best Sales'];
                 $sortLabel = $sorts[$sortBy] ?? 'Newest';
                 ?>
-                <button type="button" class="filter-dropdown-btn <?= $sortBy !== 'newest' ? 'is-active' : '' ?>">
+                <button type="button" class="filter-dropdown-btn <?= $sortBy !== 'newest' ? 'is-active' : '' ?>" aria-expanded="false" aria-controls="filter-sort-menu">
                     Sort by: <span class="filter-active-label"><?= $sortLabel ?></span>
                     <svg class="filter-chevron" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
                 </button>
-                <div class="filter-dropdown-menu filter-dropdown-menu--sort">
+                <div class="filter-dropdown-menu filter-dropdown-menu--sort" id="filter-sort-menu">
                     <?php foreach ($sorts as $key => $label): ?>
                         <label class="filter-dropdown-item <?= $sortBy === $key ? 'active' : '' ?>">
                             <input type="radio" name="sort" value="<?= $key ?>"
@@ -122,19 +113,32 @@ $currentParams = array_filter([
         (function () {
             var dropdowns = document.querySelectorAll('.jewelry-page .filter-dropdown');
 
+            function closeDropdown(dd) {
+                dd.classList.remove('open');
+                var btn = dd.querySelector('.filter-dropdown-btn');
+                if (btn) btn.setAttribute('aria-expanded', 'false');
+            }
+
             dropdowns.forEach(function (dd) {
                 var btn = dd.querySelector('.filter-dropdown-btn');
                 if (!btn) return;
                 btn.addEventListener('click', function (e) {
                     e.stopPropagation();
                     var isOpen = dd.classList.contains('open');
-                    dropdowns.forEach(function (other) { other.classList.remove('open'); });
-                    if (!isOpen) dd.classList.add('open');
+                    dropdowns.forEach(closeDropdown);
+                    if (!isOpen) {
+                        dd.classList.add('open');
+                        btn.setAttribute('aria-expanded', 'true');
+                    }
                 });
             });
 
             document.addEventListener('click', function () {
-                dropdowns.forEach(function (dd) { dd.classList.remove('open'); });
+                dropdowns.forEach(closeDropdown);
+            });
+
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape') dropdowns.forEach(closeDropdown);
             });
 
             document.querySelectorAll('.jewelry-page .filter-dropdown-menu').forEach(function (menu) {
