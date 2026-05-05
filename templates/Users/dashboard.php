@@ -35,7 +35,6 @@ $cards = [
         'url'   => ['controller' => 'ContactSubmissions', 'action' => 'index'],
         'icon'  => '<path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>'
     ],
-
     [
         'title' => 'Staff Schedule',
         'value' => null,
@@ -47,12 +46,6 @@ $cards = [
         'value' => $totalUsers,
         'url'   => ['controller' => 'Users', 'action' => 'index'],
         'icon'  => '<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>'
-    ],
-    [
-        'title' => 'Content Management System',
-        'value' => null,
-        'url'   => ['controller' => 'Pages', 'action' => 'index'],
-        'icon'  => '<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5z"/><path d="M8 7h8"/><path d="M8 11h6"/>'
     ],
 ];
 ?>
@@ -68,7 +61,6 @@ $cards = [
         <div class="dashboard-summary">
             <?php foreach ($cards as $card): ?>
                 <a href="<?= $this->Url->build($card['url']) ?>" class="dashboard-card">
-
                     <div class="dashboard-icon">
                         <svg width="26" height="26" viewBox="0 0 24 24"
                              fill="none" stroke="#786c3b" stroke-width="1.8"
@@ -76,17 +68,31 @@ $cards = [
                             <?= $card['icon'] ?>
                         </svg>
                     </div>
-
                     <div class="dashboard-content">
                         <h3><?= h($card['title']) ?></h3>
-
                         <?php if ($card['value'] !== null): ?>
                             <p><?= $card['value'] ?></p>
                         <?php endif; ?>
                     </div>
-
                 </a>
             <?php endforeach; ?>
+
+            <?php if ($role === 'admin'): ?>
+                <a href="<?= $this->Url->build(['controller' => 'SiteSettings', 'action' => 'index']) ?>" class="dashboard-card">
+                    <div class="dashboard-icon">
+                        <svg width="26" height="26" viewBox="0 0 24 24"
+                             fill="none" stroke="#786c3b" stroke-width="1.8"
+                             stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+                            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5z"/>
+                            <path d="M8 7h8"/><path d="M8 11h6"/>
+                        </svg>
+                    </div>
+                    <div class="dashboard-content">
+                        <h3>Content Management System</h3>
+                    </div>
+                </a>
+            <?php endif; ?>
         </div>
 
         <?php if ($role === 'staff' && !empty($upcomingDays)): ?>

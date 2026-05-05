@@ -27,12 +27,14 @@ foreach ($orders as $order) {
     }
     $orderProfits[$order->id] = $profit;
 
-    $d = $order->created;
-    $stats['all']['sales'] += $order->total_amount;
-    $stats['all']['profit']  += $profit;
-    if ($d->format('Y-m-d') === $todayStr)  { $stats['today']['sales'] += $order->total_amount; $stats['today']['profit'] += $profit; }
-    if ($d >= $weekAgo)                      { $stats['week']['sales']  += $order->total_amount; $stats['week']['profit']  += $profit; }
-    if ($d >= $monthStart)                   { $stats['month']['sales'] += $order->total_amount; $stats['month']['profit'] += $profit; }
+    if ($order->status === 'paid') {
+        $d = $order->created;
+        $stats['all']['sales'] += $order->total_amount;
+        $stats['all']['profit']  += $profit;
+        if ($d->format('Y-m-d') === $todayStr)  { $stats['today']['sales'] += $order->total_amount; $stats['today']['profit'] += $profit; }
+        if ($d >= $weekAgo)                      { $stats['week']['sales']  += $order->total_amount; $stats['week']['profit']  += $profit; }
+        if ($d >= $monthStart)                   { $stats['month']['sales'] += $order->total_amount; $stats['month']['profit'] += $profit; }
+    }
 }
 ?>
 <?php $this->Html->css('admincontact', ['block' => true]); ?>
@@ -173,6 +175,8 @@ foreach ($orders as $order) {
             columnDefs: [{ targets: [0,1,2,3,4], searchable: true }]
         });
 
+        const localISO = d => `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+
         $.fn.dataTable.ext.search.push(function(settings, data, dataIndex) {
             const node = table.row(dataIndex).node();
             if (!node) return true;
@@ -192,7 +196,7 @@ foreach ($orders as $order) {
             }
 
             if (dateFilter === 'all')   return true;
-            if (dateFilter === 'today') return dateStr === today.toISOString().split('T')[0];
+            if (dateFilter === 'today') return dateStr === localISO(today);
             if (dateFilter === 'week')  { const w = new Date(today); w.setDate(w.getDate() - 7); return rowDate >= w; }
             if (dateFilter === 'month') return rowDate >= new Date(today.getFullYear(), today.getMonth(), 1);
             return true;
@@ -201,7 +205,7 @@ foreach ($orders as $order) {
         $('[data-type="date"]').on('click', function() {
             dateFilter = $(this).data('filter');
             const today = new Date();
-            const iso   = d => d.toISOString().split('T')[0];
+            const iso   = localISO;
             const todayISO = iso(today);
             let from = '', to = '';
             if (dateFilter === 'today') {

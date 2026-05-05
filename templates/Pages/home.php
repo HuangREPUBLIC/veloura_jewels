@@ -9,9 +9,9 @@ $this->Html->css('home', ['block' => true]);
     <section class="hp-hero">
         <div class="hp-hero-text">
             <div class="hp-hero-ornament"></div>
-            <p class="hp-label">Handcrafted with love</p>
-            <h1 class="hp-hero-heading">Jewels that<br>tell your<br>story.</h1>
-            <p class="hp-hero-sub">Artisan-made pieces, each shaped by hand to bring warmth and meaning into your everyday.</p>
+            <p class="hp-label"><?= h($siteSettings['hero_label'] ?? '') ?></p>
+            <h1 class="hp-hero-heading"><?= h($siteSettings['hero_heading'] ?? '') ?></h1>
+            <p class="hp-hero-sub"><?= h($siteSettings['hero_subtext'] ?? '') ?></p>
             <div class="hp-hero-actions">
                 <?= $this->Html->link('Explore the Collection', ['controller' => 'Jewelry', 'action' => 'index'], ['class' => 'hp-btn hp-btn--primary']) ?>
                 <?= $this->Html->link('Shop Home Décor →', ['controller' => 'Jewelry', 'action' => 'homeDecor'], ['class' => 'hp-hero-alt-link']) ?>
@@ -84,14 +84,14 @@ $this->Html->css('home', ['block' => true]);
     <section class="hp-story">
         <div class="hp-story-image-wrap">
             <?= $this->Html->image('homepage.png', ['alt' => 'Sarah Smith — Veloura Jewels founder', 'class' => 'hp-img-fill']) ?>
-            <div class="hp-story-image-tag">Est. Brooksdale</div>
+            <div class="hp-story-image-tag"><?= h($siteSettings['brand_story_tag'] ?? '') ?></div>
         </div>
         <div class="hp-story-text">
             <p class="hp-label">Our Journey</p>
             <h2 class="hp-story-title">About<br>Veloura Jewels</h2>
             <div class="hp-story-divider"></div>
-            <p class="hp-story-body">Founded by Sarah Smith in Brooksdale, Veloura Jewels is dedicated to creating unique, handcrafted pieces that blend creativity and meaningful design. Every ring, necklace, and home accent is shaped with intention — to bring beauty and elegance into your home and wardrobe.</p>
-            <p class="hp-story-body">We believe that what you wear and what surrounds you should feel personal. That's why no two Veloura pieces are exactly alike.</p>
+            <p class="hp-story-body"><?= nl2br(h($siteSettings['brand_story_body_1'] ?? '')) ?></p>
+            <p class="hp-story-body"><?= nl2br(h($siteSettings['brand_story_body_2'] ?? '')) ?></p>
             <?= $this->Html->link('Our full story →', ['controller' => 'Pages', 'action' => 'location'], ['class' => 'hp-story-link']) ?>
         </div>
     </section>

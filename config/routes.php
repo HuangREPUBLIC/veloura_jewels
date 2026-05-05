@@ -96,6 +96,9 @@ return function (RouteBuilder $routes): void {
             ->setPass(['id'])
             ->setPatterns(['id' => '\d+']);
 
+        // CMS - Site Settings
+        $builder->connect('/cms', ['controller' => 'SiteSettings', 'action' => 'index']);
+
         // Staff schedule routes
         $builder->connect('/schedule', ['controller' => 'Schedule', 'action' => 'index']);
         $builder->connect('/schedule/delete/{id}', ['controller' => 'Schedule', 'action' => 'delete'])

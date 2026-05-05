@@ -856,6 +856,57 @@
 
 .jewelry-page .result-order-value.status { color: var(--oakwood); }
 
+.jewelry-page .cancel-countdown-wrap {
+    margin-bottom: 1.4rem;
+}
+
+.jewelry-page .cancel-countdown-label {
+    font-family: var(--font-body);
+    font-size: 0.82rem;
+    color: var(--gray-500);
+    margin-bottom: 0.25rem;
+}
+
+.jewelry-page .cancel-countdown {
+    font-family: var(--font-display);
+    font-size: 2.6rem;
+    font-weight: 400;
+    color: var(--oakwood);
+    letter-spacing: 0.05em;
+    line-height: 1;
+    margin-bottom: 0.2rem;
+}
+
+.jewelry-page .cancel-countdown-expired {
+    font-family: var(--font-body);
+    font-size: 0.82rem;
+    color: var(--gray-400);
+}
+
+.jewelry-page .result-btn--cancel {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 0.95rem;
+    background: transparent;
+    border: 1.5px solid var(--color-message-error-text);
+    color: var(--color-message-error-text) !important;
+    border-radius: 12px;
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    text-decoration: none !important;
+    transition: background 0.2s ease;
+}
+
+.jewelry-page .result-btn--cancel:hover {
+    background: var(--color-message-error-bg);
+}
+
 .jewelry-page .result-btn {
     display: inline-flex;
     align-items: center;

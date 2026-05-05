@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: May 05, 2026 at 04:03 PM
+-- Generation Time: May 05, 2026 at 09:14 PM
 -- Server version: 12.2.2-MariaDB
 -- PHP Version: 8.4.18
 
@@ -509,7 +509,7 @@ CREATE TABLE IF NOT EXISTS `schedules` (
     `modified` datetime DEFAULT NULL,
     PRIMARY KEY (`id`),
     UNIQUE KEY `unique_staff_week_day` (`user_id`,`week_start`,`day_of_week`)
-    ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+    ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 
 --
 -- Dumping data for table `schedules`
@@ -517,7 +517,43 @@ CREATE TABLE IF NOT EXISTS `schedules` (
 
 INSERT INTO `schedules` (`id`, `user_id`, `week_start`, `day_of_week`, `start_time`, `end_time`, `created`, `modified`) VALUES
                                                                                                                             (4, 10, '2026-05-11', 1, '09:00:00', '17:00:00', '2026-05-05 13:51:43', '2026-05-05 13:51:43'),
-                                                                                                                            (6, 10, '2026-05-04', 1, '09:00:00', '17:00:00', '2026-05-05 14:18:37', '2026-05-05 14:18:37');
+                                                                                                                            (7, 10, '2026-05-04', 1, '09:00:00', '17:00:00', '2026-05-05 20:03:56', '2026-05-05 20:03:56');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `site_settings`
+--
+
+DROP TABLE IF EXISTS `site_settings`;
+CREATE TABLE IF NOT EXISTS `site_settings` (
+                                               `id` int(11) NOT NULL AUTO_INCREMENT,
+    `setting_key` varchar(100) NOT NULL,
+    `setting_value` text DEFAULT NULL,
+    `label` varchar(200) NOT NULL,
+    `group_name` varchar(100) NOT NULL DEFAULT 'general',
+    `created` datetime NOT NULL,
+    `modified` datetime NOT NULL,
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `setting_key` (`setting_key`)
+    ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+
+--
+-- Dumping data for table `site_settings`
+--
+
+INSERT INTO `site_settings` (`id`, `setting_key`, `setting_value`, `label`, `group_name`, `created`, `modified`) VALUES
+                                                                                                                     (1, 'site_name', 'Veloura Jewels', 'Site Name', 'general', '2026-05-05 21:12:05', '2026-05-05 21:12:05'),
+                                                                                                                     (2, 'hero_label', 'Handcrafted with love', 'Hero Label', 'hero', '2026-05-05 21:12:05', '2026-05-05 21:12:05'),
+                                                                                                                     (3, 'hero_heading', 'Jewels that tell your story.', 'Hero Heading', 'hero', '2026-05-05 21:12:05', '2026-05-05 21:12:05'),
+                                                                                                                     (4, 'hero_subtext', 'Artisan-made pieces, each shaped by hand to bring warmth and meaning into your everyday.', 'Hero Subtext', 'hero', '2026-05-05 21:12:05', '2026-05-05 21:12:05'),
+                                                                                                                     (5, 'brand_story_tag', 'Est. Brooksdale', 'Brand Story Tag', 'brand', '2026-05-05 21:12:05', '2026-05-05 21:12:05'),
+                                                                                                                     (6, 'brand_story_body_1', 'Founded by Sarah Smith in Brooksdale, Veloura Jewels is dedicated to creating unique, handcrafted pieces that blend creativity and meaningful design. Every ring, necklace, and home accent is shaped with intention — to bring beauty and elegance into your home and wardrobe.', 'Brand Story (Paragraph 1)', 'brand', '2026-05-05 21:12:05', '2026-05-05 21:12:05'),
+                                                                                                                     (7, 'brand_story_body_2', 'We believe that what you wear and what surrounds you should feel personal. That is why no two Veloura pieces are exactly alike.', 'Brand Story (Paragraph 2)', 'brand', '2026-05-05 21:12:05', '2026-05-05 21:12:05'),
+                                                                                                                     (8, 'contact_address', '123 Main Street, Brooksdale', 'Contact Address', 'contact', '2026-05-05 21:12:05', '2026-05-05 21:12:05'),
+                                                                                                                     (9, 'contact_phone', '+64 9 123 4567', 'Contact Phone', 'contact', '2026-05-05 21:12:05', '2026-05-05 21:12:05'),
+                                                                                                                     (10, 'contact_hours', 'Mon–Fri: 9am–5pm, Sat: 10am–3pm', 'Opening Hours', 'contact', '2026-05-05 21:12:05', '2026-05-05 21:12:05'),
+                                                                                                                     (11, 'footer_tagline', 'Handcrafted jewelry & home décor, made with love in Brooksdale.', 'Footer Tagline', 'footer', '2026-05-05 21:12:05', '2026-05-05 21:12:05');
 
 -- --------------------------------------------------------
 

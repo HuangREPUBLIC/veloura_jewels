@@ -7,7 +7,7 @@
  * @var \App\View\AppView $this
  */
 
-$cakeDescription = 'Veloura Jewels';
+$cakeDescription = $siteSettings['site_name'] ?? 'Veloura Jewels';
 ?>
 <!DOCTYPE html>
 <html lang="">
@@ -190,8 +190,8 @@ $role = $identity ? $identity->get('role') : null;
                 '/',
                 ['escape' => false]
             ) ?>
-            <p class="footer-brand-name">Veloura Jewels</p>
-            <p class="footer-tagline">Handcrafted jewelry &amp; home décor, made with love in Brooksdale.</p>
+            <p class="footer-brand-name"><?= h($siteSettings['site_name'] ?? '') ?></p>
+            <p class="footer-tagline"><?= h($siteSettings['footer_tagline'] ?? '') ?></p>
             <ul class="footer-socials">
                 <li>
                     <a href="#" class="footer-social" aria-label="Facebook">
