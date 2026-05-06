@@ -113,84 +113,16 @@
     margin-bottom: 1rem;
 }
 
-.search-suggest-item {
-    display: flex;
-    flex-direction: column;
-    text-decoration: none;
-    color: var(--color-ink);
-    border: 1px solid var(--gray-200);
-    border-radius: 10px;
-    overflow: hidden;
-    transition: transform 0.22s ease, box-shadow 0.22s ease;
-}
-
-.search-suggest-item:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 10px 24px rgba(0,0,0,0.09);
-    color: var(--color-ink);
-}
-
-.search-suggest-img-wrap {
-    position: relative;
-    width: 100%;
+.search-suggest-grid .product-image-wrapper {
+    height: auto;
     aspect-ratio: 3 / 4;
-    overflow: hidden;
-    background: var(--gray-50);
-    flex-shrink: 0;
 }
 
-.search-suggest-img-wrap .product-card-badges {
-    top: 0.3rem;
-    left: 0.3rem;
-}
-
-.search-suggest-img-wrap .product-badge {
-    font-size: 0.5rem;
-    padding: 0.15rem 0.4rem;
-}
-
-.search-suggest-img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    transition: opacity 0.55s ease;
-}
-
-.search-suggest-img--primary { opacity: 1; z-index: 1; }
-.search-suggest-img--hover   { opacity: 0; z-index: 2; }
-
-.search-suggest-item:hover .search-suggest-img-wrap.has-hover-image .search-suggest-img--primary { opacity: 0; }
-.search-suggest-item:hover .search-suggest-img-wrap.has-hover-image .search-suggest-img--hover   { opacity: 1; }
-
-.search-suggest-img--empty {
-    width: 100%;
-    height: 100%;
-    background: var(--gray-100);
-}
-
-.search-suggest-info {
-    padding: 0.5rem 0.6rem 0.65rem;
-}
-
-.search-suggest-name {
-    font-family: var(--font-display);
-    font-size: 0.82rem;
-    font-weight: 500;
-    line-height: 1.3;
-    margin-bottom: 0.2rem;
+.search-suggest-grid .product-name {
     overflow: hidden;
     display: -webkit-box;
-    -webkit-line-clamp: 2;
+    -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
-}
-
-.search-suggest-price {
-    font-size: 0.78rem;
-    color: var(--color-text-muted);
 }
 
 .search-no-results {
@@ -223,15 +155,15 @@
 
 @media (max-width: 768px) {
     .search-suggest-grid {
-        grid: auto / auto-flow 42vw;
+        grid: auto / auto-flow 36vw;
         overflow-x: auto;
         scroll-snap-type: x mandatory;
         -webkit-overflow-scrolling: touch;
         padding-bottom: 0.5rem;
-        gap: 0.6rem;
+        gap: 0.5rem;
     }
 
-    .search-suggest-item {
+    .search-suggest-grid .product-card-link {
         scroll-snap-align: start;
         min-width: 0;
     }

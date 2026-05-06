@@ -24,7 +24,7 @@ $cakeDescription = $siteSettings['site_name'] ?? 'Veloura Jewels';
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <?= $this->Html->css(['normalize.min', 'fonts', 'default-styles', 'cake', 'search']) ?>
+    <?= $this->Html->css(['normalize.min', 'fonts', 'default-styles', 'cake', 'search', 'jewelry']) ?>
 
     <link rel="stylesheet" href="https://cdn.datatables.net/2.2.2/css/dataTables.dataTables.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -375,16 +375,18 @@ $role = $identity ? $identity->get('role') : null;
                 badges.push('<span class="product-badge product-badge--bestsales">Best Sales</span>');
             }
             var badge = badges.length ? '<div class="product-card-badges">' + badges.join('') + '</div>' : '';
-            var imgWrap = '<div class="search-suggest-img-wrap' + hasHover + '">'
+            var imgWrap = '<div class="product-image-wrapper' + hasHover + '">'
                 + badge
-                + (r.images[0] ? '<img src="' + r.images[0] + '" alt="' + r.name + '" class="search-suggest-img search-suggest-img--primary">' : '<div class="search-suggest-img--empty"></div>')
-                + (r.images[1] ? '<img src="' + r.images[1] + '" alt="' + r.name + '" class="search-suggest-img search-suggest-img--hover">' : '')
+                + (r.images[0] ? '<img src="' + r.images[0] + '" alt="' + r.name + '" class="product-image product-image--primary">' : '<div class="product-placeholder"><span>No Image</span></div>')
+                + (r.images[1] ? '<img src="' + r.images[1] + '" alt="' + r.name + '" class="product-image product-image--hover">' : '')
                 + '</div>';
-            return '<a href="' + r.url + '" class="search-suggest-item">'
+            return '<a href="' + r.url + '" class="product-card-link">'
+                + '<div class="product-card">'
                 + imgWrap
-                + '<div class="search-suggest-info">'
-                + '<span class="search-suggest-name">' + r.name + '</span>'
-                + '<span class="search-suggest-price">$' + r.price + '</span>'
+                + '<div class="product-card-body">'
+                + '<span class="product-name">' + r.name + '</span>'
+                + '<span class="product-price">$' + r.price + '</span>'
+                + '</div>'
                 + '</div>'
                 + '</a>';
         }).join('');

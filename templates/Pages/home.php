@@ -45,29 +45,31 @@ $this->Html->css('home', ['block' => true]);
                         ? $this->Url->build('/home-decor/view/' . $product->id)
                         : $this->Url->build(['controller' => 'Jewelry', 'action' => 'view', $product->id]);
                     ?>
-                    <a href="<?= $productUrl ?>" class="hp-product-card">
-                        <div class="hp-product-card-img-wrap<?= !empty($product->product_images[1]) ? ' has-hover-image' : '' ?>">
-                            <?php if (!empty($product->featured) || !empty($product->is_bestsales)): ?>
-                                <div class="product-card-badges">
-                                    <?php if (!empty($product->featured)): ?>
-                                        <span class="product-badge product-badge--featured">Featured</span>
-                                    <?php endif; ?>
+                    <a href="<?= $productUrl ?>" class="product-card-link">
+                        <div class="product-card">
+                            <div class="product-image-wrapper<?= !empty($product->product_images[1]) ? ' has-hover-image' : '' ?>">
+                                <?php if (!empty($product->featured) || !empty($product->is_bestsales)): ?>
+                                    <div class="product-card-badges">
+                                        <?php if (!empty($product->featured)): ?>
+                                            <span class="product-badge product-badge--featured">Featured</span>
+                                        <?php endif; ?>
 
-                                    <?php if (!empty($product->is_bestsales)): ?>
-                                        <span class="product-badge product-badge--bestsales">Best Sales</span>
-                                    <?php endif; ?>
-                                </div>
-                            <?php endif; ?>
-                            <img src="<?= $imgSrc ?>" alt="<?= h($product->name) ?>" class="hp-product-card-img hp-product-card-img--primary" loading="lazy">
-                            <?php if (!empty($product->product_images[1])): ?>
-                                <img src="<?= $this->Url->build('/img/products/' . rawurlencode($product->product_images[1]->filename)) ?>"
-                                     alt="<?= h($product->name) ?>"
-                                     class="hp-product-card-img hp-product-card-img--hover" loading="lazy">
-                            <?php endif; ?>
-                        </div>
-                        <div class="hp-product-card-info">
-                            <h4 class="hp-product-card-name"><?= h($product->name) ?></h4>
-                            <p class="hp-product-card-price">$<?= number_format((float)$product->sale_price, 2) ?></p>
+                                        <?php if (!empty($product->is_bestsales)): ?>
+                                            <span class="product-badge product-badge--bestsales">Best Sales</span>
+                                        <?php endif; ?>
+                                    </div>
+                                <?php endif; ?>
+                                <img src="<?= $imgSrc ?>" alt="<?= h($product->name) ?>" class="product-image product-image--primary" loading="lazy">
+                                <?php if (!empty($product->product_images[1])): ?>
+                                    <img src="<?= $this->Url->build('/img/products/' . rawurlencode($product->product_images[1]->filename)) ?>"
+                                         alt="<?= h($product->name) ?>"
+                                         class="product-image product-image--hover" loading="lazy">
+                                <?php endif; ?>
+                            </div>
+                            <div class="product-card-body">
+                                <h3 class="product-name"><?= h($product->name) ?></h3>
+                                <p class="product-price">$<?= number_format((float)$product->sale_price, 2) ?></p>
+                            </div>
                         </div>
                     </a>
                 <?php endforeach; ?>
