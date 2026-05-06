@@ -522,38 +522,96 @@ INSERT INTO `schedules` (`id`, `user_id`, `week_start`, `day_of_week`, `start_ti
 -- --------------------------------------------------------
 
 --
--- Table structure for table `site_settings`
+-- Table structure for table `cms_pages`
 --
 
-DROP TABLE IF EXISTS `site_settings`;
-CREATE TABLE IF NOT EXISTS `site_settings` (
-                                               `id` int(11) NOT NULL AUTO_INCREMENT,
-    `setting_key` varchar(100) NOT NULL,
-    `setting_value` text DEFAULT NULL,
+DROP TABLE IF EXISTS `page_content`;
+DROP TABLE IF EXISTS `cms_pages`;
+CREATE TABLE `cms_pages` (
+    `id` int(11) NOT NULL AUTO_INCREMENT,
+    `slug` varchar(100) NOT NULL,
+    `title` varchar(200) NOT NULL,
+    `sort_order` int(11) NOT NULL DEFAULT 0,
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `uq_slug` (`slug`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+
+INSERT INTO `cms_pages` (`id`, `slug`, `title`, `sort_order`) VALUES
+(1,'global','Global / Footer',0),
+(2,'home','Homepage',1),
+(3,'faq','FAQ',2),
+(4,'jewelry','Jewelry',3),
+(5,'home_decor','Home Decor',4),
+(6,'story','Our Story',5),
+(7,'location','Location',6);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `page_content`
+--
+
+CREATE TABLE `page_content` (
+    `id` int(11) NOT NULL AUTO_INCREMENT,
+    `page_id` int(11) NOT NULL,
+    `content_key` varchar(100) NOT NULL,
+    `content_value` text DEFAULT NULL,
     `label` varchar(200) NOT NULL,
-    `group_name` varchar(100) NOT NULL DEFAULT 'general',
+    `content_type` enum('text','textarea') NOT NULL DEFAULT 'text',
+    `sort_order` int(11) NOT NULL DEFAULT 0,
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `uq_page_key` (`page_id`,`content_key`),
+    CONSTRAINT `fk_pc_page` FOREIGN KEY (`page_id`) REFERENCES `cms_pages` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+
+INSERT INTO `page_content` (`page_id`,`content_key`,`content_value`,`label`,`content_type`,`sort_order`) VALUES
+(1,'site_name','Veloura Jewels','Site Name','text',1),
+(1,'footer_tagline','Handcrafted jewelry & home décor, made with love in Brooksdale.','Footer Tagline','textarea',2),
+(2,'hero_label','Handcrafted with love','Hero Label','text',1),
+(2,'hero_heading','Jewels that tell your story.','Hero Heading','text',2),
+(2,'hero_subtext','Artisan-made pieces, each shaped by hand to bring warmth and meaning into your everyday.','Hero Subtext','textarea',3),
+(2,'brand_story_tag','Est. Brooksdale','Brand Story Tag','text',4),
+(2,'brand_story_body_1','Founded by Sarah Smith in Brooksdale, Veloura Jewels is dedicated to creating unique, handcrafted pieces that blend creativity and meaningful design. Every ring, necklace, and home accent is shaped with intention — to bring beauty and elegance into your home and wardrobe.','Brand Story (Paragraph 1)','textarea',5),
+(2,'brand_story_body_2','We believe that what you wear and what surrounds you should feel personal. That is why no two Veloura pieces are exactly alike.','Brand Story (Paragraph 2)','textarea',6),
+(3,'faq_heading','Frequently Asked Questions','Page Heading','text',1),
+(3,'faq_subtext','Find answers to common questions about Veloura Jewels, our products, and how to get in touch.','Page Subtext','textarea',2),
+(4,'hero_heading','Our Jewelry Collection','Page Heading','text',1),
+(4,'hero_subtext','Discover timeless pieces crafted to elevate every occasion.','Page Subtext','textarea',2),
+(5,'hero_heading','Our Home Decor Collection','Page Heading','text',1),
+(5,'hero_subtext','Discover timeless pieces crafted to elevate every occasion.','Page Subtext','textarea',2),
+(6,'page_heading','Our Story','Page Heading','text',1),
+(6,'body_1','','Story (Paragraph 1)','textarea',2),
+(6,'body_2','','Story (Paragraph 2)','textarea',3),
+(7,'page_heading','Find Us','Page Heading','text',1),
+(7,'intro','','Intro Text','textarea',2),
+(7,'address','123 Main Street, Brooksdale','Address','text',3),
+(7,'phone','+64 9 123 4567','Phone','text',4),
+(7,'hours','Mon–Fri: 9am–5pm, Sat: 10am–3pm','Opening Hours','textarea',5);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `faq_items`
+--
+
+DROP TABLE IF EXISTS `faq_items`;
+CREATE TABLE `faq_items` (
+    `id` int(11) NOT NULL AUTO_INCREMENT,
+    `question` varchar(500) NOT NULL,
+    `answer` text NOT NULL,
+    `sort_order` int(11) NOT NULL DEFAULT 0,
+    `is_active` tinyint(1) NOT NULL DEFAULT 1,
     `created` datetime NOT NULL,
     `modified` datetime NOT NULL,
-    PRIMARY KEY (`id`),
-    UNIQUE KEY `setting_key` (`setting_key`)
-    ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 
---
--- Dumping data for table `site_settings`
---
-
-INSERT INTO `site_settings` (`id`, `setting_key`, `setting_value`, `label`, `group_name`, `created`, `modified`) VALUES
-                                                                                                                     (1, 'site_name', 'Veloura Jewels', 'Site Name', 'general', '2026-05-05 21:12:05', '2026-05-05 21:12:05'),
-                                                                                                                     (2, 'hero_label', 'Handcrafted with love', 'Hero Label', 'hero', '2026-05-05 21:12:05', '2026-05-05 21:12:05'),
-                                                                                                                     (3, 'hero_heading', 'Jewels that tell your story.', 'Hero Heading', 'hero', '2026-05-05 21:12:05', '2026-05-05 21:12:05'),
-                                                                                                                     (4, 'hero_subtext', 'Artisan-made pieces, each shaped by hand to bring warmth and meaning into your everyday.', 'Hero Subtext', 'hero', '2026-05-05 21:12:05', '2026-05-05 21:12:05'),
-                                                                                                                     (5, 'brand_story_tag', 'Est. Brooksdale', 'Brand Story Tag', 'brand', '2026-05-05 21:12:05', '2026-05-05 21:12:05'),
-                                                                                                                     (6, 'brand_story_body_1', 'Founded by Sarah Smith in Brooksdale, Veloura Jewels is dedicated to creating unique, handcrafted pieces that blend creativity and meaningful design. Every ring, necklace, and home accent is shaped with intention — to bring beauty and elegance into your home and wardrobe.', 'Brand Story (Paragraph 1)', 'brand', '2026-05-05 21:12:05', '2026-05-05 21:12:05'),
-                                                                                                                     (7, 'brand_story_body_2', 'We believe that what you wear and what surrounds you should feel personal. That is why no two Veloura pieces are exactly alike.', 'Brand Story (Paragraph 2)', 'brand', '2026-05-05 21:12:05', '2026-05-05 21:12:05'),
-                                                                                                                     (8, 'contact_address', '123 Main Street, Brooksdale', 'Contact Address', 'contact', '2026-05-05 21:12:05', '2026-05-05 21:12:05'),
-                                                                                                                     (9, 'contact_phone', '+64 9 123 4567', 'Contact Phone', 'contact', '2026-05-05 21:12:05', '2026-05-05 21:12:05'),
-                                                                                                                     (10, 'contact_hours', 'Mon–Fri: 9am–5pm, Sat: 10am–3pm', 'Opening Hours', 'contact', '2026-05-05 21:12:05', '2026-05-05 21:12:05'),
-                                                                                                                     (11, 'footer_tagline', 'Handcrafted jewelry & home décor, made with love in Brooksdale.', 'Footer Tagline', 'footer', '2026-05-05 21:12:05', '2026-05-05 21:12:05');
+INSERT INTO `faq_items` (`question`,`answer`,`sort_order`,`is_active`,`created`,`modified`) VALUES
+('What types of products does Veloura Jewels offer?','Veloura Jewels offers handcrafted jewellery and home décor pieces designed to add elegance and individuality to your everyday life.',1,1,NOW(),NOW()),
+('Are all Veloura Jewels products handmade?','Yes, our products are carefully handcrafted to create unique pieces with a personal and artistic touch.',2,1,NOW(),NOW()),
+('How can I get in touch with Veloura Jewels?','You can contact us through the Contact page by submitting your name, email address, and message.',3,1,NOW(),NOW()),
+('Where can I browse your collections?','You can explore our products through the Jewelry and Home Decor pages available on the website.',4,1,NOW(),NOW()),
+('Can I enquire about a product before purchasing?','Yes, you are welcome to contact us if you would like more information about a product before making a purchase.',5,1,NOW(),NOW());
 
 -- --------------------------------------------------------
 

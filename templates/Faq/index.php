@@ -2,20 +2,20 @@
 
 <div class="faq-page">
     <div class="faq-header">
-        <h2>Frequently Asked Questions</h2>
-        <p>Find answers to common questions about Veloura Jewels, our products, and how to get in touch.</p>
+        <h2><?= h($pageContent['faq_heading'] ?? 'Frequently Asked Questions') ?></h2>
+        <p><?= h($pageContent['faq_subtext'] ?? '') ?></p>
     </div>
 
     <div class="faq-container">
         <?php foreach ($faqs as $index => $faq): ?>
             <div class="faq-item">
                 <button class="faq-question" type="button" onclick="toggleFaq(<?= $index ?>)">
-                    <span><?= h($faq['question']) ?></span>
+                    <span><?= h($faq->question) ?></span>
                     <span class="faq-icon" id="icon-<?= $index ?>">+</span>
                 </button>
 
                 <div class="faq-answer" id="answer-<?= $index ?>" style="display: none;">
-                    <p><?= h($faq['answer']) ?></p>
+                    <p><?= h($faq->answer) ?></p>
                 </div>
             </div>
         <?php endforeach; ?>

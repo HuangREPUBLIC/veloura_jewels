@@ -55,7 +55,7 @@ class AppController extends Controller
     public function beforeRender(EventInterface $event): void
     {
         parent::beforeRender($event);
-        $siteSettings = $this->fetchTable('SiteSettings')->getAll();
+        $siteSettings = $this->fetchTable('PageContents')->getForPage('global');
         $this->set('siteSettings', $siteSettings);
     }
 }

@@ -67,7 +67,8 @@ class JewelryController extends AppController
             foreach ($products as $product) {
                 $product->is_bestsales = true;
             }
-            $this->set(compact('products', 'categories', 'categoryId', 'minPrice', 'maxPrice', 'sortBy'));
+            $pageContent = $this->fetchTable('PageContents')->getForPage($productType);
+            $this->set(compact('products', 'categories', 'categoryId', 'minPrice', 'maxPrice', 'sortBy', 'pageContent'));
             return;
         }
 
@@ -117,7 +118,8 @@ class JewelryController extends AppController
             $product->is_bestsales = in_array($product->id, $bestSalesIds);
         }
 
-        $this->set(compact('products', 'categories', 'categoryId', 'minPrice', 'maxPrice', 'sortBy'));
+        $pageContent = $this->fetchTable('PageContents')->getForPage($productType);
+        $this->set(compact('products', 'categories', 'categoryId', 'minPrice', 'maxPrice', 'sortBy', 'pageContent'));
     }
 
     public function homeDecor()
@@ -143,7 +145,8 @@ class JewelryController extends AppController
             foreach ($products as $product) {
                 $product->is_bestsales = true;
             }
-            $this->set(compact('products', 'categories', 'categoryId', 'minPrice', 'maxPrice', 'sortBy'));
+            $pageContent = $this->fetchTable('PageContents')->getForPage($productType);
+            $this->set(compact('products', 'categories', 'categoryId', 'minPrice', 'maxPrice', 'sortBy', 'pageContent'));
             return;
         }
 
@@ -193,7 +196,8 @@ class JewelryController extends AppController
             $product->is_bestsales = in_array($product->id, $bestSalesIds);
         }
 
-        $this->set(compact('products', 'categories', 'categoryId', 'minPrice', 'maxPrice', 'sortBy'));
+        $pageContent = $this->fetchTable('PageContents')->getForPage($productType);
+        $this->set(compact('products', 'categories', 'categoryId', 'minPrice', 'maxPrice', 'sortBy', 'pageContent'));
     }
 
     public function view($id = null)

@@ -13,29 +13,14 @@ class FaqController extends AppController
 
     public function index()
     {
-        $faqs = [
-            [
-                'question' => 'What types of products does Veloura Jewels offer?',
-                'answer' => 'Veloura Jewels offers handcrafted jewellery and home décor pieces designed to add elegance and individuality to your everyday life.'
-            ],
-            [
-                'question' => 'Are all Veloura Jewels products handmade?',
-                'answer' => 'Yes, our products are carefully handcrafted to create unique pieces with a personal and artistic touch.'
-            ],
-            [
-                'question' => 'How can I get in touch with Veloura Jewels?',
-                'answer' => 'You can contact us through the Contact page by submitting your name, email address, and message.'
-            ],
-            [
-                'question' => 'Where can I browse your collections?',
-                'answer' => 'You can explore our products through the Jewelry and Home Decor pages available on the website.'
-            ],
-            [
-                'question' => 'Can I enquire about a product before purchasing?',
-                'answer' => 'Yes, you are welcome to contact us if you would like more information about a product before making a purchase.'
-            ]
-        ];
+        $faqs = $this->fetchTable('FaqItems')
+            ->find()
+            ->where(['is_active' => 1])
+            ->orderBy(['sort_order' => 'ASC', 'id' => 'ASC'])
+            ->all();
 
-        $this->set(compact('faqs'));
+        $pageContent = $this->fetchTable('PageContents')->getForPage('faq');
+
+        $this->set(compact('faqs', 'pageContent'));
     }
 }

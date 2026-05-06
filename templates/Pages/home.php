@@ -9,9 +9,9 @@ $this->Html->css('home', ['block' => true]);
     <section class="hp-hero">
         <div class="hp-hero-text">
             <div class="hp-hero-ornament"></div>
-            <p class="hp-label"><?= h($siteSettings['hero_label'] ?? '') ?></p>
-            <h1 class="hp-hero-heading"><?= h($siteSettings['hero_heading'] ?? '') ?></h1>
-            <p class="hp-hero-sub"><?= h($siteSettings['hero_subtext'] ?? '') ?></p>
+            <p class="hp-label"><?= h($pageContent['hero_label'] ?? '') ?></p>
+            <h1 class="hp-hero-heading"><?= h($pageContent['hero_heading'] ?? '') ?></h1>
+            <p class="hp-hero-sub"><?= h($pageContent['hero_subtext'] ?? '') ?></p>
             <div class="hp-hero-actions">
                 <?= $this->Html->link('Explore the Collection', ['controller' => 'Jewelry', 'action' => 'index'], ['class' => 'hp-btn hp-btn--primary']) ?>
                 <?= $this->Html->link('Shop Home Décor →', ['controller' => 'Jewelry', 'action' => 'homeDecor'], ['class' => 'hp-hero-alt-link']) ?>
@@ -84,14 +84,14 @@ $this->Html->css('home', ['block' => true]);
     <section class="hp-story">
         <div class="hp-story-image-wrap">
             <?= $this->Html->image('homepage.png', ['alt' => 'Sarah Smith — Veloura Jewels founder', 'class' => 'hp-img-fill']) ?>
-            <div class="hp-story-image-tag"><?= h($siteSettings['brand_story_tag'] ?? '') ?></div>
+            <div class="hp-story-image-tag"><?= h($pageContent['brand_story_tag'] ?? '') ?></div>
         </div>
         <div class="hp-story-text">
             <p class="hp-label">Our Journey</p>
             <h2 class="hp-story-title">About<br>Veloura Jewels</h2>
             <div class="hp-story-divider"></div>
-            <p class="hp-story-body"><?= nl2br(h($siteSettings['brand_story_body_1'] ?? '')) ?></p>
-            <p class="hp-story-body"><?= nl2br(h($siteSettings['brand_story_body_2'] ?? '')) ?></p>
+            <p class="hp-story-body"><?= nl2br(h($pageContent['brand_story_body_1'] ?? '')) ?></p>
+            <p class="hp-story-body"><?= nl2br(h($pageContent['brand_story_body_2'] ?? '')) ?></p>
             <?= $this->Html->link('Our full story →', ['controller' => 'Pages', 'action' => 'location'], ['class' => 'hp-story-link']) ?>
         </div>
     </section>

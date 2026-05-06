@@ -62,7 +62,8 @@ class PagesController extends AppController
                 $product->is_bestsales = in_array($product->id, $bestSalesIds);
             }
 
-            $this->set(compact('featuredProducts'));
+            $pageContent = $this->fetchTable('PageContents')->getForPage('home');
+            $this->set(compact('featuredProducts', 'pageContent'));
         }
 
         try {

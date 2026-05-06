@@ -96,8 +96,13 @@ return function (RouteBuilder $routes): void {
             ->setPass(['id'])
             ->setPatterns(['id' => '\d+']);
 
-        // CMS - Site Settings
-        $builder->connect('/cms', ['controller' => 'SiteSettings', 'action' => 'index']);
+        // CMS
+        $builder->connect('/cms/faq-items/save', ['controller' => 'Cms', 'action' => 'faqItemSave']);
+        $builder->connect('/cms/faq-items/delete/{id}', ['controller' => 'Cms', 'action' => 'faqItemDelete'])
+            ->setPass(['id'])
+            ->setPatterns(['id' => '\d+']);
+        $builder->connect('/cms', ['controller' => 'Cms', 'action' => 'index']);
+        $builder->connect('/cms/{pageSlug}', ['controller' => 'Cms', 'action' => 'index'])->setPass(['pageSlug']);
 
         // Staff schedule routes
         $builder->connect('/schedule', ['controller' => 'Schedule', 'action' => 'index']);

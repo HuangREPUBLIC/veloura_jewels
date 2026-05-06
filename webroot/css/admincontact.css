@@ -1218,3 +1218,169 @@ td.actions button.btn-delete:hover {
     border-color: var(--oakwood);
     box-shadow: 0 0 0 3px rgba(var(--oakwood-rgb), 0.12);
 }
+
+/* CMS page switcher */
+
+.cms-header-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.cms-page-select {
+    appearance: none;
+    -webkit-appearance: none;
+    padding: 9px 36px 9px 14px;
+    border: 1px solid var(--admin-border);
+    border-radius: 10px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--admin-text-dark);
+    background-color: var(--admin-surface);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23786c3b' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 12px;
+    font-family: inherit;
+    cursor: pointer;
+    min-width: 160px;
+    transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.cms-page-select:hover {
+    border-color: var(--oakwood);
+}
+
+.cms-page-select:focus {
+    outline: none;
+    border-color: var(--oakwood);
+    box-shadow: 0 0 0 3px rgba(var(--oakwood-rgb), 0.12);
+}
+
+/* CMS FAQ management */
+
+.cms-faq-section {
+    margin-top: 36px;
+    padding-top: 28px;
+    border-top: 1px solid var(--admin-border);
+}
+
+.cms-faq-section-title {
+    margin-bottom: 16px !important;
+}
+
+.cms-faq-item {
+    border: 1px solid var(--admin-border);
+    border-radius: 12px;
+    padding: 14px 16px;
+    margin-bottom: 10px;
+    background: var(--admin-bg);
+}
+
+.cms-faq-item-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.cms-faq-question-text {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--admin-text-dark);
+    flex: 1;
+}
+
+.cms-faq-item-actions {
+    display: flex;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.btn-cms-edit,
+.btn-cms-cancel {
+    padding: 5px 14px;
+    border-radius: 8px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1px solid var(--admin-border);
+    background: var(--admin-surface);
+    color: var(--admin-text-dark);
+    font-family: inherit;
+    transition: 0.15s;
+}
+
+.btn-cms-edit:hover,
+.btn-cms-cancel:hover {
+    border-color: var(--oakwood);
+    color: var(--oakwood);
+}
+
+.btn-cms-delete {
+    padding: 5px 14px;
+    border-radius: 8px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1px solid #e5c0c0;
+    background: #fdf4f4;
+    color: #c0392b;
+    font-family: inherit;
+    transition: 0.15s;
+}
+
+.btn-cms-delete:hover {
+    background: #fde8e8;
+    border-color: #c0392b;
+}
+
+.cms-faq-delete-form {
+    display: inline;
+}
+
+.cms-faq-edit-form {
+    display: none;
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid var(--admin-border);
+    flex-direction: column;
+    gap: 10px;
+}
+
+.cms-faq-edit-form.is-open {
+    display: flex;
+}
+
+.cms-faq-edit-actions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-top: 4px;
+}
+
+.cms-field--inline {
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+
+.cms-input--short {
+    width: 80px !important;
+}
+
+.cms-faq-add {
+    margin-top: 24px;
+    padding: 20px;
+    border: 1px dashed var(--admin-border);
+    border-radius: 12px;
+    background: var(--admin-bg);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.cms-faq-add-btn {
+    align-self: flex-start;
+    margin-top: 4px;
+}

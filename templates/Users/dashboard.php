@@ -78,7 +78,7 @@ $cards = [
             <?php endforeach; ?>
 
             <?php if ($role === 'admin'): ?>
-                <a href="<?= $this->Url->build(['controller' => 'SiteSettings', 'action' => 'index']) ?>" class="dashboard-card">
+                <a href="<?= $this->Url->build(['controller' => 'Cms', 'action' => 'index']) ?>" class="dashboard-card">
                     <div class="dashboard-icon">
                         <svg width="26" height="26" viewBox="0 0 24 24"
                              fill="none" stroke="#786c3b" stroke-width="1.8"
