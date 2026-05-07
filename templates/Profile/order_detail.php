@@ -39,6 +39,50 @@ $this->Html->css('profile', ['block' => true]);
             </div>
         </div>
 
+        <?php if ($order->status === 'pending' && $order->stripe_session_id):
+            $windowEnd    = $order->created->modify('+30 minutes');
+            $windowEndMs  = $windowEnd->getTimestamp() * 1000;
+            $withinWindow = (new \DateTime()) < $windowEnd;
+            if ($withinWindow): ?>
+                <div class="profile-card order-cancel-window">
+                    <div class="order-cancel-info">
+                        <span class="order-cancel-label">Cancel window</span>
+                        <span class="order-cancel-timer" id="order-cancel-timer">--:--</span>
+                        <span class="order-cancel-expired" id="order-cancel-expired" style="display:none">Window closed</span>
+                    </div>
+                    <div id="order-cancel-btn-wrap">
+                        <?= $this->Form->create(null, ['url' => '/checkout/cancel', 'method' => 'post']) ?>
+                        <?= $this->Form->hidden('session_id', ['value' => $order->stripe_session_id]) ?>
+                        <?= $this->Form->button('Cancel Order', ['type' => 'submit', 'class' => 'order-cancel-btn']) ?>
+                        <?= $this->Form->end() ?>
+                    </div>
+                </div>
+                <script>
+                    (function () {
+                        const end = <?= $windowEndMs ?>;
+                        const timerEl  = document.getElementById('order-cancel-timer');
+                        const btnWrap  = document.getElementById('order-cancel-btn-wrap');
+                        const expiredEl = document.getElementById('order-cancel-expired');
+
+                        function tick() {
+                            const remaining = end - Date.now();
+                            if (remaining <= 0) {
+                                timerEl.style.display = 'none';
+                                if (btnWrap) btnWrap.style.display = 'none';
+                                expiredEl.style.display = 'block';
+                                return;
+                            }
+                            const m = Math.floor(remaining / 60000);
+                            const s = Math.floor((remaining % 60000) / 1000);
+                            timerEl.textContent = String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+                            setTimeout(tick, 1000);
+                        }
+                        tick();
+                    })();
+                </script>
+            <?php endif; ?>
+        <?php endif; ?>
+
         <!-- Order Items -->
         <div class="profile-card">
             <div class="profile-card-header">

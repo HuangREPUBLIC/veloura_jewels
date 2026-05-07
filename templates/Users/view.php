@@ -16,7 +16,6 @@ $this->assign('title', 'View User');
         <div class="page-header-row">
             <div>
                 <h3 class="page-title"><?= h($user->email) ?></h3>
-                <p class="page-subtitle">Review account details and access level</p>
             </div>
 
             <?php

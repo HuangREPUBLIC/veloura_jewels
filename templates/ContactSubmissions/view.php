@@ -14,7 +14,6 @@ $this->assign('title', 'View Submission');
         <div class="page-header-row">
             <div>
                 <h3 class="page-title"><?= h($contactSubmission->first_name . ' ' . $contactSubmission->last_name) ?></h3>
-                <p class="page-subtitle">Review customer message and reply history</p>
             </div>
 
             <div class="action-buttons">

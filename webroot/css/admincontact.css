@@ -45,11 +45,6 @@ h3.page-title {
     color: var(--admin-text) !important;
 }
 
-.page-header-row .page-subtitle {
-    margin: 8px 0 0 !important;
-    font-size: 0.88rem !important;
-    color: var(--admin-text) !important;
-}
 
 /* Page header row */
 
@@ -699,93 +694,6 @@ td.actions button.btn-delete:hover {
     border-bottom: 1px solid rgba(var(--oakwood-rgb), 0.12);
 }
 
-/* Staff weekly schedule */
-.dashboard-schedule {
-    margin-bottom: 1.8rem;
-    padding: 1.15rem 1.35rem;
-    background: var(--color-white);
-    border: 1px solid var(--admin-border);
-    border-radius: 16px;
-}
-
-.dashboard-schedule-header {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin-bottom: 1rem;
-}
-
-.dashboard-schedule-title {
-    font-family: var(--font-display);
-    font-size: 0.78rem;
-    font-weight: 600;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--admin-ink);
-}
-
-.dashboard-schedule-range {
-    font-size: 0.78rem;
-    color: var(--admin-ink-mid);
-}
-
-.dashboard-schedule-grid {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 0.5rem;
-}
-
-.dashboard-schedule-day {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.25rem;
-    padding: 0.6rem 0.4rem;
-    border-radius: 8px;
-    text-align: center;
-}
-
-.dashboard-schedule-day--on {
-    background: rgba(var(--oakwood-rgb), 0.07);
-}
-
-.dashboard-schedule-day--off {
-    background: var(--beige-light);
-    opacity: 0.6;
-}
-
-.dashboard-schedule-day--today {
-    outline: 2px solid var(--oakwood);
-    outline-offset: -2px;
-    opacity: 1;
-}
-
-.dashboard-schedule-label {
-    font-family: var(--font-display);
-    font-size: 0.72rem;
-    font-weight: 600;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    color: var(--admin-ink);
-}
-
-.dashboard-schedule-date {
-    font-size: 0.78rem;
-    color: var(--admin-ink-mid);
-}
-
-.dashboard-schedule-time {
-    font-size: 0.75rem;
-    color: var(--oakwood-dark);
-    font-weight: 600;
-}
-
-.dashboard-schedule-off {
-    font-size: 0.72rem;
-    color: var(--gray-600);
-    font-style: italic;
-}
-
 .dashboard-hero h1 {
     margin: 0 0 0.3rem 0;
     font-size: 1.7rem;
@@ -803,35 +711,10 @@ td.actions button.btn-delete:hover {
 
 .dashboard-summary {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 14px;
     margin-bottom: 1.8rem;
     width: 100%;
-}
-
-.dashboard-tools-header {
-    margin: 1.8rem 0 0.9rem;
-    padding-top: 1.2rem;
-    border-top: 1px solid rgba(var(--oakwood-rgb), 0.12);
-}
-
-.dashboard-tools-header h2 {
-    margin: 0 0 0.25rem;
-    font-size: 1.05rem;
-    font-weight: 700;
-    color: var(--admin-text-dark);
-}
-
-.dashboard-tools-header p {
-    margin: 0;
-    font-size: 0.84rem;
-    color: var(--color-lightgray);
-}
-
-.dashboard-tools-grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 14px;
 }
 
 .dashboard-card {
@@ -860,8 +743,8 @@ td.actions button.btn-delete:hover {
 }
 
 .dashboard-icon {
-    width: 46px;
-    height: 46px;
+    width: 52px;
+    height: 52px;
     background: var(--admin-bg);
     border: 1px solid rgba(var(--oakwood-rgb), 0.1);
     border-radius: 14px;
@@ -869,6 +752,12 @@ td.actions button.btn-delete:hover {
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
+}
+
+.dashboard-icon svg {
+    width: 26px;
+    height: 26px;
+    stroke-width: 1.9;
 }
 
 .dashboard-summary .dashboard-content h3 {
@@ -888,88 +777,85 @@ td.actions button.btn-delete:hover {
     line-height: 1.1;
 }
 
-.dashboard-tools-grid .dashboard-content h3 {
-    font-size: 0.95rem;
-    font-weight: 600;
-    color: var(--admin-ink);
-    margin: 0 0 0.2rem;
-}
-
-.dashboard-tools-grid .dashboard-content p {
-    font-size: 0.82rem;
-    font-weight: 400;
-    color: var(--color-lightgray);
-    margin: 0;
-    line-height: 1.4;
-}
-
 /* Low stock warning */
 
 .low-stock-warning {
     margin: 0 0 1.8rem;
-    padding: 1.25rem 1.35rem;
-    background: #fffbeb;
-    border: 1px solid #fcd34d;
+    padding: 1.15rem;
+    background: var(--color-white);
+    border: 1px solid var(--admin-border);
     border-radius: 16px;
+    box-shadow: 0 2px 12px rgba(var(--oakwood-rgb), 0.05);
 }
 
-.low-stock-warning h3 {
-    margin: 0 0 0.3rem;
-    font-size: 0.95rem;
-    font-weight: 700;
-    color: #92400e;
+.low-stock-header {
     display: flex;
-    align-items: center;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+    padding-bottom: 0.9rem;
+    margin-bottom: 0.9rem;
+    border-bottom: 1px solid rgba(var(--oakwood-rgb), 0.12);
 }
 
-.low-stock-warning > p {
-    margin: 0 0 1rem;
+.low-stock-header h3 {
+    margin: 0 0 0.2rem;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--admin-ink);
+}
+
+.low-stock-header p {
+    margin: 0;
     font-size: 0.83rem;
-    color: #78716c;
+    color: var(--admin-ink-mid);
     font-weight: 400;
 }
 
 .low-stock-list {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.8rem;
 }
 
 .low-stock-row {
-    background: var(--color-white);
-    border: 1px solid #fde68a;
-    border-radius: 8px;
-    padding: 0.75rem 1rem;
+    background: #fffdf8;
+    border: 1px solid rgba(146, 64, 14, 0.14);
+    border-left: 3px solid #d9a441;
+    border-radius: 10px;
+    padding: 0.85rem;
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 0.75rem;
+    min-width: 0;
 }
 
 .low-stock-row-top {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
+    gap: 0.75rem;
 }
 
 .low-stock-name {
     font-weight: 600;
-    font-size: 0.88rem;
-    color: var(--admin-text);
+    font-size: 0.9rem;
+    color: var(--admin-ink);
+    line-height: 1.35;
 }
 
 .low-stock-pills {
     display: flex;
     flex-wrap: wrap;
-    gap: 5px;
+    gap: 0.4rem;
 }
 
 .low-stock-btn {
     display: inline-block;
-    padding: 3px 12px;
+    padding: 0.28rem 0.7rem;
     background: var(--oakwood);
     color: var(--color-white);
-    border-radius: 5px;
+    border-radius: 6px;
     font-size: 0.76rem;
     font-weight: 600;
     text-decoration: none;
@@ -989,14 +875,15 @@ td.actions button.btn-delete:hover {
 .replied-no,
 .role-pill {
     display: inline-block;
-    padding: 2px 10px;
-    border-radius: 20px;
+    padding: 0.24rem 0.55rem;
+    border-radius: 999px;
     font-size: 0.74rem;
     font-weight: 600;
+    line-height: 1;
 }
 
-.pill-low  { background: #fde68a; color: #78350f; }
-.pill-zero { background: #fecaca; color: #7f1d1d; }
+.pill-low  { background: #fff3c4; color: #78350f; border: 1px solid #f7d77b; }
+.pill-zero { background: #ffe0df; color: #7f1d1d; border: 1px solid #f4b4b0; }
 
 /* Status pills */
 
@@ -1210,8 +1097,9 @@ td.actions button.btn-delete:hover {
         padding: 14px;
     }
 
-    .dashboard-summary,
-    .dashboard-tools-grid { grid-template-columns: 1fr; }
+    .dashboard-summary { grid-template-columns: 1fr; }
+
+    .low-stock-list { grid-template-columns: 1fr; }
 
     .admin-wrapper { padding: 12px; }
     .admin-dashboard { padding: 1rem; }
@@ -1260,3 +1148,239 @@ td.actions button.btn-delete:hover {
 }
 .featured-toggle:hover { color: var(--earth-yellow); transform: scale(1.2); }
 .featured-toggle.is-featured { color: var(--earth-yellow); }
+
+/* CMS / Site Settings */
+
+.siteSettings.index.content {
+    background: var(--admin-surface);
+    border: 1px solid var(--admin-border);
+    border-radius: 24px;
+    padding: 30px 34px;
+    box-shadow: var(--admin-shadow);
+    max-width: 760px;
+    margin: 0 auto;
+}
+
+.cms-group {
+    margin-bottom: 28px;
+}
+
+.cms-group-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--oakwood);
+    margin: 0 0 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--admin-border);
+}
+
+.cms-group-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.cms-field {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.cms-label {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--admin-text-dark);
+}
+
+.cms-input,
+.cms-textarea {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid var(--admin-border);
+    border-radius: 8px;
+    font-size: 0.88rem;
+    color: var(--admin-text-dark);
+    background: var(--admin-bg);
+    box-sizing: border-box;
+    transition: border-color 0.15s, box-shadow 0.15s;
+    font-family: inherit;
+}
+
+.cms-textarea {
+    resize: vertical;
+}
+
+.cms-input:focus,
+.cms-textarea:focus {
+    outline: none;
+    border-color: var(--oakwood);
+    box-shadow: 0 0 0 3px rgba(var(--oakwood-rgb), 0.12);
+}
+
+/* CMS page switcher */
+
+.cms-header-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.cms-page-select {
+    appearance: none;
+    -webkit-appearance: none;
+    padding: 9px 36px 9px 14px;
+    border: 1px solid var(--admin-border);
+    border-radius: 10px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--admin-text-dark);
+    background-color: var(--admin-surface);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23786c3b' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 12px;
+    font-family: inherit;
+    cursor: pointer;
+    min-width: 160px;
+    transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.cms-page-select:hover {
+    border-color: var(--oakwood);
+}
+
+.cms-page-select:focus {
+    outline: none;
+    border-color: var(--oakwood);
+    box-shadow: 0 0 0 3px rgba(var(--oakwood-rgb), 0.12);
+}
+
+/* CMS FAQ management */
+
+.cms-faq-section {
+    margin-top: 36px;
+    padding-top: 28px;
+    border-top: 1px solid var(--admin-border);
+}
+
+.cms-faq-section-title {
+    margin-bottom: 16px !important;
+}
+
+.cms-faq-item {
+    border: 1px solid var(--admin-border);
+    border-radius: 12px;
+    padding: 14px 16px;
+    margin-bottom: 10px;
+    background: var(--admin-bg);
+}
+
+.cms-faq-item-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.cms-faq-question-text {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--admin-text-dark);
+    flex: 1;
+}
+
+.cms-faq-item-actions {
+    display: flex;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.btn-cms-edit,
+.btn-cms-cancel {
+    padding: 5px 14px;
+    border-radius: 8px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1px solid var(--admin-border);
+    background: var(--admin-surface);
+    color: var(--admin-text-dark);
+    font-family: inherit;
+    transition: 0.15s;
+}
+
+.btn-cms-edit:hover,
+.btn-cms-cancel:hover {
+    border-color: var(--oakwood);
+    color: var(--oakwood);
+}
+
+.btn-cms-delete {
+    padding: 5px 14px;
+    border-radius: 8px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1px solid #e5c0c0;
+    background: #fdf4f4;
+    color: #c0392b;
+    font-family: inherit;
+    transition: 0.15s;
+}
+
+.btn-cms-delete:hover {
+    background: #fde8e8;
+    border-color: #c0392b;
+}
+
+.cms-faq-delete-form {
+    display: inline;
+}
+
+.cms-faq-edit-form {
+    display: none;
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid var(--admin-border);
+    flex-direction: column;
+    gap: 10px;
+}
+
+.cms-faq-edit-form.is-open {
+    display: flex;
+}
+
+.cms-faq-edit-actions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-top: 4px;
+}
+
+.cms-field--inline {
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+
+.cms-input--short {
+    width: 80px !important;
+}
+
+.cms-faq-add {
+    margin-top: 24px;
+    padding: 20px;
+    border: 1px dashed var(--admin-border);
+    border-radius: 12px;
+    background: var(--admin-bg);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.cms-faq-add-btn {
+    align-self: flex-start;
+    margin-top: 4px;
+}

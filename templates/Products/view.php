@@ -19,7 +19,6 @@ if (!empty($product->categories)) {
         <div class="page-header-row">
             <div>
                 <h3 class="page-title"><?= h($product->name) ?></h3>
-                <p class="page-subtitle">Review product details, stock and images</p>
             </div>
 
             <?php $role = $this->request->getAttribute('identity')->get('role'); ?>

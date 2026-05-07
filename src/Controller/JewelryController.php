@@ -67,7 +67,8 @@ class JewelryController extends AppController
             foreach ($products as $product) {
                 $product->is_bestsales = true;
             }
-            $this->set(compact('products', 'categories', 'categoryId', 'minPrice', 'maxPrice', 'sortBy'));
+            $pageContent = $this->fetchTable('PageContents')->getForPage($productType);
+            $this->set(compact('products', 'categories', 'categoryId', 'minPrice', 'maxPrice', 'sortBy', 'pageContent'));
             return;
         }
 
@@ -117,7 +118,8 @@ class JewelryController extends AppController
             $product->is_bestsales = in_array($product->id, $bestSalesIds);
         }
 
-        $this->set(compact('products', 'categories', 'categoryId', 'minPrice', 'maxPrice', 'sortBy'));
+        $pageContent = $this->fetchTable('PageContents')->getForPage($productType);
+        $this->set(compact('products', 'categories', 'categoryId', 'minPrice', 'maxPrice', 'sortBy', 'pageContent'));
     }
 
     public function homeDecor()
@@ -143,7 +145,8 @@ class JewelryController extends AppController
             foreach ($products as $product) {
                 $product->is_bestsales = true;
             }
-            $this->set(compact('products', 'categories', 'categoryId', 'minPrice', 'maxPrice', 'sortBy'));
+            $pageContent = $this->fetchTable('PageContents')->getForPage($productType);
+            $this->set(compact('products', 'categories', 'categoryId', 'minPrice', 'maxPrice', 'sortBy', 'pageContent'));
             return;
         }
 
@@ -193,7 +196,8 @@ class JewelryController extends AppController
             $product->is_bestsales = in_array($product->id, $bestSalesIds);
         }
 
-        $this->set(compact('products', 'categories', 'categoryId', 'minPrice', 'maxPrice', 'sortBy'));
+        $pageContent = $this->fetchTable('PageContents')->getForPage($productType);
+        $this->set(compact('products', 'categories', 'categoryId', 'minPrice', 'maxPrice', 'sortBy', 'pageContent'));
     }
 
     public function view($id = null)
@@ -359,7 +363,7 @@ class JewelryController extends AppController
             'mode' => 'payment',
             'line_items' => $lineItems,
             'success_url' => $this->request->scheme() . '://' . $this->request->host() . $this->request->getAttribute('base') . '/jewelry/success?session_id={CHECKOUT_SESSION_ID}',
-            'cancel_url' => $this->request->scheme() . '://' . $this->request->host() . $this->request->getAttribute('base') . '/jewelry/cancel',
+            'cancel_url' => $this->request->scheme() . '://' . $this->request->host() . $this->request->getAttribute('base') . '/checkout/cancel?session_id={CHECKOUT_SESSION_ID}',
             'metadata' => ['order_id' => (string)$order->id],
         ];
 
@@ -393,6 +397,39 @@ class JewelryController extends AppController
 
     public function cancel()
     {
+        $sessionId = (string)($this->request->getQuery('session_id') ?? $this->request->getData('session_id') ?? '');
+        $order = null;
+
+        if ($sessionId !== '') {
+            $identity = $this->request->getAttribute('identity');
+            $conditions = ['stripe_session_id' => $sessionId, 'status' => 'pending'];
+            if ($identity) {
+                $conditions['user_id'] = $identity->get('id');
+            }
+            $order = $this->Orders->find()
+                ->contain(['OrderItems'])
+                ->where($conditions)
+                ->first();
+        }
+
+        if ($this->request->is('post') && $order) {
+            $windowEnd = $order->created->modify('+30 minutes');
+            if (new \DateTime() > $windowEnd) {
+                $this->Flash->error('The cancellation window has expired.');
+                return $this->redirect(['action' => 'cancel', '?' => ['session_id' => $sessionId]]);
+            }
+            $order->status = 'cancelled';
+            $this->Orders->saveOrFail($order);
+            $this->Flash->success('Your order has been cancelled.');
+            $identity = $this->request->getAttribute('identity');
+            return $this->redirect($identity
+                ? ['controller' => 'Profile', 'action' => 'orders']
+                : ['action' => 'index']
+            );
+        }
+
+        $cancelWindowMinutes = 30;
+        $this->set(compact('order', 'cancelWindowMinutes'));
     }
 
     public function webhook()

@@ -14,7 +14,6 @@ $this->assign('title', 'Contact Submissions');
         <div class="page-header-row">
             <div>
                 <h3 class="page-title"><?= __('Contact Submissions') ?></h3>
-                <p class="page-subtitle">View and respond to customer messages</p>
             </div>
         </div>
 

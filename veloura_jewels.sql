@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: May 04, 2026 at 11:50 PM
+-- Generation Time: May 06, 2026 at 09:31 PM
 -- Server version: 12.2.2-MariaDB
 -- PHP Version: 8.4.18
 
@@ -130,6 +130,35 @@ INSERT INTO `categories_products` (`id`, `category_id`, `product_id`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `cms_pages`
+--
+
+DROP TABLE IF EXISTS `cms_pages`;
+CREATE TABLE IF NOT EXISTS `cms_pages` (
+                                           `id` int(11) NOT NULL AUTO_INCREMENT,
+    `slug` varchar(100) NOT NULL,
+    `title` varchar(200) NOT NULL,
+    `sort_order` int(11) NOT NULL DEFAULT 0,
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `uq_slug` (`slug`)
+    ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+
+--
+-- Dumping data for table `cms_pages`
+--
+
+INSERT INTO `cms_pages` (`id`, `slug`, `title`, `sort_order`) VALUES
+                                                                  (1, 'global', 'Global / Footer', 0),
+                                                                  (2, 'home', 'Homepage', 1),
+                                                                  (3, 'faq', 'FAQ', 2),
+                                                                  (4, 'jewelry', 'Jewelry', 3),
+                                                                  (5, 'home_decor', 'Home Decor', 4),
+                                                                  (6, 'story', 'Story', 5),
+                                                                  (7, 'location', 'Location', 6);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `contact_replies`
 --
 
@@ -194,6 +223,35 @@ INSERT INTO `contact_submissions` (`id`, `first_name`, `last_name`, `email`, `su
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `faq_items`
+--
+
+DROP TABLE IF EXISTS `faq_items`;
+CREATE TABLE IF NOT EXISTS `faq_items` (
+                                           `id` int(11) NOT NULL AUTO_INCREMENT,
+    `question` varchar(500) NOT NULL,
+    `answer` text NOT NULL,
+    `sort_order` int(11) NOT NULL DEFAULT 0,
+    `is_active` tinyint(1) NOT NULL DEFAULT 1,
+    `created` datetime NOT NULL,
+    `modified` datetime NOT NULL,
+    PRIMARY KEY (`id`)
+    ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+
+--
+-- Dumping data for table `faq_items`
+--
+
+INSERT INTO `faq_items` (`id`, `question`, `answer`, `sort_order`, `is_active`, `created`, `modified`) VALUES
+                                                                                                           (1, 'What types of products does Veloura Jewels offer?', 'Veloura Jewels offers handcrafted jewellery and home décor pieces designed to add elegance and individuality to your everyday life.', 1, 1, '2026-05-06 17:18:25', '2026-05-06 17:18:25'),
+                                                                                                           (2, 'Are all Veloura Jewels products handmade?', 'Yes, our products are carefully handcrafted to create unique pieces with a personal and artistic touch.', 2, 1, '2026-05-06 17:18:25', '2026-05-06 17:18:25'),
+                                                                                                           (3, 'How can I get in touch with Veloura Jewels?', 'You can contact us through the Contact page by submitting your name, email address, and message.', 3, 1, '2026-05-06 17:18:25', '2026-05-06 17:18:25'),
+                                                                                                           (4, 'Where can I browse your collections?', 'You can explore our products through the Jewelry and Home Decor pages available on the website.', 4, 1, '2026-05-06 17:18:25', '2026-05-06 17:18:25'),
+                                                                                                           (5, 'Can I enquire about a product before purchasing?', 'Yes, you are welcome to contact us if you would like more information about a product before making a purchase.', 5, 1, '2026-05-06 17:18:25', '2026-05-06 17:18:25');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `orders`
 --
 
@@ -211,7 +269,7 @@ CREATE TABLE IF NOT EXISTS `orders` (
     `modified` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp(),
     PRIMARY KEY (`id`),
     KEY `user_id` (`user_id`)
-    ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+    ) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `orders`
@@ -226,7 +284,14 @@ INSERT INTO `orders` (`id`, `user_id`, `stripe_session_id`, `stripe_payment_inte
                                                                                                                                                                            (6, 6, 'cs_test_a1TgqMv8Anz1NN2L05p0OBHkyytoxeH9GFYMSAxPoOdOiRqaKQzmRdeCkS', NULL, 'admin@test.com', 'pending', 780.00, 'aud', '2026-04-21 23:04:13', '2026-04-21 23:04:13'),
                                                                                                                                                                            (7, NULL, 'cs_test_a14zmXyuekW92FhWM9ih7KhWtVTRQ4bE9lpteD6SiShxYKhhXFVpD21XlS', NULL, NULL, 'pending', 350.00, 'aud', '2026-05-04 12:15:14', '2026-05-04 12:15:15'),
                                                                                                                                                                            (8, NULL, 'cs_test_a1IM4Z0vJmYRMqmn15EsliMxWkl4zK1IljJepxZFbof2hmlpTFGusKMkWG', NULL, NULL, 'pending', 350.00, 'aud', '2026-05-04 12:15:46', '2026-05-04 12:15:47'),
-                                                                                                                                                                           (9, NULL, 'cs_test_a1TOnt0PcwJDMNNQjrmNXpC8ZOm3LrNGsW8M2scewkjyJHFYLqB8pCWEI6', NULL, NULL, 'pending', 350.00, 'aud', '2026-05-04 12:15:47', '2026-05-04 12:15:47');
+                                                                                                                                                                           (9, NULL, 'cs_test_a1TOnt0PcwJDMNNQjrmNXpC8ZOm3LrNGsW8M2scewkjyJHFYLqB8pCWEI6', NULL, NULL, 'pending', 350.00, 'aud', '2026-05-04 12:15:47', '2026-05-04 12:15:47'),
+                                                                                                                                                                           (10, NULL, 'cs_test_a1Iorxr5TnirjUa7Tp1xm1pCSCafr3O8aSi7kM06D4dm34VNxjIlpl6qne', NULL, NULL, 'pending', 80.00, 'aud', '2026-05-06 02:05:19', '2026-05-06 02:05:20'),
+                                                                                                                                                                           (11, NULL, 'cs_test_a1B1Neqa9OlrHa22HUcEdc3kNf3ItX1LxQ9GpREO1Fmx2lQWG7EMyMaqGQ', NULL, NULL, 'pending', 350.00, 'aud', '2026-05-06 02:12:28', '2026-05-06 02:12:29'),
+                                                                                                                                                                           (12, NULL, 'cs_test_a1jvw8JOib0tsrCNIT4QsKHHBF2sXNeERXfZ3nqaKlfIsTypSFl2MCCnOk', NULL, NULL, 'pending', 350.00, 'aud', '2026-05-06 02:13:30', '2026-05-06 02:13:31'),
+                                                                                                                                                                           (13, NULL, 'cs_test_a1CtLwDNDriGZy6Gihk47M82AYiQQOKBcfvffaIeSXNImwjqyKTe20xGN1', NULL, NULL, 'pending', 350.00, 'aud', '2026-05-06 02:13:36', '2026-05-06 02:13:37'),
+                                                                                                                                                                           (14, 6, 'cs_test_a1RtEmePfmCJmkWTrZo0zhKPisRtIJsTPqFOQrKtPDyu67QDDadmjfr9rH', NULL, 'admin@test.com', 'pending', 700.00, 'aud', '2026-05-06 02:14:14', '2026-05-06 02:14:14'),
+                                                                                                                                                                           (15, NULL, 'cs_test_a19RlFfrx48wT0qa2u1Av6yN4K5A3KHBBxyzCGxs7f3i5hPVsPpSGTPnht', NULL, NULL, 'cancelled', 700.00, 'aud', '2026-05-06 02:16:46', '2026-05-06 02:18:09'),
+                                                                                                                                                                           (16, 9, 'cs_test_a1gP6uQqmBgZh2NvHdz7Es6UcX4Zs4shqlcRPvTv6PMNzmI4vkjObUbrLd', NULL, 'customer@gmail.com', 'cancelled', 700.00, 'aud', '2026-05-06 02:18:33', '2026-05-06 02:18:39');
 
 -- --------------------------------------------------------
 
@@ -251,7 +316,7 @@ CREATE TABLE IF NOT EXISTS `order_items` (
     KEY `order_id` (`order_id`),
     KEY `product_id` (`product_id`),
     KEY `variant_id` (`variant_id`)
-    ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+    ) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `order_items`
@@ -266,7 +331,61 @@ INSERT INTO `order_items` (`id`, `order_id`, `product_id`, `variant_id`, `produc
                                                                                                                                                                            (6, 6, 7, 27, 'Art Deco Pavé Choker', 'One Size', 780.00, 1, 780.00, '2026-04-21 23:04:13', '2026-04-21 23:04:13'),
                                                                                                                                                                            (7, 7, 15, 35, 'Art Deco Pavé Bracelet', 'One Size', 350.00, 1, 350.00, '2026-05-04 12:15:14', '2026-05-04 12:15:14'),
                                                                                                                                                                            (8, 8, 15, 35, 'Art Deco Pavé Bracelet', 'One Size', 350.00, 1, 350.00, '2026-05-04 12:15:46', '2026-05-04 12:15:46'),
-                                                                                                                                                                           (9, 9, 15, 35, 'Art Deco Pavé Bracelet', 'One Size', 350.00, 1, 350.00, '2026-05-04 12:15:47', '2026-05-04 12:15:47');
+                                                                                                                                                                           (9, 9, 15, 35, 'Art Deco Pavé Bracelet', 'One Size', 350.00, 1, 350.00, '2026-05-04 12:15:47', '2026-05-04 12:15:47'),
+                                                                                                                                                                           (10, 10, 45, 72, 'Crimson Candle', 'One Size', 10.00, 8, 80.00, '2026-05-06 02:05:19', '2026-05-06 02:05:20'),
+                                                                                                                                                                           (11, 11, 15, 35, 'Art Deco Pavé Bracelet', 'One Size', 350.00, 1, 350.00, '2026-05-06 02:12:28', '2026-05-06 02:12:28'),
+                                                                                                                                                                           (12, 12, 15, 35, 'Art Deco Pavé Bracelet', 'One Size', 350.00, 1, 350.00, '2026-05-06 02:13:30', '2026-05-06 02:13:30'),
+                                                                                                                                                                           (13, 13, 15, 35, 'Art Deco Pavé Bracelet', 'One Size', 350.00, 1, 350.00, '2026-05-06 02:13:36', '2026-05-06 02:13:36'),
+                                                                                                                                                                           (14, 14, 15, 35, 'Art Deco Pavé Bracelet', 'One Size', 350.00, 2, 700.00, '2026-05-06 02:14:14', '2026-05-06 02:14:14'),
+                                                                                                                                                                           (15, 15, 15, 35, 'Art Deco Pavé Bracelet', 'One Size', 350.00, 2, 700.00, '2026-05-06 02:16:46', '2026-05-06 02:16:46'),
+                                                                                                                                                                           (16, 16, 15, 35, 'Art Deco Pavé Bracelet', 'One Size', 350.00, 2, 700.00, '2026-05-06 02:18:33', '2026-05-06 02:18:33');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `page_content`
+--
+
+DROP TABLE IF EXISTS `page_content`;
+CREATE TABLE IF NOT EXISTS `page_content` (
+                                              `id` int(11) NOT NULL AUTO_INCREMENT,
+    `page_id` int(11) NOT NULL,
+    `content_key` varchar(100) NOT NULL,
+    `content_value` text DEFAULT NULL,
+    `label` varchar(200) NOT NULL,
+    `content_type` enum('text','textarea') NOT NULL DEFAULT 'text',
+    `sort_order` int(11) NOT NULL DEFAULT 0,
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `uq_page_key` (`page_id`,`content_key`)
+    ) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+
+--
+-- Dumping data for table `page_content`
+--
+
+INSERT INTO `page_content` (`id`, `page_id`, `content_key`, `content_value`, `label`, `content_type`, `sort_order`) VALUES
+                                                                                                                        (1, 1, 'site_name', 'Veloura Jewels', 'Site Name', 'text', 1),
+                                                                                                                        (2, 1, 'footer_tagline', 'Handcrafted jewelry & home décor, made with love in Brooksdale.', 'Footer Tagline', 'textarea', 2),
+                                                                                                                        (3, 2, 'hero_label', 'Handcrafted with love', 'Hero Label', 'text', 1),
+                                                                                                                        (4, 2, 'hero_heading', 'Jewels that tell your story.', 'Hero Heading', 'text', 2),
+                                                                                                                        (5, 2, 'hero_subtext', 'Artisan-made pieces, each shaped by hand to bring warmth and meaning into your everyday.', 'Hero Subtext', 'textarea', 3),
+                                                                                                                        (6, 2, 'brand_story_tag', 'Est. Brooksdale', 'Brand Story Tag', 'text', 4),
+                                                                                                                        (7, 2, 'brand_story_body_1', 'Founded by Sarah Smith in Brooksdale, Veloura Jewels is dedicated to creating unique, handcrafted pieces that blend creativity and meaningful design. Every ring, necklace, and home accent is shaped with intention — to bring beauty and elegance into your home and wardrobe.', 'Brand Story (Paragraph 1)', 'textarea', 5),
+                                                                                                                        (8, 2, 'brand_story_body_2', 'We believe that what you wear and what surrounds you should feel personal. That is why no two Veloura pieces are exactly alike.', 'Brand Story (Paragraph 2)', 'textarea', 6),
+                                                                                                                        (9, 3, 'faq_heading', 'Frequently Asked Questions', 'Page Heading', 'text', 1),
+                                                                                                                        (10, 3, 'faq_subtext', 'Find answers to common questions about Veloura Jewels, our products, and how to get in touch.', 'Page Subtext', 'textarea', 2),
+                                                                                                                        (11, 4, 'hero_heading', 'Our Jewelry Collection', 'Page Heading', 'text', 1),
+                                                                                                                        (12, 4, 'hero_subtext', 'Discover timeless pieces crafted to elevate every occasion.', 'Page Subtext', 'textarea', 2),
+                                                                                                                        (13, 5, 'hero_heading', 'Our Home Decor Collection', 'Page Heading', 'text', 1),
+                                                                                                                        (14, 5, 'hero_subtext', 'Discover timeless pieces crafted to elevate every occasion.', 'Page Subtext', 'textarea', 2),
+                                                                                                                        (15, 6, 'page_heading', 'Our Story', 'Page Heading', 'text', 1),
+                                                                                                                        (16, 6, 'body_1', '', 'Story (Paragraph 1)', 'textarea', 2),
+                                                                                                                        (17, 6, 'body_2', '', 'Story (Paragraph 2)', 'textarea', 3),
+                                                                                                                        (18, 7, 'page_heading', 'Find Us', 'Page Heading', 'text', 1),
+                                                                                                                        (19, 7, 'intro', '', 'Intro Text', 'textarea', 2),
+                                                                                                                        (20, 7, 'address', '123 Main Street, Brooksdale', 'Address', 'text', 3),
+                                                                                                                        (21, 7, 'phone', '+64 9 123 4567', 'Phone', 'text', 4),
+                                                                                                                        (22, 7, 'hours', 'Mon–Fri: 9am–5pm, Sat: 10am–3pm', 'Opening Hours', 'textarea', 5);
 
 -- --------------------------------------------------------
 
@@ -299,7 +418,7 @@ INSERT INTO `products` (`id`, `name`, `purchase_price`, `sale_price`, `supplier_
                                                                                                                                                        (3, 'Dainty Rose Gold Ring', 30.00, 120.00, 'supplier@luxgems.com.au', '2026-04-13 11:29:33', '2026-05-04 21:21:55', 'This ring is made with Alloy and 18k rose gold plated. It is microset with white cubic zirconia.\r\nThe Alloy is made of 95% recycled material. It is anti-tarnishing and Hypoallergenic.\r\nMaterial: Alloy made of 95% recycled material and 18k rose gold plated, white cubic zirconia, anti-tarnishing and Hypoallergenic\r\nAll our products are handcrafted and microset by hand in our ateliers\r\nColor: Rose gold', 'In a refined workshop, the Dainty Rose Gold Ring is carefully shaped and polished to achieve a soft, warm glow that highlights its delicate form. Each piece is finished by hand to ensure a smooth, minimalist elegance designed for everyday wear.\r\n', 1),
                                                                                                                                                        (4, 'Chunky Ice Ring', 100.00, 300.00, 'supplier@luxgems.com.au', '2026-04-13 11:29:33', '2026-05-04 21:21:51', 'Sterling silver intertwines with paths of brilliant stones to reflect the geometric patterns created by broken ice.\r\nAll our products are handcrafted in our ateliers\r\nMaterial: Sterling silver\r\nStone: White cubic zirconia\r\nColor: Silver', 'In a bold atelier, the Chunky Ice Ring is cast with substantial volume and carefully sculpted edges, then polished to a high, glass-like shine for maximum impact. Each piece is finished by hand to enhance its crisp, modern brilliance and sculptural presence.\r\n', 1),
                                                                                                                                                        (5, 'LOVE Morse Code Ring', 30.00, 120.00, 'supplier@pearlsea.com.au', '2026-04-13 11:29:33', '2026-05-04 21:22:02', 'This collection is using Morse code as a secret Love language.\r\nThis ring is embellished with the code LOVE on it, and the word LOVE is also engraved inside.\r\nMaterial: Rose Alloy made of 95% recycled material and 18k gold plated (3 microns), white cubic zirconia, anti-tarnishing and anti-allergenic\r\nAll our products are handcrafted and microset by hand in our ateliers\r\nColor: Rose gold', 'In a precise atelier, the LOVE Morse Code Ring is crafted with tiny, carefully placed stones and metal beads that encode the word \"LOVE\" in subtle rhythmic patterning. Each ring is hand-finished to ensure the message is both discreet and beautifully refined in its minimalist design.\r\n', 1),
-                                                                                                                                                       (6, 'Art Deco Adjustable Necklace', 70.00, 230.00, 'supplier@luxgems.com.au', '2026-04-13 11:29:33', '2026-05-04 22:00:07', 'This necklace is meticulously crafted for a perfect balance between bold structure and refined elegance.\r\nMaterial: Sterling silver\r\nStone: White cubic zirconia\r\nColor: Silver\r\nPendant size: Length 4.6 cm ; Width 0.7 cm\r\nTotal chain length: Adjustable to 48 cm maximum with sliding clasp', 'In a precision-led atelier, the Art Deco Adjustable Necklace is crafted with clean geometric lines, each element carefully shaped and assembled by hand. The adjustable mechanism is seamlessly integrated, ensuring both versatility and refined elegance in a timeless design.\r\n', 0),
+                                                                                                                                                       (6, 'Art Deco Adjustable Necklace', 70.00, 230.00, 'supplier@luxgems.com.au', '2026-04-13 11:29:33', '2026-05-06 21:20:18', 'This necklace is meticulously crafted for a perfect balance between bold structure and refined elegance.\r\nMaterial: Sterling silver\r\nStone: White cubic zirconia\r\nColor: Silver\r\nPendant size: Length 4.6 cm ; Width 0.7 cm\r\nTotal chain length: Adjustable to 48 cm maximum with sliding clasp', 'In a precision-led atelier, the Art Deco Adjustable Necklace is crafted with clean geometric lines, each element carefully shaped and assembled by hand. The adjustable mechanism is seamlessly integrated, ensuring both versatility and refined elegance in a timeless design.\r\n', 0),
                                                                                                                                                        (7, 'Art Deco Pavé Choker', 300.00, 780.00, 'supplier@goldcraft.com.au', '2026-04-13 11:29:33', '2026-05-04 22:00:10', 'This choker is meticulously crafted for a perfect balance between bold structure and refined elegance.\r\nMaterial: Sterling silver\r\nStone: Over 210 white cubic zirconia\r\nColor: Silver\r\nTotal chain length: 40 cm ; Width 0.8 cm', 'In a meticulous atelier, the Art Deco Pavé Choker is crafted with precise geometric forms, each tiny stone hand-set to create a seamless ribbon of light. The piece is carefully assembled to sit elegantly at the neckline, capturing the bold symmetry of the Art Deco era.\r\n', 0),
                                                                                                                                                        (8, 'Lilac Torsade Adjustable Necklace', 60.00, 210.00, 'supplier@gemstone.com.au', '2026-04-13 11:29:33', '2026-05-04 21:22:01', 'This necklace embodies elegance and versatility.\r\nMaterial: Yellow Alloy made of 95% recycled material and 18k yellow gold plated\r\nStone: Purple cubic zirconia\r\nColor: Yellow\r\nTotal chain length: Adjustable to 65 cm maximum with sliding clasp', 'In a refined atelier, the Lilac Torsade Adjustable Necklace is crafted by delicately twisting metal into a graceful spiral, then accented with soft lilac tones that catch the light. The adjustable design is seamlessly integrated, blending versatility with elegant, handcrafted detail.\r\n', 1),
                                                                                                                                                        (9, 'Lumière Pavé Choker', 180.00, 620.00, 'supplier@pearlsea.com.au', '2026-04-13 11:29:33', '2026-05-04 21:22:04', 'This minimalist and versatile choker perfectly captures the essence of spring.\r\nMaterial: Sterling silver\r\nStone: White cubic zirconia\r\nColor: Silver', 'In a precision-focused atelier, the Lumière Pavé Choker is meticulously assembled as artisans hand-set each stone to create a continuous band of brilliance. The finished piece is carefully polished to enhance its radiant glow, embodying refined craftsmanship and modern elegance.\r\n', 1),
@@ -318,15 +437,15 @@ INSERT INTO `products` (`id`, `name`, `purchase_price`, `sale_price`, `supplier_
 (35, 'Golden Blue Heart Painting', 20.00, 54.00, 'supplier@gemstone.com.au', '2026-04-21 13:03:00', '2026-05-04 23:41:18', 'Colour: Blue and Gold\r\nMaterials: Medium-density fibreboard (MDF), canvas and metal\r\nDimensions: 42cm (H), 32cm (W), 3cm(D)', 'A half-blue, half-gold heart painting comes to life as the artist blends cool serenity with radiant warmth, letting the two colors meet in a luminous seam that feels almost electric. In its final form, the heart becomes a quiet symbol of contrast—softness and brilliance held together in a single, glowing shape.', 1),
 (36, 'Flower Painting', 16.00, 27.00, 'supplier@gemstone.com.au', '2026-04-21 13:07:44', '2026-05-04 23:40:13', 'Colour: Red, Yellow, Green and Blue\r\nMaterials: Fibreboard, canvas and metal\r\nDimensions: 55cm (H) x 75cm (W) x 2.5cm (D)', 'A painting of red and yellow flowers comes alive as the artist layers bold crimson petals against warm golden blooms, letting the colors spark like sunlight meeting flame. When the final brushstroke lands, the piece radiates a vibrant energy—an ode to nature at its most spirited.', 1),
 (37, 'Butterfly Landing Painting', 20.00, 62.00, 'supplier@gemstone.com.au', '2026-04-21 13:14:02', '2026-05-04 23:39:20', 'Colour: Orange, Blue, Green, Yellow and Purple\r\nMaterials: Medium-density fibreboard (MDF), canvas and metal\r\nDimensions: 70cm (H) x 100cm (W) x 3cm (D)', 'A multi-coloured butterfly landing on an orange flower takes shape on the canvas as the artist layers shimmering blues, pinks, and golds across delicate wings, letting them glow against the warm burst of petals. In its final moment, the painting feels like a breath held in nature—a fleeting touch of beauty captured before the butterfly lifts away.', 1),
-(38, 'Simple Candle', 3.00, 8.00, 'supplier@gemstone.com.au', '2026-04-21 13:18:47', '2026-05-04 23:38:03', 'Colour: White\r\nMaterial: Metal and Paraffin\r\nDimensions: 7.5cm (H) x 7.5cm (Dia.)', 'A simple candle in a metal bowl takes shape as molten wax is poured and left to cool, the soft flame later rising to cast warm light against the bowl\'s cool, reflective surface. In its finished form, it feels like a quiet moment captured warmth held gently inside something forged from fire.', 1),
-                                                                                                                                                       (39, 'Cauldron Candle', 13.00, 28.00, 'supplier@gemstone.com.au', '2026-04-21 13:24:31', '2026-05-04 23:36:10', 'Colour: Black and White\r\nMaterial: Paraffin and Stone\r\nDimensions: 10cm (H) x 7.5cm (Dia.)', 'A candle in a stone cauldron takes form as wax is slowly poured into the carved vessel, the rough stone holding the warmth like an ancient hearth. When the flame is finally lit, it glows against the rugged surface, turning the cauldron into a quiet well of fire and shadow.', 1),
-                                                                                                                                                       (40, 'Bamboo Candle', 9.00, 23.00, 'supplier@gemstone.com.au', '2026-04-21 13:34:51', '2026-05-04 23:34:54', 'Colour: Brown\r\nMaterial: Bamboo and Paraffin\r\nDimensions: 7.5cm (H) x 7.5cm (Dia.)', 'A bamboo candle comes to life as warm wax is poured into a hollowed stalk, the natural grain of the bamboo turning the simple vessel into something quietly elegant. When lit, the flame glows through the soft brown walls, creating a gentle harmony between fire and earth.', 1),
+(38, 'Simple Candle', 3.00, 8.00, 'supplier@gemstone.com.au', '2026-04-21 13:18:47', '2026-05-06 21:30:39', 'Colour: White\r\nMaterial: Metal and Paraffin\r\nDimensions: 7.5cm (H) x 7.5cm (Dia.)', 'A simple candle in a metal bowl takes shape as molten wax is poured and left to cool, the soft flame later rising to cast warm light against the bowl\'s cool, reflective surface. In its finished form, it feels like a quiet moment captured warmth held gently inside something forged from fire.', 1),
+                                                                                                                                                       (39, 'Cauldron Candle', 13.00, 28.00, 'supplier@gemstone.com.au', '2026-04-21 13:24:31', '2026-05-06 21:27:27', 'Colour: Black and White\r\nMaterial: Paraffin and Stone\r\nDimensions: 10cm (H) x 7.5cm (Dia.)', 'A candle in a stone cauldron takes form as wax is slowly poured into the carved vessel, the rough stone holding the warmth like an ancient hearth. When the flame is finally lit, it glows against the rugged surface, turning the cauldron into a quiet well of fire and shadow.', 1),
+                                                                                                                                                       (40, 'Bamboo Candle', 9.00, 23.00, 'supplier@gemstone.com.au', '2026-04-21 13:34:51', '2026-05-06 21:28:56', 'Colour: Brown\r\nMaterial: Bamboo and Paraffin\r\nDimensions: 7.5cm (H) x 7.5cm (Dia.)', 'A bamboo candle comes to life as warm wax is poured into a hollowed stalk, the natural grain of the bamboo turning the simple vessel into something quietly elegant. When lit, the flame glows through the soft brown walls, creating a gentle harmony between fire and earth.', 1),
                                                                                                                                                        (41, 'Round Cushion', 8.00, 20.00, 'supplier@gemstone.com.au', '2026-04-21 13:39:18', '2026-05-04 23:33:33', 'Colour: Red\r\nMaterial: Velvet and Cotton\r\nDimensions: 20cm (H), 20cm (W), 6cm (D)', 'A round red cushion comes to life as soft fabric is stretched over plush filling, its vibrant color giving the simple shape a warm, inviting presence. Once finished, it feels like a small circle of comfort—bold, bright, and ready to soften any space it touches.', 1),
                                                                                                                                                        (42, 'Classic Cushion', 6.00, 12.00, 'supplier@gemstone.com.au', '2026-04-21 13:43:41', '2026-05-04 23:31:48', 'Colour: White\r\nMaterial: Polyester\r\nDimensions: 42cm (L) x 42cm (W)', 'A classic square white cushion comes together as crisp fabric is stitched around soft filling, its clean lines giving it a timeless, effortless elegance. Once finished, it becomes a quiet anchor in any room—simple, bright, and ready to soften the space with understated comfort.', 1),
                                                                                                                                                        (44, 'Crocheted Blanket', 15.00, 32.00, 'supplier@gemstone.com.au', '2026-04-21 14:18:41', '2026-05-04 23:30:28', 'Colour: Rainbow\r\nMaterial: Wool\r\nDimensions: 240cm (L) x 220cm (W)', 'A rainbow crocheted blanket begins as strands of yarn pulled through looping stitches, each color joining the next in a soft, steady rhythm that feels almost musical. When the final row is tied off, it becomes a warm spectrum of comfort—handmade joy woven into every hue.', 1),
-                                                                                                                                                       (45, 'Crimson Candle', 4.00, 10.00, 'supplier@gemstone.com.au', '2026-04-22 18:49:04', '2026-05-04 23:29:02', 'Colour: Crimson Red\r\nMaterial: Paraffin\r\nDimensions: 29cm (H), 9cm (D)', 'In a small artisanal studio, the crimson candle is hand-poured in layers, blending richly pigmented wax to achieve its deep, glowing red hue. Each candle is carefully cured and finished to ensure a clean burn and a bold, atmospheric presence.\r\n', 1),
+                                                                                                                                                       (45, 'Crimson Candle', 4.00, 10.00, 'supplier@gemstone.com.au', '2026-04-22 18:49:04', '2026-05-06 21:25:43', 'Colour: Crimson Red\r\nMaterial: Paraffin\r\nDimensions: 29cm (H), 9cm (D)', 'In a small artisanal studio, the crimson candle is hand-poured in layers, blending richly pigmented wax to achieve its deep, glowing red hue. Each candle is carefully cured and finished to ensure a clean burn and a bold, atmospheric presence.\r\n', 1),
                                                                                                                                                        (46, 'Sunshine Blanket', 12.00, 33.00, 'supplier@gemstone.com.au', '2026-04-22 18:51:08', '2026-05-04 23:23:25', 'Colour: Yellow\r\nMaterial: Fleece synthetic wool\r\nDimensions: 200cm (H), 150cm (W)', 'In a cozy textile workshop, the Sunshine Blanket is woven with soft, lightweight fibers designed to capture warmth and comfort in every thread. Each piece is carefully finished in a bright, uplifting tone that evokes the feeling of gentle morning light.\r\n', 1),
-                                                                                                                                                       (47, 'Mosaic Cushion', 9.00, 17.00, 'supplier@gemstone.com.au', '2026-04-22 18:55:02', '2026-05-04 23:15:26', 'Colur: Orange\r\nMaterial: Polyester fabric\r\nDimensions: 60cm (H), 48cm (W)', 'In a carefully curated textile studio, the cushion is assembled by layering rich orange fabrics with bold mosaic-inspired prints, each panel precisely cut and aligned for visual rhythm. It is then hand-finished to ensure a balanced contrast between vibrant pattern and smooth, solid tones for a modern, expressive accent piece.\r\n', 1);
+                                                                                                                                                       (47, 'Mosaic Cushion', 9.00, 17.00, 'supplier@gemstone.com.au', '2026-04-22 18:55:02', '2026-05-06 21:23:26', 'Colur: Orange\r\nMaterial: Polyester fabric\r\nDimensions: 60cm (H), 48cm (W)', 'In a carefully curated textile studio, the cushion is assembled by layering rich orange fabrics with bold mosaic-inspired prints, each panel precisely cut and aligned for visual rhythm. It is then hand-finished to ensure a balanced contrast between vibrant pattern and smooth, solid tones for a modern, expressive accent piece.\r\n', 1);
 
 -- --------------------------------------------------------
 
@@ -341,7 +460,7 @@ CREATE TABLE IF NOT EXISTS `product_images` (
     `filename` varchar(4096) NOT NULL,
     PRIMARY KEY (`id`),
     KEY `product_id` (`product_id`)
-    ) ENGINE=InnoDB AUTO_INCREMENT=148 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+    ) ENGINE=InnoDB AUTO_INCREMENT=161 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `product_images`
@@ -372,14 +491,9 @@ INSERT INTO `product_images` (`id`, `product_id`, `filename`) VALUES
                                                                   (92, 35, 'Screenshot_2026-04-21_125908.png'),
                                                                   (93, 36, 'Screenshot_2026-04-21_130457.png'),
                                                                   (94, 37, 'Screenshot_2026-04-21_131058.png'),
-                                                                  (96, 38, 'Screenshot_2026-04-21_131926.png'),
-                                                                  (98, 39, 'Screenshot_2026-04-21_132817.png'),
-                                                                  (99, 40, 'Screenshot_2026-04-21_133242.png'),
                                                                   (100, 41, 'Screenshot_2026-04-21_133706.png'),
                                                                   (102, 42, 'Screenshot_2026-04-21_134141.png'),
                                                                   (106, 44, 'Screenshot_2026-04-21_142317.png'),
-                                                                  (107, 6, 'necklaces4.png'),
-                                                                  (111, 45, '000e9227-bd1b-43c0-b41e-9e6dae1d0162.png'),
                                                                   (113, 16, 'Copilot_20260504_162402.png'),
                                                                   (114, 15, 'Copilot_20260504_162942.png'),
                                                                   (115, 14, 'Copilot_20260504_163148.png'),
@@ -390,23 +504,16 @@ INSERT INTO `product_images` (`id`, `product_id`, `filename`) VALUES
                                                                   (120, 9, 'Copilot_20260504_165010.png'),
                                                                   (121, 8, 'Copilot_20260504_165204.png'),
                                                                   (122, 7, 'Copilot_20260504_165404.png'),
-                                                                  (123, 6, 'Copilot_20260504_165515.png'),
                                                                   (124, 5, 'Copilot_20260504_165811.png'),
                                                                   (125, 4, 'Copilot_20260504_165953.png'),
                                                                   (126, 3, 'Copilot_20260504_170157.png'),
                                                                   (127, 2, 'Copilot_20260504_170337.png'),
                                                                   (128, 1, 'Copilot_20260504_170459.png'),
-                                                                  (129, 47, '5b08fe61-ca0c-4660-b265-c83b36f76cc0.png'),
-                                                                  (130, 47, '3569b9d8-b2ad-448c-a4d6-a58063c0ba08.png'),
                                                                   (131, 46, '6e265e94-3bac-4556-bb3b-dbf00e29bc66.png'),
                                                                   (132, 46, '44d352ee-da12-4cd0-8b80-afdc4d2429f5.png'),
-                                                                  (133, 45, 'dd725f0c-6a5b-4ed1-b949-eaf5ab9b413f.png'),
                                                                   (134, 44, 'e8b99dcd-604f-4507-abb3-a148466fcafd.png'),
                                                                   (135, 42, 'cb9a3794-b534-48d0-bf63-7544ed67d797.png'),
                                                                   (136, 41, 'dd0e3b56-02b5-4108-921a-d599f07a1756.png'),
-                                                                  (137, 40, 'b8a4924b-4560-48b8-9d09-b7661ded840c.png'),
-                                                                  (138, 39, 'cbe08cfd-4fc1-4c36-b9ca-4418848b5339.png'),
-                                                                  (139, 38, '0a83ca68-6e10-4036-bb3d-82ddcc7b817d.png'),
                                                                   (140, 37, 'f4f49bea-e080-4421-bb51-30d59193b325.png'),
                                                                   (141, 36, '7253548a-e787-48b7-a439-4dcaedf7cf83.png'),
                                                                   (142, 35, '185081e2-bcdd-47ee-93bf-6648f82ee9a8.png'),
@@ -414,7 +521,19 @@ INSERT INTO `product_images` (`id`, `product_id`, `filename`) VALUES
                                                                   (144, 33, '48099c54-dcc4-4856-86a3-626ddeea9e16.png'),
                                                                   (145, 32, '46a3e139-7e28-496c-8fbf-ec0b5e0f2ce5.png'),
                                                                   (146, 31, 'a21acd84-fa59-4c29-89e3-351ecf8a5a84.png'),
-                                                                  (147, 30, 'dde78ac9-5c15-4464-9335-adcd34ea726a.png');
+                                                                  (147, 30, 'dde78ac9-5c15-4464-9335-adcd34ea726a.png'),
+                                                                  (148, 6, 'Copilot_20260506_212001.png'),
+                                                                  (149, 6, 'Copilot_20260504_165515.png'),
+                                                                  (150, 47, 'Copilot_20260506_212223.png'),
+                                                                  (152, 47, '3569b9d8-b2ad-448c-a4d6-a58063c0ba08.png'),
+                                                                  (153, 45, 'Copilot_20260506_212531.png'),
+                                                                  (154, 45, 'dd725f0c-6a5b-4ed1-b949-eaf5ab9b413f.png'),
+                                                                  (155, 39, 'Copilot_20260506_212716.png'),
+                                                                  (156, 39, 'cbe08cfd-4fc1-4c36-b9ca-4418848b5339.png'),
+                                                                  (157, 40, 'Copilot_20260506_212838.png'),
+                                                                  (158, 40, 'b8a4924b-4560-48b8-9d09-b7661ded840c.png'),
+                                                                  (159, 38, 'Copilot_20260506_213023.png'),
+                                                                  (160, 38, '0a83ca68-6e10-4036-bb3d-82ddcc7b817d.png');
 
 -- --------------------------------------------------------
 
@@ -502,14 +621,22 @@ CREATE TABLE IF NOT EXISTS `schedules` (
                                            `id` int(11) NOT NULL AUTO_INCREMENT,
     `user_id` int(11) NOT NULL,
     `week_start` date NOT NULL COMMENT 'Monday of the scheduled week',
-    `day_of_week` tinyint(4) NOT NULL COMMENT '0=Sun,1=Mon,2=Tue,3=Wed,4=Thu,5=Fri,6=Sat',
+    `day_of_week` tinyint(4) NOT NULL COMMENT '1=Mon, 2=Tue, 3=Wed, 4=Thu, 5=Fri, 6=Sat, 7=Sun',
     `start_time` time NOT NULL,
     `end_time` time NOT NULL,
     `created` datetime DEFAULT NULL,
     `modified` datetime DEFAULT NULL,
     PRIMARY KEY (`id`),
     UNIQUE KEY `unique_staff_week_day` (`user_id`,`week_start`,`day_of_week`)
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+    ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+
+--
+-- Dumping data for table `schedules`
+--
+
+INSERT INTO `schedules` (`id`, `user_id`, `week_start`, `day_of_week`, `start_time`, `end_time`, `created`, `modified`) VALUES
+                                                                                                                            (4, 10, '2026-05-11', 1, '09:00:00', '17:00:00', '2026-05-05 13:51:43', '2026-05-05 13:51:43'),
+                                                                                                                            (7, 10, '2026-05-04', 1, '09:00:00', '17:00:00', '2026-05-05 20:03:56', '2026-05-05 20:03:56');
 
 -- --------------------------------------------------------
 
@@ -573,6 +700,12 @@ ALTER TABLE `order_items`
     ADD CONSTRAINT `fk_order_items_order` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `fk_order_items_product` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`),
   ADD CONSTRAINT `fk_order_items_variant` FOREIGN KEY (`variant_id`) REFERENCES `product_variants` (`id`) ON DELETE SET NULL;
+
+--
+-- Constraints for table `page_content`
+--
+ALTER TABLE `page_content`
+    ADD CONSTRAINT `fk_pc_page` FOREIGN KEY (`page_id`) REFERENCES `cms_pages` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `product_images`

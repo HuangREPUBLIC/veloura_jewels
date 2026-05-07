@@ -44,19 +44,19 @@
     font-weight: 700;
 }
 
-.jewelry-page .product-grid {
+.product-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
     gap: 1.8rem;
 }
 
-.jewelry-page .product-card-link {
+.product-card-link {
     display: block;
     text-decoration: none;
     color: inherit;
 }
 
-.jewelry-page .product-card {
+.product-card {
     position: relative;
     background: var(--color-white);
     border: 1px solid rgba(var(--oakwood-rgb), 0.12);
@@ -67,13 +67,13 @@
     height: 100%;
 }
 
-.jewelry-page .product-card:hover {
+.product-card:hover {
     border-color: rgba(var(--oakwood-rgb), 0.24);
     box-shadow: 0 18px 42px rgba(var(--oakwood-rgb), 0.12);
     transform: translateY(-4px);
 }
 
-.jewelry-page .product-image-wrapper {
+.product-image-wrapper {
     position: relative;
     width: 100%;
     height: 280px;
@@ -82,7 +82,7 @@
     border-radius: 18px 18px 0 0;
 }
 
-.jewelry-page .product-image {
+.product-image {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -93,29 +93,29 @@
     transition: opacity 0.55s ease, transform 0.55s ease;
 }
 
-.jewelry-page .product-image--primary {
+.product-image--primary {
     opacity: 1;
     transform: scale(1);
     z-index: 1;
 }
 
-.jewelry-page .product-image--hover {
+.product-image--hover {
     opacity: 0;
     transform: scale(1.03);
     z-index: 2;
 }
 
-.jewelry-page .product-card:hover .product-image-wrapper.has-hover-image .product-image--primary {
+.product-card:hover .product-image-wrapper.has-hover-image .product-image--primary {
     opacity: 0;
     transform: scale(1.03);
 }
 
-.jewelry-page .product-card:hover .product-image-wrapper.has-hover-image .product-image--hover {
+.product-card:hover .product-image-wrapper.has-hover-image .product-image--hover {
     opacity: 1;
     transform: scale(1);
 }
 
-.jewelry-page .product-placeholder {
+.product-placeholder {
     width: 100%;
     height: 100%;
     display: flex;
@@ -128,12 +128,12 @@
     font-family: var(--font-body);
 }
 
-.jewelry-page .product-card-body {
+.product-card-body {
     padding: 1rem 1rem 1.15rem;
     text-align: left;
 }
 
-.jewelry-page .product-name {
+.product-name {
     font-family: var(--font-display);
     font-size: 0.95rem;
     font-weight: 500;
@@ -175,7 +175,7 @@
     border: 1px solid rgba(var(--oakwood-rgb), 0.18);
 }
 
-.jewelry-page .product-price {
+.product-price {
     font-family: var(--font-body);
     font-size: 0.85rem;
     font-weight: 600;
@@ -856,6 +856,57 @@
 
 .jewelry-page .result-order-value.status { color: var(--oakwood); }
 
+.jewelry-page .cancel-countdown-wrap {
+    margin-bottom: 1.4rem;
+}
+
+.jewelry-page .cancel-countdown-label {
+    font-family: var(--font-body);
+    font-size: 0.82rem;
+    color: var(--gray-500);
+    margin-bottom: 0.25rem;
+}
+
+.jewelry-page .cancel-countdown {
+    font-family: var(--font-display);
+    font-size: 2.6rem;
+    font-weight: 400;
+    color: var(--oakwood);
+    letter-spacing: 0.05em;
+    line-height: 1;
+    margin-bottom: 0.2rem;
+}
+
+.jewelry-page .cancel-countdown-expired {
+    font-family: var(--font-body);
+    font-size: 0.82rem;
+    color: var(--gray-400);
+}
+
+.jewelry-page .result-btn--cancel {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 0.95rem;
+    background: transparent;
+    border: 1.5px solid var(--color-message-error-text);
+    color: var(--color-message-error-text) !important;
+    border-radius: 12px;
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    text-decoration: none !important;
+    transition: background 0.2s ease;
+}
+
+.jewelry-page .result-btn--cancel:hover {
+    background: var(--color-message-error-bg);
+}
+
 .jewelry-page .result-btn {
     display: inline-flex;
     align-items: center;
@@ -1170,11 +1221,11 @@
     .jewelry-page .filter-dropdown-menu--price {
         min-width: min(320px, calc(100vw - 2rem));
     }
-    .jewelry-page .product-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .product-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
 @media (max-width: 480px) {
-    .jewelry-page .product-grid { grid-template-columns: 1fr; }
+    .product-grid { grid-template-columns: 1fr; }
 }
 
 .jewelry-page .result-icon {

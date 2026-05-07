@@ -96,9 +96,20 @@ return function (RouteBuilder $routes): void {
             ->setPass(['id'])
             ->setPatterns(['id' => '\d+']);
 
-        // Schedule management
-        $builder->connect('/schedule/add', ['controller' => 'Schedule', 'action' => 'add']);
-        $builder->connect('/schedule/add/{id}', ['controller' => 'Schedule', 'action' => 'add'])
+        // CMS
+        $builder->connect('/cms/faq-items/save', ['controller' => 'Cms', 'action' => 'faqItemSave']);
+        $builder->connect('/cms/faq-items/delete/{id}', ['controller' => 'Cms', 'action' => 'faqItemDelete'])
+            ->setPass(['id'])
+            ->setPatterns(['id' => '\d+']);
+        $builder->connect('/cms', ['controller' => 'Cms', 'action' => 'index']);
+        $builder->connect('/cms/{pageSlug}', ['controller' => 'Cms', 'action' => 'index'])->setPass(['pageSlug']);
+
+        // Staff schedule routes
+        $builder->connect('/schedule', ['controller' => 'Schedule', 'action' => 'index']);
+        $builder->connect('/schedule/delete/{id}', ['controller' => 'Schedule', 'action' => 'delete'])
+            ->setPass(['id'])
+            ->setPatterns(['id' => '\d+']);
+        $builder->connect('/schedule/shifts/{id}', ['controller' => 'Schedule', 'action' => 'shifts'])
             ->setPass(['id'])
             ->setPatterns(['id' => '\d+']);
 
@@ -113,8 +124,6 @@ return function (RouteBuilder $routes): void {
         $builder->connect('/profile/orders/{id}', ['controller' => 'Profile', 'action' => 'orderDetail'])
             ->setPass(['id'])
             ->setPatterns(['id' => '\d+']);
-
-
         $builder->fallbacks();
     });
 

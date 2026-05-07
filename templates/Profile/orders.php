@@ -55,7 +55,15 @@ $statuses = ['pending', 'paid', 'shipped', 'completed', 'cancelled'];
                                 <td><?= $order->created->format('d M Y') ?></td>
                                 <td><?= count($order->order_items) ?> item<?= count($order->order_items) !== 1 ? 's' : '' ?></td>
                                 <td>$<?= number_format((float)$order->total_amount, 2) ?></td>
-                                <td><span class="order-status order-status--<?= h($order->status) ?>"><?= ucfirst(h($order->status)) ?></span></td>
+                                <td>
+                                    <span class="order-status order-status--<?= h($order->status) ?>"><?= ucfirst(h($order->status)) ?></span>
+                                    <?php if ($order->status === 'pending'): ?>
+                                        <?php $secsLeft = $order->created->modify('+30 minutes')->getTimestamp() - time(); ?>
+                                        <?php if ($secsLeft > 0): ?>
+                                            <span class="order-cancel-badge"><?= ceil($secsLeft / 60) ?> min left</span>
+                                        <?php endif; ?>
+                                    <?php endif; ?>
+                                </td>
                                 <td><?= $this->Html->link('View', ['action' => 'orderDetail', $order->id], ['class' => 'profile-table-link']) ?></td>
                             </tr>
                         <?php endforeach; ?>

@@ -15,8 +15,8 @@ $this->Html->css('jewelry', ['block' => true]);
 
 <div class="jewelry-page">
     <section class="jewelry-hero">
-        <h1>Our Home Decor Collection</h1>
-        <p>Discover timeless pieces crafted to elevate every occasion.</p>
+        <h1><?= h($pageContent['hero_heading'] ?? 'Our Home Decor Collection') ?></h1>
+        <p><?= h($pageContent['hero_subtext'] ?? '') ?></p>
     </section>
 
     <!-- Filter Bar -->

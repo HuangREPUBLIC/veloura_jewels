@@ -270,6 +270,86 @@
 .order-status--completed { background: var(--beige-light); color: var(--oakwood); }
 .order-status--cancelled { background: var(--color-message-error-bg); color: var(--color-message-error-text); }
 
+.order-cancel-badge {
+    display: inline-block;
+    margin-left: 0.4rem;
+    padding: 0.18rem 0.55rem;
+    border-radius: 20px;
+    background: var(--color-message-warning-bg);
+    color: var(--color-message-warning-text);
+    font-family: var(--font-body);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    vertical-align: middle;
+}
+
+.order-cancel-window {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+    padding: 1rem 1.4rem;
+    background: var(--color-message-warning-bg);
+    border: 1px solid var(--color-message-warning-border);
+    margin-bottom: 1rem;
+}
+
+.order-cancel-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+}
+
+.order-cancel-label {
+    font-family: var(--font-body);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--color-message-warning-text);
+}
+
+.order-cancel-timer {
+    font-family: var(--font-display);
+    font-size: 1.8rem;
+    font-weight: 400;
+    color: var(--oakwood);
+    letter-spacing: 0.04em;
+    line-height: 1;
+}
+
+.order-cancel-expired {
+    font-family: var(--font-body);
+    font-size: 0.82rem;
+    color: var(--gray-400);
+}
+
+.order-cancel-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.6rem 1.3rem;
+    background: transparent;
+    border: 1.5px solid var(--color-message-error-text);
+    color: var(--color-message-error-text) !important;
+    border-radius: 8px;
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    cursor: pointer;
+    text-decoration: none !important;
+    transition: background 0.2s ease;
+}
+
+.order-cancel-btn:hover {
+    background: var(--color-message-error-bg);
+}
+
 /* Form pages */
 .profile-form-wrap {
     max-width: 700px;
