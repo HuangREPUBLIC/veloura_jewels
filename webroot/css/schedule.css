@@ -372,21 +372,26 @@ h3.page-title,
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-height: 30px;
-    padding: 0 10px;
-    border: 1px dashed #bdb5a8;
-    border-radius: 999px;
-    color: var(--gray-600);
-    background: #fbfaf7;
-    font-size: 0.78rem;
-    font-weight: 700;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 1.5px dashed #ccc;
+    color: #ccc;
+    font-size: 1.1rem;
     text-decoration: none;
+    opacity: 0;
+    transition: opacity 0.15s, border-color 0.15s, color 0.15s, background 0.15s;
+}
+
+/* Only show the + when hovering anywhere on that staff row */
+.sched-grid-row:hover .sched-add-btn {
+    opacity: 1;
 }
 
 .sched-add-btn:hover {
+    border-color: var(--oakwood);
     color: var(--oakwood);
     background: var(--beige-light);
-    border-color: var(--oakwood);
     text-decoration: none;
 }
 

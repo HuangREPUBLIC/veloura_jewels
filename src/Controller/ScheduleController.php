@@ -96,7 +96,7 @@ class ScheduleController extends AppController
             $staff = $usersTable->get($id);
             if ($staff->role !== 'staff') {
                 $this->Flash->error('Schedules can only be assigned to staff members.');
-                return $this->redirect(['action' => 'add']);
+                return $this->redirect(['action' => 'shifts']);
             }
 
             if ($this->request->is(['post', 'put'])) {
