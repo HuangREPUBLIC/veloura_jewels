@@ -1,65 +1,84 @@
+/* FAQ Page */
+
 .faq-page {
-    background-color: var(--beige);
     min-height: 100vh;
-    padding: 1.5rem 1.2rem;
+    background: var(--beige-light);
+    padding-bottom: 5rem;
 }
 
 .faq-header {
+    background: var(--beige);
+    padding: 5rem 2rem 4.5rem;
     text-align: center;
-    max-width: 700px;
-    margin: 0 auto 2.2rem;
+    border-bottom: 1px solid rgba(var(--oakwood-rgb), 0.1);
 }
 
 .faq-header h2 {
-    font-size: 3.2rem;
-    font-weight: 700;
-    color: var(--oakwood);
+    font-family: var(--font-display);
+    font-size: clamp(2.2rem, 4vw, 3.4rem);
+    font-weight: 300;
+    color: var(--color-headings);
+    margin: 0 0 1rem;
+    letter-spacing: 0.01em;
 }
 
 .faq-header p {
-    color: var(--gray-700);
-    font-size: 1rem;
-}
-
-.faq-container {
-    max-width: 38rem;
+    font-size: 0.95rem;
+    color: var(--color-text-muted);
+    line-height: 1.8;
+    max-width: 520px;
     margin: 0 auto;
 }
 
+.faq-container {
+    max-width: 42rem;
+    margin: 3.5rem auto 0;
+    padding-inline: 1.5rem;
+}
+
 .faq-item {
-    background-color: var(--color-white);
-    border-radius: 12px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.05);
-    margin-bottom: 1rem;
+    background: var(--color-white);
+    border: 1px solid rgba(var(--oakwood-rgb), 0.1);
+    border-radius: 16px;
+    margin-bottom: 0.75rem;
     overflow: hidden;
+    box-shadow: 0 4px 12px rgba(var(--oakwood-rgb), 0.05);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.faq-item:hover {
+    border-color: rgba(var(--oakwood-rgb), 0.2);
+    box-shadow: 0 6px 20px rgba(var(--oakwood-rgb), 0.09);
 }
 
 .faq-question {
     width: 100%;
-    padding: 1rem 1.2rem;
+    padding: 1.2rem 1.4rem;
     background: var(--color-white);
-    color: var(--gray-800);
     border: none;
-    font-size: 1rem;
-    font-weight: 600;
     text-align: left;
     cursor: pointer;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    transition: all 0.2s ease;
-    font-family: inherit;
+    gap: 1rem;
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--color-headings);
+    transition: background 0.18s ease;
 }
 
 .faq-question:hover {
-    background: var(--gray-50);
+    background: rgba(var(--beige-light-rgb), 0.7);
 }
 
 .faq-answer {
-    padding: 0 1.2rem 1rem 1.2rem;
-    color: var(--gray-700);
-    font-size: 0.95rem;
-    line-height: 1.7;
+    padding: 0 1.4rem 1.3rem;
+    color: var(--color-text-muted);
+    font-size: 0.92rem;
+    line-height: 1.8;
     display: none;
 }
 
@@ -68,9 +87,195 @@
 }
 
 .faq-icon {
+    flex-shrink: 0;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: rgba(var(--oakwood-rgb), 0.08);
     color: var(--oakwood);
-    font-size: 1.4rem;
-    font-weight: 600;
-    margin-left: 1rem;
+    font-size: 1.1rem;
+    font-weight: 400;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.18s ease;
     line-height: 1;
+}
+
+.faq-question:hover .faq-icon {
+    background: rgba(var(--oakwood-rgb), 0.14);
+}
+
+@media (max-width: 768px) {
+    .faq-header {
+        padding: 3.5rem 1.5rem 3rem;
+    }
+
+    .faq-container {
+        margin-top: 2.5rem;
+        padding-inline: 1rem;
+    }
+}
+
+
+/* Our Story Page */
+
+.story-page {
+    min-height: 100vh;
+    background: var(--color-white);
+}
+
+.story-hero {
+    background: var(--beige);
+    padding: 5.5rem 2rem 5rem;
+    text-align: center;
+    border-bottom: 1px solid rgba(var(--oakwood-rgb), 0.1);
+}
+
+.story-hero-ornament {
+    width: 36px;
+    height: 1.5px;
+    background: var(--earth-yellow);
+    margin: 0 auto 1.4rem;
+}
+
+.story-label {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    color: var(--oakwood);
+    margin: 0 0 0.9rem;
+}
+
+.story-hero-title {
+    font-family: var(--font-display);
+    font-size: clamp(2.4rem, 5vw, 4rem);
+    font-weight: 300;
+    color: var(--color-headings);
+    letter-spacing: 0.01em;
+    line-height: 1.05;
+    margin: 0 0 1.4rem;
+}
+
+.story-hero-sub {
+    font-size: 0.92rem;
+    color: var(--color-text-muted);
+    line-height: 1.7;
+    max-width: 420px;
+    margin: 0 auto;
+}
+
+.story-section--body {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 5rem 2rem;
+}
+
+.story-prose p {
+    font-size: 0.97rem;
+    color: var(--color-ink, #2c2420);
+    line-height: 2;
+    margin: 0 0 1.4rem;
+}
+
+.story-prose p:last-child {
+    margin-bottom: 0;
+}
+
+.story-values {
+    background: var(--beige);
+    padding: 5rem 2rem 6rem;
+    border-top: 1px solid rgba(var(--oakwood-rgb), 0.08);
+}
+
+.story-values-header {
+    text-align: center;
+    margin-bottom: 3.5rem;
+}
+
+.story-values-ornament {
+    width: 36px;
+    height: 1.5px;
+    background: var(--earth-yellow);
+    margin: 0 auto 1.4rem;
+}
+
+.story-values-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.8rem, 3vw, 2.6rem);
+    font-weight: 300;
+    color: var(--color-headings);
+    letter-spacing: 0.02em;
+    margin: 0;
+}
+
+.story-values-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    max-width: 980px;
+    margin: 0 auto;
+}
+
+.story-value-card {
+    background: var(--color-white);
+    border: 1px solid rgba(var(--oakwood-rgb), 0.1);
+    border-radius: 18px;
+    padding: 1.8rem 1.6rem;
+    box-shadow: 0 4px 14px rgba(var(--oakwood-rgb), 0.05);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.25s ease;
+}
+
+.story-value-card:hover {
+    border-color: rgba(var(--oakwood-rgb), 0.2);
+    box-shadow: 0 8px 24px rgba(var(--oakwood-rgb), 0.09);
+    transform: translateY(-3px);
+}
+
+.story-value-ornament {
+    width: 22px;
+    height: 1.5px;
+    background: var(--earth-yellow);
+    margin-bottom: 0.9rem;
+}
+
+.story-value-title {
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    color: var(--color-headings);
+    margin: 0 0 0.7rem;
+}
+
+.story-value-card p {
+    font-size: 0.87rem;
+    color: var(--color-text-muted);
+    line-height: 1.75;
+    margin: 0;
+}
+
+@media (max-width: 768px) {
+    .story-hero {
+        padding: 4rem 1.5rem 3.5rem;
+    }
+
+    .story-section--body {
+        padding: 3.5rem 1.5rem;
+    }
+
+    .story-values {
+        padding: 3.5rem 1.5rem 4.5rem;
+    }
+
+    .story-values-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .story-values-grid {
+        grid-template-columns: 1fr;
+    }
 }

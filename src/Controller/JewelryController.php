@@ -31,6 +31,7 @@ class JewelryController extends AppController
             'createCheckoutSession',
             'success',
             'cancel',
+            'resumeCheckout',
             'webhook',
         ]);
     }
@@ -359,11 +360,18 @@ class JewelryController extends AppController
             ];
         }
 
+        $baseUrl = $this->request->scheme() . '://' . $this->request->host() . $this->request->getAttribute('base');
+
         $sessionParams = [
+            'ui_mode' => 'embedded_page',
             'mode' => 'payment',
             'line_items' => $lineItems,
-            'success_url' => $this->request->scheme() . '://' . $this->request->host() . $this->request->getAttribute('base') . '/jewelry/success?session_id={CHECKOUT_SESSION_ID}',
-            'cancel_url' => $this->request->scheme() . '://' . $this->request->host() . $this->request->getAttribute('base') . '/checkout/cancel?session_id={CHECKOUT_SESSION_ID}',
+            'return_url' => $baseUrl . '/checkout/success?session_id={CHECKOUT_SESSION_ID}',
+            'shipping_address_collection' => [
+                'allowed_countries' => ['AU', 'NZ', 'US', 'GB', 'CA', 'SG', 'HK', 'JP'],
+            ],
+            'billing_address_collection' => 'required',
+            'phone_number_collection' => ['enabled' => true],
             'metadata' => ['order_id' => (string)$order->id],
         ];
 
@@ -376,7 +384,12 @@ class JewelryController extends AppController
         $order->stripe_session_id = $session->id;
         $this->Orders->saveOrFail($order);
 
-        return $this->redirect($session->url);
+        $clientSecret = $session->client_secret;
+        $sessionId = $session->id;
+        $publishableKey = Configure::read('Stripe.publishableKey');
+        $this->set(compact('clientSecret', 'publishableKey', 'products', 'total', 'sessionId'));
+        $this->viewBuilder()->disableAutoLayout();
+        $this->render('payment');
     }
 
     public function success()
@@ -397,12 +410,13 @@ class JewelryController extends AppController
 
     public function cancel()
     {
+        $cancelWindowMinutes = 30;
         $sessionId = (string)($this->request->getQuery('session_id') ?? $this->request->getData('session_id') ?? '');
         $order = null;
 
         if ($sessionId !== '') {
             $identity = $this->request->getAttribute('identity');
-            $conditions = ['stripe_session_id' => $sessionId, 'status' => 'pending'];
+            $conditions = ['stripe_session_id' => $sessionId];
             if ($identity) {
                 $conditions['user_id'] = $identity->get('id');
             }
@@ -412,9 +426,18 @@ class JewelryController extends AppController
                 ->first();
         }
 
-        if ($this->request->is('post') && $order) {
-            $windowEnd = $order->created->modify('+30 minutes');
-            if (new \DateTime() > $windowEnd) {
+        // Auto-cancel pending orders whose window has expired
+        if ($order && $order->status === 'pending') {
+            $windowEnd = $order->created->modify("+{$cancelWindowMinutes} minutes");
+            if ((new \DateTime()) > $windowEnd) {
+                $order->status = 'cancelled';
+                $this->Orders->save($order);
+            }
+        }
+
+        if ($this->request->is('post') && $order && $order->status === 'pending') {
+            $windowEnd = $order->created->modify("+{$cancelWindowMinutes} minutes");
+            if ((new \DateTime()) > $windowEnd) {
                 $this->Flash->error('The cancellation window has expired.');
                 return $this->redirect(['action' => 'cancel', '?' => ['session_id' => $sessionId]]);
             }
@@ -428,8 +451,61 @@ class JewelryController extends AppController
             );
         }
 
-        $cancelWindowMinutes = 30;
         $this->set(compact('order', 'cancelWindowMinutes'));
+    }
+
+    public function resumeCheckout()
+    {
+        $sessionId = (string)$this->request->getQuery('session_id');
+
+        if (!$sessionId) {
+            return $this->redirect(['action' => 'checkout']);
+        }
+
+        $order = $this->Orders->find()
+            ->contain(['OrderItems'])
+            ->where(['stripe_session_id' => $sessionId, 'status' => 'pending'])
+            ->first();
+
+        if (!$order) {
+            return $this->redirect(['action' => 'cancel', '?' => ['session_id' => $sessionId]]);
+        }
+
+        $stripe = new StripeClient(Configure::read('Stripe.secretKey'));
+        try {
+            $session = $stripe->checkout->sessions->retrieve($sessionId);
+        } catch (\Exception $e) {
+            return $this->redirect(['action' => 'checkout']);
+        }
+
+        if ($session->status !== 'open') {
+            return $this->redirect(['action' => 'cancel', '?' => ['session_id' => $sessionId]]);
+        }
+
+        $variantsTable = $this->fetchTable('ProductVariants');
+        $products = [];
+        $total = 0;
+
+        foreach ($order->order_items as $item) {
+            try {
+                $product = $this->Products->get($item->product_id, contain: ['ProductImages']);
+                $variant = $variantsTable->get($item->variant_id);
+            } catch (RecordNotFoundException $e) {
+                continue;
+            }
+            $product->variant  = $variant;
+            $product->quantity = $item->quantity;
+            $product->subtotal = (float)$item->subtotal;
+            $total += $product->subtotal;
+            $products[] = $product;
+        }
+
+        $clientSecret   = $session->client_secret;
+        $publishableKey = Configure::read('Stripe.publishableKey');
+
+        $this->set(compact('clientSecret', 'publishableKey', 'products', 'total', 'sessionId'));
+        $this->viewBuilder()->disableAutoLayout();
+        $this->render('payment');
     }
 
     public function webhook()

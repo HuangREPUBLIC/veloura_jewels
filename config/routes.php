@@ -52,7 +52,7 @@ return function (RouteBuilder $routes): void {
     $routes->scope('/', function (RouteBuilder $builder): void {
 
         $builder->connect('/', ['controller' => 'Pages', 'action' => 'display', 'home']);
-        $builder->connect('/story', ['controller' => 'Pages', 'action' => 'story']);
+        $builder->connect('/story', ['controller' => 'OurStory', 'action' => 'index']);
         $builder->connect('/location', ['controller' => 'Pages', 'action' => 'location']);
 
         $builder->connect('/pages/*', 'Pages::display');
@@ -71,6 +71,7 @@ return function (RouteBuilder $routes): void {
         $builder->connect('/checkout/create-session', ['controller' => 'Jewelry', 'action' => 'createCheckoutSession']);
         $builder->connect('/checkout/success', ['controller' => 'Jewelry', 'action' => 'success']);
         $builder->connect('/checkout/cancel', ['controller' => 'Jewelry', 'action' => 'cancel']);
+        $builder->connect('/checkout/resume', ['controller' => 'Jewelry', 'action' => 'resumeCheckout']);
         $builder->connect('/stripe/webhook', ['controller' => 'Jewelry', 'action' => 'webhook']);
 
 

@@ -346,8 +346,11 @@ INSERT INTO `page_content` (`id`, `page_id`, `content_key`, `content_value`, `la
                                                                                                                         (13, 5, 'hero_heading', 'Our Home Decor Collection', 'Page Heading', 'text', 1),
                                                                                                                         (14, 5, 'hero_subtext', 'Discover timeless pieces crafted to elevate every occasion.', 'Page Subtext', 'textarea', 2),
                                                                                                                         (15, 6, 'page_heading', 'Our Story', 'Page Heading', 'text', 1),
-                                                                                                                        (16, 6, 'body_1', '', 'Story (Paragraph 1)', 'textarea', 2),
-                                                                                                                        (17, 6, 'body_2', '', 'Story (Paragraph 2)', 'textarea', 3),
+                                                                                                                        (16, 6, 'body_1', 'Founded by Sarah Smith, Veloura Jewels began with a simple belief: the pieces we wear and the spaces we live in should tell a story.', 'Story (Paragraph 1)', 'textarea', 2),
+                                                                                                                        (17, 6, 'body_2', 'What started as a passion for timeless jewellery soon evolved into a carefully curated collection of jewellery and home décor designed to bring elegance, warmth, and individuality into everyday life. Sarah created Veloura Jewels to offer more than beautiful products — she wanted to create meaningful pieces that help people celebrate moments, memories, and personal style.', 'Story (Paragraph 2)', 'textarea', 3),
+                                                                                                                        (23, 6, 'body_3', 'Inspired by modern sophistication and classic craftsmanship, Veloura Jewels blends refined design with a sense of comfort and authenticity. Every collection is selected with attention to detail, quality, and versatility, allowing customers to express themselves through both fashion and home styling.', 'Story (Paragraph 3)', 'textarea', 4),
+                                                                                                                        (24, 6, 'body_4', 'Whether it\'s a delicate necklace worn every day, a statement ring for a special occasion, or décor that transforms a house into a home, Veloura Jewels is built around the idea that beauty should feel personal.', 'Story (Paragraph 4)', 'textarea', 5),
+                                                                                                                        (25, 6, 'hero_sub', 'Founded by Sarah Smith — pieces crafted to carry meaning.', 'Hero Subtitle', 'text', 0),
                                                                                                                         (18, 7, 'page_heading', 'Find Us', 'Page Heading', 'text', 1),
                                                                                                                         (19, 7, 'intro', '', 'Intro Text', 'textarea', 2),
                                                                                                                         (20, 7, 'address', '123 Main Street, Brooksdale', 'Address', 'text', 3),
@@ -804,7 +807,7 @@ ALTER TABLE `order_items`
 -- AUTO_INCREMENT for table `page_content`
 --
 ALTER TABLE `page_content`
-    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `products`
