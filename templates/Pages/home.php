@@ -92,7 +92,7 @@ $this->Html->css('home', ['block' => true]);
             <div class="hp-story-divider"></div>
             <p class="hp-story-body">Founded by Sarah Smith in Brooksdale, Veloura Jewels is dedicated to creating unique, handcrafted pieces that blend creativity and meaningful design. Every ring, necklace, and home accent is shaped with intention — to bring beauty and elegance into your home and wardrobe.</p>
             <p class="hp-story-body">We believe that what you wear and what surrounds you should feel personal. That's why no two Veloura pieces are exactly alike.</p>
-            <?= $this->Html->link('Our full story →', ['controller' => 'Pages', 'action' => 'location'], ['class' => 'hp-story-link']) ?>
+            <?= $this->Html->link('Our full story →', ['controller' => 'OurStory', 'action' => 'index'], ['class' => 'hp-story-link']) ?>
         </div>
     </section>
 

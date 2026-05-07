@@ -74,6 +74,7 @@ $role = $identity ? $identity->get('role') : null;
             <?= $this->Html->link('Contact', '/contact', ['class' => str_starts_with($currentPath, '/contact') ? 'active' : '']) ?>
         <?php endif ?>
         <?= $this->Html->link('Location', '/location', ['class' => str_starts_with($currentPath, '/location') ? 'active' : '']) ?>
+        <?= $this->Html->link('Our Story', '/ourStory', ['class' => str_starts_with($currentPath, '/ourStory') ? 'active' : '']) ?>
         <?= $this->Html->link('FAQ', '/faq', ['class' => str_starts_with($currentPath, '/faq') ? 'active' : '']) ?>
 
     </nav>
@@ -231,7 +232,7 @@ $role = $identity ? $identity->get('role') : null;
             <ul class="footer-nav">
                 <li><?= $this->Html->link('Jewelry', ['controller' => 'Jewelry', 'action' => 'index']) ?></li>
                 <li><?= $this->Html->link('Home Décor', ['controller' => 'Jewelry', 'action' => 'home_decor']) ?></li>
-                <li><?= $this->Html->link('Story', ['controller' => 'Pages', 'action' => 'story']) ?></li>
+                <li><?= $this->Html->link('Our Story', ['controller' => 'OurStory', 'action' => 'index']) ?></li>
                 <li><?= $this->Html->link('Location', ['controller' => 'Pages', 'action' => 'location']) ?></li>
             </ul>
         </div>
