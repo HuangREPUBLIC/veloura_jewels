@@ -122,7 +122,9 @@ class ProductsController extends AppController
         if (empty($types)) {
             $types = ['jewelry' => 'Jewelry', 'home_decor' => 'Home Decor'];
         }
-        $this->set(compact('product', 'categories', 'categoriesJson', 'types'));
+
+        $preselectedType = $this->request->getQuery('type') ?? '';
+        $this->set(compact('product', 'categories', 'categoriesJson', 'types', 'preselectedType'));
     }
 
     public function edit($id = null)

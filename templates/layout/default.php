@@ -64,8 +64,10 @@ $role = $identity ? $identity->get('role') : null;
     <?php $currentPath = $this->request->getPath(); ?>
     <nav class="navbar-links" id="navLinks">
         <?= $this->Html->link('Home', '/', ['class' => $currentPath === '/' ? 'active' : '']) ?>
+        <?= $this->Html->link('Our Story', '/ourStory', ['class' => str_starts_with($currentPath, '/ourStory') ? 'active' : '']) ?>
         <?= $this->Html->link('Jewelry', '/jewelry', ['class' => str_starts_with($currentPath, '/jewelry') ? 'active' : '']) ?>
         <?= $this->Html->link('Home Decor', '/home-decor', ['class' => str_starts_with($currentPath, '/home-decor') ? 'active' : '']) ?>
+       <?= $this->Html->link('FAQ', '/faq', ['class' => str_starts_with($currentPath, '/faq') ? 'active' : '']) ?>
 
         <?php if (in_array($role, ['admin', 'staff'])): ?>
             <?= $this->Html->link('Dashboard', '/dashboard', ['class' => str_starts_with($currentPath, '/dashboard') ? 'active' : '']) ?>
@@ -73,10 +75,6 @@ $role = $identity ? $identity->get('role') : null;
         <?php else : ?>
             <?= $this->Html->link('Contact', '/contact', ['class' => str_starts_with($currentPath, '/contact') ? 'active' : '']) ?>
         <?php endif ?>
-        <?= $this->Html->link('Location', '/location', ['class' => str_starts_with($currentPath, '/location') ? 'active' : '']) ?>
-        <?= $this->Html->link('Our Story', '/ourStory', ['class' => str_starts_with($currentPath, '/ourStory') ? 'active' : '']) ?>
-        <?= $this->Html->link('FAQ', '/faq', ['class' => str_starts_with($currentPath, '/faq') ? 'active' : '']) ?>
-
     </nav>
 
 

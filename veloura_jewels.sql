@@ -2,10 +2,10 @@
 -- version 5.2.3
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: May 06, 2026 at 09:31 PM
--- Server version: 12.2.2-MariaDB
--- PHP Version: 8.4.18
+-- Host: 127.0.0.1
+-- Generation Time: May 07, 2026 at 04:14 PM
+-- Server version: 11.8.6-MariaDB
+-- PHP Version: 8.4.16
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -26,35 +26,15 @@ USE `veloura_jewels`;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `cake_migrations`
---
-
-DROP TABLE IF EXISTS `cake_migrations`;
-CREATE TABLE IF NOT EXISTS `cake_migrations` (
-                                                 `id` int(11) NOT NULL AUTO_INCREMENT,
-    `version` bigint(20) NOT NULL,
-    `migration_name` varchar(100) DEFAULT NULL,
-    `plugin` varchar(100) DEFAULT NULL,
-    `start_time` timestamp NULL DEFAULT NULL,
-    `end_time` timestamp NULL DEFAULT NULL,
-    `breakpoint` tinyint(1) NOT NULL DEFAULT 0,
-    PRIMARY KEY (`id`),
-    UNIQUE KEY `version_plugin_unique` (`version`,`plugin`)
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `categories`
 --
 
 DROP TABLE IF EXISTS `categories`;
-CREATE TABLE IF NOT EXISTS `categories` (
-                                            `id` int(11) NOT NULL AUTO_INCREMENT,
-    `name` varchar(64) NOT NULL,
-    `type` varchar(20) NOT NULL DEFAULT 'jewelry',
-    PRIMARY KEY (`id`)
-    ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+CREATE TABLE `categories` (
+                              `id` int(11) NOT NULL,
+                              `name` varchar(64) NOT NULL,
+                              `type` varchar(20) NOT NULL DEFAULT 'jewelry'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `categories`
@@ -79,14 +59,11 @@ INSERT INTO `categories` (`id`, `name`, `type`) VALUES
 --
 
 DROP TABLE IF EXISTS `categories_products`;
-CREATE TABLE IF NOT EXISTS `categories_products` (
-                                                     `id` int(11) NOT NULL AUTO_INCREMENT,
-    `category_id` int(11) NOT NULL,
-    `product_id` int(11) NOT NULL,
-    PRIMARY KEY (`id`),
-    KEY `category_id` (`category_id`),
-    KEY `product_id` (`product_id`)
-    ) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+CREATE TABLE `categories_products` (
+                                       `id` int(11) NOT NULL,
+                                       `category_id` int(11) NOT NULL,
+                                       `product_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `categories_products`
@@ -134,14 +111,12 @@ INSERT INTO `categories_products` (`id`, `category_id`, `product_id`) VALUES
 --
 
 DROP TABLE IF EXISTS `cms_pages`;
-CREATE TABLE IF NOT EXISTS `cms_pages` (
-                                           `id` int(11) NOT NULL AUTO_INCREMENT,
-    `slug` varchar(100) NOT NULL,
-    `title` varchar(200) NOT NULL,
-    `sort_order` int(11) NOT NULL DEFAULT 0,
-    PRIMARY KEY (`id`),
-    UNIQUE KEY `uq_slug` (`slug`)
-    ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+CREATE TABLE `cms_pages` (
+                             `id` int(11) NOT NULL,
+                             `slug` varchar(100) NOT NULL,
+                             `title` varchar(200) NOT NULL,
+                             `sort_order` int(11) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 
 --
 -- Dumping data for table `cms_pages`
@@ -163,17 +138,15 @@ INSERT INTO `cms_pages` (`id`, `slug`, `title`, `sort_order`) VALUES
 --
 
 DROP TABLE IF EXISTS `contact_replies`;
-CREATE TABLE IF NOT EXISTS `contact_replies` (
-                                                 `id` int(11) NOT NULL AUTO_INCREMENT,
-    `contact_submission_id` int(11) NOT NULL,
-    `subject` varchar(255) NOT NULL,
-    `message` text NOT NULL,
-    `sent_at` datetime DEFAULT current_timestamp(),
-    `created` datetime DEFAULT current_timestamp(),
-    `modified` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-    PRIMARY KEY (`id`),
-    KEY `fk_contact_replies_submission` (`contact_submission_id`)
-    ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+CREATE TABLE `contact_replies` (
+                                   `id` int(11) NOT NULL,
+                                   `contact_submission_id` int(11) NOT NULL,
+                                   `subject` varchar(255) NOT NULL,
+                                   `message` text NOT NULL,
+                                   `sent_at` datetime DEFAULT current_timestamp(),
+                                   `created` datetime DEFAULT current_timestamp(),
+                                   `modified` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 
 --
 -- Dumping data for table `contact_replies`
@@ -183,7 +156,9 @@ INSERT INTO `contact_replies` (`id`, `contact_submission_id`, `subject`, `messag
                                                                                                                           (1, 1, 'Re: Your enquiry', 'Hi Jialin,', '2026-03-23 10:10:33', '2026-03-23 10:10:33', '2026-03-23 10:10:33'),
                                                                                                                           (2, 4, 'Re: Your enquiry', 'Hi Hey,', '2026-03-24 06:30:18', '2026-03-24 06:30:19', '2026-03-24 06:30:19'),
                                                                                                                           (3, 1, 'Re: Your enquiry', 'test', '2026-03-24 06:32:52', '2026-03-24 06:32:52', '2026-03-24 06:32:52'),
-                                                                                                                          (4, 4, 'Re: This is a test subject', 'Hi Hey,', '2026-04-16 12:00:12', '2026-04-16 12:00:12', '2026-04-16 12:00:12');
+                                                                                                                          (4, 4, 'Re: This is a test subject', 'Hi Hey,', '2026-04-16 12:00:12', '2026-04-16 12:00:12', '2026-04-16 12:00:12'),
+                                                                                                                          (5, 10, 'Re: kj k', 'Hi Hunter, hbub', '2026-05-07 12:49:12', '2026-05-07 12:49:12', '2026-05-07 12:49:12'),
+                                                                                                                          (6, 6, 'Re: testing email', 'Hi Customer, no', '2026-05-07 13:18:46', '2026-05-07 13:18:46', '2026-05-07 13:18:46');
 
 -- --------------------------------------------------------
 
@@ -192,19 +167,18 @@ INSERT INTO `contact_replies` (`id`, `contact_submission_id`, `subject`, `messag
 --
 
 DROP TABLE IF EXISTS `contact_submissions`;
-CREATE TABLE IF NOT EXISTS `contact_submissions` (
-                                                     `id` int(11) NOT NULL AUTO_INCREMENT,
-    `first_name` varchar(50) NOT NULL,
-    `last_name` varchar(50) NOT NULL,
-    `email` varchar(255) NOT NULL,
-    `subject` varchar(255) NOT NULL,
-    `message` text NOT NULL,
-    `captcha_passed` tinyint(1) NOT NULL DEFAULT 0,
-    `is_replied` tinyint(1) NOT NULL DEFAULT 0,
-    `created` datetime DEFAULT current_timestamp(),
-    `modified` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-    PRIMARY KEY (`id`)
-    ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+CREATE TABLE `contact_submissions` (
+                                       `id` int(11) NOT NULL,
+                                       `first_name` varchar(50) NOT NULL,
+                                       `last_name` varchar(50) NOT NULL,
+                                       `email` varchar(255) NOT NULL,
+                                       `subject` varchar(255) NOT NULL,
+                                       `message` text NOT NULL,
+                                       `captcha_passed` tinyint(1) NOT NULL DEFAULT 0,
+                                       `is_replied` tinyint(1) NOT NULL DEFAULT 0,
+                                       `created` datetime DEFAULT current_timestamp(),
+                                       `modified` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 
 --
 -- Dumping data for table `contact_submissions`
@@ -215,10 +189,12 @@ INSERT INTO `contact_submissions` (`id`, `first_name`, `last_name`, `email`, `su
                                                                                                                                                               (3, '11', '11', '11@1.com', '', '1wassadsad', 0, 0, '2026-03-20 02:44:25', '2026-03-20 02:44:25'),
                                                                                                                                                               (4, 'Hey', 'Test', 'Testing@mail.com', 'This is a test subject', 'I want to test the subject', 0, 1, '2026-03-24 06:23:08', '2026-04-16 12:00:12'),
                                                                                                                                                               (5, 'Customer', 'Test', 'test1@u26s1141.iedev.org', 'testing email', 'TEST', 0, 0, '2026-04-22 00:40:01', '2026-04-22 00:40:01'),
-                                                                                                                                                              (6, 'Customer', 'we', 'test1@u26s1141.iedev.org', 'testing email', 'test', 0, 0, '2026-04-22 00:47:12', '2026-04-22 00:47:12'),
+                                                                                                                                                              (6, 'Customer', 'we', 'test1@u26s1141.iedev.org', 'testing email', 'test', 0, 1, '2026-04-22 00:47:12', '2026-05-07 13:18:46'),
                                                                                                                                                               (7, 'Customer', 'Test', 'test1@u26s1141.iedev.org', 'testing email', 'tesret', 0, 0, '2026-04-22 01:16:42', '2026-04-22 01:16:42'),
                                                                                                                                                               (8, 'Customer', 'Test', 'test1@u26s1141.iedev.org', 'testing email', 'wwww', 0, 0, '2026-04-22 01:22:27', '2026-04-22 01:22:27'),
-                                                                                                                                                              (9, 'sami', 'Test', 'test1@u26s1141.iedev.org', 'devTesting', 'Testing if email works on dev version', 0, 0, '2026-04-22 01:27:19', '2026-04-22 01:27:19');
+                                                                                                                                                              (9, 'sami', 'Test', 'test1@u26s1141.iedev.org', 'devTesting', 'Testing if email works on dev version', 0, 0, '2026-04-22 01:27:19', '2026-04-22 01:27:19'),
+                                                                                                                                                              (10, 'Hunter', 'McConnell', 'hmcc0010@student.monash.edu', 'kj k', 'kjn', 0, 1, '2026-05-07 12:47:45', '2026-05-07 12:49:12'),
+                                                                                                                                                              (11, 'Customer', 'Test', 'customer@gmail.com', 'Hello ', 'MEssage', 0, 0, '2026-05-07 13:15:52', '2026-05-07 13:15:52');
 
 -- --------------------------------------------------------
 
@@ -227,16 +203,15 @@ INSERT INTO `contact_submissions` (`id`, `first_name`, `last_name`, `email`, `su
 --
 
 DROP TABLE IF EXISTS `faq_items`;
-CREATE TABLE IF NOT EXISTS `faq_items` (
-                                           `id` int(11) NOT NULL AUTO_INCREMENT,
-    `question` varchar(500) NOT NULL,
-    `answer` text NOT NULL,
-    `sort_order` int(11) NOT NULL DEFAULT 0,
-    `is_active` tinyint(1) NOT NULL DEFAULT 1,
-    `created` datetime NOT NULL,
-    `modified` datetime NOT NULL,
-    PRIMARY KEY (`id`)
-    ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+CREATE TABLE `faq_items` (
+                             `id` int(11) NOT NULL,
+                             `question` varchar(500) NOT NULL,
+                             `answer` text NOT NULL,
+                             `sort_order` int(11) NOT NULL DEFAULT 0,
+                             `is_active` tinyint(1) NOT NULL DEFAULT 1,
+                             `created` datetime NOT NULL,
+                             `modified` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 
 --
 -- Dumping data for table `faq_items`
@@ -256,20 +231,18 @@ INSERT INTO `faq_items` (`id`, `question`, `answer`, `sort_order`, `is_active`, 
 --
 
 DROP TABLE IF EXISTS `orders`;
-CREATE TABLE IF NOT EXISTS `orders` (
-                                        `id` int(11) NOT NULL AUTO_INCREMENT,
-    `user_id` int(11) DEFAULT NULL,
-    `stripe_session_id` varchar(255) DEFAULT NULL,
-    `stripe_payment_intent_id` varchar(255) DEFAULT NULL,
-    `customer_email` varchar(255) DEFAULT NULL,
-    `status` varchar(50) NOT NULL DEFAULT 'pending',
-    `total_amount` decimal(10,2) NOT NULL DEFAULT 0.00,
-    `currency` varchar(10) NOT NULL DEFAULT 'aud',
-    `created` datetime DEFAULT current_timestamp(),
-    `modified` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-    PRIMARY KEY (`id`),
-    KEY `user_id` (`user_id`)
-    ) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+CREATE TABLE `orders` (
+                          `id` int(11) NOT NULL,
+                          `user_id` int(11) DEFAULT NULL,
+                          `stripe_session_id` varchar(255) DEFAULT NULL,
+                          `stripe_payment_intent_id` varchar(255) DEFAULT NULL,
+                          `customer_email` varchar(255) DEFAULT NULL,
+                          `status` varchar(50) NOT NULL DEFAULT 'pending',
+                          `total_amount` decimal(10,2) NOT NULL DEFAULT 0.00,
+                          `currency` varchar(10) NOT NULL DEFAULT 'aud',
+                          `created` datetime DEFAULT current_timestamp(),
+                          `modified` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `orders`
@@ -300,23 +273,19 @@ INSERT INTO `orders` (`id`, `user_id`, `stripe_session_id`, `stripe_payment_inte
 --
 
 DROP TABLE IF EXISTS `order_items`;
-CREATE TABLE IF NOT EXISTS `order_items` (
-                                             `id` int(11) NOT NULL AUTO_INCREMENT,
-    `order_id` int(11) NOT NULL,
-    `product_id` int(11) NOT NULL,
-    `variant_id` int(11) DEFAULT NULL,
-    `product_name` varchar(255) NOT NULL,
-    `selected_size` varchar(20) DEFAULT NULL,
-    `unit_price` decimal(10,2) NOT NULL,
-    `quantity` int(11) NOT NULL,
-    `subtotal` decimal(10,2) NOT NULL,
-    `created` datetime DEFAULT current_timestamp(),
-    `modified` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-    PRIMARY KEY (`id`),
-    KEY `order_id` (`order_id`),
-    KEY `product_id` (`product_id`),
-    KEY `variant_id` (`variant_id`)
-    ) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+CREATE TABLE `order_items` (
+                               `id` int(11) NOT NULL,
+                               `order_id` int(11) NOT NULL,
+                               `product_id` int(11) NOT NULL,
+                               `variant_id` int(11) DEFAULT NULL,
+                               `product_name` varchar(255) NOT NULL,
+                               `selected_size` varchar(20) DEFAULT NULL,
+                               `unit_price` decimal(10,2) NOT NULL,
+                               `quantity` int(11) NOT NULL,
+                               `subtotal` decimal(10,2) NOT NULL,
+                               `created` datetime DEFAULT current_timestamp(),
+                               `modified` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `order_items`
@@ -347,17 +316,15 @@ INSERT INTO `order_items` (`id`, `order_id`, `product_id`, `variant_id`, `produc
 --
 
 DROP TABLE IF EXISTS `page_content`;
-CREATE TABLE IF NOT EXISTS `page_content` (
-                                              `id` int(11) NOT NULL AUTO_INCREMENT,
-    `page_id` int(11) NOT NULL,
-    `content_key` varchar(100) NOT NULL,
-    `content_value` text DEFAULT NULL,
-    `label` varchar(200) NOT NULL,
-    `content_type` enum('text','textarea') NOT NULL DEFAULT 'text',
-    `sort_order` int(11) NOT NULL DEFAULT 0,
-    PRIMARY KEY (`id`),
-    UNIQUE KEY `uq_page_key` (`page_id`,`content_key`)
-    ) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+CREATE TABLE `page_content` (
+                                `id` int(11) NOT NULL,
+                                `page_id` int(11) NOT NULL,
+                                `content_key` varchar(100) NOT NULL,
+                                `content_value` text DEFAULT NULL,
+                                `label` varchar(200) NOT NULL,
+                                `content_type` enum('text','textarea') NOT NULL DEFAULT 'text',
+                                `sort_order` int(11) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 
 --
 -- Dumping data for table `page_content`
@@ -372,7 +339,7 @@ INSERT INTO `page_content` (`id`, `page_id`, `content_key`, `content_value`, `la
                                                                                                                         (6, 2, 'brand_story_tag', 'Est. Brooksdale', 'Brand Story Tag', 'text', 4),
                                                                                                                         (7, 2, 'brand_story_body_1', 'Founded by Sarah Smith in Brooksdale, Veloura Jewels is dedicated to creating unique, handcrafted pieces that blend creativity and meaningful design. Every ring, necklace, and home accent is shaped with intention — to bring beauty and elegance into your home and wardrobe.', 'Brand Story (Paragraph 1)', 'textarea', 5),
                                                                                                                         (8, 2, 'brand_story_body_2', 'We believe that what you wear and what surrounds you should feel personal. That is why no two Veloura pieces are exactly alike.', 'Brand Story (Paragraph 2)', 'textarea', 6),
-                                                                                                                        (9, 3, 'faq_heading', 'Frequently Asked Questions', 'Page Heading', 'text', 1),
+                                                                                                                        (9, 3, 'faq_heading', 'Frequently Asked Questionssss', 'Page Heading', 'text', 1),
                                                                                                                         (10, 3, 'faq_subtext', 'Find answers to common questions about Veloura Jewels, our products, and how to get in touch.', 'Page Subtext', 'textarea', 2),
                                                                                                                         (11, 4, 'hero_heading', 'Our Jewelry Collection', 'Page Heading', 'text', 1),
                                                                                                                         (12, 4, 'hero_subtext', 'Discover timeless pieces crafted to elevate every occasion.', 'Page Subtext', 'textarea', 2),
@@ -394,19 +361,18 @@ INSERT INTO `page_content` (`id`, `page_id`, `content_key`, `content_value`, `la
 --
 
 DROP TABLE IF EXISTS `products`;
-CREATE TABLE IF NOT EXISTS `products` (
-                                          `id` int(11) NOT NULL AUTO_INCREMENT,
-    `name` varchar(64) NOT NULL,
-    `purchase_price` decimal(9,2) NOT NULL,
-    `sale_price` decimal(9,2) NOT NULL,
-    `supplier_email` varchar(320) DEFAULT NULL,
-    `created` datetime DEFAULT NULL,
-    `modified` datetime DEFAULT NULL,
-    `description` text DEFAULT NULL,
-    `story` text DEFAULT NULL,
-    `featured` tinyint(1) NOT NULL DEFAULT 0,
-    PRIMARY KEY (`id`)
-    ) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+CREATE TABLE `products` (
+                            `id` int(11) NOT NULL,
+                            `name` varchar(64) NOT NULL,
+                            `purchase_price` decimal(9,2) NOT NULL,
+                            `sale_price` decimal(9,2) NOT NULL,
+                            `supplier_email` varchar(320) DEFAULT NULL,
+                            `created` datetime DEFAULT NULL,
+                            `modified` datetime DEFAULT NULL,
+                            `description` text DEFAULT NULL,
+                            `story` text DEFAULT NULL,
+                            `featured` tinyint(1) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `products`
@@ -415,7 +381,7 @@ CREATE TABLE IF NOT EXISTS `products` (
 INSERT INTO `products` (`id`, `name`, `purchase_price`, `sale_price`, `supplier_email`, `created`, `modified`, `description`, `story`, `featured`) VALUES
                                                                                                                                                        (1, 'Art Deco Ring', 50.00, 110.00, 'supplier@luxgems.com.au', '2026-04-13 11:29:33', '2026-05-04 22:00:11', 'This ring is meticulously crafted for a perfect balance between bold structure and refined elegance. The design and stone setting ensure a unique brilliance. Inspired by Art Deco aesthetic, each piece embodies timeless sophistication.\r\nAll our products are handcrafted in our ateliers\r\nMaterial: Sterling silver\r\nStone: White cubic zirconia\r\nWidth: 0.5 cm\r\nColor: Silver', 'In a precise atelier, the Art Deco Ring is crafted with sharp geometric lines, each facet carefully shaped and aligned by hand to reflect the elegance of the 1920s. The final setting is polished to enhance its symmetry and brilliance, resulting in a timeless statement piece.\r\n', 0),
                                                                                                                                                        (2, 'Statement Torsade Pavé Ring', 85.00, 210.00, 'supplier@goldcraft.com.au', '2026-04-13 11:29:33', '2026-05-04 21:22:10', 'This ring embodies elegance and versatility. Its radiant shine echoes pure light, creating a captivating sparkle that draws attention.\r\nAll our products are handcrafted in our ateliers\r\nMaterial: Yellow Alloy made of 95% recycled material and 18k yellow gold plated, anti-tarnishing and hypoallergenic\r\nStone: White cubic zirconia\r\nWidth: 0.9 cm\r\nColor: Yellow', 'In a meticulous atelier, the Statement Torsade Pavé Ring is formed by twisting fine metal into a bold spiral, then hand-setting pavé stones along its curves for continuous brilliance. The design is carefully polished to emphasize its sculptural form and luminous detail.\r\n', 1),
-                                                                                                                                                       (3, 'Dainty Rose Gold Ring', 30.00, 120.00, 'supplier@luxgems.com.au', '2026-04-13 11:29:33', '2026-05-04 21:21:55', 'This ring is made with Alloy and 18k rose gold plated. It is microset with white cubic zirconia.\r\nThe Alloy is made of 95% recycled material. It is anti-tarnishing and Hypoallergenic.\r\nMaterial: Alloy made of 95% recycled material and 18k rose gold plated, white cubic zirconia, anti-tarnishing and Hypoallergenic\r\nAll our products are handcrafted and microset by hand in our ateliers\r\nColor: Rose gold', 'In a refined workshop, the Dainty Rose Gold Ring is carefully shaped and polished to achieve a soft, warm glow that highlights its delicate form. Each piece is finished by hand to ensure a smooth, minimalist elegance designed for everyday wear.\r\n', 1),
+                                                                                                                                                       (3, 'Dainty Rose Gold Ring', 30.00, 120.00, 'supplier@luxgems.com.au', '2026-04-13 11:29:33', '2026-05-07 13:17:22', 'This ring is made with Alloy and 18k rose gold plated. It is microset with white cubic zirconia.\r\nThe Alloy is made of 95% recycled material. It is anti-tarnishing and Hypoallergenic.\r\nMaterial: Alloy made of 95% recycled material and 18k rose gold plated, white cubic zirconia, anti-tarnishing and Hypoallergenic\r\nAll our products are handcrafted and microset by hand in our ateliers\r\nColor: Rose gold', 'In a refined workshop, the Dainty Rose Gold Ring is carefully shaped and polished to achieve a soft, warm glow that highlights its delicate form. Each piece is finished by hand to ensure a smooth, minimalist elegance designed for everyday wear.\r\n', 1),
                                                                                                                                                        (4, 'Chunky Ice Ring', 100.00, 300.00, 'supplier@luxgems.com.au', '2026-04-13 11:29:33', '2026-05-04 21:21:51', 'Sterling silver intertwines with paths of brilliant stones to reflect the geometric patterns created by broken ice.\r\nAll our products are handcrafted in our ateliers\r\nMaterial: Sterling silver\r\nStone: White cubic zirconia\r\nColor: Silver', 'In a bold atelier, the Chunky Ice Ring is cast with substantial volume and carefully sculpted edges, then polished to a high, glass-like shine for maximum impact. Each piece is finished by hand to enhance its crisp, modern brilliance and sculptural presence.\r\n', 1),
                                                                                                                                                        (5, 'LOVE Morse Code Ring', 30.00, 120.00, 'supplier@pearlsea.com.au', '2026-04-13 11:29:33', '2026-05-04 21:22:02', 'This collection is using Morse code as a secret Love language.\r\nThis ring is embellished with the code LOVE on it, and the word LOVE is also engraved inside.\r\nMaterial: Rose Alloy made of 95% recycled material and 18k gold plated (3 microns), white cubic zirconia, anti-tarnishing and anti-allergenic\r\nAll our products are handcrafted and microset by hand in our ateliers\r\nColor: Rose gold', 'In a precise atelier, the LOVE Morse Code Ring is crafted with tiny, carefully placed stones and metal beads that encode the word \"LOVE\" in subtle rhythmic patterning. Each ring is hand-finished to ensure the message is both discreet and beautifully refined in its minimalist design.\r\n', 1),
                                                                                                                                                        (6, 'Art Deco Adjustable Necklace', 70.00, 230.00, 'supplier@luxgems.com.au', '2026-04-13 11:29:33', '2026-05-06 21:20:18', 'This necklace is meticulously crafted for a perfect balance between bold structure and refined elegance.\r\nMaterial: Sterling silver\r\nStone: White cubic zirconia\r\nColor: Silver\r\nPendant size: Length 4.6 cm ; Width 0.7 cm\r\nTotal chain length: Adjustable to 48 cm maximum with sliding clasp', 'In a precision-led atelier, the Art Deco Adjustable Necklace is crafted with clean geometric lines, each element carefully shaped and assembled by hand. The adjustable mechanism is seamlessly integrated, ensuring both versatility and refined elegance in a timeless design.\r\n', 0),
@@ -454,13 +420,11 @@ INSERT INTO `products` (`id`, `name`, `purchase_price`, `sale_price`, `supplier_
 --
 
 DROP TABLE IF EXISTS `product_images`;
-CREATE TABLE IF NOT EXISTS `product_images` (
-                                                `id` int(11) NOT NULL AUTO_INCREMENT,
-    `product_id` int(11) NOT NULL,
-    `filename` varchar(4096) NOT NULL,
-    PRIMARY KEY (`id`),
-    KEY `product_id` (`product_id`)
-    ) ENGINE=InnoDB AUTO_INCREMENT=161 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+CREATE TABLE `product_images` (
+                                  `id` int(11) NOT NULL,
+                                  `product_id` int(11) NOT NULL,
+                                  `filename` varchar(4096) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `product_images`
@@ -542,14 +506,12 @@ INSERT INTO `product_images` (`id`, `product_id`, `filename`) VALUES
 --
 
 DROP TABLE IF EXISTS `product_variants`;
-CREATE TABLE IF NOT EXISTS `product_variants` (
-                                                  `id` int(11) NOT NULL AUTO_INCREMENT,
-    `product_id` int(11) NOT NULL,
-    `size` varchar(20) NOT NULL,
-    `stock` int(11) NOT NULL DEFAULT 0,
-    PRIMARY KEY (`id`),
-    KEY `product_id` (`product_id`)
-    ) ENGINE=InnoDB AUTO_INCREMENT=77 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+CREATE TABLE `product_variants` (
+                                    `id` int(11) NOT NULL,
+                                    `product_id` int(11) NOT NULL,
+                                    `size` varchar(20) NOT NULL,
+                                    `stock` int(11) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `product_variants`
@@ -566,9 +528,9 @@ INSERT INTO `product_variants` (`id`, `product_id`, `size`, `stock`) VALUES
                                                                          (8, 2, 'Size 7', 5),
                                                                          (9, 2, 'Size 8', 5),
                                                                          (10, 2, 'Size 9', 5),
-                                                                         (11, 3, 'Size 5', 1),
-                                                                         (12, 3, 'Size 6', 1),
-                                                                         (13, 3, 'Size 7', 1),
+                                                                         (11, 3, 'Size 5', 10),
+                                                                         (12, 3, 'Size 6', 10),
+                                                                         (13, 3, 'Size 7', 10),
                                                                          (14, 3, 'Size 8', 1),
                                                                          (15, 3, 'Size 9', 1),
                                                                          (16, 4, 'Size 5', 1),
@@ -617,18 +579,16 @@ INSERT INTO `product_variants` (`id`, `product_id`, `size`, `stock`) VALUES
 --
 
 DROP TABLE IF EXISTS `schedules`;
-CREATE TABLE IF NOT EXISTS `schedules` (
-                                           `id` int(11) NOT NULL AUTO_INCREMENT,
-    `user_id` int(11) NOT NULL,
-    `week_start` date NOT NULL COMMENT 'Monday of the scheduled week',
-    `day_of_week` tinyint(4) NOT NULL COMMENT '1=Mon, 2=Tue, 3=Wed, 4=Thu, 5=Fri, 6=Sat, 7=Sun',
-    `start_time` time NOT NULL,
-    `end_time` time NOT NULL,
-    `created` datetime DEFAULT NULL,
-    `modified` datetime DEFAULT NULL,
-    PRIMARY KEY (`id`),
-    UNIQUE KEY `unique_staff_week_day` (`user_id`,`week_start`,`day_of_week`)
-    ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+CREATE TABLE `schedules` (
+                             `id` int(11) NOT NULL,
+                             `user_id` int(11) NOT NULL,
+                             `week_start` date NOT NULL COMMENT 'Monday of the scheduled week',
+                             `day_of_week` tinyint(4) NOT NULL COMMENT '1=Mon, 2=Tue, 3=Wed, 4=Thu, 5=Fri, 6=Sat, 7=Sun',
+                             `start_time` time NOT NULL,
+                             `end_time` time NOT NULL,
+                             `created` datetime DEFAULT NULL,
+                             `modified` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 
 --
 -- Dumping data for table `schedules`
@@ -636,7 +596,23 @@ CREATE TABLE IF NOT EXISTS `schedules` (
 
 INSERT INTO `schedules` (`id`, `user_id`, `week_start`, `day_of_week`, `start_time`, `end_time`, `created`, `modified`) VALUES
                                                                                                                             (4, 10, '2026-05-11', 1, '09:00:00', '17:00:00', '2026-05-05 13:51:43', '2026-05-05 13:51:43'),
-                                                                                                                            (7, 10, '2026-05-04', 1, '09:00:00', '17:00:00', '2026-05-05 20:03:56', '2026-05-05 20:03:56');
+                                                                                                                            (9, 10, '2026-05-04', 1, '09:00:00', '17:00:00', '2026-05-07 11:32:53', '2026-05-07 11:32:53'),
+                                                                                                                            (10, 13, '2026-05-04', 1, '09:00:00', '19:00:00', '2026-05-07 12:51:25', '2026-05-07 12:51:25'),
+                                                                                                                            (11, 12, '2026-05-04', 2, '09:00:00', '17:00:00', '2026-05-07 12:51:40', '2026-05-07 12:51:40'),
+                                                                                                                            (15, 11, '2026-05-04', 2, '09:00:00', '17:00:00', '2026-05-07 13:19:36', '2026-05-07 13:19:36'),
+                                                                                                                            (16, 11, '2026-05-04', 3, '09:00:00', '17:00:00', '2026-05-07 13:19:36', '2026-05-07 13:19:36'),
+                                                                                                                            (17, 11, '2026-05-04', 4, '09:00:00', '17:00:00', '2026-05-07 13:19:36', '2026-05-07 13:19:36'),
+                                                                                                                            (18, 11, '2026-05-04', 5, '09:00:00', '17:00:00', '2026-05-07 13:19:36', '2026-05-07 13:19:36'),
+                                                                                                                            (19, 13, '2026-05-11', 1, '09:00:00', '17:00:00', '2026-05-07 15:44:23', '2026-05-07 15:44:23'),
+                                                                                                                            (20, 13, '2026-05-11', 2, '09:00:00', '17:00:00', '2026-05-07 15:44:23', '2026-05-07 15:44:23'),
+                                                                                                                            (21, 13, '2026-05-11', 3, '09:00:00', '17:00:00', '2026-05-07 15:44:23', '2026-05-07 15:44:23'),
+                                                                                                                            (22, 13, '2026-05-11', 4, '09:00:00', '17:00:00', '2026-05-07 15:44:23', '2026-05-07 15:44:23'),
+                                                                                                                            (23, 13, '2026-05-11', 5, '09:00:00', '17:00:00', '2026-05-07 15:44:23', '2026-05-07 15:44:23'),
+                                                                                                                            (24, 12, '2026-05-18', 1, '09:00:00', '17:00:00', '2026-05-07 15:47:11', '2026-05-07 15:47:11'),
+                                                                                                                            (25, 12, '2026-05-18', 2, '09:00:00', '17:00:00', '2026-05-07 15:47:11', '2026-05-07 15:47:11'),
+                                                                                                                            (26, 12, '2026-05-18', 3, '09:00:00', '17:00:00', '2026-05-07 15:47:11', '2026-05-07 15:47:11'),
+                                                                                                                            (27, 12, '2026-05-18', 4, '09:00:00', '17:00:00', '2026-05-07 15:47:11', '2026-05-07 15:47:11'),
+                                                                                                                            (28, 12, '2026-05-18', 5, '09:00:00', '17:00:00', '2026-05-07 15:47:11', '2026-05-07 15:47:11');
 
 -- --------------------------------------------------------
 
@@ -645,21 +621,20 @@ INSERT INTO `schedules` (`id`, `user_id`, `week_start`, `day_of_week`, `start_ti
 --
 
 DROP TABLE IF EXISTS `users`;
-CREATE TABLE IF NOT EXISTS `users` (
-                                       `id` int(11) NOT NULL AUTO_INCREMENT,
-    `email` varchar(255) NOT NULL,
-    `password` varchar(255) NOT NULL,
-    `first_name` varchar(100) DEFAULT NULL,
-    `last_name` varchar(100) DEFAULT NULL,
-    `phone` varchar(20) DEFAULT NULL,
-    `address` varchar(500) DEFAULT NULL,
-    `nonce` varchar(255) DEFAULT NULL,
-    `nonce_expiry` datetime DEFAULT NULL,
-    `created` datetime DEFAULT NULL,
-    `modified` datetime DEFAULT NULL,
-    `role` varchar(255) NOT NULL DEFAULT 'customer',
-    PRIMARY KEY (`id`)
-    ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+CREATE TABLE `users` (
+                         `id` int(11) NOT NULL,
+                         `email` varchar(255) NOT NULL,
+                         `password` varchar(255) NOT NULL,
+                         `first_name` varchar(100) DEFAULT NULL,
+                         `last_name` varchar(100) DEFAULT NULL,
+                         `phone` varchar(20) DEFAULT NULL,
+                         `address` varchar(500) DEFAULT NULL,
+                         `nonce` varchar(255) DEFAULT NULL,
+                         `nonce_expiry` datetime DEFAULT NULL,
+                         `created` datetime DEFAULT NULL,
+                         `modified` datetime DEFAULT NULL,
+                         `role` varchar(255) NOT NULL DEFAULT 'customer'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 
 --
 -- Dumping data for table `users`
@@ -668,7 +643,198 @@ CREATE TABLE IF NOT EXISTS `users` (
 INSERT INTO `users` (`id`, `email`, `password`, `first_name`, `last_name`, `phone`, `address`, `nonce`, `nonce_expiry`, `created`, `modified`, `role`) VALUES
                                                                                                                                                            (6, 'admin@test.com', '$2y$12$3j848N59AYD3s84DOpqA7eI0Cu6aqLosTj9aGuR.8b4ysY2kaNMg6', 'Admin', 'Test', NULL, NULL, NULL, NULL, '2026-03-24 04:04:54', '2026-03-24 04:04:54', 'admin'),
                                                                                                                                                            (9, 'customer@gmail.com', '$2y$12$dpFy6UEE5lMm7GcYFM9KHewxxP6lHS1UUxqlARKrLqYpgupBvZAPq', 'Customer', 'Test', NULL, NULL, NULL, NULL, '2026-04-16 13:19:40', '2026-04-16 13:19:40', 'customer'),
-                                                                                                                                                           (10, 'staff@gmail.com', '$2y$12$7UeOSrqwNufTAgpnq0aFCuR0MqwCn1EUSN.GtTMrkePbB/kErewh6', 'Staff', 'Test', NULL, NULL, NULL, NULL, '2026-04-16 13:20:17', '2026-04-16 13:20:17', 'staff');
+                                                                                                                                                           (10, 'staff@gmail.com', '$2y$12$7UeOSrqwNufTAgpnq0aFCuR0MqwCn1EUSN.GtTMrkePbB/kErewh6', 'Staff', 'Test', NULL, NULL, NULL, NULL, '2026-04-16 13:20:17', '2026-04-16 13:20:17', 'staff'),
+                                                                                                                                                           (11, 'sen@staff.com', '$2y$12$Qym3rQqnHERvGNFi.hduz.RNTCUgJsi8jUYm4ChHYHa0ZellH9OzO', 'Sen', 'Staff', NULL, NULL, NULL, NULL, '2026-05-07 11:56:00', '2026-05-07 11:57:42', 'staff'),
+                                                                                                                                                           (12, 'justin@staff.com', '$2y$12$Hiduc3Sk2MSGQ4gqibXbUuI2xbBld5lJOyOn6WCNEkU2Tr1lSQ0J6', 'Justin', 'Staff', NULL, NULL, NULL, NULL, '2026-05-07 11:56:28', '2026-05-07 11:57:48', 'staff'),
+                                                                                                                                                           (13, 'katherine@staff.com', '$2y$12$2r.EIs49aZ3H4wEcE8bozOaG3JszX5cOUsUjF0h9v0pE3ZrxHZvvq', 'Katherine', 'Staff', NULL, NULL, NULL, NULL, '2026-05-07 11:57:14', '2026-05-07 11:57:37', 'staff');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `categories`
+--
+ALTER TABLE `categories`
+    ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `categories_products`
+--
+ALTER TABLE `categories_products`
+    ADD PRIMARY KEY (`id`),
+  ADD KEY `category_id` (`category_id`),
+  ADD KEY `product_id` (`product_id`);
+
+--
+-- Indexes for table `cms_pages`
+--
+ALTER TABLE `cms_pages`
+    ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `uq_slug` (`slug`);
+
+--
+-- Indexes for table `contact_replies`
+--
+ALTER TABLE `contact_replies`
+    ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_contact_replies_submission` (`contact_submission_id`);
+
+--
+-- Indexes for table `contact_submissions`
+--
+ALTER TABLE `contact_submissions`
+    ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `faq_items`
+--
+ALTER TABLE `faq_items`
+    ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `orders`
+--
+ALTER TABLE `orders`
+    ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`);
+
+--
+-- Indexes for table `order_items`
+--
+ALTER TABLE `order_items`
+    ADD PRIMARY KEY (`id`),
+  ADD KEY `order_id` (`order_id`),
+  ADD KEY `product_id` (`product_id`),
+  ADD KEY `variant_id` (`variant_id`);
+
+--
+-- Indexes for table `page_content`
+--
+ALTER TABLE `page_content`
+    ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `uq_page_key` (`page_id`,`content_key`);
+
+--
+-- Indexes for table `products`
+--
+ALTER TABLE `products`
+    ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `product_images`
+--
+ALTER TABLE `product_images`
+    ADD PRIMARY KEY (`id`),
+  ADD KEY `product_id` (`product_id`);
+
+--
+-- Indexes for table `product_variants`
+--
+ALTER TABLE `product_variants`
+    ADD PRIMARY KEY (`id`),
+  ADD KEY `product_id` (`product_id`);
+
+--
+-- Indexes for table `schedules`
+--
+ALTER TABLE `schedules`
+    ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `unique_staff_week_day` (`user_id`,`week_start`,`day_of_week`);
+
+--
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+    ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `categories`
+--
+ALTER TABLE `categories`
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT for table `categories_products`
+--
+ALTER TABLE `categories_products`
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
+
+--
+-- AUTO_INCREMENT for table `cms_pages`
+--
+ALTER TABLE `cms_pages`
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `contact_replies`
+--
+ALTER TABLE `contact_replies`
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `contact_submissions`
+--
+ALTER TABLE `contact_submissions`
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- AUTO_INCREMENT for table `faq_items`
+--
+ALTER TABLE `faq_items`
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `orders`
+--
+ALTER TABLE `orders`
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+
+--
+-- AUTO_INCREMENT for table `order_items`
+--
+ALTER TABLE `order_items`
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+
+--
+-- AUTO_INCREMENT for table `page_content`
+--
+ALTER TABLE `page_content`
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+
+--
+-- AUTO_INCREMENT for table `products`
+--
+ALTER TABLE `products`
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
+
+--
+-- AUTO_INCREMENT for table `product_images`
+--
+ALTER TABLE `product_images`
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=161;
+
+--
+-- AUTO_INCREMENT for table `product_variants`
+--
+ALTER TABLE `product_variants`
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
+
+--
+-- AUTO_INCREMENT for table `schedules`
+--
+ALTER TABLE `schedules`
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- Constraints for dumped tables

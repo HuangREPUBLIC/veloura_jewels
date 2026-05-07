@@ -147,12 +147,28 @@ $this->Html->css('jewelry', ['block' => true]);
         })();
     </script>
 
+
+    <?php
+    $identity = $this->request->getAttribute('identity');
+    $isAdmin  = $identity && $identity->get('role') === 'admin';
+    ?>
+
     <?php if ($products->isEmpty()): ?>
         <div class="empty-state">
             <p>No products found. <a href="<?= $this->Url->build(['controller' => 'Jewelry', 'action' => 'home_decor']) ?>">Clear filters</a></p>
         </div>
     <?php else: ?>
         <div class="product-grid">
+            <!-- Quick-add tile — only visible to admins -->
+            <?php if ($isAdmin): ?>
+            <a href="<?= $this->Url->build(['controller' => 'Products', 'action' => 'add', '?' => ['type' => 'jewelry']]) ?>" class="product-card-link">
+                <div class="product-card product-card--add">
+                    <div class="product-card-add-icon">+</div>
+                    <p class="product-card-add-label">Add Product</p>
+                </div>
+            </a>
+            <?php endif; ?>
+
             <?php foreach ($products as $product): ?>
                 <a href="<?= $this->Url->build('/home-decor/view/' . $product->id) ?>" class="product-card-link">
                     <div class="product-card">

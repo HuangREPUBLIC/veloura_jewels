@@ -1,3 +1,47 @@
+.product-card--add {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 300px;
+    border: 2px dashed #d0ccc4;
+    border-radius: 12px;
+    background: #fafaf8;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+}
+
+.product-card--add:hover {
+    border-color: var(--oakwood);
+    background: var(--beige-light);
+}
+
+.product-card-add-icon {
+    font-size: 2.5rem;
+    font-weight: 300;
+    color: #ccc;
+    line-height: 1;
+    transition: color 0.2s;
+}
+
+.product-card--add:hover .product-card-add-icon {
+    color: var(--oakwood);
+}
+
+.product-card-add-label {
+    margin-top: 0.75rem;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: #bbb;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+}
+
+.product-card--add:hover .product-card-add-label {
+    color: var(--oakwood);
+}
+
 .jewelry-page {
     font-family: var(--font-body);
     font-size: 1rem;
