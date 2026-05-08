@@ -70,7 +70,7 @@ $role = $identity ? $identity->get('role') : null;
        <?= $this->Html->link('FAQ', '/faq', ['class' => str_starts_with($currentPath, '/faq') ? 'active' : '']) ?>
 
         <?php if (in_array($role, ['admin', 'staff'])): ?>
-            <?= $this->Html->link('Dashboard', '/dashboard', ['class' => str_starts_with($currentPath, '/dashboard') ? 'active' : '']) ?>
+            <?= $this->Html->link('Dashboard', '/dashboard', ['class' => (bool) array_filter(['/dashboard', '/schedule', '/products', '/users', '/orders', '/cms', '/contact-submissions'], fn($p) => str_starts_with($currentPath, $p)) ? 'active' : '']) ?>
 
         <?php else : ?>
             <?= $this->Html->link('Contact', '/contact', ['class' => str_starts_with($currentPath, '/contact') ? 'active' : '']) ?>
@@ -317,6 +317,8 @@ $role = $identity ? $identity->get('role') : null;
     var searchTimer;
     var suggestUrl = <?= json_encode($this->Url->build(['controller' => 'Search', 'action' => 'suggest'])) ?>;
     var searchUrl  = <?= json_encode($this->Url->build(['controller' => 'Search', 'action' => 'search'])) ?>;
+    var wishlistEnabled = <?= json_encode((bool)($identity ?? false)) ?>;
+    var currentPagePath = <?= json_encode($this->request->getPath() . ($this->request->getUri()->getQuery() ? '?' . $this->request->getUri()->getQuery() : '')) ?>;
 
     function openSearch() {
         var panel = document.getElementById('searchPanel');
@@ -374,13 +376,21 @@ $role = $identity ? $identity->get('role') : null;
                 + (r.images[0] ? '<img src="' + r.images[0] + '" alt="' + r.name + '" class="search-suggest-img search-suggest-img--primary">' : '<div class="search-suggest-img--empty"></div>')
                 + (r.images[1] ? '<img src="' + r.images[1] + '" alt="' + r.name + '" class="search-suggest-img search-suggest-img--hover">' : '')
                 + '</div>';
-            return '<a href="' + r.url + '" class="search-suggest-item">'
+            var wishlistBtn = wishlistEnabled
+                ? '<button class="wishlist-btn' + (r.wishlisted ? ' wishlisted' : '') + '" data-product-id="' + r.id + '" type="button" aria-label="Save to wishlist">'
+                    + '<svg width="20" height="20" viewBox="0 0 64 64" fill="currentColor"><path d="M32,57C31,56.5 5,42 5,23.5C5,13.8 12.2,6.5 21,6.5C26,6.5 30.4,9 32,11.2C33.6,9 38,6.5 43,6.5C51.8,6.5 59,13.8 59,23.5C59,42 33,56.5 32,57Z"/></svg>'
+                    + '</button>'
+                : '';
+            return '<div class="product-card-wrap">'
+                + '<a href="' + r.url + '?back=' + encodeURIComponent(currentPagePath) + '" class="search-suggest-item">'
                 + imgWrap
                 + '<div class="search-suggest-info">'
                 + '<span class="search-suggest-name">' + r.name + '</span>'
                 + '<span class="search-suggest-price">$' + r.price + '</span>'
                 + '</div>'
-                + '</a>';
+                + '</a>'
+                + wishlistBtn
+                + '</div>';
         }).join('');
 
         var viewAll = '<a href="' + searchUrl + '?q=' + encodeURIComponent(q) + '" class="search-view-all">'
@@ -419,6 +429,20 @@ $role = $identity ? $identity->get('role') : null;
             update();
         });
     });
+
+    <?php if ($identity): ?>
+    document.addEventListener('click', function (e) {
+        var btn = e.target.closest('.wishlist-btn');
+        if (!btn) return;
+        e.preventDefault();
+        e.stopPropagation();
+        var id = btn.dataset.productId;
+        fetch('<?= $this->Url->build('/profile/wishlist/toggle/') ?>' + id, { method: 'POST' })
+            .then(function (r) { return r.json(); })
+            .then(function (data) { btn.classList.toggle('wishlisted', data.wishlisted); })
+            .catch(function (err) { console.error('Wishlist error:', err); });
+    });
+    <?php endif; ?>
 </script>
 </body>
 </html>

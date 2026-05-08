@@ -148,8 +148,9 @@ $this->Html->css('jewelry', ['block' => true]);
     </script>
 
     <?php
-    $identity = $this->request->getAttribute('identity');
-    $isAdmin  = $identity && $identity->get('role') === 'admin';
+    $identity    = $this->request->getAttribute('identity');
+    $isAdmin     = $identity && $identity->get('role') === 'admin';
+    $wishlistIds = $wishlistIds ?? [];
     ?>
 
     <?php if ($products->isEmpty()): ?>
@@ -170,7 +171,8 @@ $this->Html->css('jewelry', ['block' => true]);
                 </a>
             <?php endif; ?>
             <?php foreach ($products as $product): ?>
-                <a href="<?= $this->Url->build('/jewelry/view/' . $product->id) ?>" class="product-card-link">
+                <div class="product-card-wrap">
+                <a href="<?= $this->Url->build('/jewelry/view/' . $product->id) ?>?back=/jewelry" class="product-card-link">
                     <div class="product-card">
                         <div class="product-image-wrapper<?= !empty($product->product_images[1]) ? ' has-hover-image' : '' ?>">
                             <?php if (!empty($product->featured) || !empty($product->is_bestsales)): ?>
@@ -209,7 +211,19 @@ $this->Html->css('jewelry', ['block' => true]);
                         </div>
                     </div>
                 </a>
+                <?php if ($identity): ?>
+                <button class="wishlist-btn<?= in_array($product->id, $wishlistIds) ? ' wishlisted' : '' ?>"
+                        data-product-id="<?= $product->id ?>"
+                        type="button"
+                        aria-label="Save to wishlist">
+                    <svg width="20" height="20" viewBox="0 0 64 64" fill="currentColor">
+                        <path d="M32,57C31,56.5 5,42 5,23.5C5,13.8 12.2,6.5 21,6.5C26,6.5 30.4,9 32,11.2C33.6,9 38,6.5 43,6.5C51.8,6.5 59,13.8 59,23.5C59,42 33,56.5 32,57Z"/>
+                    </svg>
+                </button>
+                <?php endif; ?>
+                </div>
             <?php endforeach; ?>
         </div>
     <?php endif; ?>
 </div>
+

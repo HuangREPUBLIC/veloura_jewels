@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace App\Model\Table;
 
 use Cake\ORM\Query\SelectQuery;
-use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
@@ -12,7 +11,8 @@ use Cake\Validation\Validator;
  * Products Model
  *
  * @property \App\Model\Table\ProductImagesTable&\Cake\ORM\Association\HasMany $ProductImages
- * @property \App\Model\Table\CategoriesTable&\Cake\ORM\Association\BelongsToMany $Categories
+ * @property \App\Model\Table\CategoriesTable&\Cake\ORM\Association\BelongsTo $Category
+ * @property \App\Model\Table\ProductVariantsTable&\Cake\ORM\Association\HasMany $ProductVariants
  *
  * @method \App\Model\Entity\Product newEmptyEntity()
  * @method \App\Model\Entity\Product newEntity(array $data, array $options = [])
@@ -27,16 +27,9 @@ use Cake\Validation\Validator;
  * @method iterable<\App\Model\Entity\Product>|\Cake\Datasource\ResultSetInterface<\App\Model\Entity\Product> saveManyOrFail(iterable $entities, array $options = [])
  * @method iterable<\App\Model\Entity\Product>|\Cake\Datasource\ResultSetInterface<\App\Model\Entity\Product>|false deleteMany(iterable $entities, array $options = [])
  * @method iterable<\App\Model\Entity\Product>|\Cake\Datasource\ResultSetInterface<\App\Model\Entity\Product> deleteManyOrFail(iterable $entities, array $options = [])
- * @property \App\Model\Table\ProductVariantsTable&\Cake\ORM\Association\HasMany $ProductVariants
  */
 class ProductsTable extends Table
 {
-    /**
-     * Initialize method
-     *
-     * @param array<string, mixed> $config The configuration for the Table.
-     * @return void
-     */
     public function initialize(array $config): void
     {
         parent::initialize($config);
@@ -49,10 +42,9 @@ class ProductsTable extends Table
         $this->hasMany('ProductImages', [
             'foreignKey' => 'product_id',
         ]);
-        $this->belongsToMany('Categories', [
-            'foreignKey' => 'product_id',
-            'targetForeignKey' => 'category_id',
-            'joinTable' => 'categories_products',
+        $this->belongsTo('Category', [
+            'foreignKey' => 'category_id',
+            'className'  => 'Categories',
         ]);
         $this->hasMany('ProductVariants', [
             'foreignKey' => 'product_id',
@@ -66,37 +58,27 @@ class ProductsTable extends Table
             ->enableAutoFields(true)
             ->join([
                 'order_items' => [
-                    'table' => 'order_items',
-                    'type' => 'INNER',
+                    'table'      => 'order_items',
+                    'type'       => 'INNER',
                     'conditions' => 'order_items.product_id = Products.id',
                 ],
-                'categories_products' => [
-                    'table' => 'categories_products',
-                    'type' => 'INNER',
-                    'conditions' => 'categories_products.product_id = Products.id',
-                ],
                 'categories' => [
-                    'table' => 'categories',
-                    'type' => 'INNER',
+                    'table'      => 'categories',
+                    'type'       => 'INNER',
                     'conditions' => [
-                        'categories.id = categories_products.category_id',
-                        'categories.type' => $productType
+                        'categories.id = Products.category_id',
+                        'categories.type' => $productType,
                     ],
                 ],
             ])
             ->groupBy('Products.id')
             ->orderBy([
-                'total_sold' => 'DESC',
-                'Products.id' => 'DESC'
+                'total_sold'  => 'DESC',
+                'Products.id' => 'DESC',
             ])
             ->limit($limit);
     }
-    /**
-     * Default validation rules.
-     *
-     * @param \Cake\Validation\Validator $validator Validator instance.
-     * @return \Cake\Validation\Validator
-     */
+
     public function validationDefault(Validator $validator): Validator
     {
         $validator
@@ -129,6 +111,7 @@ class ProductsTable extends Table
             ->scalar('story')
             ->requirePresence('story', 'create')
             ->notEmptyString('story');
+
         $validator
             ->boolean('featured')
             ->notEmptyString('featured');

@@ -68,6 +68,15 @@ $this->Html->css('profile', ['block' => true]);
             </div>
         </div>
 
+        <!-- Wishlist Card -->
+        <div class="profile-card">
+            <div class="profile-card-header">
+                <h2>Wishlist</h2>
+                <?= $this->Html->link('View All', ['action' => 'wishlist'], ['class' => 'profile-link-btn']) ?>
+            </div>
+            <p class="profile-info-value"><?= $wishlistCount ?> saved item<?= $wishlistCount !== 1 ? 's' : '' ?></p>
+        </div>
+
         <!-- Recent Orders Card -->
         <div class="profile-card profile-card--full">
             <div class="profile-card-header">

@@ -1,70 +1,51 @@
 <?php
 /**
- * Reset Password HTML email template
- *
  * @var \App\View\AppView $this
- * @var string $first_name email recipient's first name
- * @var string $last_name email recipient's last name
- * @var string $email email recipient's email address
- * @var string $nonce nonce used to reset the password
+ * @var string $first_name
+ * @var string $nonce
+ * @var string $email
  */
+$resetUrl = $this->Url->build(['controller' => 'Auth', 'action' => 'resetPassword', $nonce], ['fullBase' => true]);
 ?>
-<div class="content">
-    <!-- START CENTERED WHITE CONTAINER -->
-    <table role="presentation" class="main">
-        <!-- START MAIN CONTENT AREA -->
-        <tr>
-            <td class="wrapper">
-                <table role="presentation" border="0" cellpadding="0" cellspacing="0">
-                    <tr>
-                        <td>
-                            <h3>Reset your account password</h3>
-                            <p>Hi <?= h($first_name) ?>, </p>
-                            <p>Thank you for your request to reset the password of your account on <b>Cake CMS/Auth Sample</b>. </p>
-                            <p></p>
-                            <p>To reset your account password, use the button below to access the reset password page: </p>
-                            <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="btn btn-primary">
-                                <tbody>
-                                <tr>
-                                    <td align="left">
-                                        <table role="presentation" border="0" cellpadding="0" cellspacing="0">
-                                            <tbody>
-                                            <tr>
-                                                <td><a href="<?= $this->Url->build(['controller' => 'Auth', 'action' => 'resetPassword', $nonce], ['fullBase' => true]) ?>" target="_blank">Reset account password</a></td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                            <p>or use the following link: <br>
-                                <?= $this->Html->link(
-                                    $this->Url->build(['controller' => 'Auth', 'action' => 'resetPassword', $nonce], ['fullBase' => true]),
-                                    ['controller' => 'Auth', 'action' => 'resetPassword', $nonce],
-                                    ['fullBase' => true, 'style' => 'word-break:break-all']
-                                ) ?></p>
-                        </td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
-        <!-- END MAIN CONTENT AREA -->
-    </table>
-    <!-- END CENTERED WHITE CONTAINER -->
-    <!-- START FOOTER -->
-    <div class="footer">
-        <table role="presentation" border="0" cellpadding="0" cellspacing="0">
-            <tr>
-                <td class="content-block">
-                    This email is addressed to <?= $first_name ?>  <?= $last_name ?> &lt;<?= $email ?>&gt;<br>
-                    Please discard this email if it not meant for you
-                    <br>
-                    <br>
-                    Copyright &copy; <?= date("Y"); ?> Monash FIT Industry Experience
-                </td>
-            </tr>
-        </table>
-    </div>
-    <!-- END FOOTER -->
-</div>
+<!-- Eyebrow -->
+<p style="margin:0 0 6px;font-family:Arial,sans-serif;font-size:10px;
+           letter-spacing:0.18em;text-transform:uppercase;color:#c9a84c;">
+  Account Security
+</p>
+
+<!-- Heading -->
+<h1 style="margin:0 0 20px;font-family:Georgia,'Times New Roman',serif;
+            font-size:26px;font-weight:400;color:#3d1f5e;line-height:1.2;">
+  Reset your password.
+</h1>
+
+<p style="margin:0 0 16px;font-family:Arial,sans-serif;font-size:14px;
+           color:#555555;line-height:1.8;">
+  Hi <?= h($first_name) ?>, we received a request to reset the password for your Veloura Jewels account.
+</p>
+
+<p style="margin:0 0 32px;font-family:Arial,sans-serif;font-size:14px;
+           color:#555555;line-height:1.8;">
+  This link is valid for 7 days. If you didn't request a password reset, you can safely ignore this email.
+</p>
+
+<!-- CTA -->
+<table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:28px;">
+  <tr>
+    <td style="background-color:#3d1f5e;border-radius:2px;">
+      <a href="<?= h($resetUrl) ?>"
+         style="display:inline-block;padding:14px 36px;font-family:Arial,sans-serif;
+                font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;
+                color:#c9a84c;text-decoration:none;">
+        Reset Password
+      </a>
+    </td>
+  </tr>
+</table>
+
+<!-- Fallback link -->
+<p style="margin:0;font-family:Arial,sans-serif;font-size:12px;color:#9b8fa0;line-height:1.7;">
+  Or copy this link into your browser:<br>
+  <a href="<?= h($resetUrl) ?>"
+     style="color:#9b8fa0;word-break:break-all;"><?= h($resetUrl) ?></a>
+</p>

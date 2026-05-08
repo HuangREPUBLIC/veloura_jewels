@@ -1802,3 +1802,20 @@ body:has(.vp-checkout) {
     }
     .vp-apm { margin-top: 0; }
 }
+
+/* Wishlist heart button — APM-style: outline by default, filled when saved */
+
+/* Wishlist page grid */
+.wishlist-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1.5rem;
+    margin-top: 0;
+}
+
+.wishlist-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+

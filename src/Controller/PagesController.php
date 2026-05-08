@@ -53,7 +53,7 @@ class PagesController extends AppController
             ));
 
             $featuredProducts = $productsTable->find()
-                ->contain(['ProductImages', 'Categories'])
+                ->contain(['ProductImages', 'Category'])
                 ->orderBy(['Products.id' => 'DESC'])
                 ->limit(4)
                 ->all();
@@ -63,7 +63,14 @@ class PagesController extends AppController
             }
 
             $pageContent = $this->fetchTable('PageContents')->getForPage('home');
-            $this->set(compact('featuredProducts', 'pageContent'));
+            $identity = $this->request->getAttribute('identity');
+            $wishlistIds = [];
+            if ($identity) {
+                $wishlistIds = $this->fetchTable('Wishlists')->find()
+                    ->where(['user_id' => $identity->get('id')])
+                    ->all()->extract('product_id')->toList();
+            }
+            $this->set(compact('featuredProducts', 'pageContent', 'wishlistIds'));
         }
 
         try {

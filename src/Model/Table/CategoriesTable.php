@@ -11,7 +11,7 @@ use Cake\Validation\Validator;
 /**
  * Categories Model
  *
- * @property \App\Model\Table\ProductsTable&\Cake\ORM\Association\BelongsToMany $Products
+ * @property \App\Model\Table\ProductsTable&\Cake\ORM\Association\HasMany $Products
  *
  * @method \App\Model\Entity\Category newEmptyEntity()
  * @method \App\Model\Entity\Category newEntity(array $data, array $options = [])
@@ -43,10 +43,8 @@ class CategoriesTable extends Table
         $this->setDisplayField('name');
         $this->setPrimaryKey('id');
 
-        $this->belongsToMany('Products', [
+        $this->hasMany('Products', [
             'foreignKey' => 'category_id',
-            'targetForeignKey' => 'product_id',
-            'joinTable' => 'categories_products',
         ]);
     }
 

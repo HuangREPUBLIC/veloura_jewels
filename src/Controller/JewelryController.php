@@ -7,6 +7,8 @@ use Cake\Event\EventInterface;
 use Cake\Core\Configure;
 use Cake\Http\Exception\BadRequestException;
 use Cake\Datasource\Exception\RecordNotFoundException;
+use Cake\Log\Log;
+use Cake\Mailer\Mailer;
 use Stripe\StripeClient;
 use Stripe\Webhook;
 
@@ -60,6 +62,8 @@ class JewelryController extends AppController
         $maxPrice   = $this->request->getQuery('max_price');
         $sortBy     = $this->request->getQuery('sort') ?? 'newest';
 
+        $wishlistIds = $this->getWishlistIds();
+
         if ($sortBy === 'bestsales') {
             $products = $this->Products
                 ->find('bestSales', productType: $productType, limit: 4)
@@ -69,7 +73,7 @@ class JewelryController extends AppController
                 $product->is_bestsales = true;
             }
             $pageContent = $this->fetchTable('PageContents')->getForPage($productType);
-            $this->set(compact('products', 'categories', 'categoryId', 'minPrice', 'maxPrice', 'sortBy', 'pageContent'));
+            $this->set(compact('products', 'categories', 'categoryId', 'minPrice', 'maxPrice', 'sortBy', 'pageContent', 'wishlistIds'));
             return;
         }
 
@@ -89,38 +93,32 @@ class JewelryController extends AppController
             ->orderBy($sortOptions[$sortBy] ?? $sortOptions['newest']);
 
         if ($categoryId > 0) {
-            $query->matching('Categories', function ($q) use ($categoryId, $productType) {
-                return $q->where([
-                    'Categories.id' => $categoryId,
-                    'Categories.type' => $productType
-                ]);
+            $query->innerJoinWith('Category', function ($q) use ($categoryId, $productType) {
+                return $q->where(['Category.id' => $categoryId, 'Category.type' => $productType]);
             });
         } else {
-            $query->matching('Categories', function ($q) use ($productType) {
-                return $q->where(['Categories.type' => $productType]);
+            $query->innerJoinWith('Category', function ($q) use ($productType) {
+                return $q->where(['Category.type' => $productType]);
             });
         }
 
         if ($minPrice !== null && $minPrice !== '') {
             $query->where(['Products.sale_price >=' => (float)$minPrice]);
         }
-
         if ($maxPrice !== null && $maxPrice !== '') {
             $query->where(['Products.sale_price <=' => (float)$maxPrice]);
         }
-
         if ($sortBy === 'featured') {
             $query->where(['Products.featured' => 1]);
         }
 
         $products = $query->all();
-
         foreach ($products as $product) {
             $product->is_bestsales = in_array($product->id, $bestSalesIds);
         }
 
         $pageContent = $this->fetchTable('PageContents')->getForPage($productType);
-        $this->set(compact('products', 'categories', 'categoryId', 'minPrice', 'maxPrice', 'sortBy', 'pageContent'));
+        $this->set(compact('products', 'categories', 'categoryId', 'minPrice', 'maxPrice', 'sortBy', 'pageContent', 'wishlistIds'));
     }
 
     public function homeDecor()
@@ -138,6 +136,8 @@ class JewelryController extends AppController
         $maxPrice   = $this->request->getQuery('max_price');
         $sortBy     = $this->request->getQuery('sort') ?? 'newest';
 
+        $wishlistIds = $this->getWishlistIds();
+
         if ($sortBy === 'bestsales') {
             $products = $this->Products
                 ->find('bestSales', productType: $productType, limit: 4)
@@ -147,7 +147,7 @@ class JewelryController extends AppController
                 $product->is_bestsales = true;
             }
             $pageContent = $this->fetchTable('PageContents')->getForPage($productType);
-            $this->set(compact('products', 'categories', 'categoryId', 'minPrice', 'maxPrice', 'sortBy', 'pageContent'));
+            $this->set(compact('products', 'categories', 'categoryId', 'minPrice', 'maxPrice', 'sortBy', 'pageContent', 'wishlistIds'));
             return;
         }
 
@@ -167,38 +167,32 @@ class JewelryController extends AppController
             ->orderBy($sortOptions[$sortBy] ?? $sortOptions['newest']);
 
         if ($categoryId > 0) {
-            $query->matching('Categories', function ($q) use ($categoryId, $productType) {
-                return $q->where([
-                    'Categories.id' => $categoryId,
-                    'Categories.type' => $productType
-                ]);
+            $query->innerJoinWith('Category', function ($q) use ($categoryId, $productType) {
+                return $q->where(['Category.id' => $categoryId, 'Category.type' => $productType]);
             });
         } else {
-            $query->matching('Categories', function ($q) use ($productType) {
-                return $q->where(['Categories.type' => $productType]);
+            $query->innerJoinWith('Category', function ($q) use ($productType) {
+                return $q->where(['Category.type' => $productType]);
             });
         }
 
         if ($minPrice !== null && $minPrice !== '') {
             $query->where(['Products.sale_price >=' => (float)$minPrice]);
         }
-
         if ($maxPrice !== null && $maxPrice !== '') {
             $query->where(['Products.sale_price <=' => (float)$maxPrice]);
         }
-
         if ($sortBy === 'featured') {
             $query->where(['Products.featured' => 1]);
         }
 
         $products = $query->all();
-
         foreach ($products as $product) {
             $product->is_bestsales = in_array($product->id, $bestSalesIds);
         }
 
         $pageContent = $this->fetchTable('PageContents')->getForPage($productType);
-        $this->set(compact('products', 'categories', 'categoryId', 'minPrice', 'maxPrice', 'sortBy', 'pageContent'));
+        $this->set(compact('products', 'categories', 'categoryId', 'minPrice', 'maxPrice', 'sortBy', 'pageContent', 'wishlistIds'));
     }
 
     public function view($id = null)
@@ -550,7 +544,7 @@ class JewelryController extends AppController
 
                     $items = $this->OrderItems->find()
                         ->where(['order_id' => $order->id])
-                        ->all();
+                        ->toArray();
 
                     foreach ($items as $item) {
                         if (!$item->variant_id) continue;
@@ -560,12 +554,39 @@ class JewelryController extends AppController
                         $variantsTable->saveOrFail($variant);
                     }
 
+                    if (!empty($order->customer_email)) {
+                        try {
+                            $mailer = new Mailer('default');
+                            $mailer->setEmailFormat('text')
+                                ->setTo($order->customer_email)
+                                ->setSubject('Your Veloura Jewels order #' . $order->id . ' is confirmed');
+                            $mailer->viewBuilder()->setTemplate('order_confirmation');
+                            $mailer->setViewVars(['order' => $order, 'items' => $items]);
+                            $mailer->deliver();
+                        } catch (\Exception $e) {
+                            Log::error('Order confirmation email failed: ' . $e->getMessage());
+                        }
+                    }
+
                 }
             }
         }
 
         http_response_code(200);
         echo 'OK';
+    }
+
+    private function getWishlistIds(): array
+    {
+        $identity = $this->request->getAttribute('identity');
+        if (!$identity) {
+            return [];
+        }
+        return $this->fetchTable('Wishlists')->find()
+            ->where(['user_id' => $identity->get('id')])
+            ->all()
+            ->extract('product_id')
+            ->toList();
     }
 
     private function buildCartProductsAndTotal(): array

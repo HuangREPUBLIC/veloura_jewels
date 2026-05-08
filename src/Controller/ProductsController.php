@@ -27,10 +27,10 @@ class ProductsController extends AppController
     public function index()
     {
         $products = $this->Products->find()
-            ->contain(['Categories', 'ProductVariants'])
+            ->contain(['Category', 'ProductVariants'])
             ->all();
         $lowStockProducts = $this->Products->find()
-            ->contain(['Categories', 'ProductVariants'])
+            ->contain(['Category', 'ProductVariants'])
             ->matching('ProductVariants', function ($q) {
                 return $q->where(['ProductVariants.stock <' => 5]);
             })
@@ -42,7 +42,7 @@ class ProductsController extends AppController
 
     public function view($id = null)
     {
-        $product = $this->Products->get($id, contain: ['Categories', 'ProductImages', 'ProductVariants']);
+        $product = $this->Products->get($id, contain: ['Category', 'ProductImages', 'ProductVariants']);
         $this->set(compact('product'));
     }
 
@@ -63,30 +63,19 @@ class ProductsController extends AppController
             $data = $this->request->getData();
             $typeValue = $data['type'] ?? '';
 
-            // Resolve new category: create it in the DB if '__new__' placeholder is selected
-            $categoryIds = (array)($data['categories']['_ids'] ?? []);
-            if (in_array('__new__', $categoryIds)) {
+            if (($data['category_id'] ?? '') === '__new__') {
                 $newCatName = trim($data['new_category_name'] ?? '');
                 if ($newCatName !== '' && $typeValue !== '') {
-                    $newCat = $this->Products->Categories->newEntity([
-                        'name' => $newCatName,
-                        'type' => $typeValue,
-                    ]);
-                    $savedCat = $this->Products->Categories->save($newCat);
+                    $newCat = $this->Products->Category->newEntity(['name' => $newCatName, 'type' => $typeValue]);
+                    $savedCat = $this->Products->Category->save($newCat);
                     if ($savedCat) {
-                        $categoryIds = array_values(array_filter($categoryIds, fn($id) => $id !== '__new__'));
-                        $categoryIds[] = $savedCat->id;
-                        $data['categories']['_ids'] = $categoryIds;
+                        $data['category_id'] = $savedCat->id;
                     }
-                } else {
-                    $data['categories']['_ids'] = array_values(array_filter($categoryIds, fn($id) => $id !== '__new__'));
                 }
             }
 
-            $product = $this->Products->patchEntity($product, $data, [
-                'associated' => ['ProductVariants', 'Categories']
-            ]);
-            if ($this->Products->save($product, ['associated' => ['ProductVariants', 'Categories']])) {
+            $product = $this->Products->patchEntity($product, $data, ['associated' => ['ProductVariants']]);
+            if ($this->Products->save($product, ['associated' => ['ProductVariants']])) {
                 $this->_saveProductImages($product->id);
                 $this->Flash->success(__('The product has been saved.'));
                 return $this->redirect(['action' => 'index']);
@@ -94,19 +83,16 @@ class ProductsController extends AppController
             $this->Flash->error(__('The product could not be saved. Please, try again.'));
         }
 
-        // Return categories with their type so JS can filter by type
-        $categoriesRaw = $this->Products->Categories->find()
+        $categoriesRaw = $this->Products->Category->find()
             ->select(['id', 'name', 'type'])
             ->orderBy(['type' => 'ASC', 'name' => 'ASC'])
-            ->all()
-            ->toArray();
+            ->all()->toArray();
 
         $categories = [];
         foreach ($categoriesRaw as $cat) {
             $categories[$cat->id] = $cat->name;
         }
 
-        // Pass full category data as JSON for JS filtering
         $categoriesJson = json_encode(array_map(fn($cat) => [
             'id'   => $cat->id,
             'name' => $cat->name,
@@ -141,36 +127,25 @@ class ProductsController extends AppController
 
         $from = $this->request->getQuery('from');
 
-        $product = $this->Products->get($id, contain: ['Categories', 'ProductVariants', 'ProductImages']);
+        $product = $this->Products->get($id, contain: ['Category', 'ProductVariants', 'ProductImages']);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $data = $this->request->getData();
             $from = $data['from'] ?? $from;
             $typeValue = $data['type'] ?? '';
 
-            // Resolve new category
-            $categoryIds = (array)($data['categories']['_ids'] ?? []);
-            if (in_array('__new__', $categoryIds)) {
+            if (($data['category_id'] ?? '') === '__new__') {
                 $newCatName = trim($data['new_category_name'] ?? '');
                 if ($newCatName !== '' && $typeValue !== '') {
-                    $newCat = $this->Products->Categories->newEntity([
-                        'name' => $newCatName,
-                        'type' => $typeValue,
-                    ]);
-                    $savedCat = $this->Products->Categories->save($newCat);
+                    $newCat = $this->Products->Category->newEntity(['name' => $newCatName, 'type' => $typeValue]);
+                    $savedCat = $this->Products->Category->save($newCat);
                     if ($savedCat) {
-                        $categoryIds = array_values(array_filter($categoryIds, fn($id) => $id !== '__new__'));
-                        $categoryIds[] = $savedCat->id;
-                        $data['categories']['_ids'] = $categoryIds;
+                        $data['category_id'] = $savedCat->id;
                     }
-                } else {
-                    $data['categories']['_ids'] = array_values(array_filter($categoryIds, fn($id) => $id !== '__new__'));
                 }
             }
 
-            $product = $this->Products->patchEntity($product, $data, [
-                'associated' => ['ProductVariants', 'Categories']
-            ]);
-            if ($this->Products->save($product, ['associated' => ['ProductVariants', 'Categories']])) {
+            $product = $this->Products->patchEntity($product, $data, ['associated' => ['ProductVariants']]);
+            if ($this->Products->save($product, ['associated' => ['ProductVariants']])) {
                 $this->_saveProductImages($product->id);
                 $deleteIds = $this->request->getData('delete_images') ?? [];
                 if (!empty($deleteIds)) {
@@ -199,19 +174,16 @@ class ProductsController extends AppController
 
         $this->set('from', $from);
 
-        // Return categories with their type so JS can filter by type
-        $categoriesRaw = $this->Products->Categories->find()
+        $categoriesRaw = $this->Products->Category->find()
             ->select(['id', 'name', 'type'])
             ->orderBy(['type' => 'ASC', 'name' => 'ASC'])
-            ->all()
-            ->toArray();
+            ->all()->toArray();
 
         $categories = [];
         foreach ($categoriesRaw as $cat) {
             $categories[$cat->id] = $cat->name;
         }
 
-        // Pass full category data as JSON for JS filtering
         $categoriesJson = json_encode(array_map(fn($cat) => [
             'id'   => $cat->id,
             'name' => $cat->name,

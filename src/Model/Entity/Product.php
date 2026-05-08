@@ -16,35 +16,27 @@ use Cake\ORM\Entity;
  * @property string|null $description
  * @property string|null $story
  * @property bool $featured
+ * @property int $category_id
  * @property \Cake\I18n\DateTime $created
  * @property \Cake\I18n\DateTime $modified
+ * @property \App\Model\Entity\Category $category
  * @property \App\Model\Entity\ProductImage[] $product_images
- * @property \App\Model\Entity\Category[] $categories
  * @property \App\Model\Entity\ProductVariant[] $product_variants
  */
 class Product extends Entity
 {
-    /**
-     * Fields that can be mass assigned using newEntity() or patchEntity().
-     *
-     * Note that when '*' is set to true, this allows all unspecified fields to
-     * be mass assigned. For security purposes, it is advised to set '*' to false
-     * (or remove it), and explicitly make individual fields accessible as needed.
-     *
-     * @var array<string, bool>
-     */
     protected array $_accessible = [
-        'name' => true,
-        'purchase_price' => true,
-        'sale_price' => true,
-        'supplier_email' => true,
-        'product_images' => true,
-        'categories' => true,
-        'created' => false,
-        'modified' => false,
-        'description' => true,
-        'story' => true,
+        'name'            => true,
+        'purchase_price'  => true,
+        'sale_price'      => true,
+        'supplier_email'  => true,
+        'description'     => true,
+        'story'           => true,
+        'featured'        => true,
+        'category_id'     => true,
+        'product_images'  => true,
         'product_variants' => true,
-        'featured' => true,
+        'created'         => false,
+        'modified'        => false,
     ];
 }
