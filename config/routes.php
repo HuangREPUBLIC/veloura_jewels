@@ -121,6 +121,12 @@ return function (RouteBuilder $routes): void {
         $builder->connect('/profile', ['controller' => 'Profile', 'action' => 'index']);
         $builder->connect('/profile/edit', ['controller' => 'Profile', 'action' => 'edit']);
         $builder->connect('/profile/change-password', ['controller' => 'Profile', 'action' => 'changePassword']);
+        $builder->connect('/profile/wishlist', ['controller' => 'Profile', 'action' => 'wishlist']);
+        $builder->connect('/profile/wishlist/add-to-cart', ['controller' => 'Profile', 'action' => 'addWishlistToCart'])
+            ->setMethods(['POST']);
+        $builder->connect('/profile/wishlist/toggle/{id}', ['controller' => 'Profile', 'action' => 'wishlistToggle'])
+            ->setPass(['id'])
+            ->setPatterns(['id' => '\d+']);
         $builder->connect('/profile/orders', ['controller' => 'Profile', 'action' => 'orders']);
         $builder->connect('/profile/orders/{id}', ['controller' => 'Profile', 'action' => 'orderDetail'])
             ->setPass(['id'])

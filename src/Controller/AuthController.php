@@ -50,7 +50,6 @@ class AuthController extends AppController
             $data = $this->request->getData();
             $data['role'] = 'customer';
 
-            // Password confirmation check
             if (empty($data['password_confirm']) || $data['password'] !== $data['password_confirm']) {
                 $this->Flash->error('Passwords do not match. Please try again.');
                 $this->set(compact('user'));
@@ -60,6 +59,17 @@ class AuthController extends AppController
             $user = $this->Users->patchEntity($user, $data);
 
             if ($this->Users->save($user)) {
+                try {
+                    $mailer = new Mailer('default');
+                    $mailer->setEmailFormat('text')
+                        ->setTo($user->email)
+                        ->setSubject('Welcome to Veloura Jewels');
+                    $mailer->viewBuilder()->setTemplate('welcome');
+                    $mailer->setViewVars(['first_name' => $user->first_name ?? 'there']);
+                    $mailer->deliver();
+                } catch (\Exception $e) {
+                    \Cake\Log\Log::error('Welcome email failed: ' . $e->getMessage());
+                }
                 $this->Flash->success('Account created! Please log in.');
                 return $this->redirect(['action' => 'login']);
             }
@@ -77,48 +87,29 @@ class AuthController extends AppController
     {
         if ($this->request->is('post')) {
             // Retrieve the user entity by provided email address
-            // Note findBy* is a magic/dynamic finder
             $user = $this->Users->findByEmail($this->request->getData('email'))->first();
             if ($user) {
-                // Set nonce and expiry date
                 $user->nonce = Security::randomString(128);
                 $user->nonce_expiry = new DateTime('7 days');
                 if ($this->Users->save($user)) {
-                    // Now let's send the password reset email
                     $mailer = new Mailer('default');
-
-                    // email basic config
-                    $mailer
-                        ->setEmailFormat('both')
+                    $mailer->setEmailFormat('text')
                         ->setTo($user->email)
                         ->setSubject('Reset your account password');
-
-                    // select email template
-                    $mailer
-                        ->viewBuilder()
-                        ->setTemplate('reset_password');
-
-                    // transfer required view variables to email template
-                    $mailer
-                        ->setViewVars([
-                            'first_name' => $user->first_name,
-                            'last_name' => $user->last_name,
-                            'nonce' => $user->nonce,
-                            'email' => $user->email,
-                        ]);
-
-                    //Send email
+                    $mailer->viewBuilder()->setTemplate('reset_password');
+                    $mailer->setViewVars([
+                        'first_name' => $user->first_name,
+                        'last_name' => $user->last_name,
+                        'nonce' => $user->nonce,
+                        'email' => $user->email,
+                    ]);
                     if (!$mailer->deliver()) {
-                        // Just in case something goes wrong when sending emails
                         $this->Flash->error('We have encountered an issue when sending you emails. Please try again. ');
-
-                        return $this->render(); // Skip the rest of the controller and render the view
+                        return $this->render();
                     }
                 } else {
-                    // Just in case something goes wrong when saving nonce and expiry
                     $this->Flash->error('We are having issue to reset your password. Please try again. ');
-
-                    return $this->render(); // Skip the rest of the controller and render the view
+                    return $this->render();
                 }
             }
 
@@ -150,10 +141,8 @@ class AuthController extends AppController
             return $this->redirect(['action' => 'login']);
         }
 
-        // Note findBy* is a magic/dynamic finder
         $user = $this->Users->findByNonce($nonce)->first();
 
-        // If nonce cannot find the user, or nonce is expired, prompt for re-reset password
         if (!$user || $user->nonce_expiry < DateTime::now()) {
             $this->Flash->error('Your link is invalid or expired. Please try again.');
 
@@ -168,11 +157,8 @@ class AuthController extends AppController
                 return;
             }
 
-            // Used a different validation set in Model/Table file to ensure both fields are filled
             $user = $this->Users->patchEntity($user, $this->request->getData(), ['validate' => 'resetPassword']);
 
-            // Also clear the nonce-related fields on successful password resets.
-            // This ensures that the reset link can't be used a second time.
             $user->nonce = null;
             $user->nonce_expiry = null;
 

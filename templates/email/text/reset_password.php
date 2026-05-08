@@ -1,27 +1,19 @@
 <?php
 /**
- * Reset Password text email template
- *
  * @var \App\View\AppView $this
- * @var string $first_name email recipient's first name
- * @var string $last_name email recipient's last name
- * @var string $email email recipient's email address
- * @var string $nonce nonce used to reset the password
+ * @var string $first_name
+ * @var string $nonce
  */
 ?>
-Reset your account password
-==========
+Reset your Veloura Jewels password
+===================================
 
 Hi <?= h($first_name) ?>,
 
-Thank you for your request to reset the password of your account on Cake CMS/Auth Sample.
+We received a request to reset your password. Click the link below to set a new one:
 
-To reset your account password, use the button below to access the reset password page:
 <?= $this->Url->build(['controller' => 'Auth', 'action' => 'resetPassword', $nonce], ['fullBase' => true]) ?>
 
+This link expires in 7 days. If you didn't request this, you can safely ignore this email.
 
-==========
-This email is addressed to <?= $first_name ?>  <?= $last_name ?> <<?= $email ?>>
-Please discard this email if it not meant for you
-
-Copyright (c) <?= date("Y"); ?> Monash FIT Industry Experience
+— Veloura Jewels

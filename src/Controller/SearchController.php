@@ -38,7 +38,14 @@ class SearchController extends AppController
             }
         }
 
-        $this->set(compact('products', 'q'));
+        $identity = $this->request->getAttribute('identity');
+        $wishlistIds = [];
+        if ($identity) {
+            $wishlistIds = $this->fetchTable('Wishlists')->find()
+                ->where(['user_id' => $identity->get('id')])
+                ->all()->extract('product_id')->toList();
+        }
+        $this->set(compact('products', 'q', 'wishlistIds'));
     }
 
     public function suggest(): \Cake\Http\Response
@@ -66,6 +73,13 @@ class SearchController extends AppController
                 ->limit(4)
                 ->all();
 
+            $identity = $this->request->getAttribute('identity');
+            $wishlistIds = [];
+            if ($identity) {
+                $wishlistIds = $this->fetchTable('Wishlists')->find()
+                    ->where(['user_id' => $identity->get('id')])
+                    ->all()->extract('product_id')->toList();
+            }
             foreach ($products as $p) {
                 $url = Router::url(['controller' => 'Jewelry', 'action' => 'view', $p->id]);
 
@@ -75,12 +89,14 @@ class SearchController extends AppController
                 );
 
                 $results[] = [
+                    'id'           => $p->id,
                     'name'         => $p->name,
                     'price'        => number_format((float)$p->sale_price, 2),
                     'url'          => $url,
                     'images'       => $images,
                     'featured'     => !empty($p->featured),
                     'is_bestsales' => in_array($p->id, $bestSalesIds),
+                    'wishlisted'   => in_array($p->id, $wishlistIds),
                 ];
             }
         }

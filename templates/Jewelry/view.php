@@ -27,7 +27,12 @@ $oneSizeVariant = $isOneSizeOnly ? $inStockVariants[0] : null;
 ?>
 
 <div class="jewelry-page">
-    <?php $backUrl = $section === 'home_decor' ? '/home-decor' : '/jewelry'; ?>
+    <?php
+    $back    = $this->request->getQuery('back');
+    $backUrl = ($back && str_starts_with($back, '/'))
+        ? $back
+        : ($section === 'home_decor' ? '/home-decor' : '/jewelry');
+    ?>
     <?= $this->Html->link(__('← Back'), $backUrl, ['class' => 'jewelry-back-link']) ?>
     <div class="product-detail">
         <div class="product-detail-image">

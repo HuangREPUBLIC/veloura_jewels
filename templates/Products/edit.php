@@ -8,13 +8,7 @@
  */
 $this->Html->css('login', ['block' => true]);
 
-$currentType = '';
-if (!empty($product->categories)) {
-    $currentType = $product->categories[0]->type ?? '';
-}
-if (!empty($product->type)) {
-    $currentType = $product->type;
-}
+$currentType = $product->category->type ?? $product->type ?? '';
 ?>
 
 <div class="login-page">
@@ -54,18 +48,10 @@ if (!empty($product->type)) {
             </div>
 
             <!-- Category: filtered by type -->
-            <?php
-            $selectedCatIds = [];
-            if (!empty($product->categories)) {
-                foreach ($product->categories as $cat) {
-                    $selectedCatIds[] = $cat->id;
-                }
-            }
-            $selectedCatIdsJson = json_encode($selectedCatIds);
-            ?>
+            <?php $selectedCatId = $product->category_id ?? null; ?>
             <div class="input">
                 <label for="categories-select">Category <span style="color:red">*</span></label>
-                <select name="categories[_ids][]" id="categories-select" required
+                <select name="category_id" id="categories-select" required
                         <?= empty($currentType) ? 'disabled' : '' ?>
                         onchange="onCategoryChange(this.value)">
                     <?php if (empty($currentType)): ?>
@@ -269,8 +255,8 @@ if (!empty($product->type)) {
     });
 
     // Category / type logic
-    var allCategories  = <?= $categoriesJson ?>;
-    var selectedCatIds = <?= $selectedCatIdsJson ?? '[]' ?>;
+    var allCategories = <?= $categoriesJson ?>;
+    var selectedCatId = <?= json_encode($selectedCatId) ?>;
     var variantIndex   = <?= !empty($product->product_variants) ? count($product->product_variants) : 0 ?>;
 
     var sizesByType = {
@@ -280,7 +266,7 @@ if (!empty($product->type)) {
 
     (function init() {
         var currentType = document.getElementById('type-select').value;
-        if (currentType) populateCategories(currentType, selectedCatIds);
+        if (currentType) populateCategories(currentType, selectedCatId);
     })();
 
     function onTypeChange(type) {
@@ -309,7 +295,7 @@ if (!empty($product->type)) {
             var opt = document.createElement('option');
             opt.value = c.id;
             opt.textContent = c.name;
-            if (preselected.indexOf(c.id) !== -1) opt.selected = true;
+            if (c.id == preselected) opt.selected = true;
             select.appendChild(opt);
         });
         var newOpt = document.createElement('option');

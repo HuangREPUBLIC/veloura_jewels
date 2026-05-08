@@ -11,7 +11,11 @@ $this->Html->css('login', ['block' => true]);
 
 <div class="login-page">
     <div class="users form content login-card--wide">
-        <?= $this->Html->link(__('← Back'), ['action' => 'index']) ?>
+        <?php
+        $backUrl = ($preselectedType ?? '') === 'home_decor' ? '/home-decor'
+            : (($preselectedType ?? '') === 'jewelry' ? '/jewelry' : ['action' => 'index']);
+        ?>
+        <?= $this->Html->link(__('← Back'), $backUrl) ?>
 
         <?= $this->Form->create($product, ['enctype' => 'multipart/form-data', 'id' => 'product-form']) ?>
         <fieldset>
@@ -40,7 +44,7 @@ $this->Html->css('login', ['block' => true]);
             <!-- Category: filtered by type -->
             <div class="input">
                 <label for="categories-select">Category <span style="color:red">*</span></label>
-                <select name="categories[_ids][]" id="categories-select" required disabled
+                <select name="category_id" id="categories-select" required disabled
                         onchange="onCategoryChange(this.value)">
                     <option value="">-- Select a type first --</option>
                 </select>

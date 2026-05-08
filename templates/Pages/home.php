@@ -1,6 +1,6 @@
 <?php
 $this->assign('title', 'Home');
-$this->Html->css('home', ['block' => true]);
+$this->Html->css(['home', 'jewelry'], ['block' => true]);
 ?>
 
 <div class="home-page">
@@ -30,6 +30,10 @@ $this->Html->css('home', ['block' => true]);
                 <p class="hp-label">Just in</p>
                 <h2 class="hp-section-header-title">New Arrivals</h2>
             </div>
+            <?php
+            $identity    = $this->request->getAttribute('identity');
+            $wishlistIds = $wishlistIds ?? [];
+            ?>
             <div class="hp-arrivals-grid">
                 <?php foreach ($featuredProducts as $product): ?>
                     <?php
@@ -37,39 +41,49 @@ $this->Html->css('home', ['block' => true]);
                     $imgSrc = $img
                         ? $this->Url->build('/img/products/' . rawurlencode($img))
                         : $this->Url->build('/img/homepage.png');
-                    $isHomeDecor = false;
-                    foreach ($product->categories as $cat) {
-                        if ($cat->type === 'home_decor') { $isHomeDecor = true; break; }
-                    }
+                    $isHomeDecor = ($product->category->type ?? '') === 'home_decor';
                     $productUrl = $isHomeDecor
-                        ? $this->Url->build('/home-decor/view/' . $product->id)
-                        : $this->Url->build(['controller' => 'Jewelry', 'action' => 'view', $product->id]);
+                        ? $this->Url->build('/home-decor/view/' . $product->id) . '?back=/'
+                        : $this->Url->build(['controller' => 'Jewelry', 'action' => 'view', $product->id]) . '?back=/';
                     ?>
-                    <a href="<?= $productUrl ?>" class="hp-product-card">
-                        <div class="hp-product-card-img-wrap<?= !empty($product->product_images[1]) ? ' has-hover-image' : '' ?>">
+                    <div class="product-card-wrap">
+                    <a href="<?= $productUrl ?>" class="product-card-link">
+                        <div class="product-card">
+                        <div class="product-image-wrapper<?= !empty($product->product_images[1]) ? ' has-hover-image' : '' ?>">
                             <?php if (!empty($product->featured) || !empty($product->is_bestsales)): ?>
                                 <div class="product-card-badges">
                                     <?php if (!empty($product->featured)): ?>
                                         <span class="product-badge product-badge--featured">Featured</span>
                                     <?php endif; ?>
-
                                     <?php if (!empty($product->is_bestsales)): ?>
                                         <span class="product-badge product-badge--bestsales">Best Sales</span>
                                     <?php endif; ?>
                                 </div>
                             <?php endif; ?>
-                            <img src="<?= $imgSrc ?>" alt="<?= h($product->name) ?>" class="hp-product-card-img hp-product-card-img--primary" loading="lazy">
+                            <img src="<?= $imgSrc ?>" alt="<?= h($product->name) ?>" class="product-image product-image--primary" loading="lazy">
                             <?php if (!empty($product->product_images[1])): ?>
                                 <img src="<?= $this->Url->build('/img/products/' . rawurlencode($product->product_images[1]->filename)) ?>"
                                      alt="<?= h($product->name) ?>"
-                                     class="hp-product-card-img hp-product-card-img--hover" loading="lazy">
+                                     class="product-image product-image--hover" loading="lazy">
                             <?php endif; ?>
                         </div>
-                        <div class="hp-product-card-info">
-                            <h4 class="hp-product-card-name"><?= h($product->name) ?></h4>
-                            <p class="hp-product-card-price">$<?= number_format((float)$product->sale_price, 2) ?></p>
+                        <div class="product-card-body">
+                            <h4 class="product-name"><?= h($product->name) ?></h4>
+                            <p class="product-price">$<?= number_format((float)$product->sale_price, 2) ?></p>
+                        </div>
                         </div>
                     </a>
+                    <?php if ($identity): ?>
+                    <button class="wishlist-btn<?= in_array($product->id, $wishlistIds) ? ' wishlisted' : '' ?>"
+                            data-product-id="<?= $product->id ?>"
+                            type="button"
+                            aria-label="Save to wishlist">
+                        <svg width="20" height="20" viewBox="0 0 64 64" fill="currentColor">
+                            <path d="M32,57C31,56.5 5,42 5,23.5C5,13.8 12.2,6.5 21,6.5C26,6.5 30.4,9 32,11.2C33.6,9 38,6.5 43,6.5C51.8,6.5 59,13.8 59,23.5C59,42 33,56.5 32,57Z"/>
+                        </svg>
+                    </button>
+                    <?php endif; ?>
+                    </div>
                 <?php endforeach; ?>
             </div>
             <div class="hp-arrivals-footer">

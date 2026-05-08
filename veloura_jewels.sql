@@ -2,10 +2,10 @@
 -- version 5.2.3
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: May 07, 2026 at 04:14 PM
--- Server version: 11.8.6-MariaDB
--- PHP Version: 8.4.16
+-- Host: localhost
+-- Generation Time: May 08, 2026 at 03:29 AM
+-- Server version: 12.2.2-MariaDB
+-- PHP Version: 8.4.18
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -26,15 +26,35 @@ USE `veloura_jewels`;
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `cake_migrations`
+--
+
+DROP TABLE IF EXISTS `cake_migrations`;
+CREATE TABLE IF NOT EXISTS `cake_migrations` (
+                                                 `id` int(11) NOT NULL AUTO_INCREMENT,
+    `version` bigint(20) NOT NULL,
+    `migration_name` varchar(100) DEFAULT NULL,
+    `plugin` varchar(100) DEFAULT NULL,
+    `start_time` timestamp NULL DEFAULT NULL,
+    `end_time` timestamp NULL DEFAULT NULL,
+    `breakpoint` tinyint(1) NOT NULL DEFAULT 0,
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `version_plugin_unique` (`version`,`plugin`)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `categories`
 --
 
 DROP TABLE IF EXISTS `categories`;
-CREATE TABLE `categories` (
-                              `id` int(11) NOT NULL,
-                              `name` varchar(64) NOT NULL,
-                              `type` varchar(20) NOT NULL DEFAULT 'jewelry'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+CREATE TABLE IF NOT EXISTS `categories` (
+                                            `id` int(11) NOT NULL AUTO_INCREMENT,
+    `name` varchar(64) NOT NULL,
+    `type` varchar(20) NOT NULL DEFAULT 'jewelry',
+    PRIMARY KEY (`id`)
+    ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `categories`
@@ -55,68 +75,18 @@ INSERT INTO `categories` (`id`, `name`, `type`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `categories_products`
---
-
-DROP TABLE IF EXISTS `categories_products`;
-CREATE TABLE `categories_products` (
-                                       `id` int(11) NOT NULL,
-                                       `category_id` int(11) NOT NULL,
-                                       `product_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `categories_products`
---
-
-INSERT INTO `categories_products` (`id`, `category_id`, `product_id`) VALUES
-                                                                          (1, 1, 1),
-                                                                          (2, 1, 2),
-                                                                          (3, 1, 3),
-                                                                          (4, 1, 4),
-                                                                          (5, 1, 5),
-                                                                          (6, 2, 6),
-                                                                          (7, 2, 7),
-                                                                          (8, 2, 8),
-                                                                          (9, 2, 9),
-                                                                          (10, 2, 10),
-                                                                          (11, 3, 11),
-                                                                          (12, 3, 12),
-                                                                          (13, 3, 13),
-                                                                          (14, 3, 14),
-                                                                          (15, 4, 15),
-                                                                          (16, 4, 16),
-                                                                          (28, 7, 30),
-                                                                          (29, 7, 31),
-                                                                          (30, 7, 32),
-                                                                          (31, 7, 33),
-                                                                          (32, 9, 34),
-                                                                          (33, 9, 35),
-                                                                          (34, 9, 36),
-                                                                          (35, 9, 37),
-                                                                          (36, 6, 38),
-                                                                          (37, 6, 39),
-                                                                          (38, 6, 40),
-                                                                          (39, 8, 41),
-                                                                          (40, 8, 42),
-                                                                          (42, 10, 44),
-                                                                          (43, 6, 45),
-                                                                          (44, 10, 46),
-                                                                          (45, 8, 47);
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `cms_pages`
 --
 
 DROP TABLE IF EXISTS `cms_pages`;
-CREATE TABLE `cms_pages` (
-                             `id` int(11) NOT NULL,
-                             `slug` varchar(100) NOT NULL,
-                             `title` varchar(200) NOT NULL,
-                             `sort_order` int(11) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+CREATE TABLE IF NOT EXISTS `cms_pages` (
+                                           `id` int(11) NOT NULL AUTO_INCREMENT,
+    `slug` varchar(100) NOT NULL,
+    `title` varchar(200) NOT NULL,
+    `sort_order` int(11) NOT NULL DEFAULT 0,
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `uq_slug` (`slug`)
+    ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 
 --
 -- Dumping data for table `cms_pages`
@@ -138,15 +108,17 @@ INSERT INTO `cms_pages` (`id`, `slug`, `title`, `sort_order`) VALUES
 --
 
 DROP TABLE IF EXISTS `contact_replies`;
-CREATE TABLE `contact_replies` (
-                                   `id` int(11) NOT NULL,
-                                   `contact_submission_id` int(11) NOT NULL,
-                                   `subject` varchar(255) NOT NULL,
-                                   `message` text NOT NULL,
-                                   `sent_at` datetime DEFAULT current_timestamp(),
-                                   `created` datetime DEFAULT current_timestamp(),
-                                   `modified` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+CREATE TABLE IF NOT EXISTS `contact_replies` (
+                                                 `id` int(11) NOT NULL AUTO_INCREMENT,
+    `contact_submission_id` int(11) NOT NULL,
+    `subject` varchar(255) NOT NULL,
+    `message` text NOT NULL,
+    `sent_at` datetime DEFAULT current_timestamp(),
+    `created` datetime DEFAULT current_timestamp(),
+    `modified` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+    PRIMARY KEY (`id`),
+    KEY `fk_contact_replies_submission` (`contact_submission_id`)
+    ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 
 --
 -- Dumping data for table `contact_replies`
@@ -167,18 +139,19 @@ INSERT INTO `contact_replies` (`id`, `contact_submission_id`, `subject`, `messag
 --
 
 DROP TABLE IF EXISTS `contact_submissions`;
-CREATE TABLE `contact_submissions` (
-                                       `id` int(11) NOT NULL,
-                                       `first_name` varchar(50) NOT NULL,
-                                       `last_name` varchar(50) NOT NULL,
-                                       `email` varchar(255) NOT NULL,
-                                       `subject` varchar(255) NOT NULL,
-                                       `message` text NOT NULL,
-                                       `captcha_passed` tinyint(1) NOT NULL DEFAULT 0,
-                                       `is_replied` tinyint(1) NOT NULL DEFAULT 0,
-                                       `created` datetime DEFAULT current_timestamp(),
-                                       `modified` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+CREATE TABLE IF NOT EXISTS `contact_submissions` (
+                                                     `id` int(11) NOT NULL AUTO_INCREMENT,
+    `first_name` varchar(50) NOT NULL,
+    `last_name` varchar(50) NOT NULL,
+    `email` varchar(255) NOT NULL,
+    `subject` varchar(255) NOT NULL,
+    `message` text NOT NULL,
+    `captcha_passed` tinyint(1) NOT NULL DEFAULT 0,
+    `is_replied` tinyint(1) NOT NULL DEFAULT 0,
+    `created` datetime DEFAULT current_timestamp(),
+    `modified` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+    PRIMARY KEY (`id`)
+    ) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 
 --
 -- Dumping data for table `contact_submissions`
@@ -194,7 +167,8 @@ INSERT INTO `contact_submissions` (`id`, `first_name`, `last_name`, `email`, `su
                                                                                                                                                               (8, 'Customer', 'Test', 'test1@u26s1141.iedev.org', 'testing email', 'wwww', 0, 0, '2026-04-22 01:22:27', '2026-04-22 01:22:27'),
                                                                                                                                                               (9, 'sami', 'Test', 'test1@u26s1141.iedev.org', 'devTesting', 'Testing if email works on dev version', 0, 0, '2026-04-22 01:27:19', '2026-04-22 01:27:19'),
                                                                                                                                                               (10, 'Hunter', 'McConnell', 'hmcc0010@student.monash.edu', 'kj k', 'kjn', 0, 1, '2026-05-07 12:47:45', '2026-05-07 12:49:12'),
-                                                                                                                                                              (11, 'Customer', 'Test', 'customer@gmail.com', 'Hello ', 'MEssage', 0, 0, '2026-05-07 13:15:52', '2026-05-07 13:15:52');
+                                                                                                                                                              (11, 'Customer', 'Test', 'customer@gmail.com', 'Hello ', 'MEssage', 0, 0, '2026-05-07 13:15:52', '2026-05-07 13:15:52'),
+                                                                                                                                                              (12, 'Jialin', 'Wu', 'jialinwu.island@gmail.com', '1qwefghh', '12345', 0, 0, '2026-05-08 00:24:10', '2026-05-08 00:24:10');
 
 -- --------------------------------------------------------
 
@@ -203,15 +177,16 @@ INSERT INTO `contact_submissions` (`id`, `first_name`, `last_name`, `email`, `su
 --
 
 DROP TABLE IF EXISTS `faq_items`;
-CREATE TABLE `faq_items` (
-                             `id` int(11) NOT NULL,
-                             `question` varchar(500) NOT NULL,
-                             `answer` text NOT NULL,
-                             `sort_order` int(11) NOT NULL DEFAULT 0,
-                             `is_active` tinyint(1) NOT NULL DEFAULT 1,
-                             `created` datetime NOT NULL,
-                             `modified` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+CREATE TABLE IF NOT EXISTS `faq_items` (
+                                           `id` int(11) NOT NULL AUTO_INCREMENT,
+    `question` varchar(500) NOT NULL,
+    `answer` text NOT NULL,
+    `sort_order` int(11) NOT NULL DEFAULT 0,
+    `is_active` tinyint(1) NOT NULL DEFAULT 1,
+    `created` datetime NOT NULL,
+    `modified` datetime NOT NULL,
+    PRIMARY KEY (`id`)
+    ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 
 --
 -- Dumping data for table `faq_items`
@@ -231,18 +206,20 @@ INSERT INTO `faq_items` (`id`, `question`, `answer`, `sort_order`, `is_active`, 
 --
 
 DROP TABLE IF EXISTS `orders`;
-CREATE TABLE `orders` (
-                          `id` int(11) NOT NULL,
-                          `user_id` int(11) DEFAULT NULL,
-                          `stripe_session_id` varchar(255) DEFAULT NULL,
-                          `stripe_payment_intent_id` varchar(255) DEFAULT NULL,
-                          `customer_email` varchar(255) DEFAULT NULL,
-                          `status` varchar(50) NOT NULL DEFAULT 'pending',
-                          `total_amount` decimal(10,2) NOT NULL DEFAULT 0.00,
-                          `currency` varchar(10) NOT NULL DEFAULT 'aud',
-                          `created` datetime DEFAULT current_timestamp(),
-                          `modified` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+CREATE TABLE IF NOT EXISTS `orders` (
+                                        `id` int(11) NOT NULL AUTO_INCREMENT,
+    `user_id` int(11) DEFAULT NULL,
+    `stripe_session_id` varchar(255) DEFAULT NULL,
+    `stripe_payment_intent_id` varchar(255) DEFAULT NULL,
+    `customer_email` varchar(255) DEFAULT NULL,
+    `status` varchar(50) NOT NULL DEFAULT 'pending',
+    `total_amount` decimal(10,2) NOT NULL DEFAULT 0.00,
+    `currency` varchar(10) NOT NULL DEFAULT 'aud',
+    `created` datetime DEFAULT current_timestamp(),
+    `modified` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+    PRIMARY KEY (`id`),
+    KEY `user_id` (`user_id`)
+    ) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `orders`
@@ -264,7 +241,8 @@ INSERT INTO `orders` (`id`, `user_id`, `stripe_session_id`, `stripe_payment_inte
                                                                                                                                                                            (13, NULL, 'cs_test_a1CtLwDNDriGZy6Gihk47M82AYiQQOKBcfvffaIeSXNImwjqyKTe20xGN1', NULL, NULL, 'pending', 350.00, 'aud', '2026-05-06 02:13:36', '2026-05-06 02:13:37'),
                                                                                                                                                                            (14, 6, 'cs_test_a1RtEmePfmCJmkWTrZo0zhKPisRtIJsTPqFOQrKtPDyu67QDDadmjfr9rH', NULL, 'admin@test.com', 'pending', 700.00, 'aud', '2026-05-06 02:14:14', '2026-05-06 02:14:14'),
                                                                                                                                                                            (15, NULL, 'cs_test_a19RlFfrx48wT0qa2u1Av6yN4K5A3KHBBxyzCGxs7f3i5hPVsPpSGTPnht', NULL, NULL, 'cancelled', 700.00, 'aud', '2026-05-06 02:16:46', '2026-05-06 02:18:09'),
-                                                                                                                                                                           (16, 9, 'cs_test_a1gP6uQqmBgZh2NvHdz7Es6UcX4Zs4shqlcRPvTv6PMNzmI4vkjObUbrLd', NULL, 'customer@gmail.com', 'cancelled', 700.00, 'aud', '2026-05-06 02:18:33', '2026-05-06 02:18:39');
+                                                                                                                                                                           (16, 9, 'cs_test_a1gP6uQqmBgZh2NvHdz7Es6UcX4Zs4shqlcRPvTv6PMNzmI4vkjObUbrLd', NULL, 'customer@gmail.com', 'cancelled', 700.00, 'aud', '2026-05-06 02:18:33', '2026-05-06 02:18:39'),
+                                                                                                                                                                           (17, 6, 'cs_test_a1hNho1neh42l1WF3nkPZJye97ggpfI6UAmr1PkF7A8r6kkTUQN5q4UODz', NULL, 'admin@test.com', 'cancelled', 350.00, 'aud', '2026-05-07 17:41:56', '2026-05-07 17:43:01');
 
 -- --------------------------------------------------------
 
@@ -273,19 +251,23 @@ INSERT INTO `orders` (`id`, `user_id`, `stripe_session_id`, `stripe_payment_inte
 --
 
 DROP TABLE IF EXISTS `order_items`;
-CREATE TABLE `order_items` (
-                               `id` int(11) NOT NULL,
-                               `order_id` int(11) NOT NULL,
-                               `product_id` int(11) NOT NULL,
-                               `variant_id` int(11) DEFAULT NULL,
-                               `product_name` varchar(255) NOT NULL,
-                               `selected_size` varchar(20) DEFAULT NULL,
-                               `unit_price` decimal(10,2) NOT NULL,
-                               `quantity` int(11) NOT NULL,
-                               `subtotal` decimal(10,2) NOT NULL,
-                               `created` datetime DEFAULT current_timestamp(),
-                               `modified` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+CREATE TABLE IF NOT EXISTS `order_items` (
+                                             `id` int(11) NOT NULL AUTO_INCREMENT,
+    `order_id` int(11) NOT NULL,
+    `product_id` int(11) NOT NULL,
+    `variant_id` int(11) DEFAULT NULL,
+    `product_name` varchar(255) NOT NULL,
+    `selected_size` varchar(20) DEFAULT NULL,
+    `unit_price` decimal(10,2) NOT NULL,
+    `quantity` int(11) NOT NULL,
+    `subtotal` decimal(10,2) NOT NULL,
+    `created` datetime DEFAULT current_timestamp(),
+    `modified` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+    PRIMARY KEY (`id`),
+    KEY `order_id` (`order_id`),
+    KEY `product_id` (`product_id`),
+    KEY `variant_id` (`variant_id`)
+    ) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `order_items`
@@ -307,7 +289,8 @@ INSERT INTO `order_items` (`id`, `order_id`, `product_id`, `variant_id`, `produc
                                                                                                                                                                            (13, 13, 15, 35, 'Art Deco Pavé Bracelet', 'One Size', 350.00, 1, 350.00, '2026-05-06 02:13:36', '2026-05-06 02:13:36'),
                                                                                                                                                                            (14, 14, 15, 35, 'Art Deco Pavé Bracelet', 'One Size', 350.00, 2, 700.00, '2026-05-06 02:14:14', '2026-05-06 02:14:14'),
                                                                                                                                                                            (15, 15, 15, 35, 'Art Deco Pavé Bracelet', 'One Size', 350.00, 2, 700.00, '2026-05-06 02:16:46', '2026-05-06 02:16:46'),
-                                                                                                                                                                           (16, 16, 15, 35, 'Art Deco Pavé Bracelet', 'One Size', 350.00, 2, 700.00, '2026-05-06 02:18:33', '2026-05-06 02:18:33');
+                                                                                                                                                                           (16, 16, 15, 35, 'Art Deco Pavé Bracelet', 'One Size', 350.00, 2, 700.00, '2026-05-06 02:18:33', '2026-05-06 02:18:33'),
+                                                                                                                                                                           (17, 17, 15, 35, 'Art Deco Pavé Bracelet', 'One Size', 350.00, 1, 350.00, '2026-05-07 17:41:56', '2026-05-07 17:41:56');
 
 -- --------------------------------------------------------
 
@@ -316,15 +299,17 @@ INSERT INTO `order_items` (`id`, `order_id`, `product_id`, `variant_id`, `produc
 --
 
 DROP TABLE IF EXISTS `page_content`;
-CREATE TABLE `page_content` (
-                                `id` int(11) NOT NULL,
-                                `page_id` int(11) NOT NULL,
-                                `content_key` varchar(100) NOT NULL,
-                                `content_value` text DEFAULT NULL,
-                                `label` varchar(200) NOT NULL,
-                                `content_type` enum('text','textarea') NOT NULL DEFAULT 'text',
-                                `sort_order` int(11) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+CREATE TABLE IF NOT EXISTS `page_content` (
+                                              `id` int(11) NOT NULL AUTO_INCREMENT,
+    `page_id` int(11) NOT NULL,
+    `content_key` varchar(100) NOT NULL,
+    `content_value` text DEFAULT NULL,
+    `label` varchar(200) NOT NULL,
+    `content_type` enum('text','textarea') NOT NULL DEFAULT 'text',
+    `sort_order` int(11) NOT NULL DEFAULT 0,
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `uq_page_key` (`page_id`,`content_key`)
+    ) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 
 --
 -- Dumping data for table `page_content`
@@ -348,14 +333,14 @@ INSERT INTO `page_content` (`id`, `page_id`, `content_key`, `content_value`, `la
                                                                                                                         (15, 6, 'page_heading', 'Our Story', 'Page Heading', 'text', 1),
                                                                                                                         (16, 6, 'body_1', 'Founded by Sarah Smith, Veloura Jewels began with a simple belief: the pieces we wear and the spaces we live in should tell a story.', 'Story (Paragraph 1)', 'textarea', 2),
                                                                                                                         (17, 6, 'body_2', 'What started as a passion for timeless jewellery soon evolved into a carefully curated collection of jewellery and home décor designed to bring elegance, warmth, and individuality into everyday life. Sarah created Veloura Jewels to offer more than beautiful products — she wanted to create meaningful pieces that help people celebrate moments, memories, and personal style.', 'Story (Paragraph 2)', 'textarea', 3),
-                                                                                                                        (23, 6, 'body_3', 'Inspired by modern sophistication and classic craftsmanship, Veloura Jewels blends refined design with a sense of comfort and authenticity. Every collection is selected with attention to detail, quality, and versatility, allowing customers to express themselves through both fashion and home styling.', 'Story (Paragraph 3)', 'textarea', 4),
-                                                                                                                        (24, 6, 'body_4', 'Whether it\'s a delicate necklace worn every day, a statement ring for a special occasion, or décor that transforms a house into a home, Veloura Jewels is built around the idea that beauty should feel personal.', 'Story (Paragraph 4)', 'textarea', 5),
-                                                                                                                        (25, 6, 'hero_sub', 'Founded by Sarah Smith — pieces crafted to carry meaning.', 'Hero Subtitle', 'text', 0),
                                                                                                                         (18, 7, 'page_heading', 'Find Us', 'Page Heading', 'text', 1),
                                                                                                                         (19, 7, 'intro', '', 'Intro Text', 'textarea', 2),
                                                                                                                         (20, 7, 'address', '123 Main Street, Brooksdale', 'Address', 'text', 3),
                                                                                                                         (21, 7, 'phone', '+64 9 123 4567', 'Phone', 'text', 4),
-                                                                                                                        (22, 7, 'hours', 'Mon–Fri: 9am–5pm, Sat: 10am–3pm', 'Opening Hours', 'textarea', 5);
+                                                                                                                        (22, 7, 'hours', 'Mon–Fri: 9am–5pm, Sat: 10am–3pm', 'Opening Hours', 'textarea', 5),
+                                                                                                                        (23, 6, 'body_3', 'Inspired by modern sophistication and classic craftsmanship, Veloura Jewels blends refined design with a sense of comfort and authenticity. Every collection is selected with attention to detail, quality, and versatility, allowing customers to express themselves through both fashion and home styling.', 'Story (Paragraph 3)', 'textarea', 4),
+                                                                                                                        (24, 6, 'body_4', 'Whether it\'s a delicate necklace worn every day, a statement ring for a special occasion, or décor that transforms a house into a home, Veloura Jewels is built around the idea that beauty should feel personal.', 'Story (Paragraph 4)', 'textarea', 5),
+(25, 6, 'hero_sub', 'Founded by Sarah Smith — pieces crafted to carry meaning.', 'Hero Subtitle', 'text', 0);
 
 -- --------------------------------------------------------
 
@@ -364,57 +349,60 @@ INSERT INTO `page_content` (`id`, `page_id`, `content_key`, `content_value`, `la
 --
 
 DROP TABLE IF EXISTS `products`;
-CREATE TABLE `products` (
-                            `id` int(11) NOT NULL,
-                            `name` varchar(64) NOT NULL,
-                            `purchase_price` decimal(9,2) NOT NULL,
-                            `sale_price` decimal(9,2) NOT NULL,
-                            `supplier_email` varchar(320) DEFAULT NULL,
-                            `created` datetime DEFAULT NULL,
-                            `modified` datetime DEFAULT NULL,
-                            `description` text DEFAULT NULL,
-                            `story` text DEFAULT NULL,
-                            `featured` tinyint(1) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+CREATE TABLE IF NOT EXISTS `products` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(64) NOT NULL,
+  `purchase_price` decimal(9,2) NOT NULL,
+  `sale_price` decimal(9,2) NOT NULL,
+  `supplier_email` varchar(320) DEFAULT NULL,
+  `created` datetime DEFAULT NULL,
+  `modified` datetime DEFAULT NULL,
+  `description` text DEFAULT NULL,
+  `story` text DEFAULT NULL,
+  `featured` tinyint(1) NOT NULL DEFAULT 0,
+  `category_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_products_category` (`category_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `products`
 --
 
-INSERT INTO `products` (`id`, `name`, `purchase_price`, `sale_price`, `supplier_email`, `created`, `modified`, `description`, `story`, `featured`) VALUES
-                                                                                                                                                       (1, 'Art Deco Ring', 50.00, 110.00, 'supplier@luxgems.com.au', '2026-04-13 11:29:33', '2026-05-04 22:00:11', 'This ring is meticulously crafted for a perfect balance between bold structure and refined elegance. The design and stone setting ensure a unique brilliance. Inspired by Art Deco aesthetic, each piece embodies timeless sophistication.\r\nAll our products are handcrafted in our ateliers\r\nMaterial: Sterling silver\r\nStone: White cubic zirconia\r\nWidth: 0.5 cm\r\nColor: Silver', 'In a precise atelier, the Art Deco Ring is crafted with sharp geometric lines, each facet carefully shaped and aligned by hand to reflect the elegance of the 1920s. The final setting is polished to enhance its symmetry and brilliance, resulting in a timeless statement piece.\r\n', 0),
-                                                                                                                                                       (2, 'Statement Torsade Pavé Ring', 85.00, 210.00, 'supplier@goldcraft.com.au', '2026-04-13 11:29:33', '2026-05-04 21:22:10', 'This ring embodies elegance and versatility. Its radiant shine echoes pure light, creating a captivating sparkle that draws attention.\r\nAll our products are handcrafted in our ateliers\r\nMaterial: Yellow Alloy made of 95% recycled material and 18k yellow gold plated, anti-tarnishing and hypoallergenic\r\nStone: White cubic zirconia\r\nWidth: 0.9 cm\r\nColor: Yellow', 'In a meticulous atelier, the Statement Torsade Pavé Ring is formed by twisting fine metal into a bold spiral, then hand-setting pavé stones along its curves for continuous brilliance. The design is carefully polished to emphasize its sculptural form and luminous detail.\r\n', 1),
-                                                                                                                                                       (3, 'Dainty Rose Gold Ring', 30.00, 120.00, 'supplier@luxgems.com.au', '2026-04-13 11:29:33', '2026-05-07 13:17:22', 'This ring is made with Alloy and 18k rose gold plated. It is microset with white cubic zirconia.\r\nThe Alloy is made of 95% recycled material. It is anti-tarnishing and Hypoallergenic.\r\nMaterial: Alloy made of 95% recycled material and 18k rose gold plated, white cubic zirconia, anti-tarnishing and Hypoallergenic\r\nAll our products are handcrafted and microset by hand in our ateliers\r\nColor: Rose gold', 'In a refined workshop, the Dainty Rose Gold Ring is carefully shaped and polished to achieve a soft, warm glow that highlights its delicate form. Each piece is finished by hand to ensure a smooth, minimalist elegance designed for everyday wear.\r\n', 1),
-                                                                                                                                                       (4, 'Chunky Ice Ring', 100.00, 300.00, 'supplier@luxgems.com.au', '2026-04-13 11:29:33', '2026-05-04 21:21:51', 'Sterling silver intertwines with paths of brilliant stones to reflect the geometric patterns created by broken ice.\r\nAll our products are handcrafted in our ateliers\r\nMaterial: Sterling silver\r\nStone: White cubic zirconia\r\nColor: Silver', 'In a bold atelier, the Chunky Ice Ring is cast with substantial volume and carefully sculpted edges, then polished to a high, glass-like shine for maximum impact. Each piece is finished by hand to enhance its crisp, modern brilliance and sculptural presence.\r\n', 1),
-                                                                                                                                                       (5, 'LOVE Morse Code Ring', 30.00, 120.00, 'supplier@pearlsea.com.au', '2026-04-13 11:29:33', '2026-05-04 21:22:02', 'This collection is using Morse code as a secret Love language.\r\nThis ring is embellished with the code LOVE on it, and the word LOVE is also engraved inside.\r\nMaterial: Rose Alloy made of 95% recycled material and 18k gold plated (3 microns), white cubic zirconia, anti-tarnishing and anti-allergenic\r\nAll our products are handcrafted and microset by hand in our ateliers\r\nColor: Rose gold', 'In a precise atelier, the LOVE Morse Code Ring is crafted with tiny, carefully placed stones and metal beads that encode the word \"LOVE\" in subtle rhythmic patterning. Each ring is hand-finished to ensure the message is both discreet and beautifully refined in its minimalist design.\r\n', 1),
-                                                                                                                                                       (6, 'Art Deco Adjustable Necklace', 70.00, 230.00, 'supplier@luxgems.com.au', '2026-04-13 11:29:33', '2026-05-06 21:20:18', 'This necklace is meticulously crafted for a perfect balance between bold structure and refined elegance.\r\nMaterial: Sterling silver\r\nStone: White cubic zirconia\r\nColor: Silver\r\nPendant size: Length 4.6 cm ; Width 0.7 cm\r\nTotal chain length: Adjustable to 48 cm maximum with sliding clasp', 'In a precision-led atelier, the Art Deco Adjustable Necklace is crafted with clean geometric lines, each element carefully shaped and assembled by hand. The adjustable mechanism is seamlessly integrated, ensuring both versatility and refined elegance in a timeless design.\r\n', 0),
-                                                                                                                                                       (7, 'Art Deco Pavé Choker', 300.00, 780.00, 'supplier@goldcraft.com.au', '2026-04-13 11:29:33', '2026-05-04 22:00:10', 'This choker is meticulously crafted for a perfect balance between bold structure and refined elegance.\r\nMaterial: Sterling silver\r\nStone: Over 210 white cubic zirconia\r\nColor: Silver\r\nTotal chain length: 40 cm ; Width 0.8 cm', 'In a meticulous atelier, the Art Deco Pavé Choker is crafted with precise geometric forms, each tiny stone hand-set to create a seamless ribbon of light. The piece is carefully assembled to sit elegantly at the neckline, capturing the bold symmetry of the Art Deco era.\r\n', 0),
-                                                                                                                                                       (8, 'Lilac Torsade Adjustable Necklace', 60.00, 210.00, 'supplier@gemstone.com.au', '2026-04-13 11:29:33', '2026-05-04 21:22:01', 'This necklace embodies elegance and versatility.\r\nMaterial: Yellow Alloy made of 95% recycled material and 18k yellow gold plated\r\nStone: Purple cubic zirconia\r\nColor: Yellow\r\nTotal chain length: Adjustable to 65 cm maximum with sliding clasp', 'In a refined atelier, the Lilac Torsade Adjustable Necklace is crafted by delicately twisting metal into a graceful spiral, then accented with soft lilac tones that catch the light. The adjustable design is seamlessly integrated, blending versatility with elegant, handcrafted detail.\r\n', 1),
-                                                                                                                                                       (9, 'Lumière Pavé Choker', 180.00, 620.00, 'supplier@pearlsea.com.au', '2026-04-13 11:29:33', '2026-05-04 21:22:04', 'This minimalist and versatile choker perfectly captures the essence of spring.\r\nMaterial: Sterling silver\r\nStone: White cubic zirconia\r\nColor: Silver', 'In a precision-focused atelier, the Lumière Pavé Choker is meticulously assembled as artisans hand-set each stone to create a continuous band of brilliance. The finished piece is carefully polished to enhance its radiant glow, embodying refined craftsmanship and modern elegance.\r\n', 1),
-                                                                                                                                                       (10, 'Maille Marine Chain Necklace', 140.00, 410.00, 'supplier@gemstone.com.au', '2026-04-13 11:29:33', '2026-05-04 21:22:04', 'Material: Rose Alloy made of 95% recycled material and 18k gold plated, white cubic zirconia\r\nColor: Rose gold\r\nTotal chain length: 45 cm', 'In a skilled workshop, the Maille Marine Chain Necklace is crafted by interlinking polished metal loops in a classic marine-inspired pattern, each connection carefully secured by hand. The piece is then refined to a smooth finish, highlighting its strength, rhythm, and understated elegance.\r\n', 1),
-                                                                                                                                                       (11, 'Statement Art Deco Drop Earrings', 150.00, 430.00, 'supplier@luxgems.com.au', '2026-04-13 11:29:33', '2026-05-04 21:22:09', 'These earrings are meticulously crafted for a perfect balance between bold structure and refined elegance.\r\nMaterial: Sterling silver\r\nStone: White cubic zirconia\r\nColor: Silver\r\nLength: 7.1 cm ; Width : 2.2 cm', 'In a precision-driven atelier, the Statement Art Deco Drop Earrings take shape as artisans cut and assemble bold geometric elements, then hand-set each stone in crisp, symmetrical lines. The result is a striking pair that channels 1920s glamour through meticulous craftsmanship and modern refinement.', 1),
-                                                                                                                                                       (12, 'Torsade Pavé Hoop Earrings', 55.00, 210.00, 'supplier@goldcraft.com.au', '2026-04-13 11:29:33', '2026-05-04 21:22:15', 'These earrings embody elegance and versatility.\r\nMaterial: Yellow Alloy made of 95% recycled material and 18k yellow gold plated\r\nStone: White cubic zirconia\r\nColor: Yellow\r\nLength: 2.1 cm ; Width : 0.7 cm', 'In a meticulous workshop, the Torsade Pavé Hoop Earrings are formed by twisting fine metal strands into an elegant spiral, then hand-setting each tiny stone along the curves for a seamless sparkle. The process blends structural precision with delicate craftsmanship, creating hoops that shimmer with every turn.\r\n', 1),
-                                                                                                                                                       (13, 'Dainty Rose Gold Hoop Earrings', 95.00, 275.00, 'supplier@gemstone.com.au', '2026-04-13 11:29:33', '2026-05-04 21:21:53', 'Material: Alloy made of 95% recycled material and 18k gold plated, white cubic zirconia\r\nColor: Rose gold\r\nSize: Small (Length: 2.8 cm ; Width : 0.5 cm)', 'In a refined workshop, the Dainty Rose Gold Hoop Earrings are carefully shaped from fine metal and polished to a soft, warm glow. Each pair is finished with precise detailing to achieve a lightweight, elegant design made for everyday wear.\r\n', 1),
-                                                                                                                                                       (14, 'Asymmetric Cross Earrings', 65.00, 240.00, 'supplier@pearlsea.com.au', '2026-04-13 11:29:33', '2026-05-04 21:21:22', 'Material: Platinum and rhodium plated on patented white alloy, made from recycled materials\r\nStone: Cubic zirconia\r\nDimensions: 39 mm length, 20 mm width', 'In a contemporary atelier, the Asymmetric Cross Earrings are thoughtfully crafted with mismatched silhouettes, each piece shaped and balanced by hand for a modern edge. The design comes together through careful finishing, highlighting contrast and individuality in every detail.\r\n', 1),
-                                                                                                                                                       (15, 'Art Deco Pavé Bracelet', 90.00, 350.00, 'supplier@luxgems.com.au', '2026-04-13 11:29:33', '2026-05-04 21:21:18', 'This bracelet is meticulously crafted for a perfect balance between bold structure and refined elegance.\r\nMaterial: Sterling silver\r\nStone: White cubic zirconia\r\nColor: Silver', 'Under the glow of a 1920s ballroom chandelier, the Art Deco pavé bracelet caught every flicker of light, each stone set like a secret carefully placed in time. It wasn\'t just jewelry—it was a quiet declaration of elegance that outlived the night and everyone in it.', 1),
-(16, 'Lilac Lumière Pavé Bracelet', 90.00, 300.00, 'supplier@goldcraft.com.au', '2026-04-13 11:29:33', '2026-05-04 21:21:58', 'Material: Platinum and rhodium plated on patented white alloy\r\nStone: Lilac cubic zirconia\r\nDimensions: 4 mm width', 'In a quiet atelier, the Lilac Lumière Pavé Bracelet is brought to life as artisans delicately set each lilac-hued stone to capture a soft, radiant glow. Every detail is carefully crafted to reflect light with a gentle shimmer, evoking elegance in every movement.\r\n', 1),
-(30, 'Asian Vase', 20.00, 50.00, 'supplier@gemstone.com.au', '2026-04-21 12:27:05', '2026-05-04 23:48:19', 'Colour: White and Blue\r\nMaterial: Stoneware, Coloured Glaze\r\nDimensions: 14cm (H), 15cm (W)', 'A centuries-old Chinese stoneware vase emerges from the kiln with a luminous glaze, each brushstroke capturing the quiet discipline of its maker. Once destined for an imperial hall, it now carries the whispered history of dynasties through its delicate form.', 0),
-(31, 'Rustic Vase', 10.00, 20.00, 'supplier@gemstone.com.au', '2026-04-21 12:36:45', '2026-05-04 23:46:58', 'Colour: Grey and Brown\r\nMaterial: Stoneware\r\nDimensions: 16cm (H), 10cm (W)', 'A rustic stone vase takes shape under the steady rhythm of a mason\'s chisel, each strike revealing the raw, weathered character hidden within the rock. Its rough-hewn surface carries the quiet story of earth, craft, and time converging into a single, enduring form.', 1),
-                                                                                                                                                       (32, 'Ancient Vase', 20.00, 60.00, 'supplier@gemstone.com.au', '2026-04-21 12:40:21', '2026-05-04 23:44:53', 'Colour: Yellow and Black\r\nMaterial: Ceramic\r\nDimensions: 25cm (H), 15cm (W)', 'An ancient Greek ceramic vase emerges from the potter\'s wheel with mythic scenes circling its surface, each figure painted in bold strokes meant to outlast generations. Fired in the heat of a smoky kiln, it becomes both a vessel and a storyteller, carrying the spirit of a civilization that shaped the Western world.', 0),
-(33, 'Flowery Vase', 12.00, 28.00, 'supplier@gemstone.com.au', '2026-04-21 12:44:52', '2026-05-04 23:43:26', 'Colour: Blue and White\r\nMaterial: Ceramic\r\nDimensions: 20cm (H), 12cm (W)', 'A flowery ceramic vase blooms into existence as the artist layers soft petals and curling leaves across its surface, each stroke turning clay into a quiet garden. Once fired, it carries the warmth of the kiln and the gentle poetry of nature captured in glaze.', 1),
-(34, 'Waves Painting', 10.00, 22.00, 'supplier@gemstone.com.au', '2026-04-21 12:58:01', '2026-05-04 23:42:22', 'Colour: Blue and Brown\r\nMaterial: Medium-density fibreboard (MDF), canvas and metal\r\nDimensions: 90cm (H) x 60cm (W) x 2.5cm (D)\r\nWeight: 3.1kg', 'A wave painting rises from the canvas as the artist layers sweeping strokes of deep blues and foaming whites, capturing the moment water gathers its strength. In its final form, the piece feels alive—an instant of motion frozen just before the sea breaks into thunder.', 1),
-(35, 'Golden Blue Heart Painting', 20.00, 54.00, 'supplier@gemstone.com.au', '2026-04-21 13:03:00', '2026-05-04 23:41:18', 'Colour: Blue and Gold\r\nMaterials: Medium-density fibreboard (MDF), canvas and metal\r\nDimensions: 42cm (H), 32cm (W), 3cm(D)', 'A half-blue, half-gold heart painting comes to life as the artist blends cool serenity with radiant warmth, letting the two colors meet in a luminous seam that feels almost electric. In its final form, the heart becomes a quiet symbol of contrast—softness and brilliance held together in a single, glowing shape.', 1),
-(36, 'Flower Painting', 16.00, 27.00, 'supplier@gemstone.com.au', '2026-04-21 13:07:44', '2026-05-04 23:40:13', 'Colour: Red, Yellow, Green and Blue\r\nMaterials: Fibreboard, canvas and metal\r\nDimensions: 55cm (H) x 75cm (W) x 2.5cm (D)', 'A painting of red and yellow flowers comes alive as the artist layers bold crimson petals against warm golden blooms, letting the colors spark like sunlight meeting flame. When the final brushstroke lands, the piece radiates a vibrant energy—an ode to nature at its most spirited.', 1),
-(37, 'Butterfly Landing Painting', 20.00, 62.00, 'supplier@gemstone.com.au', '2026-04-21 13:14:02', '2026-05-04 23:39:20', 'Colour: Orange, Blue, Green, Yellow and Purple\r\nMaterials: Medium-density fibreboard (MDF), canvas and metal\r\nDimensions: 70cm (H) x 100cm (W) x 3cm (D)', 'A multi-coloured butterfly landing on an orange flower takes shape on the canvas as the artist layers shimmering blues, pinks, and golds across delicate wings, letting them glow against the warm burst of petals. In its final moment, the painting feels like a breath held in nature—a fleeting touch of beauty captured before the butterfly lifts away.', 1),
-(38, 'Simple Candle', 3.00, 8.00, 'supplier@gemstone.com.au', '2026-04-21 13:18:47', '2026-05-06 21:30:39', 'Colour: White\r\nMaterial: Metal and Paraffin\r\nDimensions: 7.5cm (H) x 7.5cm (Dia.)', 'A simple candle in a metal bowl takes shape as molten wax is poured and left to cool, the soft flame later rising to cast warm light against the bowl\'s cool, reflective surface. In its finished form, it feels like a quiet moment captured warmth held gently inside something forged from fire.', 1),
-                                                                                                                                                       (39, 'Cauldron Candle', 13.00, 28.00, 'supplier@gemstone.com.au', '2026-04-21 13:24:31', '2026-05-06 21:27:27', 'Colour: Black and White\r\nMaterial: Paraffin and Stone\r\nDimensions: 10cm (H) x 7.5cm (Dia.)', 'A candle in a stone cauldron takes form as wax is slowly poured into the carved vessel, the rough stone holding the warmth like an ancient hearth. When the flame is finally lit, it glows against the rugged surface, turning the cauldron into a quiet well of fire and shadow.', 1),
-                                                                                                                                                       (40, 'Bamboo Candle', 9.00, 23.00, 'supplier@gemstone.com.au', '2026-04-21 13:34:51', '2026-05-06 21:28:56', 'Colour: Brown\r\nMaterial: Bamboo and Paraffin\r\nDimensions: 7.5cm (H) x 7.5cm (Dia.)', 'A bamboo candle comes to life as warm wax is poured into a hollowed stalk, the natural grain of the bamboo turning the simple vessel into something quietly elegant. When lit, the flame glows through the soft brown walls, creating a gentle harmony between fire and earth.', 1),
-                                                                                                                                                       (41, 'Round Cushion', 8.00, 20.00, 'supplier@gemstone.com.au', '2026-04-21 13:39:18', '2026-05-04 23:33:33', 'Colour: Red\r\nMaterial: Velvet and Cotton\r\nDimensions: 20cm (H), 20cm (W), 6cm (D)', 'A round red cushion comes to life as soft fabric is stretched over plush filling, its vibrant color giving the simple shape a warm, inviting presence. Once finished, it feels like a small circle of comfort—bold, bright, and ready to soften any space it touches.', 1),
-                                                                                                                                                       (42, 'Classic Cushion', 6.00, 12.00, 'supplier@gemstone.com.au', '2026-04-21 13:43:41', '2026-05-04 23:31:48', 'Colour: White\r\nMaterial: Polyester\r\nDimensions: 42cm (L) x 42cm (W)', 'A classic square white cushion comes together as crisp fabric is stitched around soft filling, its clean lines giving it a timeless, effortless elegance. Once finished, it becomes a quiet anchor in any room—simple, bright, and ready to soften the space with understated comfort.', 1),
-                                                                                                                                                       (44, 'Crocheted Blanket', 15.00, 32.00, 'supplier@gemstone.com.au', '2026-04-21 14:18:41', '2026-05-04 23:30:28', 'Colour: Rainbow\r\nMaterial: Wool\r\nDimensions: 240cm (L) x 220cm (W)', 'A rainbow crocheted blanket begins as strands of yarn pulled through looping stitches, each color joining the next in a soft, steady rhythm that feels almost musical. When the final row is tied off, it becomes a warm spectrum of comfort—handmade joy woven into every hue.', 1),
-                                                                                                                                                       (45, 'Crimson Candle', 4.00, 10.00, 'supplier@gemstone.com.au', '2026-04-22 18:49:04', '2026-05-06 21:25:43', 'Colour: Crimson Red\r\nMaterial: Paraffin\r\nDimensions: 29cm (H), 9cm (D)', 'In a small artisanal studio, the crimson candle is hand-poured in layers, blending richly pigmented wax to achieve its deep, glowing red hue. Each candle is carefully cured and finished to ensure a clean burn and a bold, atmospheric presence.\r\n', 1),
-                                                                                                                                                       (46, 'Sunshine Blanket', 12.00, 33.00, 'supplier@gemstone.com.au', '2026-04-22 18:51:08', '2026-05-04 23:23:25', 'Colour: Yellow\r\nMaterial: Fleece synthetic wool\r\nDimensions: 200cm (H), 150cm (W)', 'In a cozy textile workshop, the Sunshine Blanket is woven with soft, lightweight fibers designed to capture warmth and comfort in every thread. Each piece is carefully finished in a bright, uplifting tone that evokes the feeling of gentle morning light.\r\n', 1),
-                                                                                                                                                       (47, 'Mosaic Cushion', 9.00, 17.00, 'supplier@gemstone.com.au', '2026-04-22 18:55:02', '2026-05-06 21:23:26', 'Colur: Orange\r\nMaterial: Polyester fabric\r\nDimensions: 60cm (H), 48cm (W)', 'In a carefully curated textile studio, the cushion is assembled by layering rich orange fabrics with bold mosaic-inspired prints, each panel precisely cut and aligned for visual rhythm. It is then hand-finished to ensure a balanced contrast between vibrant pattern and smooth, solid tones for a modern, expressive accent piece.\r\n', 1);
+INSERT INTO `products` (`id`, `name`, `purchase_price`, `sale_price`, `supplier_email`, `created`, `modified`, `description`, `story`, `featured`, `category_id`) VALUES
+(1, 'Art Deco Ring', 50.00, 110.00, 'supplier@luxgems.com.au', '2026-04-13 11:29:33', '2026-05-04 22:00:11', 'This ring is meticulously crafted for a perfect balance between bold structure and refined elegance. The design and stone setting ensure a unique brilliance. Inspired by Art Deco aesthetic, each piece embodies timeless sophistication.\r\nAll our products are handcrafted in our ateliers\r\nMaterial: Sterling silver\r\nStone: White cubic zirconia\r\nWidth: 0.5 cm\r\nColor: Silver', 'In a precise atelier, the Art Deco Ring is crafted with sharp geometric lines, each facet carefully shaped and aligned by hand to reflect the elegance of the 1920s. The final setting is polished to enhance its symmetry and brilliance, resulting in a timeless statement piece.\r\n', 0, 1),
+(2, 'Statement Torsade Pavé Ring', 85.00, 210.00, 'supplier@goldcraft.com.au', '2026-04-13 11:29:33', '2026-05-04 21:22:10', 'This ring embodies elegance and versatility. Its radiant shine echoes pure light, creating a captivating sparkle that draws attention.\r\nAll our products are handcrafted in our ateliers\r\nMaterial: Yellow Alloy made of 95% recycled material and 18k yellow gold plated, anti-tarnishing and hypoallergenic\r\nStone: White cubic zirconia\r\nWidth: 0.9 cm\r\nColor: Yellow', 'In a meticulous atelier, the Statement Torsade Pavé Ring is formed by twisting fine metal into a bold spiral, then hand-setting pavé stones along its curves for continuous brilliance. The design is carefully polished to emphasize its sculptural form and luminous detail.\r\n', 1, 1),
+(3, 'Dainty Rose Gold Ring', 30.00, 120.00, 'supplier@luxgems.com.au', '2026-04-13 11:29:33', '2026-05-07 13:17:22', 'This ring is made with Alloy and 18k rose gold plated. It is microset with white cubic zirconia.\r\nThe Alloy is made of 95% recycled material. It is anti-tarnishing and Hypoallergenic.\r\nMaterial: Alloy made of 95% recycled material and 18k rose gold plated, white cubic zirconia, anti-tarnishing and Hypoallergenic\r\nAll our products are handcrafted and microset by hand in our ateliers\r\nColor: Rose gold', 'In a refined workshop, the Dainty Rose Gold Ring is carefully shaped and polished to achieve a soft, warm glow that highlights its delicate form. Each piece is finished by hand to ensure a smooth, minimalist elegance designed for everyday wear.\r\n', 1, 1),
+(4, 'Chunky Ice Ring', 100.00, 300.00, 'supplier@luxgems.com.au', '2026-04-13 11:29:33', '2026-05-04 21:21:51', 'Sterling silver intertwines with paths of brilliant stones to reflect the geometric patterns created by broken ice.\r\nAll our products are handcrafted in our ateliers\r\nMaterial: Sterling silver\r\nStone: White cubic zirconia\r\nColor: Silver', 'In a bold atelier, the Chunky Ice Ring is cast with substantial volume and carefully sculpted edges, then polished to a high, glass-like shine for maximum impact. Each piece is finished by hand to enhance its crisp, modern brilliance and sculptural presence.\r\n', 1, 1),
+(5, 'LOVE Morse Code Ring', 30.00, 120.00, 'supplier@pearlsea.com.au', '2026-04-13 11:29:33', '2026-05-04 21:22:02', 'This collection is using Morse code as a secret Love language.\r\nThis ring is embellished with the code LOVE on it, and the word LOVE is also engraved inside.\r\nMaterial: Rose Alloy made of 95% recycled material and 18k gold plated (3 microns), white cubic zirconia, anti-tarnishing and anti-allergenic\r\nAll our products are handcrafted and microset by hand in our ateliers\r\nColor: Rose gold', 'In a precise atelier, the LOVE Morse Code Ring is crafted with tiny, carefully placed stones and metal beads that encode the word \"LOVE\" in subtle rhythmic patterning. Each ring is hand-finished to ensure the message is both discreet and beautifully refined in its minimalist design.\r\n', 1, 1),
+(6, 'Art Deco Adjustable Necklace', 70.00, 230.00, 'supplier@luxgems.com.au', '2026-04-13 11:29:33', '2026-05-06 21:20:18', 'This necklace is meticulously crafted for a perfect balance between bold structure and refined elegance.\r\nMaterial: Sterling silver\r\nStone: White cubic zirconia\r\nColor: Silver\r\nPendant size: Length 4.6 cm ; Width 0.7 cm\r\nTotal chain length: Adjustable to 48 cm maximum with sliding clasp', 'In a precision-led atelier, the Art Deco Adjustable Necklace is crafted with clean geometric lines, each element carefully shaped and assembled by hand. The adjustable mechanism is seamlessly integrated, ensuring both versatility and refined elegance in a timeless design.\r\n', 0, 2),
+                                                                                                                         (7, 'Art Deco Pavé Choker', 300.00, 780.00, 'supplier@goldcraft.com.au', '2026-04-13 11:29:33', '2026-05-04 22:00:10', 'This choker is meticulously crafted for a perfect balance between bold structure and refined elegance.\r\nMaterial: Sterling silver\r\nStone: Over 210 white cubic zirconia\r\nColor: Silver\r\nTotal chain length: 40 cm ; Width 0.8 cm', 'In a meticulous atelier, the Art Deco Pavé Choker is crafted with precise geometric forms, each tiny stone hand-set to create a seamless ribbon of light. The piece is carefully assembled to sit elegantly at the neckline, capturing the bold symmetry of the Art Deco era.\r\n', 0, 2),
+                                                                                                                         (8, 'Lilac Torsade Adjustable Necklace', 60.00, 210.00, 'supplier@gemstone.com.au', '2026-04-13 11:29:33', '2026-05-04 21:22:01', 'This necklace embodies elegance and versatility.\r\nMaterial: Yellow Alloy made of 95% recycled material and 18k yellow gold plated\r\nStone: Purple cubic zirconia\r\nColor: Yellow\r\nTotal chain length: Adjustable to 65 cm maximum with sliding clasp', 'In a refined atelier, the Lilac Torsade Adjustable Necklace is crafted by delicately twisting metal into a graceful spiral, then accented with soft lilac tones that catch the light. The adjustable design is seamlessly integrated, blending versatility with elegant, handcrafted detail.\r\n', 1, 2),
+                                                                                                                         (9, 'Lumière Pavé Choker', 180.00, 620.00, 'supplier@pearlsea.com.au', '2026-04-13 11:29:33', '2026-05-04 21:22:04', 'This minimalist and versatile choker perfectly captures the essence of spring.\r\nMaterial: Sterling silver\r\nStone: White cubic zirconia\r\nColor: Silver', 'In a precision-focused atelier, the Lumière Pavé Choker is meticulously assembled as artisans hand-set each stone to create a continuous band of brilliance. The finished piece is carefully polished to enhance its radiant glow, embodying refined craftsmanship and modern elegance.\r\n', 1, 2),
+                                                                                                                         (10, 'Maille Marine Chain Necklace', 140.00, 410.00, 'supplier@gemstone.com.au', '2026-04-13 11:29:33', '2026-05-04 21:22:04', 'Material: Rose Alloy made of 95% recycled material and 18k gold plated, white cubic zirconia\r\nColor: Rose gold\r\nTotal chain length: 45 cm', 'In a skilled workshop, the Maille Marine Chain Necklace is crafted by interlinking polished metal loops in a classic marine-inspired pattern, each connection carefully secured by hand. The piece is then refined to a smooth finish, highlighting its strength, rhythm, and understated elegance.\r\n', 1, 2),
+                                                                                                                         (11, 'Statement Art Deco Drop Earrings', 150.00, 430.00, 'supplier@luxgems.com.au', '2026-04-13 11:29:33', '2026-05-04 21:22:09', 'These earrings are meticulously crafted for a perfect balance between bold structure and refined elegance.\r\nMaterial: Sterling silver\r\nStone: White cubic zirconia\r\nColor: Silver\r\nLength: 7.1 cm ; Width : 2.2 cm', 'In a precision-driven atelier, the Statement Art Deco Drop Earrings take shape as artisans cut and assemble bold geometric elements, then hand-set each stone in crisp, symmetrical lines. The result is a striking pair that channels 1920s glamour through meticulous craftsmanship and modern refinement.', 1, 3),
+                                                                                                                         (12, 'Torsade Pavé Hoop Earrings', 55.00, 210.00, 'supplier@goldcraft.com.au', '2026-04-13 11:29:33', '2026-05-04 21:22:15', 'These earrings embody elegance and versatility.\r\nMaterial: Yellow Alloy made of 95% recycled material and 18k yellow gold plated\r\nStone: White cubic zirconia\r\nColor: Yellow\r\nLength: 2.1 cm ; Width : 0.7 cm', 'In a meticulous workshop, the Torsade Pavé Hoop Earrings are formed by twisting fine metal strands into an elegant spiral, then hand-setting each tiny stone along the curves for a seamless sparkle. The process blends structural precision with delicate craftsmanship, creating hoops that shimmer with every turn.\r\n', 1, 3),
+                                                                                                                         (13, 'Dainty Rose Gold Hoop Earrings', 95.00, 275.00, 'supplier@gemstone.com.au', '2026-04-13 11:29:33', '2026-05-04 21:21:53', 'Material: Alloy made of 95% recycled material and 18k gold plated, white cubic zirconia\r\nColor: Rose gold\r\nSize: Small (Length: 2.8 cm ; Width : 0.5 cm)', 'In a refined workshop, the Dainty Rose Gold Hoop Earrings are carefully shaped from fine metal and polished to a soft, warm glow. Each pair is finished with precise detailing to achieve a lightweight, elegant design made for everyday wear.\r\n', 1, 3),
+                                                                                                                         (14, 'Asymmetric Cross Earrings', 65.00, 240.00, 'supplier@pearlsea.com.au', '2026-04-13 11:29:33', '2026-05-04 21:21:22', 'Material: Platinum and rhodium plated on patented white alloy, made from recycled materials\r\nStone: Cubic zirconia\r\nDimensions: 39 mm length, 20 mm width', 'In a contemporary atelier, the Asymmetric Cross Earrings are thoughtfully crafted with mismatched silhouettes, each piece shaped and balanced by hand for a modern edge. The design comes together through careful finishing, highlighting contrast and individuality in every detail.\r\n', 1, 3),
+                                                                                                                         (15, 'Art Deco Pavé Bracelet', 90.00, 350.00, 'supplier@luxgems.com.au', '2026-04-13 11:29:33', '2026-05-04 21:21:18', 'This bracelet is meticulously crafted for a perfect balance between bold structure and refined elegance.\r\nMaterial: Sterling silver\r\nStone: White cubic zirconia\r\nColor: Silver', 'Under the glow of a 1920s ballroom chandelier, the Art Deco pavé bracelet caught every flicker of light, each stone set like a secret carefully placed in time. It wasn\'t just jewelry—it was a quiet declaration of elegance that outlived the night and everyone in it.', 1, 4),
+(16, 'Lilac Lumière Pavé Bracelet', 90.00, 300.00, 'supplier@goldcraft.com.au', '2026-04-13 11:29:33', '2026-05-04 21:21:58', 'Material: Platinum and rhodium plated on patented white alloy\r\nStone: Lilac cubic zirconia\r\nDimensions: 4 mm width', 'In a quiet atelier, the Lilac Lumière Pavé Bracelet is brought to life as artisans delicately set each lilac-hued stone to capture a soft, radiant glow. Every detail is carefully crafted to reflect light with a gentle shimmer, evoking elegance in every movement.\r\n', 1, 4),
+(30, 'Asian Vase', 20.00, 50.00, 'supplier@gemstone.com.au', '2026-04-21 12:27:05', '2026-05-04 23:48:19', 'Colour: White and Blue\r\nMaterial: Stoneware, Coloured Glaze\r\nDimensions: 14cm (H), 15cm (W)', 'A centuries-old Chinese stoneware vase emerges from the kiln with a luminous glaze, each brushstroke capturing the quiet discipline of its maker. Once destined for an imperial hall, it now carries the whispered history of dynasties through its delicate form.', 0, 7),
+(31, 'Rustic Vase', 10.00, 20.00, 'supplier@gemstone.com.au', '2026-04-21 12:36:45', '2026-05-04 23:46:58', 'Colour: Grey and Brown\r\nMaterial: Stoneware\r\nDimensions: 16cm (H), 10cm (W)', 'A rustic stone vase takes shape under the steady rhythm of a mason\'s chisel, each strike revealing the raw, weathered character hidden within the rock. Its rough-hewn surface carries the quiet story of earth, craft, and time converging into a single, enduring form.', 1, 7),
+                                                                                                                         (32, 'Ancient Vase', 20.00, 60.00, 'supplier@gemstone.com.au', '2026-04-21 12:40:21', '2026-05-08 02:17:24', 'Colour: Yellow and Black\r\nMaterial: Ceramic\r\nDimensions: 25cm (H), 15cm (W)', 'An ancient Greek ceramic vase emerges from the potter\'s wheel with mythic scenes circling its surface, each figure painted in bold strokes meant to outlast generations. Fired in the heat of a smoky kiln, it becomes both a vessel and a storyteller, carrying the spirit of a civilization that shaped the Western world.', 0, 7),
+(33, 'Flowery Vase', 12.00, 28.00, 'supplier@gemstone.com.au', '2026-04-21 12:44:52', '2026-05-04 23:43:26', 'Colour: Blue and White\r\nMaterial: Ceramic\r\nDimensions: 20cm (H), 12cm (W)', 'A flowery ceramic vase blooms into existence as the artist layers soft petals and curling leaves across its surface, each stroke turning clay into a quiet garden. Once fired, it carries the warmth of the kiln and the gentle poetry of nature captured in glaze.', 1, 7),
+(34, 'Waves Painting', 10.00, 22.00, 'supplier@gemstone.com.au', '2026-04-21 12:58:01', '2026-05-04 23:42:22', 'Colour: Blue and Brown\r\nMaterial: Medium-density fibreboard (MDF), canvas and metal\r\nDimensions: 90cm (H) x 60cm (W) x 2.5cm (D)\r\nWeight: 3.1kg', 'A wave painting rises from the canvas as the artist layers sweeping strokes of deep blues and foaming whites, capturing the moment water gathers its strength. In its final form, the piece feels alive—an instant of motion frozen just before the sea breaks into thunder.', 1, 9),
+(35, 'Golden Blue Heart Painting', 20.00, 54.00, 'supplier@gemstone.com.au', '2026-04-21 13:03:00', '2026-05-04 23:41:18', 'Colour: Blue and Gold\r\nMaterials: Medium-density fibreboard (MDF), canvas and metal\r\nDimensions: 42cm (H), 32cm (W), 3cm(D)', 'A half-blue, half-gold heart painting comes to life as the artist blends cool serenity with radiant warmth, letting the two colors meet in a luminous seam that feels almost electric. In its final form, the heart becomes a quiet symbol of contrast—softness and brilliance held together in a single, glowing shape.', 1, 9),
+(36, 'Flower Painting', 16.00, 27.00, 'supplier@gemstone.com.au', '2026-04-21 13:07:44', '2026-05-04 23:40:13', 'Colour: Red, Yellow, Green and Blue\r\nMaterials: Fibreboard, canvas and metal\r\nDimensions: 55cm (H) x 75cm (W) x 2.5cm (D)', 'A painting of red and yellow flowers comes alive as the artist layers bold crimson petals against warm golden blooms, letting the colors spark like sunlight meeting flame. When the final brushstroke lands, the piece radiates a vibrant energy—an ode to nature at its most spirited.', 1, 9),
+(37, 'Butterfly Landing Painting', 20.00, 62.00, 'supplier@gemstone.com.au', '2026-04-21 13:14:02', '2026-05-04 23:39:20', 'Colour: Orange, Blue, Green, Yellow and Purple\r\nMaterials: Medium-density fibreboard (MDF), canvas and metal\r\nDimensions: 70cm (H) x 100cm (W) x 3cm (D)', 'A multi-coloured butterfly landing on an orange flower takes shape on the canvas as the artist layers shimmering blues, pinks, and golds across delicate wings, letting them glow against the warm burst of petals. In its final moment, the painting feels like a breath held in nature—a fleeting touch of beauty captured before the butterfly lifts away.', 1, 9),
+(38, 'Simple Candle', 3.00, 8.00, 'supplier@gemstone.com.au', '2026-04-21 13:18:47', '2026-05-06 21:30:39', 'Colour: White\r\nMaterial: Metal and Paraffin\r\nDimensions: 7.5cm (H) x 7.5cm (Dia.)', 'A simple candle in a metal bowl takes shape as molten wax is poured and left to cool, the soft flame later rising to cast warm light against the bowl\'s cool, reflective surface. In its finished form, it feels like a quiet moment captured warmth held gently inside something forged from fire.', 1, 6),
+                                                                                                                         (39, 'Cauldron Candle', 13.00, 28.00, 'supplier@gemstone.com.au', '2026-04-21 13:24:31', '2026-05-06 21:27:27', 'Colour: Black and White\r\nMaterial: Paraffin and Stone\r\nDimensions: 10cm (H) x 7.5cm (Dia.)', 'A candle in a stone cauldron takes form as wax is slowly poured into the carved vessel, the rough stone holding the warmth like an ancient hearth. When the flame is finally lit, it glows against the rugged surface, turning the cauldron into a quiet well of fire and shadow.', 1, 6),
+                                                                                                                         (40, 'Bamboo Candle', 9.00, 23.00, 'supplier@gemstone.com.au', '2026-04-21 13:34:51', '2026-05-06 21:28:56', 'Colour: Brown\r\nMaterial: Bamboo and Paraffin\r\nDimensions: 7.5cm (H) x 7.5cm (Dia.)', 'A bamboo candle comes to life as warm wax is poured into a hollowed stalk, the natural grain of the bamboo turning the simple vessel into something quietly elegant. When lit, the flame glows through the soft brown walls, creating a gentle harmony between fire and earth.', 1, 6),
+                                                                                                                         (41, 'Round Cushion', 8.00, 20.00, 'supplier@gemstone.com.au', '2026-04-21 13:39:18', '2026-05-04 23:33:33', 'Colour: Red\r\nMaterial: Velvet and Cotton\r\nDimensions: 20cm (H), 20cm (W), 6cm (D)', 'A round red cushion comes to life as soft fabric is stretched over plush filling, its vibrant color giving the simple shape a warm, inviting presence. Once finished, it feels like a small circle of comfort—bold, bright, and ready to soften any space it touches.', 1, 8),
+                                                                                                                         (42, 'Classic Cushion', 6.00, 12.00, 'supplier@gemstone.com.au', '2026-04-21 13:43:41', '2026-05-04 23:31:48', 'Colour: White\r\nMaterial: Polyester\r\nDimensions: 42cm (L) x 42cm (W)', 'A classic square white cushion comes together as crisp fabric is stitched around soft filling, its clean lines giving it a timeless, effortless elegance. Once finished, it becomes a quiet anchor in any room—simple, bright, and ready to soften the space with understated comfort.', 1, 8),
+                                                                                                                         (44, 'Crocheted Blanket', 15.00, 32.00, 'supplier@gemstone.com.au', '2026-04-21 14:18:41', '2026-05-04 23:30:28', 'Colour: Rainbow\r\nMaterial: Wool\r\nDimensions: 240cm (L) x 220cm (W)', 'A rainbow crocheted blanket begins as strands of yarn pulled through looping stitches, each color joining the next in a soft, steady rhythm that feels almost musical. When the final row is tied off, it becomes a warm spectrum of comfort—handmade joy woven into every hue.', 1, 10),
+                                                                                                                         (45, 'Crimson Candle', 4.00, 10.00, 'supplier@gemstone.com.au', '2026-04-22 18:49:04', '2026-05-06 21:25:43', 'Colour: Crimson Red\r\nMaterial: Paraffin\r\nDimensions: 29cm (H), 9cm (D)', 'In a small artisanal studio, the crimson candle is hand-poured in layers, blending richly pigmented wax to achieve its deep, glowing red hue. Each candle is carefully cured and finished to ensure a clean burn and a bold, atmospheric presence.\r\n', 1, 6),
+                                                                                                                         (46, 'Sunshine Blanket', 12.00, 33.00, 'supplier@gemstone.com.au', '2026-04-22 18:51:08', '2026-05-04 23:23:25', 'Colour: Yellow\r\nMaterial: Fleece synthetic wool\r\nDimensions: 200cm (H), 150cm (W)', 'In a cozy textile workshop, the Sunshine Blanket is woven with soft, lightweight fibers designed to capture warmth and comfort in every thread. Each piece is carefully finished in a bright, uplifting tone that evokes the feeling of gentle morning light.\r\n', 1, 10),
+                                                                                                                         (47, 'Mosaic Cushion', 9.00, 17.00, 'supplier@gemstone.com.au', '2026-04-22 18:55:02', '2026-05-06 21:23:26', 'Colur: Orange\r\nMaterial: Polyester fabric\r\nDimensions: 60cm (H), 48cm (W)', 'In a carefully curated textile studio, the cushion is assembled by layering rich orange fabrics with bold mosaic-inspired prints, each panel precisely cut and aligned for visual rhythm. It is then hand-finished to ensure a balanced contrast between vibrant pattern and smooth, solid tones for a modern, expressive accent piece.\r\n', 1, 8);
 
 -- --------------------------------------------------------
 
@@ -423,11 +411,13 @@ INSERT INTO `products` (`id`, `name`, `purchase_price`, `sale_price`, `supplier_
 --
 
 DROP TABLE IF EXISTS `product_images`;
-CREATE TABLE `product_images` (
-                                  `id` int(11) NOT NULL,
-                                  `product_id` int(11) NOT NULL,
-                                  `filename` varchar(4096) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+CREATE TABLE IF NOT EXISTS `product_images` (
+                                                `id` int(11) NOT NULL AUTO_INCREMENT,
+    `product_id` int(11) NOT NULL,
+    `filename` varchar(4096) NOT NULL,
+    PRIMARY KEY (`id`),
+    KEY `product_id` (`product_id`)
+    ) ENGINE=InnoDB AUTO_INCREMENT=161 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `product_images`
@@ -509,12 +499,14 @@ INSERT INTO `product_images` (`id`, `product_id`, `filename`) VALUES
 --
 
 DROP TABLE IF EXISTS `product_variants`;
-CREATE TABLE `product_variants` (
-                                    `id` int(11) NOT NULL,
-                                    `product_id` int(11) NOT NULL,
-                                    `size` varchar(20) NOT NULL,
-                                    `stock` int(11) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+CREATE TABLE IF NOT EXISTS `product_variants` (
+                                                  `id` int(11) NOT NULL AUTO_INCREMENT,
+    `product_id` int(11) NOT NULL,
+    `size` varchar(20) NOT NULL,
+    `stock` int(11) NOT NULL DEFAULT 0,
+    PRIMARY KEY (`id`),
+    KEY `product_id` (`product_id`)
+    ) ENGINE=InnoDB AUTO_INCREMENT=77 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `product_variants`
@@ -582,16 +574,18 @@ INSERT INTO `product_variants` (`id`, `product_id`, `size`, `stock`) VALUES
 --
 
 DROP TABLE IF EXISTS `schedules`;
-CREATE TABLE `schedules` (
-                             `id` int(11) NOT NULL,
-                             `user_id` int(11) NOT NULL,
-                             `week_start` date NOT NULL COMMENT 'Monday of the scheduled week',
-                             `day_of_week` tinyint(4) NOT NULL COMMENT '1=Mon, 2=Tue, 3=Wed, 4=Thu, 5=Fri, 6=Sat, 7=Sun',
-                             `start_time` time NOT NULL,
-                             `end_time` time NOT NULL,
-                             `created` datetime DEFAULT NULL,
-                             `modified` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+CREATE TABLE IF NOT EXISTS `schedules` (
+                                           `id` int(11) NOT NULL AUTO_INCREMENT,
+    `user_id` int(11) NOT NULL,
+    `week_start` date NOT NULL COMMENT 'Monday of the scheduled week',
+    `day_of_week` tinyint(4) NOT NULL COMMENT '1=Mon, 2=Tue, 3=Wed, 4=Thu, 5=Fri, 6=Sat, 7=Sun',
+    `start_time` time NOT NULL,
+    `end_time` time NOT NULL,
+    `created` datetime DEFAULT NULL,
+    `modified` datetime DEFAULT NULL,
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `unique_staff_week_day` (`user_id`,`week_start`,`day_of_week`)
+    ) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 
 --
 -- Dumping data for table `schedules`
@@ -624,20 +618,21 @@ INSERT INTO `schedules` (`id`, `user_id`, `week_start`, `day_of_week`, `start_ti
 --
 
 DROP TABLE IF EXISTS `users`;
-CREATE TABLE `users` (
-                         `id` int(11) NOT NULL,
-                         `email` varchar(255) NOT NULL,
-                         `password` varchar(255) NOT NULL,
-                         `first_name` varchar(100) DEFAULT NULL,
-                         `last_name` varchar(100) DEFAULT NULL,
-                         `phone` varchar(20) DEFAULT NULL,
-                         `address` varchar(500) DEFAULT NULL,
-                         `nonce` varchar(255) DEFAULT NULL,
-                         `nonce_expiry` datetime DEFAULT NULL,
-                         `created` datetime DEFAULT NULL,
-                         `modified` datetime DEFAULT NULL,
-                         `role` varchar(255) NOT NULL DEFAULT 'customer'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+CREATE TABLE IF NOT EXISTS `users` (
+                                       `id` int(11) NOT NULL AUTO_INCREMENT,
+    `email` varchar(255) NOT NULL,
+    `password` varchar(255) NOT NULL,
+    `first_name` varchar(100) DEFAULT NULL,
+    `last_name` varchar(100) DEFAULT NULL,
+    `phone` varchar(20) DEFAULT NULL,
+    `address` varchar(500) DEFAULT NULL,
+    `nonce` varchar(255) DEFAULT NULL,
+    `nonce_expiry` datetime DEFAULT NULL,
+    `created` datetime DEFAULT NULL,
+    `modified` datetime DEFAULT NULL,
+    `role` varchar(255) NOT NULL DEFAULT 'customer',
+    PRIMARY KEY (`id`)
+    ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 
 --
 -- Dumping data for table `users`
@@ -651,204 +646,44 @@ INSERT INTO `users` (`id`, `email`, `password`, `first_name`, `last_name`, `phon
                                                                                                                                                            (12, 'justin@staff.com', '$2y$12$Hiduc3Sk2MSGQ4gqibXbUuI2xbBld5lJOyOn6WCNEkU2Tr1lSQ0J6', 'Justin', 'Staff', NULL, NULL, NULL, NULL, '2026-05-07 11:56:28', '2026-05-07 11:57:48', 'staff'),
                                                                                                                                                            (13, 'katherine@staff.com', '$2y$12$2r.EIs49aZ3H4wEcE8bozOaG3JszX5cOUsUjF0h9v0pE3ZrxHZvvq', 'Katherine', 'Staff', NULL, NULL, NULL, NULL, '2026-05-07 11:57:14', '2026-05-07 11:57:37', 'staff');
 
---
--- Indexes for dumped tables
---
+-- --------------------------------------------------------
 
 --
--- Indexes for table `categories`
---
-ALTER TABLE `categories`
-    ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `categories_products`
---
-ALTER TABLE `categories_products`
-    ADD PRIMARY KEY (`id`),
-  ADD KEY `category_id` (`category_id`),
-  ADD KEY `product_id` (`product_id`);
-
---
--- Indexes for table `cms_pages`
---
-ALTER TABLE `cms_pages`
-    ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `uq_slug` (`slug`);
-
---
--- Indexes for table `contact_replies`
---
-ALTER TABLE `contact_replies`
-    ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_contact_replies_submission` (`contact_submission_id`);
-
---
--- Indexes for table `contact_submissions`
---
-ALTER TABLE `contact_submissions`
-    ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `faq_items`
---
-ALTER TABLE `faq_items`
-    ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `orders`
---
-ALTER TABLE `orders`
-    ADD PRIMARY KEY (`id`),
-  ADD KEY `user_id` (`user_id`);
-
---
--- Indexes for table `order_items`
---
-ALTER TABLE `order_items`
-    ADD PRIMARY KEY (`id`),
-  ADD KEY `order_id` (`order_id`),
-  ADD KEY `product_id` (`product_id`),
-  ADD KEY `variant_id` (`variant_id`);
-
---
--- Indexes for table `page_content`
---
-ALTER TABLE `page_content`
-    ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `uq_page_key` (`page_id`,`content_key`);
-
---
--- Indexes for table `products`
---
-ALTER TABLE `products`
-    ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `product_images`
---
-ALTER TABLE `product_images`
-    ADD PRIMARY KEY (`id`),
-  ADD KEY `product_id` (`product_id`);
-
---
--- Indexes for table `product_variants`
---
-ALTER TABLE `product_variants`
-    ADD PRIMARY KEY (`id`),
-  ADD KEY `product_id` (`product_id`);
-
---
--- Indexes for table `schedules`
---
-ALTER TABLE `schedules`
-    ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `unique_staff_week_day` (`user_id`,`week_start`,`day_of_week`);
-
---
--- Indexes for table `users`
---
-ALTER TABLE `users`
-    ADD PRIMARY KEY (`id`);
-
---
--- AUTO_INCREMENT for dumped tables
+-- Table structure for table `wishlists`
 --
 
---
--- AUTO_INCREMENT for table `categories`
---
-ALTER TABLE `categories`
-    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+DROP TABLE IF EXISTS `wishlists`;
+CREATE TABLE IF NOT EXISTS `wishlists` (
+                                           `id` int(11) NOT NULL AUTO_INCREMENT,
+    `user_id` int(11) NOT NULL,
+    `product_id` int(11) NOT NULL,
+    `created` datetime DEFAULT NULL,
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `user_product` (`user_id`,`product_id`),
+    KEY `user_id` (`user_id`),
+    KEY `product_id` (`product_id`)
+    ) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- AUTO_INCREMENT for table `categories_products`
+-- Dumping data for table `wishlists`
 --
-ALTER TABLE `categories_products`
-    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 
---
--- AUTO_INCREMENT for table `cms_pages`
---
-ALTER TABLE `cms_pages`
-    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
-
---
--- AUTO_INCREMENT for table `contact_replies`
---
-ALTER TABLE `contact_replies`
-    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
---
--- AUTO_INCREMENT for table `contact_submissions`
---
-ALTER TABLE `contact_submissions`
-    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
-
---
--- AUTO_INCREMENT for table `faq_items`
---
-ALTER TABLE `faq_items`
-    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
---
--- AUTO_INCREMENT for table `orders`
---
-ALTER TABLE `orders`
-    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
-
---
--- AUTO_INCREMENT for table `order_items`
---
-ALTER TABLE `order_items`
-    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
-
---
--- AUTO_INCREMENT for table `page_content`
---
-ALTER TABLE `page_content`
-    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
-
---
--- AUTO_INCREMENT for table `products`
---
-ALTER TABLE `products`
-    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
-
---
--- AUTO_INCREMENT for table `product_images`
---
-ALTER TABLE `product_images`
-    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=161;
-
---
--- AUTO_INCREMENT for table `product_variants`
---
-ALTER TABLE `product_variants`
-    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
-
---
--- AUTO_INCREMENT for table `schedules`
---
-ALTER TABLE `schedules`
-    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
-
---
--- AUTO_INCREMENT for table `users`
---
-ALTER TABLE `users`
-    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+INSERT INTO `wishlists` (`id`, `user_id`, `product_id`, `created`) VALUES
+                                                                       (1, 9, 16, '2026-05-07 23:14:01'),
+                                                                       (2, 9, 15, '2026-05-07 23:14:04'),
+                                                                       (3, 9, 14, '2026-05-07 23:14:05'),
+                                                                       (4, 9, 1, '2026-05-07 23:14:56'),
+                                                                       (5, 9, 46, '2026-05-07 23:17:43'),
+                                                                       (10, 6, 14, '2026-05-08 02:42:43'),
+                                                                       (11, 6, 16, '2026-05-08 02:42:44'),
+                                                                       (12, 6, 12, '2026-05-08 02:42:45'),
+                                                                       (14, 6, 3, '2026-05-08 02:46:32'),
+                                                                       (15, 6, 45, '2026-05-08 02:50:35'),
+                                                                       (16, 6, 15, '2026-05-08 02:55:02');
 
 --
 -- Constraints for dumped tables
 --
-
---
--- Constraints for table `categories_products`
---
-ALTER TABLE `categories_products`
-    ADD CONSTRAINT `categories_products_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`),
-  ADD CONSTRAINT `categories_products_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `contact_replies`
@@ -877,6 +712,12 @@ ALTER TABLE `page_content`
     ADD CONSTRAINT `fk_pc_page` FOREIGN KEY (`page_id`) REFERENCES `cms_pages` (`id`) ON DELETE CASCADE;
 
 --
+-- Constraints for table `products`
+--
+ALTER TABLE `products`
+    ADD CONSTRAINT `fk_products_category` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`);
+
+--
 -- Constraints for table `product_images`
 --
 ALTER TABLE `product_images`
@@ -893,6 +734,13 @@ ALTER TABLE `product_variants`
 --
 ALTER TABLE `schedules`
     ADD CONSTRAINT `fk_schedule_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `wishlists`
+--
+ALTER TABLE `wishlists`
+    ADD CONSTRAINT `wishlists_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `wishlists_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

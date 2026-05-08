@@ -5,10 +5,7 @@
  */
 $this->assign('title', 'View Product');
 
-$productType = '';
-if (!empty($product->categories)) {
-    $productType = $product->categories[0]->type ?? '';
-}
+$productType = $product->category->type ?? '';
 ?>
 <?php $this->Html->css('admincontact', ['block' => true]); ?>
 
@@ -51,12 +48,10 @@ if (!empty($product->categories)) {
                 </td>
             </tr>
             <tr>
-                <th><?= __('Categories') ?></th>
+                <th><?= __('Category') ?></th>
                 <td>
-                    <?php if (!empty($product->categories)): ?>
-                        <span class="admin-category-text">
-                            <?= h(implode(', ', collection($product->categories)->extract('name')->toList())) ?>
-                        </span>
+                    <?php if (!empty($product->category)): ?>
+                        <span class="admin-category-text"><?= h($product->category->name) ?></span>
                     <?php endif; ?>
                 </td>
             </tr>

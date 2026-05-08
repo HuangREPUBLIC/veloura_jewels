@@ -76,10 +76,8 @@ $this->assign('title', 'Products');
                             ?>
                         </td>
                         <td>
-                            <?php if (!empty($product->categories)): ?>
-                                <span class="admin-category-text">
-                                    <?= h(implode(', ', collection($product->categories)->extract('name')->toList())) ?>
-                                </span>
+                            <?php if (!empty($product->category)): ?>
+                                <span class="admin-category-text"><?= h($product->category->name) ?></span>
                             <?php else: ?>
                                 -
                             <?php endif; ?>

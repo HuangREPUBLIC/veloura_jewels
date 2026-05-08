@@ -246,7 +246,7 @@ return [
     'Email' => [
         'default' => [
             'transport' => 'default',
-            'from' => ['test1@u26s1141.iedev.org' => 'Veloura Jewels'],
+            // 'from' is set in app_local.php to avoid duplicate merge
             /*
              * Will by default be set to config value of App.encoding, if that exists otherwise to UTF-8.
              */
