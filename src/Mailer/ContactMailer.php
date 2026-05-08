@@ -30,8 +30,7 @@ class ContactMailer extends Mailer
             ->setFrom('test1@u26s1141.iedev.org', 'Veloura Jewels')
             ->setTo($contactSubmission->email)
             ->setSubject('We received your message - Veloura Jewels')
-            ->setEmailFormat('text')
-//            ->setLayout(false)
+            ->setEmailFormat('both')
             ->setViewVars([
                 'firstName' => $contactSubmission->first_name,
                 'userMessage' => $contactSubmission->message,

@@ -557,7 +557,7 @@ class JewelryController extends AppController
                     if (!empty($order->customer_email)) {
                         try {
                             $mailer = new Mailer('default');
-                            $mailer->setEmailFormat('text')
+                            $mailer->setEmailFormat('both')
                                 ->setTo($order->customer_email)
                                 ->setSubject('Your Veloura Jewels order #' . $order->id . ' is confirmed');
                             $mailer->viewBuilder()->setTemplate('order_confirmation');
