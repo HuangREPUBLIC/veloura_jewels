@@ -61,7 +61,7 @@ class AuthController extends AppController
             if ($this->Users->save($user)) {
                 try {
                     $mailer = new Mailer('default');
-                    $mailer->setEmailFormat('text')
+                    $mailer->setEmailFormat('both')
                         ->setTo($user->email)
                         ->setSubject('Welcome to Veloura Jewels');
                     $mailer->viewBuilder()->setTemplate('welcome');
@@ -93,7 +93,7 @@ class AuthController extends AppController
                 $user->nonce_expiry = new DateTime('7 days');
                 if ($this->Users->save($user)) {
                     $mailer = new Mailer('default');
-                    $mailer->setEmailFormat('text')
+                    $mailer->setEmailFormat('both')
                         ->setTo($user->email)
                         ->setSubject('Reset your account password');
                     $mailer->viewBuilder()->setTemplate('reset_password');

@@ -1,19 +1,14 @@
-<?php
-/**
- * @var \App\View\AppView $this
- * @var string $first_name
- * @var string $nonce
- */
-?>
-Reset your Veloura Jewels password
-===================================
+Reset Your Password — Veloura Jewels
+=====================================
 
 Hi <?= h($first_name) ?>,
 
-We received a request to reset your password. Click the link below to set a new one:
+We received a request to reset the password for your Veloura Jewels account.
+
+Click the link below to reset your password (valid for 7 days):
 
 <?= $this->Url->build(['controller' => 'Auth', 'action' => 'resetPassword', $nonce], ['fullBase' => true]) ?>
 
-This link expires in 7 days. If you didn't request this, you can safely ignore this email.
+If you didn't request a password reset, you can safely ignore this email.
 
 — Veloura Jewels
