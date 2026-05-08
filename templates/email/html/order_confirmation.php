@@ -51,12 +51,9 @@ $shopUrl = $this->Url->build('/jewelry', ['fullBase' => true]);
         style="padding:10px 12px 10px 0;border-bottom:1px solid #ede8df;">
       <?php if ($imgUrl): ?>
       <img src="<?= h($imgUrl) ?>" alt="<?= h($item->product_name) ?>"
-           width="60" height="60"
-           style="display:block;width:60px;height:60px;object-fit:cover;
+           width="60"
+           style="display:block;width:60px;height:auto;
                   border-radius:4px;border:1px solid #e8e3d8;">
-      <?php else: ?>
-      <div style="width:60px;height:60px;background-color:#f0ede4;
-                  border-radius:4px;border:1px solid #e8e3d8;"></div>
       <?php endif; ?>
     </td>
     <!-- Product name and size -->
