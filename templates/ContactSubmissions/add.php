@@ -39,15 +39,20 @@ $this->Html->meta([
 
             <div class="contact-form-row">
                 <?= $this->Form->control('first_name', [
-                    'label' => 'First Name',
+                    'label' => [
+                        'text' => 'First Name <span class="required-asterisk">*</span>',
+                        'escape' => false,
+                    ],
                     'placeholder' => 'Your first name',
                     'required' => true,
                     'value' => $identity ? $identity->get('first_name') : null,
-
                 ]) ?>
 
                 <?= $this->Form->control('last_name', [
-                    'label' => 'Last Name',
+                    'label' => [
+                        'text' => 'Last Name <span class="required-asterisk">*</span>',
+                        'escape' => false,
+                    ],
                     'placeholder' => 'Your last name',
                     'required' => true,
                     'value' => $identity ? $identity->get('last_name') : null,
@@ -55,23 +60,31 @@ $this->Html->meta([
             </div>
 
             <?= $this->Form->control('email', [
-                'label' => 'Your Email',
+                'label' => [
+                    'text' => 'Your Email <span class="required-asterisk">*</span>',
+                    'escape' => false,
+                ],
                 'placeholder' => 'Your email address',
                 'required' => true,
                 'value' => $identity ? $identity->get('email') : null,
-
             ]) ?>
 
             <?= $this->Form->control('subject', [
-                'label' => 'Subject',
+                'label' => [
+                    'text' => 'Subject <span class="required-asterisk">*</span>',
+                    'escape' => false,
+                ],
                 'placeholder' => 'Enter Subject for Message',
-                'required' => true
+                'required' => true,
             ]) ?>
 
             <?= $this->Form->control('message', [
-                'label' => 'Message',
+                'label' => [
+                    'text' => 'Message <span class="required-asterisk">*</span>',
+                    'escape' => false,
+                ],
                 'placeholder' => 'Write your message here...',
-                'required' => true
+                'required' => true,
             ]) ?>
 
             <div class="cf-turnstile"

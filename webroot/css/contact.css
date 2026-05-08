@@ -89,3 +89,8 @@
     font-size: 0.95rem;
     margin-bottom: 0.3rem;
 }
+.contact-page .required-asterisk {
+    color: #c0392b;
+    margin-left: 2px;
+    font-weight: 600;
+}
