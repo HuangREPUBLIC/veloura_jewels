@@ -16,11 +16,19 @@ $shopUrl = $this->Url->build('/jewelry', ['fullBase' => true]);
   Thank you for your purchase.
 </h1>
 
+
+
+
+
 <p style="margin:0 0 6px;font-family:Arial,sans-serif;font-size:14px;
            color:#5c5549;line-height:1.8;">
   Your order <strong style="color:#786c3b;">#<?= h($order->id) ?></strong> has been confirmed
   and is being prepared with care.
 </p>
+
+<?php
+echo $this->Html->image('homepage.png', ['alt' => 'CakePHP']);
+?>
 
 <!-- Divider -->
 <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%"
@@ -39,6 +47,8 @@ $shopUrl = $this->Url->build('/jewelry', ['fullBase' => true]);
 <!-- Items -->
 <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%"
        style="margin-bottom:20px;">
+
+
   <?php foreach ($items as $item):
     $imgFilename = $item->product->product_images[0]->filename ?? null;
     $imgUrl = $imgFilename
