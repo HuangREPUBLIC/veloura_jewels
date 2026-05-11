@@ -41,7 +41,12 @@ class CmsController extends AppController
         }
 
         if ($this->request->is('post')) {
+            $uploadDir    = WWW_ROOT . 'img' . DS;
+            $allowedMimes = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
+            $uploads      = $this->request->getUploadedFiles();
+
             foreach ($this->request->getData() as $key => $value) {
+                if (!is_string($value)) continue;
                 $record = $pageContentsTable->find()
                     ->where(['page_id' => $currentPage->id, 'content_key' => $key])
                     ->first();
@@ -50,6 +55,27 @@ class CmsController extends AppController
                     $pageContentsTable->save($record);
                 }
             }
+
+            foreach ($uploads as $key => $upload) {
+                if ($upload->getError() !== UPLOAD_ERR_OK) continue;
+
+                $record = $pageContentsTable->find()
+                    ->where(['page_id' => $currentPage->id, 'content_key' => $key, 'content_type' => 'image'])
+                    ->first();
+                if (!$record) continue;
+
+                $tmpPath = $upload->getStream()->getMetadata('uri');
+                $finfo   = new \finfo(FILEINFO_MIME_TYPE);
+                if (!in_array($finfo->file($tmpPath), $allowedMimes)) continue;
+
+                $ext      = strtolower(pathinfo($upload->getClientFilename(), PATHINFO_EXTENSION));
+                $filename = preg_replace('/[^a-z0-9_\-\.]/i', '_', $upload->getClientFilename());
+                $upload->moveTo($uploadDir . $filename);
+
+                $record->content_value = $filename;
+                $pageContentsTable->save($record);
+            }
+
             $this->Flash->success('Content saved.');
             return $this->redirect(['action' => 'index', $pageSlug]);
         }

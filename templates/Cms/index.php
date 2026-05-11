@@ -21,7 +21,7 @@ $faqSaveUrl = ['action' => 'faqItemSave'];
 
         <?= $this->Flash->render() ?>
 
-        <?= $this->Form->create(null, ['url' => $saveUrl, 'method' => 'post']) ?>
+        <?= $this->Form->create(null, ['url' => $saveUrl, 'method' => 'post', 'enctype' => 'multipart/form-data']) ?>
 
         <div class="page-header-row">
             <h3 class="page-title">Content Management</h3>
@@ -50,6 +50,16 @@ $faqSaveUrl = ['action' => 'faqItemSave'];
                                 name="<?= h($row->content_key) ?>"
                                 class="cms-textarea"
                                 rows="3"><?= h($row->content_value) ?></textarea>
+                        <?php elseif ($row->content_type === 'image'): ?>
+                            <?php if (!empty($row->content_value)): ?>
+                                <?= $this->Html->image(h($row->content_value), ['class' => 'cms-image-preview']) ?>
+                            <?php endif; ?>
+                            <input
+                                id="field-<?= h($row->content_key) ?>"
+                                type="file"
+                                name="<?= h($row->content_key) ?>"
+                                accept="image/*"
+                                class="cms-input">
                         <?php else: ?>
                             <input
                                 id="field-<?= h($row->content_key) ?>"

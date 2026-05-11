@@ -68,6 +68,7 @@ $role = $identity ? $identity->get('role') : null;
         <?= $this->Html->link('Jewelry', '/jewelry', ['class' => str_starts_with($currentPath, '/jewelry') ? 'active' : '']) ?>
         <?= $this->Html->link('Home Decor', '/home-decor', ['class' => str_starts_with($currentPath, '/home-decor') ? 'active' : '']) ?>
        <?= $this->Html->link('FAQ', '/faq', ['class' => str_starts_with($currentPath, '/faq') ? 'active' : '']) ?>
+       <?= $this->Html->link('Location', '/location', ['class' => str_starts_with($currentPath, '/location') ? 'active' : '']) ?>
 
         <?php if (in_array($role, ['admin', 'staff'])): ?>
             <?= $this->Html->link('Dashboard', '/dashboard', ['class' => (bool) array_filter(['/dashboard', '/schedule', '/products', '/users', '/orders', '/cms', '/contact-submissions'], fn($p) => str_starts_with($currentPath, $p)) ? 'active' : '']) ?>
@@ -190,7 +191,7 @@ $role = $identity ? $identity->get('role') : null;
                 ['escape' => false]
             ) ?>
             <p class="footer-brand-name">Veloura Jewels</p>
-            <p class="footer-tagline">Handcrafted jewelry &amp; home décor, made with love in Brooksdale.</p>
+            <p class="footer-tagline"><?= h($siteSettings['footer_tagline'] ?? 'Handcrafted jewelry &amp; home décor, made with love in Brooksdale.') ?></p>
             <ul class="footer-socials">
                 <li>
                     <a href="#" class="footer-social" aria-label="Facebook">

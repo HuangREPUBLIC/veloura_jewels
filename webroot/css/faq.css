@@ -279,3 +279,83 @@
         grid-template-columns: 1fr;
     }
 }
+
+
+/* Location Page */
+
+.location-page {
+    min-height: 100vh;
+    background: var(--beige-light);
+    padding-bottom: 5rem;
+}
+
+.location-hero {
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.location-hero-img {
+    max-width: 100%;
+    height: auto;
+    display: inline-block;
+}
+
+.location-content {
+    max-width: 900px;
+    margin: 3.5rem auto 0;
+    padding-inline: 1.5rem;
+}
+
+.location-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+}
+
+.location-card {
+    background: var(--color-white);
+    border: 1px solid rgba(var(--oakwood-rgb), 0.1);
+    border-radius: 18px;
+    padding: 2rem 1.6rem;
+    text-align: center;
+    box-shadow: 0 4px 14px rgba(var(--oakwood-rgb), 0.05);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.25s ease;
+}
+
+.location-card:hover {
+    border-color: rgba(var(--oakwood-rgb), 0.2);
+    box-shadow: 0 8px 24px rgba(var(--oakwood-rgb), 0.09);
+    transform: translateY(-3px);
+}
+
+.location-card-icon {
+    color: var(--oakwood);
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: center;
+}
+
+.location-card-title {
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    color: var(--color-headings);
+    margin: 0 0 0.6rem;
+}
+
+.location-card-text {
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+    line-height: 1.75;
+    margin: 0;
+    white-space: pre-line;
+}
+
+@media (max-width: 768px) {
+    .location-cards {
+        grid-template-columns: 1fr;
+        max-width: 420px;
+        margin-inline: auto;
+    }
+}

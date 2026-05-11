@@ -15,7 +15,12 @@ class PagesController extends AppController
     public function beforeFilter(\Cake\Event\EventInterface $event)
     {
         parent::beforeFilter($event);
-        $this->Authentication->addUnauthenticatedActions(['display']);
+        $this->Authentication->addUnauthenticatedActions(['display', 'location']);
+    }
+
+    public function location(): void
+    {
+        $this->set('pageContent', $this->fetchTable('PageContents')->getForPage('location'));
     }
 
     public function display(string ...$path): ?Response

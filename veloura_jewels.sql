@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: May 11, 2026 at 05:03 PM
+-- Generation Time: May 12, 2026 at 02:18 AM
 -- Server version: 12.2.2-MariaDB
 -- PHP Version: 8.4.18
 
@@ -306,18 +306,17 @@ CREATE TABLE IF NOT EXISTS `page_content` (
     `content_key` varchar(100) NOT NULL,
     `content_value` text DEFAULT NULL,
     `label` varchar(200) NOT NULL,
-    `content_type` enum('text','textarea') NOT NULL DEFAULT 'text',
+    `content_type` enum('text','textarea','image') NOT NULL DEFAULT 'text',
     `sort_order` int(11) NOT NULL DEFAULT 0,
     PRIMARY KEY (`id`),
     UNIQUE KEY `uq_page_key` (`page_id`,`content_key`)
-    ) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+    ) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 
 --
 -- Dumping data for table `page_content`
 --
 
 INSERT INTO `page_content` (`id`, `page_id`, `content_key`, `content_value`, `label`, `content_type`, `sort_order`) VALUES
-                                                                                                                        (1, 1, 'site_name', 'Veloura Jewels', 'Site Name', 'text', 1),
                                                                                                                         (2, 1, 'footer_tagline', 'Handcrafted jewelry & home décor, made with love in Brooksdale.', 'Footer Tagline', 'textarea', 2),
                                                                                                                         (3, 2, 'hero_label', 'Handcrafted with love', 'Hero Label', 'text', 1),
                                                                                                                         (4, 2, 'hero_heading', 'Jewels that tell your story.', 'Hero Heading', 'text', 2),
@@ -336,12 +335,13 @@ INSERT INTO `page_content` (`id`, `page_id`, `content_key`, `content_value`, `la
                                                                                                                         (17, 6, 'body_2', 'What started as a passion for timeless jewellery soon evolved into a carefully curated collection of jewellery and home décor designed to bring elegance, warmth, and individuality into everyday life. Sarah created Veloura Jewels to offer more than beautiful products — she wanted to create meaningful pieces that help people celebrate moments, memories, and personal style.', 'Story (Paragraph 2)', 'textarea', 3),
                                                                                                                         (18, 7, 'page_heading', 'Find Us', 'Page Heading', 'text', 1),
                                                                                                                         (19, 7, 'intro', '', 'Intro Text', 'textarea', 2),
-                                                                                                                        (20, 7, 'address', '123 Main Street, Brooksdale', 'Address', 'text', 3),
-                                                                                                                        (21, 7, 'phone', '+64 9 123 4567', 'Phone', 'text', 4),
-                                                                                                                        (22, 7, 'hours', 'Mon–Fri: 9am–5pm, Sat: 10am–3pm', 'Opening Hours', 'textarea', 5),
+                                                                                                                        (20, 7, 'address', '88 Elizabeth Road, Melbourne VIC 3000', 'Address', 'text', 3),
+                                                                                                                        (21, 7, 'phone', '123 456 7890', 'Phone', 'text', 4),
+                                                                                                                        (22, 7, 'hours', '10:00AM – 6:00PM', 'Opening Hours', 'textarea', 5),
                                                                                                                         (23, 6, 'body_3', 'Inspired by modern sophistication and classic craftsmanship, Veloura Jewels blends refined design with a sense of comfort and authenticity. Every collection is selected with attention to detail, quality, and versatility, allowing customers to express themselves through both fashion and home styling.', 'Story (Paragraph 3)', 'textarea', 4),
                                                                                                                         (24, 6, 'body_4', 'Whether it\'s a delicate necklace worn every day, a statement ring for a special occasion, or décor that transforms a house into a home, Veloura Jewels is built around the idea that beauty should feel personal.', 'Story (Paragraph 4)', 'textarea', 5),
-(25, 6, 'hero_sub', 'Founded by Sarah Smith — pieces crafted to carry meaning.', 'Hero Subtitle', 'text', 0);
+(25, 6, 'hero_sub', 'Founded by Sarah Smith — pieces crafted to carry meaning.', 'Hero Subtitle', 'text', 0),
+(26, 7, 'store_image', 'store.png', 'Store Image Filename', 'image', 0);
 
 -- --------------------------------------------------------
 
@@ -439,7 +439,6 @@ INSERT INTO `product_images` (`id`, `product_id`, `filename`) VALUES
                                                                   (39, 12, 'torsade-hoop-earrings.png'),
                                                                   (40, 11, 'art-deco-statement-drop-earrings.png'),
                                                                   (41, 4, 'chunky_rce_ring.png'),
-                                                                  (82, 28, 'Screenshot_2026-04-21_122051.png'),
                                                                   (91, 34, 'Screenshot_2026-04-21_125329.png'),
                                                                   (92, 35, 'Screenshot_2026-04-21_125908.png'),
                                                                   (93, 36, 'Screenshot_2026-04-21_130457.png'),
