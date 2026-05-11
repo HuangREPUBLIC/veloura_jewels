@@ -48,11 +48,12 @@ class ScheduleController extends AppController
      */
     public function index(): void
     {
-        $isAdmin  = $this->Authentication->getIdentity()->get('role') === 'admin';
+        $identity = $this->Authentication->getIdentity();
+        $isAdmin  = $identity->get('role') === 'admin';
         $weekData = $this->resolveWeek($this->request->getQuery('week'));
-        $shifts   = $this->Schedules->find('forWeek', weekStart: $weekData['weekStartStr'])->all();
 
         if ($isAdmin) {
+            $shifts = $this->Schedules->find('forWeek', weekStart: $weekData['weekStartStr'])->all();
             $staffList  = $this->Schedules->Users->find()
                 ->where(['role' => 'staff'])
                 ->orderByAsc('first_name')
@@ -60,7 +61,12 @@ class ScheduleController extends AppController
                 ->all();
             $staffOrder = $this->indexUsersById($staffList);
         } else {
-            $staffOrder = $this->extractStaffOrder($shifts);
+            $userId = (int)$identity->get('id');
+            $shifts = $this->Schedules->find('forWeek', weekStart: $weekData['weekStartStr'])
+                ->where(['Schedules.user_id' => $userId])
+                ->all();
+            $currentUser = $this->Schedules->Users->get($userId);
+            $staffOrder  = [$userId => $currentUser];
         }
 
         $this->set([

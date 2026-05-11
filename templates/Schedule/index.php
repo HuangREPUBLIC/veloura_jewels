@@ -10,7 +10,7 @@
 
 use App\Model\Entity\Schedule;
 
-$this->assign('title', $isAdminView ? 'Manage Schedule' : 'Team Schedule');
+$this->assign('title', $isAdminView ? 'Manage Schedule' : 'My Schedule');
 $this->Html->css('schedule', ['block' => true]);
 
 $todayStr = (new DateTime('today'))->format('Y-m-d');

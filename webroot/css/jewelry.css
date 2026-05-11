@@ -1333,8 +1333,8 @@
 }
 
 .jewelry-page .filter-dropdown-menu--price {
-    min-width: 320px;
-    padding: 1.15rem 1.25rem 1.25rem;
+    min-width: 240px;
+    padding: 1.3rem 1.3rem 1.2rem;
 }
 
 .jewelry-page .filter-dropdown.open .filter-dropdown-menu {
@@ -1394,56 +1394,105 @@
 /* Price dropdown internals */
 .jewelry-page .price-dropdown-row {
     display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.8rem;
-    margin-bottom: 0.9rem;
-    background: rgba(var(--beige-light-rgb), 0.42);
-    border: 1px solid rgba(var(--oakwood-rgb), 0.08);
+    align-items: stretch;
+    gap: 0;
+    padding: 0;
+    margin-bottom: 1rem;
+    background: var(--color-white);
+    border: 1.5px solid rgba(var(--oakwood-rgb), 0.15);
     border-radius: 14px;
+    overflow: hidden;
 }
 
-.jewelry-page .price-prefix,
-.jewelry-page .price-sep {
+.jewelry-page .price-prefix {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    padding-left: 0.9rem;
     font-family: var(--font-body);
-    font-size: 0.88rem;
-    color: var(--gray-500);
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: rgba(var(--oakwood-rgb), 0.5);
+    line-height: 1;
+}
+
+.jewelry-page .price-sep {
+    display: flex;
+    align-items: center;
+    align-self: stretch;
+    flex-shrink: 0;
+    padding: 0 0.55rem;
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    color: rgba(var(--oakwood-rgb), 0.28);
+    border-left: 1.5px solid rgba(var(--oakwood-rgb), 0.1);
+    border-right: 1.5px solid rgba(var(--oakwood-rgb), 0.1);
 }
 
 .jewelry-page .price-input {
-    width: 86px;
-    height: 42px;
-    padding: 0 0.65rem;
-    border: 1.5px solid rgba(var(--oakwood-rgb), 0.12);
-    border-radius: 10px;
+    flex: 1;
+    min-width: 0;
+    width: auto;
+    height: 50px;
+    padding: 0 0.65rem 0 0.3rem;
+    border: none;
+    border-radius: 0;
     font-family: var(--font-body);
-    font-size: 0.85rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--color-headings);
+    background: transparent;
     box-sizing: border-box;
     outline: none;
-    transition: border-color 0.18s ease, box-shadow 0.18s ease;
+    transition: background 0.18s ease;
+    -moz-appearance: textfield;
+}
+
+.jewelry-page .price-input::-webkit-outer-spin-button,
+.jewelry-page .price-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.jewelry-page .price-input::placeholder {
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--gray-400);
+    font-weight: 600;
 }
 
 .jewelry-page .price-input:focus {
-    border-color: var(--oakwood);
-    box-shadow: 0 0 0 3px rgba(var(--oakwood-rgb), 0.08);
+    background: rgba(var(--beige-light-rgb), 0.4);
 }
 
 .jewelry-page .filter-apply-btn {
     width: 100%;
-    height: 42px;
+    height: 44px;
     padding: 0 1rem;
     background: var(--oakwood);
     color: var(--color-white);
     border: none;
-    border-radius: 999px;
+    border-radius: 12px;
     font-family: var(--font-body);
-    font-size: 0.82rem;
-    font-weight: 600;
+    font-size: 0.76rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
     cursor: pointer;
-    transition: background 0.2s ease;
+    transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease;
+    box-shadow: 0 4px 14px rgba(var(--oakwood-rgb), 0.2);
 }
 
-.jewelry-page .filter-apply-btn:hover { background: var(--oakwood-dark); }
+.jewelry-page .filter-apply-btn:hover {
+    background: var(--oakwood-dark);
+    box-shadow: 0 6px 20px rgba(var(--oakwood-rgb), 0.28);
+}
+
+.jewelry-page .filter-apply-btn:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 8px rgba(var(--oakwood-rgb), 0.15);
+}
 
 /* Sort right-aligned */
 .jewelry-page .filter-dropdown--right {
@@ -1490,7 +1539,41 @@
     }
 
     .jewelry-page .filter-dropdown-menu--price {
-        min-width: min(320px, calc(100vw - 2rem));
+        left: auto;
+        right: 0;
+        min-width: 0;
+        width: 180px;
+    }
+
+    .jewelry-page .filter-dropdown-menu--price::before {
+        left: auto;
+        right: 1.4rem;
+    }
+
+    .jewelry-page .filter-dropdown-menu--price .price-dropdown-row {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        border-radius: 12px;
+    }
+
+    .jewelry-page .filter-dropdown-menu--price .price-sep {
+        grid-column: 1 / -1;
+        border-left: none;
+        border-right: none;
+        border-top: 1.5px solid rgba(var(--oakwood-rgb), 0.1);
+        border-bottom: 1.5px solid rgba(var(--oakwood-rgb), 0.1);
+        padding: 0.28rem 0.9rem;
+        align-self: auto;
+        justify-content: center;
+    }
+
+    .jewelry-page .filter-dropdown-menu--price .price-prefix {
+        display: flex;
+        align-items: center;
+    }
+
+    .jewelry-page .filter-dropdown-menu--price .price-input {
+        height: 44px;
     }
     .product-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }

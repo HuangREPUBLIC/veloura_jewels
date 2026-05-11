@@ -3,6 +3,7 @@
 .faq-page {
     min-height: 100vh;
     background: var(--beige-light);
+    padding-bottom: 6rem;
 }
 
 .faq-header {
@@ -31,7 +32,7 @@
 
 .faq-container {
     max-width: 680px;
-    margin: 0 auto 6rem;
+    margin: 0 auto;
     padding-inline: 1.5rem;
     display: flex;
     flex-direction: column;
@@ -106,7 +107,8 @@
 
 @media (max-width: 768px) {
     .faq-header { padding: 3.5rem 1.5rem 3rem; }
-    .faq-container { padding-inline: 1rem; margin-bottom: 4rem; }
+    .faq-page { padding-bottom: 4rem; }
+    .faq-container { padding-inline: 1rem; }
 }
 
 
