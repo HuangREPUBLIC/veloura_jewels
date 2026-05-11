@@ -181,8 +181,33 @@ $this->Html->css('login', ['block' => true]);
         });
     }
 
-    // Before submit: set the file input to the reordered list
+    function mergeAndRenumberVariants() {
+        var container = document.getElementById('variants-container');
+        var sizeMap = {};
+        Array.from(container.querySelectorAll('.variant-row')).forEach(function(row) {
+            var sizeEl = row.querySelector('select[name*="[size]"], input[name*="[size]"]');
+            if (!sizeEl || !sizeEl.value) return;
+            var size = sizeEl.value;
+            var stockEl = row.querySelector('input[type="number"]');
+            var stock = parseInt(stockEl ? stockEl.value : '0') || 0;
+            if (sizeMap[size]) {
+                var keeperStock = sizeMap[size].querySelector('input[type="number"]');
+                if (keeperStock) keeperStock.value = (parseInt(keeperStock.value) || 0) + stock;
+                row.remove();
+            } else {
+                sizeMap[size] = row;
+            }
+        });
+        container.querySelectorAll('.variant-row').forEach(function(row, i) {
+            row.querySelectorAll('[name]').forEach(function(el) {
+                el.name = el.name.replace(/product_variants\[\d+\]/, 'product_variants[' + i + ']');
+            });
+        });
+    }
+
+    // Before submit: merge duplicate sizes, then set file input to reordered list
     document.getElementById('product-form').addEventListener('submit', function() {
+        mergeAndRenumberVariants();
         if (fileList.length > 0) {
             var dt = new DataTransfer();
             fileList.forEach(function(f) { dt.items.add(f); });
@@ -194,14 +219,17 @@ $this->Html->css('login', ['block' => true]);
     var allCategories = <?= $categoriesJson ?>;
     var variantIndex  = 1;
 
-    var sizesByType = {
-        'jewelry':    ['Size 5','Size 6','Size 7','Size 8','Size 9','Size 10','Size 11','Size 12','One Size'],
-        'home_decor': ['One Size']
-    };
+    var ringSizes = ['Size 5','Size 6','Size 7','Size 8','Size 9','Size 10','Size 11','Size 12','One Size'];
+
+    function getSizes() {
+        var catId = document.getElementById('categories-select').value;
+        var cat = allCategories.find(function(c) { return c.id == catId; });
+        return (cat && cat.name === 'Rings') ? ringSizes : ['One Size'];
+    }
 
     function onTypeChange(type) {
         updateCategories(type);
-        updateAllSizeSelects(type);
+        updateAllSizeSelects();
     }
 
     function updateCategories(type) {
@@ -244,10 +272,11 @@ $this->Html->css('login', ['block' => true]);
             newCatInput.required = false;
             newCatInput.value = '';
         }
+        updateAllSizeSelects();
     }
 
-    function buildSizeOptions(type, selectedValue) {
-        var sizes = sizesByType[type] || ['One Size'];
+    function buildSizeOptions(selectedValue) {
+        var sizes = getSizes();
         var html = '<option value="">-- Size --</option>';
         sizes.forEach(function(s) {
             html += '<option value="' + s + '"' + (s === selectedValue ? ' selected' : '') + '>' + s + '</option>';
@@ -255,17 +284,17 @@ $this->Html->css('login', ['block' => true]);
         return html;
     }
 
-    function buildSizeField(name, type) {
-        var sizes = sizesByType[type] || ['One Size'];
+    function buildSizeField(name) {
+        var sizes = getSizes();
         if (sizes.length === 1) {
             return '<input type="hidden" name="' + name + '" value="' + sizes[0] + '">'
                 + '<span class="size-text-label">' + sizes[0] + '</span>';
         }
-        return '<select name="' + name + '" class="size-select">' + buildSizeOptions(type, '') + '</select>';
+        return '<select name="' + name + '" class="size-select">' + buildSizeOptions('') + '</select>';
     }
 
-    function updateAllSizeSelects(type) {
-        var sizes = sizesByType[type] || ['One Size'];
+    function updateAllSizeSelects() {
+        var sizes = getSizes();
         document.querySelectorAll('#variants-container .variant-row').forEach(function(row) {
             var sel = row.querySelector('select[name*="[size]"]');
             var hid = row.querySelector('input[type="hidden"][name*="[size]"]');
@@ -290,22 +319,21 @@ $this->Html->css('login', ['block' => true]);
                     var name = hid.name;
                     var select = document.createElement('select');
                     select.name = name; select.className = 'size-select';
-                    select.innerHTML = buildSizeOptions(type, '');
+                    select.innerHTML = buildSizeOptions('');
                     row.insertBefore(select, hid);
                     hid.remove();
                     if (lbl) lbl.remove();
                 } else if (sel) {
-                    sel.innerHTML = buildSizeOptions(type, sel.value);
+                    sel.innerHTML = buildSizeOptions(sel.value);
                 }
             }
         });
     }
 
     function addVariantRow() {
-        var type = document.getElementById('type-select').value;
         var row = document.createElement('div');
         row.className = 'variant-row';
-        row.innerHTML = buildSizeField('product_variants[' + variantIndex + '][size]', type)
+        row.innerHTML = buildSizeField('product_variants[' + variantIndex + '][size]')
             + '<input type="number" name="product_variants[' + variantIndex + '][stock]" placeholder="Qty" min="0">'
             + '<button type="button" onclick="this.parentNode.remove()">✕</button>';
         document.getElementById('variants-container').appendChild(row);

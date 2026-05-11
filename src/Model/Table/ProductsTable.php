@@ -48,6 +48,7 @@ class ProductsTable extends Table
         ]);
         $this->hasMany('ProductVariants', [
             'foreignKey' => 'product_id',
+            'saveStrategy' => 'replace',
         ]);
     }
 
