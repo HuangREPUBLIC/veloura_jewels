@@ -7,19 +7,19 @@ $this->Html->css(['home', 'jewelry'], ['block' => true]);
 
     <!-- HERO -->
     <section class="hp-hero">
-        <div class="hp-hero-text">
-            <div class="hp-hero-ornament"></div>
-            <p class="hp-label">Handcrafted with love</p>
-            <h1 class="hp-hero-heading">Jewels that<br>tell your<br>story.</h1>
-            <p class="hp-hero-sub">Artisan-made pieces, each shaped by hand to bring warmth and meaning into your everyday.</p>
-            <div class="hp-hero-actions">
-                <?= $this->Html->link('Explore the Collection', ['controller' => 'Jewelry', 'action' => 'index'], ['class' => 'hp-btn hp-btn--primary']) ?>
-                <?= $this->Html->link('Shop Home Décor →', ['controller' => 'Jewelry', 'action' => 'homeDecor'], ['class' => 'hp-hero-alt-link']) ?>
+        <div class="hero-panel">
+            <video class="home-video" autoplay muted loop playsinline>
+                <source src="webroot/videos/homeVideo.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+
+            <div class="hp-hero-overlay">
+                <h1 class="hp-hero-heading">Jewels that tell <br> your story.</h1>
+                <p class="hp-hero-sub">Artisan-made pieces, each shaped by hand to bring warmth and meaning into your everyday.</p>
+                <div class="hp-hero-actions">
+                    <?= $this->Html->link('Explore the Collection', ['controller' => 'Jewelry', 'action' => 'index'], ['class' => 'hp-btn hp-btn--primary']) ?>
+                </div>
             </div>
-        </div>
-        <div class="hp-hero-image">
-            <?= $this->Html->image('homepage.png', ['alt' => 'Veloura Jewels collection', 'class' => 'hp-img-fill']) ?>
-            <div class="hp-hero-warm-overlay"></div>
         </div>
     </section>
 
@@ -27,7 +27,6 @@ $this->Html->css(['home', 'jewelry'], ['block' => true]);
     <?php if (!empty($featuredProducts)): ?>
         <section class="hp-arrivals">
             <div class="hp-section-header">
-                <p class="hp-label">Just in</p>
                 <h2 class="hp-section-header-title">New Arrivals</h2>
             </div>
             <?php

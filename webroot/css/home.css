@@ -9,12 +9,7 @@
     display: block;
 }
 
-.hp-img-fill {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-}
+
 
 .hp-btn {
     display: inline-block;
@@ -32,16 +27,16 @@
     white-space: nowrap;
 }
 
-.hp-btn--primary {
-    background: var(--oakwood);
-    color: var(--color-white);
-    border-color: var(--oakwood);
+.hp-hero-overlay .hp-btn--primary {
+    background: transparent;
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.7);
 }
 
-.hp-btn--primary:hover {
-    background: var(--oakwood-dark);
-    border-color: var(--oakwood-dark);
-    color: var(--color-white);
+.hp-hero-overlay .hp-btn--primary:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: #fff;
+    color: #fff;
 }
 
 .hp-section-header {
@@ -57,87 +52,78 @@
     margin: 0;
     letter-spacing: 0.01em;
 }
-
-/* Hero */
+/* Hero - full viewport video */
 .hp-hero {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    min-height: 680px;
+    display: block;
+    min-height: auto;
 }
 
-.hp-hero-text {
-    background: var(--beige);
-    padding: 5.5rem 5rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-.hp-hero-ornament {
-    width: 36px;
-    height: 1.5px;
-    background: var(--earth-yellow);
-    margin-bottom: 1.6rem;
-}
-
-.hp-hero-heading {
-    font-family: var(--font-display);
-    font-size: clamp(2.8rem, 5vw, 4.6rem);
-    font-weight: 300;
-    color: var(--color-headings);
-    line-height: 1.05;
-    margin-bottom: 1.6rem;
-    letter-spacing: -0.02em;
-}
-
-.hp-hero-sub {
-    font-size: 0.9rem;
-    color: var(--color-text-muted);
-    line-height: 1.9;
-    max-width: 300px;
-    margin-bottom: 3rem;
-}
-
-.hp-hero-actions {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 1.4rem;
-}
-
-.hp-hero-alt-link {
-    font-size: 0.78rem;
-    font-weight: 500;
-    letter-spacing: 0.06em;
-    color: var(--oakwood);
-    text-decoration: none;
-    border-bottom: 1px solid rgba(var(--oakwood-rgb), 0.35);
-    padding-bottom: 0.12rem;
-    transition: color 0.2s ease, border-color 0.2s ease;
-}
-
-.hp-hero-alt-link:hover {
-    color: var(--oakwood-dark);
-    border-color: var(--oakwood-dark);
-}
-
-.hp-hero-image {
+.hero-panel {
     position: relative;
-    background: #d8d0c4;
+    width: 100%;
+    height: 100vh;
+    min-height: 600px;
+    max-height: 750px;
     overflow: hidden;
 }
 
-.hp-hero-warm-overlay {
+.home-video {
     position: absolute;
     inset: 0;
-    background: linear-gradient(
-        135deg,
-        rgba(180, 120, 60, 0.07) 0%,
-        rgba(100, 55, 15, 0.16) 100%
-    );
-    pointer-events: none;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
+.hp-hero-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    text-align: center;
+    background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.15) 0%,
+        rgba(0, 0, 0, 0.35) 100%
+    );
+    padding: 1rem;
+}
+
+/* Override text colors for on-video readability */
+.hp-hero-overlay .hp-label {
+    color: var(--earth-yellow);
+}
+
+.hp-hero-overlay .hp-hero-heading {
+    color: #fff;
+    font-size: clamp(1.8rem, 4vw, 3rem);
+    font-weight: 600;
+    line-height: 1.05;
+    margin-bottom: 1.2rem;
+}
+
+.hp-hero-overlay .hp-hero-sub {
+    color: rgba(255, 255, 255, 0.85);
+    max-width: 480px;
+    margin-bottom: 2rem;
+}
+
+.hp-hero-overlay .hp-hero-actions {
+    align-items: center;
+    margin-bottom: 4rem;
+}
+
+.hp-hero-overlay .hp-hero-alt-link {
+    color: rgba(255, 255, 255, 0.9);
+    border-bottom-color: rgba(255, 255, 255, 0.4);
+}
+
+.hp-hero-overlay .hp-hero-alt-link:hover {
+    color: #fff;
+    border-color: #fff;
+}
 
 /* New arrivals */
 .hp-arrivals {
@@ -305,6 +291,18 @@
 
 
 /* Responsive */
+
+@media (max-width: 768px) {
+    .hero-panel {
+        height: 85vh;
+        min-height: 480px;
+    }
+
+    .hp-hero-overlay {
+        padding: 2rem 1.5rem;
+    }
+}
+
 @media (max-width: 1024px) {
     .hp-arrivals-grid {
         grid-template-columns: repeat(2, 1fr);
