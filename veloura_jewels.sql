@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: May 12, 2026 at 02:18 AM
+-- Generation Time: May 12, 2026 at 02:59 AM
 -- Server version: 12.2.2-MariaDB
 -- PHP Version: 8.4.18
 
@@ -310,7 +310,7 @@ CREATE TABLE IF NOT EXISTS `page_content` (
     `sort_order` int(11) NOT NULL DEFAULT 0,
     PRIMARY KEY (`id`),
     UNIQUE KEY `uq_page_key` (`page_id`,`content_key`)
-    ) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+    ) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 
 --
 -- Dumping data for table `page_content`
@@ -341,7 +341,8 @@ INSERT INTO `page_content` (`id`, `page_id`, `content_key`, `content_value`, `la
                                                                                                                         (23, 6, 'body_3', 'Inspired by modern sophistication and classic craftsmanship, Veloura Jewels blends refined design with a sense of comfort and authenticity. Every collection is selected with attention to detail, quality, and versatility, allowing customers to express themselves through both fashion and home styling.', 'Story (Paragraph 3)', 'textarea', 4),
                                                                                                                         (24, 6, 'body_4', 'Whether it\'s a delicate necklace worn every day, a statement ring for a special occasion, or décor that transforms a house into a home, Veloura Jewels is built around the idea that beauty should feel personal.', 'Story (Paragraph 4)', 'textarea', 5),
 (25, 6, 'hero_sub', 'Founded by Sarah Smith — pieces crafted to carry meaning.', 'Hero Subtitle', 'text', 0),
-(26, 7, 'store_image', 'store.png', 'Store Image Filename', 'image', 0);
+(26, 7, 'store_image', 'store.png', 'Store Image Filename', 'image', 0),
+(27, 7, 'store_image_inside', 'storeInterior.png', 'Store Interior Image Filename', 'image', 1);
 
 -- --------------------------------------------------------
 
