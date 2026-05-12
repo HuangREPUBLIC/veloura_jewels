@@ -98,7 +98,7 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
 
             // CSRF Protection — skip for Stripe webhook (server-to-server, no token)
             ->add(function ($request, $handler) {$path = (string)$request->getUri()->getPath();
-                if (str_contains($path, 'stripe/webhook') || str_starts_with($path, '/profile/wishlist/toggle/')) {
+                if (str_contains($path, 'stripe/webhook')) {
                     return $handler->handle($request);
                 }
                 return (new CsrfProtectionMiddleware(['httponly' => true]))->process($request, $handler);

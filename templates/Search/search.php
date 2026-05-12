@@ -36,8 +36,14 @@ $this->Html->css('jewelry', ['block' => true]);
         ?>
         <div class="product-grid">
             <?php foreach ($products as $product): ?>
+                <?php
+                $isHomeDecor = ($product->category->type ?? '') === 'home_decor';
+                $productUrl = $isHomeDecor
+                    ? $this->Url->build('/home-decor/view/' . $product->id)
+                    : $this->Url->build('/jewelry/view/' . $product->id);
+                ?>
                 <div class="product-card-wrap">
-                <a href="<?= $this->Url->build(['controller' => 'Jewelry', 'action' => 'view', $product->id]) ?>?back=<?= $searchBack ?>" class="product-card-link">
+                <a href="<?= $productUrl ?>?back=<?= $searchBack ?>" class="product-card-link">
                     <div class="product-card">
                         <div class="product-image-wrapper<?= !empty($product->product_images[1]) ? ' has-hover-image' : '' ?>">
                             <?php if (!empty($product->featured) || !empty($product->is_bestsales)): ?>

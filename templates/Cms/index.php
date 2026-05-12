@@ -24,7 +24,7 @@ $faqSaveUrl = ['action' => 'faqItemSave'];
         <?= $this->Form->create(null, ['url' => $saveUrl, 'method' => 'post', 'enctype' => 'multipart/form-data']) ?>
 
         <div class="page-header-row">
-            <h3 class="page-title">Content Management</h3>
+            <h3 class="page-title">Content Management: <?= h($currentPage->title) ?></h3>
             <div class="cms-header-right">
                 <select class="cms-page-select" onchange="window.location=this.value">
                     <?php foreach ($pages as $p): ?>

@@ -7,7 +7,7 @@
     --color-white: #fff;
     --color-main-bg: #f5f7fa;
     --color-links: #786c3b;
-    --color-links-active: #5a5029;
+    --color-links-active: #284d40;
     --color-headings: #1c1c1a;
     --color-message-success-bg: #e3fcec;
     --color-message-success-text: #1f9d55;
@@ -23,7 +23,7 @@
     --color-message-info-border: #6cb2eb;
     --beige: #dad7c5;
     --beige-light: #f0ede4;
-    --sage: #bce3c5;
+    --sage: #c7d8ca;
     --earth-yellow: #e1a95e;
     --oakwood: #786c3b;
     --oakwood-dark: #5a5029;
@@ -38,11 +38,11 @@
     --admin-ink: #111827;
     --admin-ink-mid: #374151;
 
-    --emerald: #2D6A4F;
-    --emerald-light: #358B63;
-    --emerald-dark: #1F4D39;
-    --emerald-rgb: 45, 106, 79;
-    --emerald-neon: #7CD695;
+    --emerald: #284d40;
+    --emerald-light: #4f7867;
+    --emerald-dark: #18382f;
+    --emerald-rgb: 40, 77, 64;
+    --emerald-gold: #b7975a;
 
     --font-display: 'Raleway', 'Helvetica Neue', sans-serif;
     --font-body: 'Raleway', 'Helvetica Neue', sans-serif;
@@ -243,4 +243,3 @@ img {
     stroke: var(--oakwood);
     filter: drop-shadow(0 1px 2px rgba(var(--oakwood-rgb), 0.3));
 }
-

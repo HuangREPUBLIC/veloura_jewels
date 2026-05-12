@@ -78,6 +78,14 @@ class ProfileController extends AppController
         $userId = $this->Authentication->getIdentity()->get('id');
         $wishlistsTable = $this->fetchTable('Wishlists');
 
+        $productExists = $this->fetchTable('Products')->exists(['id' => $id]);
+        if (!$productExists) {
+            return $this->response
+                ->withStatus(404)
+                ->withType('application/json')
+                ->withStringBody(json_encode(['error' => 'Product not found']));
+        }
+
         $existing = $wishlistsTable->find()
             ->where(['user_id' => $userId, 'product_id' => $id])
             ->first();
@@ -109,13 +117,22 @@ class ProfileController extends AppController
         $session = $this->request->getSession();
         $cart    = $session->read('Cart') ?? [];
 
+        $added = 0;
+        $skipped = 0;
+
         foreach ($items as $item) {
             $product = $item->product;
             if (empty($product->product_variants)) {
+                $skipped++;
+                continue;
+            }
+            if (count($product->product_variants) !== 1) {
+                $skipped++;
                 continue;
             }
             $variant = $product->product_variants[0];
             if ($variant->stock < 1) {
+                $skipped++;
                 continue;
             }
             $key = $product->id . '_' . $variant->id;
@@ -124,10 +141,17 @@ class ProfileController extends AppController
             } else {
                 $cart[$key] = ['product_id' => $product->id, 'variant_id' => $variant->id, 'quantity' => 1];
             }
+            $added++;
         }
 
         $session->write('Cart', $cart);
-        $this->Flash->success('Wishlist items added to your bag.');
+        if ($added > 0 && $skipped > 0) {
+            $this->Flash->success($added . ' wishlist item' . ($added === 1 ? '' : 's') . ' added to your bag. Items with size choices need to be added individually.');
+        } elseif ($added > 0) {
+            $this->Flash->success('Wishlist items added to your bag.');
+        } else {
+            $this->Flash->error('No wishlist items could be added automatically. Please choose a size for each item.');
+        }
         return $this->redirect('/jewelry/cart');
     }
 

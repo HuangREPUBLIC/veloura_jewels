@@ -191,7 +191,7 @@ $role = $identity ? $identity->get('role') : null;
                 ['escape' => false]
             ) ?>
             <p class="footer-brand-name">Veloura Jewels</p>
-            <p class="footer-tagline"><?= h($siteSettings['footer_tagline'] ?? 'Handcrafted jewelry &amp; home décor, made with love in Brooksdale.') ?></p>
+            <p class="footer-tagline"><?= h($siteSettings['footer_tagline'] ?? 'Handcrafted jewellery &amp; home décor, made with love in Brooksdale.') ?></p>
             <ul class="footer-socials">
                 <li>
                     <a href="#" class="footer-social" aria-label="Facebook">
@@ -229,7 +229,7 @@ $role = $identity ? $identity->get('role') : null;
         <div class="footer-col">
             <h6 class="footer-heading">Explore</h6>
             <ul class="footer-nav">
-                <li><?= $this->Html->link('Jewelry', ['controller' => 'Jewelry', 'action' => 'index']) ?></li>
+                <li><?= $this->Html->link('Jewellery', ['controller' => 'Jewelry', 'action' => 'index']) ?></li>
                 <li><?= $this->Html->link('Home Décor', ['controller' => 'Jewelry', 'action' => 'home_decor']) ?></li>
                 <li><?= $this->Html->link('Our Story', ['controller' => 'OurStory', 'action' => 'index']) ?></li>
                 <li><?= $this->Html->link('Location', ['controller' => 'Pages', 'action' => 'location']) ?></li>
@@ -319,6 +319,7 @@ $role = $identity ? $identity->get('role') : null;
     var suggestUrl = <?= json_encode($this->Url->build(['controller' => 'Search', 'action' => 'suggest'])) ?>;
     var searchUrl  = <?= json_encode($this->Url->build(['controller' => 'Search', 'action' => 'search'])) ?>;
     var wishlistEnabled = <?= json_encode((bool)($identity ?? false)) ?>;
+    var csrfToken = <?= json_encode($this->request->getAttribute('csrfToken')) ?>;
     var currentPagePath = <?= json_encode($this->request->getPath() . ($this->request->getUri()->getQuery() ? '?' . $this->request->getUri()->getQuery() : '')) ?>;
 
     function openSearch() {
@@ -438,10 +439,23 @@ $role = $identity ? $identity->get('role') : null;
         e.preventDefault();
         e.stopPropagation();
         var id = btn.dataset.productId;
-        fetch('<?= $this->Url->build('/profile/wishlist/toggle/') ?>' + id, { method: 'POST' })
-            .then(function (r) { return r.json(); })
+        var wasWishlisted = btn.classList.contains('wishlisted');
+        btn.disabled = true;
+        fetch('<?= $this->Url->build('/profile/wishlist/toggle/') ?>' + id, {
+            method: 'POST',
+            headers: { 'X-CSRF-Token': csrfToken }
+        })
+            .then(function (r) {
+                if (!r.ok) throw new Error('Wishlist request failed');
+                return r.json();
+            })
             .then(function (data) { btn.classList.toggle('wishlisted', data.wishlisted); })
-            .catch(function (err) { console.error('Wishlist error:', err); });
+            .catch(function (err) {
+                btn.classList.toggle('wishlisted', wasWishlisted);
+                console.error('Wishlist error:', err);
+                window.alert('Could not update your wishlist. Please try again.');
+            })
+            .finally(function () { btn.disabled = false; });
     });
     <?php endif; ?>
 </script>

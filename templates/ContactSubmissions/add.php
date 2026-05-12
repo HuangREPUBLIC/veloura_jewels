@@ -29,8 +29,8 @@ $this->Html->meta([
 
 <div class="contact-page">
     <div class="contact-header">
-        <h2>Contact Veloura Jewels</h2>
-        <p>We'd love to hear from you! Whether you have questions about our handcrafted jewelry, want to discuss a custom piece, or simply want to learn more about our story, feel free to reach out.</p>
+        <h2><?= h($pageContent['contact_heading'] ?? 'Contact Veloura Jewels') ?></h2>
+        <p><?= h($pageContent['contact_subtext'] ?? "We'd love to hear from you! Whether you have questions about our handcrafted jewellery, want to discuss a custom piece, or simply want to learn more about our story, feel free to reach out.") ?></p>
     </div>
 
     <div class="contactSubmissions form content">

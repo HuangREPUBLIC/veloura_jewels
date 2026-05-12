@@ -17,16 +17,6 @@ $this->Html->css(['profile', 'jewelry'], ['block' => true]);
         <h1 class="wishlist-title">Wishlist</h1>
         <?php if (!empty($items)): ?>
         <div class="wishlist-actions-row">
-            <button type="button" class="wishlist-share-btn" id="wishlist-share-btn">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="18" cy="5" r="3"/>
-                    <circle cx="6" cy="12" r="3"/>
-                    <circle cx="18" cy="19" r="3"/>
-                    <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/>
-                    <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
-                </svg>
-                Share Wishlist
-            </button>
             <form method="post" action="<?= $this->Url->build(['action' => 'addWishlistToCart']) ?>" style="display:contents">
                 <input type="hidden" name="_csrfToken" value="<?= h($this->request->getAttribute('csrfToken')) ?>">
                 <button type="submit" class="wishlist-share-btn">
@@ -136,6 +126,8 @@ $this->Html->css(['profile', 'jewelry'], ['block' => true]);
 <script>
 (function () {
     var toggleUrl = '<?= $this->Url->build('/profile/wishlist/toggle/') ?>';
+    var csrfToken = <?= json_encode($this->request->getAttribute('csrfToken')) ?>;
+    var emptyStateHtml = '<div class="profile-card"><p class="profile-info-value">You have no saved items yet. Browse <a href="/jewelry">Jewellery</a> or <a href="/home-decor">Home Décor</a> to add some.</p></div>';
 
     document.querySelectorAll('.wishlist-size-select').forEach(function (sel) {
         sel.addEventListener('change', function () {
@@ -147,21 +139,30 @@ $this->Html->css(['profile', 'jewelry'], ['block' => true]);
     document.querySelectorAll('.wishlist-remove-btn').forEach(function (btn) {
         btn.addEventListener('click', function () {
             var wrap = btn.closest('.product-card-wrap');
-            fetch(toggleUrl + btn.dataset.productId, { method: 'POST' })
-                .then(function (r) { return r.json(); })
-                .then(function () { wrap.remove(); });
+            btn.disabled = true;
+            fetch(toggleUrl + btn.dataset.productId, {
+                method: 'POST',
+                headers: { 'X-CSRF-Token': csrfToken }
+            })
+                .then(function (r) {
+                    if (!r.ok) throw new Error('Wishlist request failed');
+                    return r.json();
+                })
+                .then(function () {
+                    var grid = wrap.closest('.product-grid');
+                    var actions = document.querySelector('.wishlist-actions-row');
+                    wrap.remove();
+                    if (grid && !grid.querySelector('.product-card-wrap')) {
+                        grid.insertAdjacentHTML('afterend', emptyStateHtml);
+                        grid.remove();
+                        if (actions) actions.remove();
+                    }
+                })
+                .catch(function () {
+                    btn.disabled = false;
+                    window.alert('Could not update your wishlist. Please try again.');
+                });
         });
     });
-
-    var shareBtn = document.getElementById('wishlist-share-btn');
-    if (shareBtn) {
-        shareBtn.addEventListener('click', function () {
-            navigator.clipboard.writeText(window.location.href).then(function () {
-                var origHTML = shareBtn.innerHTML;
-                shareBtn.textContent = 'Link Copied';
-                setTimeout(function () { shareBtn.innerHTML = origHTML; }, 2000);
-            });
-        });
-    }
 }());
 </script>

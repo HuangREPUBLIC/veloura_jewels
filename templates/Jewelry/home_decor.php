@@ -66,11 +66,21 @@ $this->Html->css('jewelry', ['block' => true]);
                     <?= $this->Form->hidden('category', ['value' => $categoryId ?: '']) ?>
                     <?= $this->Form->hidden('sort', ['value' => $sortBy]) ?>
                     <div class="price-dropdown-row">
-                        <span class="price-prefix">$</span>
-                        <?= $this->Form->number('min_price', ['placeholder' => 'Min', 'value' => $minPrice, 'class' => 'price-input', 'min' => 0, 'step' => 1]) ?>
-                        <span class="price-sep">—</span>
-                        <span class="price-prefix">$</span>
-                        <?= $this->Form->number('max_price', ['placeholder' => 'Max', 'value' => $maxPrice, 'class' => 'price-input', 'min' => 0, 'step' => 1]) ?>
+                        <label class="price-field">
+                            <span class="price-field-label">Min</span>
+                            <span class="price-field-control">
+                                <span class="price-prefix">$</span>
+                                <?= $this->Form->number('min_price', ['placeholder' => '0', 'value' => $minPrice, 'class' => 'price-input', 'min' => 0, 'step' => 1]) ?>
+                            </span>
+                        </label>
+                        <span class="price-sep">to</span>
+                        <label class="price-field">
+                            <span class="price-field-label">Max</span>
+                            <span class="price-field-control">
+                                <span class="price-prefix">$</span>
+                                <?= $this->Form->number('max_price', ['placeholder' => 'Any', 'value' => $maxPrice, 'class' => 'price-input', 'min' => 0, 'step' => 1]) ?>
+                            </span>
+                        </label>
                     </div>
                     <button type="submit" class="filter-apply-btn">Apply</button>
                 </div>
@@ -226,4 +236,3 @@ $this->Html->css('jewelry', ['block' => true]);
         </div>
     <?php endif; ?>
 </div>
-

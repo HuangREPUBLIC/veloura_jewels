@@ -28,7 +28,7 @@ class SearchController extends AppController
             ));
 
             $products = $productsTable->find()
-                ->contain(['ProductImages'])
+                ->contain(['ProductImages', 'Category'])
                 ->where(['Products.name LIKE' => '%' . $q . '%'])
                 ->orderBy(['Products.name' => 'ASC'])
                 ->all();
@@ -67,7 +67,7 @@ class SearchController extends AppController
                 collection($productsTable->find('bestSales', productType: 'home_decor', limit: 4)->all())->extract('id')->toList()
             ));
             $products = $productsTable->find()
-                ->contain(['ProductImages'])
+                ->contain(['ProductImages', 'Category'])
                 ->where(['Products.name LIKE' => '%' . $q . '%'])
                 ->orderBy(['Products.name' => 'ASC'])
                 ->limit(4)
@@ -81,7 +81,9 @@ class SearchController extends AppController
                     ->all()->extract('product_id')->toList();
             }
             foreach ($products as $p) {
-                $url = Router::url(['controller' => 'Jewelry', 'action' => 'view', $p->id]);
+                $url = ($p->category->type ?? '') === 'home_decor'
+                    ? Router::url('/home-decor/view/' . $p->id)
+                    : Router::url('/jewelry/view/' . $p->id);
 
                 $images = array_map(
                     fn($img) => Router::url('/img/products/' . $img->filename),

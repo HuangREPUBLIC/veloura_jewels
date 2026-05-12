@@ -63,6 +63,8 @@ class ContactSubmissionsController extends AppController
     public function add()
     {
         $contactSubmission = $this->ContactSubmissions->newEmptyEntity();
+        $pageContent = $this->fetchTable('PageContents')->getForPage('contact');
+        $this->set(compact('pageContent'));
 
         if ($this->request->is('post')) {
             $contactSubmission = $this->ContactSubmissions->patchEntity(

@@ -1,5 +1,5 @@
 <?php $this->Html->css('faq', ['block' => true]); ?>
-<?php $this->assign('title', 'Find Us'); ?>
+<?php $this->assign('title', $pageContent['page_heading'] ?? 'Visit Veloura'); ?>
 
 <div class="location-page">
 
@@ -8,7 +8,7 @@
             <?= $this->Html->image(h($pageContent['store_image']), ['alt' => 'Veloura Jewels Store', 'class' => 'location-banner-img']) ?>
         <?php endif; ?>
         <div class="location-banner-overlay">
-            <h1 class="location-title"><?= h($pageContent['page_heading'] ?? 'Find Us') ?></h1>
+            <h1 class="location-title"><?= h($pageContent['page_heading'] ?? 'Visit Veloura') ?></h1>
         </div>
     </div>
 
