@@ -15,7 +15,7 @@ $this->Html->css('jewelry', ['block' => true]);
 
 <div class="jewelry-page">
     <section class="jewelry-hero">
-        <h1><?= h($pageContent['hero_heading'] ?? 'Our Jewelry Collection') ?></h1>
+        <h1><?= h($pageContent['hero_heading'] ?? 'Our Jewellery Collection') ?></h1>
         <p><?= h($pageContent['hero_subtext'] ?? '') ?></p>
     </section>
 

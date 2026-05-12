@@ -209,7 +209,7 @@
 }
 
 .product-badge--featured {
-    background: rgba(var(--oakwood-rgb), 0.86);
+    background: var(--emerald-neon);
     color: var(--color-white);
 }
 
@@ -459,7 +459,7 @@
     justify-content: center;
     min-width: 260px;
     padding: 0.9rem 1.6rem;
-    background: var(--oakwood);
+    background: var(--emerald);
     color: var(--color-white);
     border: none;
     border-radius: 999px;
@@ -473,7 +473,7 @@
 }
 
 .jewelry-page .jewelry-add-to-cart-btn:hover {
-    background: var(--oakwood-dark);
+    background: var(--emerald-dark);
     color: var(--color-white);
 }
 

@@ -252,8 +252,8 @@
 }
 
 .search-view-all:hover {
-    background: rgba(var(--oakwood-rgb), 0.06);
-    color: var(--oakwood);
+    background: rgba(var(--emerald-rgb), 0.06);
+    color: var(--emerald);
 }
 
 @media (max-width: 768px) {

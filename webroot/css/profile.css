@@ -156,7 +156,8 @@
 }
 
 .profile-link-btn:hover {
-    background: var(--oakwood);
+    background: var(--emerald);
+    border-color: var(--emerald);
     color: var(--color-white);
     text-decoration: none;
 }
@@ -447,7 +448,7 @@
     letter-spacing: 0.1em;
     text-transform: uppercase;
     padding: 0.65rem 2rem;
-    background: var(--oakwood);
+    background: var(--emerald);
     color: var(--color-white);
     border: none;
     border-radius: 5px;
@@ -456,7 +457,7 @@
 }
 
 .profile-save-btn:hover {
-    background: var(--oakwood-dark);
+    background: var(--emerald-dark);
 }
 
 .profile-cancel-btn {
@@ -495,14 +496,14 @@
 }
 
 .profile-status-tab:hover {
-    border-color: var(--oakwood);
-    color: var(--oakwood);
+    border-color: var(--emerald);
+    color: var(--emerald);
     text-decoration: none;
 }
 
 .profile-status-tab.active {
-    background: var(--oakwood);
-    border-color: var(--oakwood);
+    background: var(--emerald);
+    border-color: var(--emerald);
     color: var(--color-white);
 }
 

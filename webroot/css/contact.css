@@ -50,7 +50,7 @@
 .contact-page .contact-submit-btn {
     width: 100%;
     padding: 0.9rem;
-    background-color: var(--oakwood);
+    background-color: var(--emerald);
     color: var(--color-white);
     border: none;
     border-radius: 10px;
@@ -63,7 +63,7 @@
 }
 
 .contact-page .contact-submit-btn:hover {
-    background-color: var(--oakwood-dark);
+    background-color: var(--emerald-dark);
 }
 
 .contact-page .contact-submit-btn:disabled {

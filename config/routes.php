@@ -58,13 +58,13 @@ return function (RouteBuilder $routes): void {
         $builder->connect('/pages/*', 'Pages::display');
 
         // Jewelry shop routes
-        $builder->connect('/jewelry', ['controller' => 'Jewelry', 'action' => 'index']);
+        $builder->connect('/jewellery', ['controller' => 'Jewelry', 'action' => 'index']);
         $builder->connect('/home-decor', ['controller' => 'Jewelry', 'action' => 'home_decor']);
-        $builder->connect('/jewelry/view/{id}', ['controller' => 'Jewelry', 'action' => 'view'])
+        $builder->connect('/jewellery/view/{id}', ['controller' => 'Jewelry', 'action' => 'view'])
             ->setPass(['id']);
         $builder->connect('/home-decor/view/{id}', ['controller' => 'Jewelry', 'action' => 'view'])
             ->setPass(['id']);
-        $builder->connect('/jewelry/add-to-cart', ['controller' => 'Jewelry', 'action' => 'addToCart']);
+        $builder->connect('/jewellery/add-to-cart', ['controller' => 'Jewelry', 'action' => 'addToCart']);
         $builder->connect('/cart', ['controller' => 'Jewelry', 'action' => 'cart']);
         $builder->connect('/cart/remove', ['controller' => 'Jewelry', 'action' => 'removeFromCart']);
         $builder->connect('/checkout', ['controller' => 'Jewelry', 'action' => 'checkout']);

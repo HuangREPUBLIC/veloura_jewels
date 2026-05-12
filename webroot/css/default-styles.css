@@ -38,6 +38,12 @@
     --admin-ink: #111827;
     --admin-ink-mid: #374151;
 
+    --emerald: #2D6A4F;
+    --emerald-light: #358B63;
+    --emerald-dark: #1F4D39;
+    --emerald-rgb: 45, 106, 79;
+    --emerald-neon: #7CD695;
+
     --font-display: 'Raleway', 'Helvetica Neue', sans-serif;
     --font-body: 'Raleway', 'Helvetica Neue', sans-serif;
     --font-admin: Arial, 'Helvetica Neue', Helvetica, sans-serif;

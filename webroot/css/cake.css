@@ -94,14 +94,14 @@ th { white-space: nowrap; }
     left: 1rem;
     right: 1rem;
     height: 1.5px;
-    background: var(--oakwood);
+    background: var(--emerald);
     transform: scaleX(0);
     transition: transform 0.25s ease;
     transform-origin: center;
 }
 
 .navbar-links a:hover {
-    color: var(--oakwood);
+    color: var(--emerald);
 }
 
 .navbar-links a:hover::after,
@@ -110,7 +110,7 @@ th { white-space: nowrap; }
 }
 
 .navbar-links a.active {
-    color: var(--oakwood);
+    color: var(--emerald);
 }
 
 .navbar-right {
@@ -529,7 +529,7 @@ input[type='color'] {
 }
 
 .footer-newsletter-btn {
-    background: var(--oakwood);
+    background: var(--emerald);
     color: var(--color-white);
     border: none;
     border-radius: 0;
@@ -544,7 +544,7 @@ input[type='color'] {
 }
 
 .footer-newsletter-btn:hover {
-    background: var(--oakwood-dark);
+    background: var(--emerald-dark);
 }
 
 .footer-subscribe-thanks {

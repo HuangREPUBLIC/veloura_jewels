@@ -67,6 +67,20 @@ class PagesController extends AppController
                 $product->is_bestsales = in_array($product->id, $bestSalesIds);
             }
 
+            $featuredJewelry = $productsTable->find()
+                ->contain(['ProductImages', 'Category'])
+                ->where(['Category.type' => 'jewelry'])
+                ->orderBy(['Products.id' => 'DESC'])
+                ->limit(3)
+                ->all();
+
+            $featuredHomeDecor = $productsTable->find()
+                ->contain(['ProductImages', 'Category'])
+                ->where(['Category.type' => 'home_decor'])
+                ->orderBy(['Products.id' => 'DESC'])
+                ->limit(3)
+                ->all();
+
             $pageContent = $this->fetchTable('PageContents')->getForPage('home');
             $identity = $this->request->getAttribute('identity');
             $wishlistIds = [];
@@ -75,7 +89,7 @@ class PagesController extends AppController
                     ->where(['user_id' => $identity->get('id')])
                     ->all()->extract('product_id')->toList();
             }
-            $this->set(compact('featuredProducts', 'pageContent', 'wishlistIds'));
+            $this->set(compact('featuredProducts', 'featuredJewelry', 'featuredHomeDecor', 'pageContent', 'wishlistIds'));
         }
 
         try {

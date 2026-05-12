@@ -65,7 +65,7 @@ $role = $identity ? $identity->get('role') : null;
     <nav class="navbar-links" id="navLinks">
         <?= $this->Html->link('Home', '/', ['class' => $currentPath === '/' ? 'active' : '']) ?>
         <?= $this->Html->link('Our Story', '/ourStory', ['class' => str_starts_with($currentPath, '/ourStory') ? 'active' : '']) ?>
-        <?= $this->Html->link('Jewelry', '/jewelry', ['class' => str_starts_with($currentPath, '/jewelry') ? 'active' : '']) ?>
+        <?= $this->Html->link('Jewellery', '/jewellery', ['class' => str_starts_with($currentPath, '/jewelry') ? 'active' : '']) ?>
         <?= $this->Html->link('Home Decor', '/home-decor', ['class' => str_starts_with($currentPath, '/home-decor') ? 'active' : '']) ?>
        <?= $this->Html->link('FAQ', '/faq', ['class' => str_starts_with($currentPath, '/faq') ? 'active' : '']) ?>
        <?= $this->Html->link('Location', '/location', ['class' => str_starts_with($currentPath, '/location') ? 'active' : '']) ?>

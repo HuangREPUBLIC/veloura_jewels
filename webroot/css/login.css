@@ -95,7 +95,7 @@
     display: block;
     width: 100%;
     padding: 0.9rem;
-    background-color: var(--oakwood);
+    background-color: var(--emerald);;
     color: var(--color-white);
     border: none;
     border-radius: 10px;
@@ -107,7 +107,7 @@
 }
 
 .login-page .login-button:hover {
-    background-color: var(--oakwood-dark);
+    background-color: var(--emerald-dark);
 }
 
 .login-page .login-button:disabled {
