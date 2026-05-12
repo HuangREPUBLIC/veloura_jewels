@@ -28,7 +28,7 @@ class UsersController extends AppController
     {
         $identity = $this->Authentication->getIdentity();
 
-        if (!$identity || !in_array($identity->get('role'), ['admin', 'staff'])) {
+        if (!$identity || !in_array($identity->get('role'), ['admin'])) {
             $this->Flash->error('You do not have permission to view users.');
             return $this->redirect('/');
         }

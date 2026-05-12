@@ -21,31 +21,43 @@ $cards = [
         'title' => 'Total Products',
         'value' => $totalProducts,
         'url'   => ['controller' => 'Products', 'action' => 'index'],
-        'icon'  => '<path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/>'
+        'icon'  => '<path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/>',
+        'admin' => false,
     ],
     [
         'title' => 'Total Orders',
         'value' => $totalOrders,
         'url'   => ['controller' => 'Orders', 'action' => 'index'],
-        'icon'  => '<path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/>'
+        'icon'  => '<path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/>',
+        'admin' => false,
     ],
     [
         'title' => 'Total Enquiries',
         'value' => $totalEnquiries,
         'url'   => ['controller' => 'ContactSubmissions', 'action' => 'index'],
-        'icon'  => '<path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>'
+        'icon'  => '<path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>',
+        'admin' => false,
     ],
     [
         'title' => 'Staff Schedule',
         'value' => null,
         'url'   => ['controller' => 'Schedule', 'action' => 'index'],
-        'icon'  => '<rect x="3" y="4" width="18" height="17" rx="2"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h18"/>'
+        'icon'  => '<rect x="3" y="4" width="18" height="17" rx="2"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h18"/>',
+        'admin' => false,
     ],
     [
         'title' => 'Total Users',
         'value' => $totalUsers,
         'url'   => ['controller' => 'Users', 'action' => 'index'],
-        'icon'  => '<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>'
+        'icon'  => '<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>',
+        'admin' => true,
+    ],
+    [
+        'title' => 'Content Management System',
+        'value' => null,
+        'url'   => ['controller' => 'Cms', 'action' => 'index'],
+        'icon'  => '<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5z"/><path d="M8 7h8"/><path d="M8 11h6"/>',
+        'admin' => true,
     ],
 ];
 ?>
@@ -58,8 +70,9 @@ $cards = [
             <p>Hi, <?= h($authUser->first_name) ?></p>
         </div>
 
-        <div class="dashboard-summary">
+        <div class="dashboard-summary <?= $role === 'staff' ? 'dashboard-summary--grid-2x2' : '' ?>">
             <?php foreach ($cards as $card): ?>
+                <?php if ($card['admin'] && $role !== 'admin') continue; ?>
                 <a href="<?= $this->Url->build($card['url']) ?>" class="dashboard-card">
                     <div class="dashboard-icon">
                         <svg width="26" height="26" viewBox="0 0 24 24"
@@ -76,23 +89,6 @@ $cards = [
                     </div>
                 </a>
             <?php endforeach; ?>
-
-            <?php if ($role === 'admin'): ?>
-                <a href="<?= $this->Url->build(['controller' => 'Cms', 'action' => 'index']) ?>" class="dashboard-card">
-                    <div class="dashboard-icon">
-                        <svg width="26" height="26" viewBox="0 0 24 24"
-                             fill="none" stroke="#786c3b" stroke-width="1.8"
-                             stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
-                            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5z"/>
-                            <path d="M8 7h8"/><path d="M8 11h6"/>
-                        </svg>
-                    </div>
-                    <div class="dashboard-content">
-                        <h3>Content Management System</h3>
-                    </div>
-                </a>
-            <?php endif; ?>
         </div>
 
         <?php if ($role === 'staff' && !empty($upcomingDays)): ?>
@@ -135,15 +131,13 @@ $cards = [
                 <div class="low-stock-list">
                     <?php foreach ($lowStockProducts as $product): ?>
                         <div class="low-stock-row">
-
                             <div class="low-stock-row-top">
                                 <span class="low-stock-name"><?= h($product->name) ?></span>
-
                                 <?php if ($role === 'admin'): ?>
                                     <?= $this->Html->link(
                                         'Restock',
-                                        ['controller'=>'Products','action'=>'edit',$product->id],
-                                        ['class'=>'low-stock-btn']
+                                        ['controller' => 'Products', 'action' => 'edit', $product->id],
+                                        ['class' => 'low-stock-btn']
                                     ) ?>
                                 <?php endif; ?>
                             </div>
@@ -157,12 +151,9 @@ $cards = [
                                     <?php endif; ?>
                                 <?php endforeach; ?>
                             </div>
-
                         </div>
                     <?php endforeach; ?>
                 </div>
-
-
             </div>
         <?php endif; ?>
 

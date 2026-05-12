@@ -33,6 +33,14 @@
 .admin-wrapper h5,
 .admin-wrapper h6 { font-size: 0.82rem; font-weight: 600; color: var(--admin-ink-mid); }
 
+.dashboard-summary {
+    grid-template-columns: repeat(3, 1fr); /* default for admin */
+}
+
+.dashboard-summary.dashboard-summary--grid-2x2 {
+    grid-template-columns: repeat(2, 1fr) !important;
+}
+
 /* Page title */
 
 .page-header-row .page-title,
