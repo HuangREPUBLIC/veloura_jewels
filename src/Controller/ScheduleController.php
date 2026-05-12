@@ -51,9 +51,10 @@ class ScheduleController extends AppController
         $identity = $this->Authentication->getIdentity();
         $isAdmin  = $identity->get('role') === 'admin';
         $weekData = $this->resolveWeek($this->request->getQuery('week'));
+        $shifts   = $this->Schedules->find('forWeek', weekStart: $weekData['weekStartStr'])->all();
 
         if ($isAdmin) {
-            $shifts = $this->Schedules->find('forWeek', weekStart: $weekData['weekStartStr'])->all();
+            // Admins see all staff rows even if they have no shifts this week
             $staffList  = $this->Schedules->Users->find()
                 ->where(['role' => 'staff'])
                 ->orderByAsc('first_name')
@@ -61,12 +62,8 @@ class ScheduleController extends AppController
                 ->all();
             $staffOrder = $this->indexUsersById($staffList);
         } else {
-            $userId = (int)$identity->get('id');
-            $shifts = $this->Schedules->find('forWeek', weekStart: $weekData['weekStartStr'])
-                ->where(['Schedules.user_id' => $userId])
-                ->all();
-            $currentUser = $this->Schedules->Users->get($userId);
-            $staffOrder  = [$userId => $currentUser];
+            // Staff see the same full week view, just without edit/delete buttons
+            $staffOrder = $this->extractStaffOrder($shifts);
         }
 
         $this->set([
@@ -75,7 +72,6 @@ class ScheduleController extends AppController
                 'isAdminView'     => $isAdmin,
             ] + $weekData);
     }
-
 
     /**
      * Admin: create or edit a whole week of shifts for one staff member.
