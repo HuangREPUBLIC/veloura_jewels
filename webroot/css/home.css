@@ -335,6 +335,8 @@
 
 .hp-featured-image {
     width: 100%;
+    aspect-ratio: 4 / 3;
+    align-self: center;
     background: rgba(255, 255, 255, 0.5);
     overflow: hidden;
     box-shadow: 0 16px 34px rgba(var(--oakwood-rgb), 0.08);
@@ -432,7 +434,7 @@
     }
 
     .hp-featured-image {
-        aspect-ratio: 16 / 9;
+        aspect-ratio: 4 / 3;
         overflow: hidden;
     }
 
