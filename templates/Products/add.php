@@ -36,7 +36,9 @@ $this->Html->css('login', ['block' => true]);
                 <select name="type" id="type-select" required onchange="onTypeChange(this.value)">
                     <option value="">-- Select a type --</option>
                     <?php foreach ($types as $key => $label): ?>
-                        <option value="<?= h($key) ?>"><?= h($label) ?></option>
+                        <option value="<?= h($key) ?>" <?= ($preselectedType ?? '') === $key ? 'selected' : '' ?>>
+                            <?= h($label) ?>
+                        </option>
                     <?php endforeach; ?>
                 </select>
             </div>
@@ -226,6 +228,14 @@ $this->Html->css('login', ['block' => true]);
         var cat = allCategories.find(function(c) { return c.id == catId; });
         return (cat && cat.name === 'Rings') ? ringSizes : ['One Size'];
     }
+
+    (function initProductForm() {
+        var currentType = document.getElementById('type-select').value;
+        if (currentType) {
+            updateCategories(currentType);
+        }
+        updateAllSizeSelects();
+    })();
 
     function onTypeChange(type) {
         updateCategories(type);
