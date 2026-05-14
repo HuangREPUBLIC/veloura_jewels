@@ -8,7 +8,6 @@
  */
 $this->Html->css('login', ['block' => true]);
 ?>
-
 <div class="login-page">
     <div class="users form content login-card--wide">
         <?php
@@ -24,9 +23,9 @@ $this->Html->css('login', ['block' => true]);
             <?= $this->Flash->render() ?>
 
             <?php
-            echo $this->Form->control('name',           ['label' => 'Name',           'required' => true]);
-            echo $this->Form->control('purchase_price', ['label' => 'Purchase Price', 'required' => true]);
-            echo $this->Form->control('sale_price',     ['label' => 'Sale Price',     'required' => true]);
+            echo $this->Form->control('name',           ['label' => ['text' => 'Name <span style="color:red">*</span>',           'escape' => false], 'required' => true]);
+            echo $this->Form->control('purchase_price', ['label' => ['text' => 'Purchase Price <span style="color:red">*</span>', 'escape' => false], 'required' => true]);
+            echo $this->Form->control('sale_price',     ['label' => ['text' => 'Sale Price <span style="color:red">*</span>',     'escape' => false], 'required' => true]);
             echo $this->Form->control('supplier_email', ['label' => 'Supplier Email']);
             ?>
 
@@ -57,7 +56,7 @@ $this->Html->css('login', ['block' => true]);
 
             <!-- Images: drag to reorder, click or drop to add -->
             <div class="input">
-                <label>Images</label>
+                <label for="Images">Images <span style="color:red">*</span></label>
                 <div class="img-upload-zone" id="img-upload-zone">
                     <input type="file" id="real-file-input" name="product_images[]"
                            multiple accept="image/*" style="display:none">
@@ -70,13 +69,14 @@ $this->Html->css('login', ['block' => true]);
             </div>
 
             <?php
-            echo $this->Form->control('description', ['type' => 'textarea', 'label' => 'Product Description', 'required' => true]);
-            echo $this->Form->control('story',       ['type' => 'textarea', 'label' => 'Story',               'required' => true]);
+            echo $this->Form->control('description', ['type' => 'textarea', 'label' => ['text' => 'Product Description <span style="color:red">*</span>', 'escape' => false], 'required' => true]);
+            echo $this->Form->control('story ',       ['type' => 'textarea', 'label' => ['text' => 'Story <span style="color:red">*</span>',               'escape' => false], 'required' => true]);
             ?>
 
             <!-- Size & Stock: filtered by type -->
             <div class="input">
-                <label>Size &amp; Stock</label>
+                <label for="Size">Size &amp; Stock <span style="color:red">*</span></label>
+
                 <div id="variants-container">
                     <div class="variant-row">
                         <select name="product_variants[0][size]" id="first-size-select">

@@ -10,7 +10,6 @@ $this->Html->css('login', ['block' => true]);
 
 $currentType = $product->category->type ?? $product->type ?? '';
 ?>
-
 <div class="login-page">
     <div class="users form content login-card--wide">
         <?php
@@ -28,9 +27,9 @@ $currentType = $product->category->type ?? $product->type ?? '';
             <?= $this->Flash->render() ?>
 
             <?php
-            echo $this->Form->control('name',           ['label' => 'Name',           'required' => true]);
-            echo $this->Form->control('purchase_price', ['label' => 'Purchase Price', 'required' => true]);
-            echo $this->Form->control('sale_price',     ['label' => 'Sale Price',     'required' => true]);
+            echo $this->Form->control('name',           ['label' => ['text' => 'Name <span style="color:red">*</span>',           'escape' => false], 'required' => true]);
+            echo $this->Form->control('purchase_price', ['label' => ['text' => 'Purchase Price <span style="color:red">*</span>', 'escape' => false], 'required' => true]);
+            echo $this->Form->control('sale_price',     ['label' => ['text' => 'Sale Price <span style="color:red">*</span>',     'escape' => false], 'required' => true]);
             echo $this->Form->control('supplier_email', ['label' => 'Supplier Email']);
             ?>
 
@@ -52,7 +51,7 @@ $currentType = $product->category->type ?? $product->type ?? '';
             <div class="input">
                 <label for="categories-select">Category <span style="color:red">*</span></label>
                 <select name="category_id" id="categories-select" required
-                        <?= empty($currentType) ? 'disabled' : '' ?>
+                    <?= empty($currentType) ? 'disabled' : '' ?>
                         onchange="onCategoryChange(this.value)">
                     <?php if (empty($currentType)): ?>
                         <option value="">-- Select a type first --</option>
@@ -102,13 +101,13 @@ $currentType = $product->category->type ?? $product->type ?? '';
             </div>
 
             <?php
-            echo $this->Form->control('description', ['type' => 'textarea', 'label' => 'Product Description', 'required' => true]);
-            echo $this->Form->control('story',       ['type' => 'textarea', 'label' => 'Story',               'required' => true]);
+            echo $this->Form->control('description', ['type' => 'textarea', 'label' => ['text' => 'Product Description <span style="color:red">*</span>', 'escape' => false], 'required' => true]);
+            echo $this->Form->control('story',       ['type' => 'textarea', 'label' => ['text' => 'Story <span style="color:red">*</span>',               'escape' => false], 'required' => true]);
             ?>
 
             <!-- Size & Stock -->
             <div class="input">
-                <label>Size &amp; Stock</label>
+                <label>Size &amp; Stock <span style="color:red">*</span></label>
                 <div id="variants-container">
                     <?php if (!empty($product->product_variants)): ?>
                         <?php foreach ($product->product_variants as $i => $variant): ?>
@@ -129,7 +128,7 @@ $currentType = $product->category->type ?? $product->type ?? '';
                                     <select name="product_variants[<?= $i ?>][size]" class="size-select">
                                         <?php foreach ($sizes as $s): ?>
                                             <option value="<?= $s ?>"
-                                                    <?= $variant->size === $s ? 'selected' : '' ?>>
+                                                <?= $variant->size === $s ? 'selected' : '' ?>>
                                                 <?= $s ?>
                                             </option>
                                         <?php endforeach; ?>
