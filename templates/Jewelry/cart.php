@@ -54,8 +54,8 @@ $this->Html->css(['jewelry', 'home'], ['block' => true]);
                             <div class="cart-quantity-row">
                                 <?= $this->Form->label('quantity_' . $product->id, 'Quantity', ['class' => 'cart-quantity-label']) ?>
                                 <div class="qty-row">
-                                    <div class="qty-box">
-                                        <button type="button" class="jewelry-qty-minus">−</button>
+                                    <div class="qty-stepper">
+                                        <button type="button" class="qty-stepper-btn" data-dir="minus">−</button>
                                         <input
                                             type="number"
                                             id="quantity_<?= $product->id ?>"
@@ -63,9 +63,9 @@ $this->Html->css(['jewelry', 'home'], ['block' => true]);
                                             value="<?= (int)$product->quantity ?>"
                                             min="1"
                                             max="<?= (int)$product->variant->stock ?>"
-                                            class="cart-quantity-input"
+                                            class="qty-stepper-input"
                                         >
-                                        <button type="button" class="jewelry-qty-plus">+</button>
+                                        <button type="button" class="qty-stepper-btn" data-dir="plus">+</button>
                                     </div>
                                     <span class="qty-toast" role="alert" aria-live="assertive"></span>
                                 </div>
@@ -116,10 +116,10 @@ $this->Html->script('collection-modal', ['block' => true]);
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        document.querySelectorAll('.qty-box').forEach(function (wrapper) {
-            var input = wrapper.querySelector('input');
-            var minus = wrapper.querySelector('.jewelry-qty-minus');
-            var plus  = wrapper.querySelector('.jewelry-qty-plus');
+        document.querySelectorAll('.qty-stepper').forEach(function (wrapper) {
+            var input = wrapper.querySelector('.qty-stepper-input');
+            var minus = wrapper.querySelector('[data-dir="minus"]');
+            var plus  = wrapper.querySelector('[data-dir="plus"]');
             var form  = wrapper.closest('form');
             var row   = wrapper.closest('.qty-row');
             var toast = row ? row.querySelector('.qty-toast') : null;

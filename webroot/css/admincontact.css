@@ -1148,6 +1148,52 @@ td.actions button.btn-delete:hover {
     #contactFormsTable tbody td { padding: 12px 10px !important; }
 }
 
+.btn-activity-log {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 40px;
+    padding: 0 20px;
+    border-radius: 10px;
+    border: 1.5px solid var(--emerald);
+    background: transparent;
+    color: var(--emerald);
+    font-weight: 600;
+    font-size: 0.88rem;
+    font-family: inherit;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.btn-activity-log:hover {
+    background: var(--emerald);
+    color: var(--color-white);
+}
+
+.btn-restore-log {
+    border: 1.5px solid #b45309 !important;
+    color: #b45309 !important;
+    background: transparent !important;
+}
+
+.btn-restore-log:hover {
+    background: #fef3c7 !important;
+    color: #92400e !important;
+    border-color: #92400e !important;
+}
+
+.btn-archive-log {
+    border: 1.5px solid #9ca3af !important;
+    color: #6b7280 !important;
+    background: transparent !important;
+}
+
+.btn-archive-log:hover {
+    background: #f3f4f6 !important;
+    color: #374151 !important;
+    border-color: #6b7280 !important;
+}
+
 .featured-toggle {
     background: none;
     border: none;

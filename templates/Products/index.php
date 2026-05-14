@@ -21,9 +21,12 @@ $this->Html->script('https://cdn.datatables.net/2.2.2/js/dataTables.min.js', ['b
                 <h3 class="page-title"><?= __('Products') ?></h3>
             </div>
 
-            <?php if ($role === 'admin'): ?>
-                <?= $this->Html->link(__('Add New Product'), ['action' => 'add'], ['class' => 'btn-new-product']) ?>
-            <?php endif; ?>
+            <div style="display:flex;gap:10px;align-items:center">
+                <?php if ($role === 'admin'): ?>
+                    <button id="openActivityLogBtn" class="btn-activity-log">Activity Log</button>
+                    <?= $this->Html->link(__('Add New Product'), ['action' => 'add'], ['class' => 'btn-new-product']) ?>
+                <?php endif; ?>
+            </div>
         </div>
 
         <div class="table-responsive" style="padding: 10px">
@@ -105,16 +108,19 @@ $this->Html->script('https://cdn.datatables.net/2.2.2/js/dataTables.min.js', ['b
             </table>
         </div>
     </div>
+</div>
 
-    <?php if ($role === 'admin'): ?>
-    <div class="products index content" style="margin-top: 2rem;">
-        <div class="page-header-row">
-            <div>
-                <h3 class="page-title">Product Activity Log</h3>
-            </div>
+<?php if ($role === 'admin'): ?>
+<!-- Activity Log Modal -->
+<div id="activityLogModal" style="display:none;position:fixed;inset:0;z-index:900">
+    <div id="activityLogOverlay" style="position:absolute;inset:0;background:rgba(0,0,0,0.45)"></div>
+    <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:#fff;border-radius:14px;width:92%;max-width:960px;max-height:85vh;display:flex;flex-direction:column;box-shadow:0 12px 40px rgba(0,0,0,0.18);overflow:hidden">
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:20px 24px 16px;border-bottom:1px solid #eee;flex-shrink:0">
+            <strong style="font-size:1.05rem;color:#2a2320">Product Activity Log</strong>
+            <button id="activityLogClose" style="background:none;border:none;font-size:1.4rem;cursor:pointer;line-height:1;color:#555">&times;</button>
         </div>
-        <div class="table-responsive" style="padding: 10px">
-            <table id="activityLogsTable" class="display">
+        <div style="overflow:auto;padding:16px 24px 24px;font-family:var(--font-admin)">
+            <table id="activityLogsTable" class="display" style="width:100%">
                 <thead>
                     <tr>
                         <th>When</th>
@@ -128,9 +134,10 @@ $this->Html->script('https://cdn.datatables.net/2.2.2/js/dataTables.min.js', ['b
                     <?php foreach ($productLogs as $log): ?>
                         <?php
                         $badgeStyle = match($log->action) {
-                            'created' => 'background:#d4edda;color:#155724',
-                            'deleted' => 'background:#f8d7da;color:#721c24',
-                            default   => 'background:#fff3cd;color:#856404',
+                            'created'  => 'background:#d4edda;color:#155724',
+                            'deleted'  => 'background:#f8d7da;color:#721c24',
+                            'restored' => 'background:#d1ecf1;color:#0c5460',
+                            default    => 'background:#fff3cd;color:#856404',
                         };
                         $logMeta = [
                             'Action'  => ucfirst($log->action),
@@ -141,6 +148,7 @@ $this->Html->script('https://cdn.datatables.net/2.2.2/js/dataTables.min.js', ['b
                         $logChanges = [];
                         if (!empty($log->changes)) {
                             foreach ($log->changes as $k => $v) {
+                                if ($k === 'images') continue;
                                 $label = ucwords(str_replace('_', ' ', $k));
                                 if (is_array($v) && isset($v['from'], $v['to'])) {
                                     $logChanges[$label] = ['from' => $v['from'], 'to' => $v['to']];
@@ -160,8 +168,24 @@ $this->Html->script('https://cdn.datatables.net/2.2.2/js/dataTables.min.js', ['b
                             </td>
                             <td><?= h($log->model_label) ?></td>
                             <td><?= h($log->user_name) ?></td>
-                            <td>
+                            <td class="actions">
                                 <button class="btn-view log-view-btn" data-changes="<?= h($logDataJson) ?>">View</button>
+                                <?php if ($log->action === 'deleted'): ?>
+                                    <?= $this->Form->postLink('Restore', ['action' => 'restoreProduct', $log->id], [
+                                        'confirm' => 'Restore "' . $log->model_label . '" from deleted?',
+                                        'class'   => 'btn-restore-log',
+                                    ]) ?>
+                                <?php elseif ($log->action === 'updated'): ?>
+                                    <?= $this->Form->postLink('Revert', ['action' => 'restoreProduct', $log->id], [
+                                        'confirm' => 'Revert "' . $log->model_label . '" to its state before this change?',
+                                        'class'   => 'btn-restore-log',
+                                    ]) ?>
+                                <?php endif; ?>
+                                <?php if (!in_array($log->action, ['updated', 'deleted'])): ?>
+                                    <?= $this->Form->postLink('Archive', ['action' => 'archiveLog', $log->id], [
+                                        'class' => 'btn-archive-log',
+                                    ]) ?>
+                                <?php endif; ?>
                             </td>
                         </tr>
                     <?php endforeach; ?>
@@ -169,17 +193,18 @@ $this->Html->script('https://cdn.datatables.net/2.2.2/js/dataTables.min.js', ['b
             </table>
         </div>
     </div>
-    <?php endif; ?>
 </div>
+<?php endif; ?>
 
-<div id="logModal" style="display:none;position:fixed;inset:0;z-index:1000">
-    <div id="logModalOverlay" style="position:absolute;inset:0;background:rgba(0,0,0,0.45)"></div>
+<!-- Changes detail popup (sits above the log modal) -->
+<div id="logModal" style="display:none;position:fixed;inset:0;z-index:1100">
+    <div id="logModalOverlay" style="position:absolute;inset:0;background:rgba(0,0,0,0.35)"></div>
     <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:#fff;border-radius:10px;min-width:320px;max-width:520px;width:90%;box-shadow:0 8px 32px rgba(0,0,0,0.18);padding:28px 28px 20px">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
             <strong style="font-size:1rem">Changes</strong>
             <button id="logModalClose" style="background:none;border:none;font-size:1.3rem;cursor:pointer;line-height:1;color:#555">&times;</button>
         </div>
-        <div id="logModalBody" style="font-size:0.9rem;color:#333"></div>
+        <div id="logModalBody" style="font-size:0.9rem;color:#333;max-height:60vh;overflow-y:auto;font-family:var(--font-admin)"></div>
     </div>
 </div>
 
@@ -195,14 +220,23 @@ $this->Html->script('https://cdn.datatables.net/2.2.2/js/dataTables.min.js', ['b
         });
 
         var csrfToken = '<?= $this->request->getAttribute('csrfToken') ?>';
+        var logTableInit = false;
 
-        if ($('#activityLogsTable').length) {
-            $('#activityLogsTable').DataTable({
-                order: [[0, 'desc']],
-                language: { lengthMenu: '_MENU_ Entries Per Page', search: 'Search:' },
-                columnDefs: [{ targets: [-1], orderable: false, searchable: false }],
-            });
-        }
+        $('#openActivityLogBtn').on('click', function() {
+            $('#activityLogModal').fadeIn(180);
+            if (!logTableInit) {
+                $('#activityLogsTable').DataTable({
+                    order: [[0, 'desc']],
+                    language: { lengthMenu: '_MENU_ Entries Per Page', search: 'Search:' },
+                    columnDefs: [{ targets: [-1], orderable: false, searchable: false }],
+                });
+                logTableInit = true;
+            }
+        });
+
+        $('#activityLogOverlay, #activityLogClose').on('click', function() {
+            $('#activityLogModal').fadeOut(180);
+        });
 
         $(document).on('click', '.log-view-btn', function() {
             var data = $(this).data('changes');

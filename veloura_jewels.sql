@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: May 14, 2026 at 09:25 PM
+-- Generation Time: May 15, 2026 at 01:45 AM
 -- Server version: 12.2.2-MariaDB
 -- PHP Version: 8.4.18
 
@@ -18,12 +18,6 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `veloura_jewels`
---
-CREATE DATABASE IF NOT EXISTS `veloura_jewels` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_uca1400_ai_ci;
-USE `veloura_jewels`;
-
--- --------------------------------------------------------
 
 --
 -- Table structure for table `activity_logs`
@@ -40,10 +34,11 @@ CREATE TABLE IF NOT EXISTS `activity_logs` (
     `model_label` varchar(255) DEFAULT NULL,
     `changes` text DEFAULT NULL,
     `created` datetime NOT NULL,
+    `is_archived` tinyint(1) NOT NULL DEFAULT 0,
     PRIMARY KEY (`id`),
     KEY `idx_model` (`model`),
     KEY `idx_created` (`created`)
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+    ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -378,7 +373,7 @@ CREATE TABLE IF NOT EXISTS `products` (
   `category_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_products_category` (`category_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=58 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `products`
@@ -390,8 +385,7 @@ INSERT INTO `products` (`id`, `name`, `purchase_price`, `sale_price`, `supplier_
 (3, 'Dainty Rose Gold Ring', 28.00, 115.00, 'supplier@luxgems.com.au', '2026-04-13 11:29:33', '2026-05-07 13:17:22', 'This ring is made with Alloy and 18k rose gold plated. It is microset with white cubic zirconia.\r\nThe Alloy is made of 95% recycled material. It is anti-tarnishing and Hypoallergenic.\r\nMaterial: Alloy made of 95% recycled material and 18k rose gold plated, white cubic zirconia, anti-tarnishing and Hypoallergenic\r\nAll our products are handcrafted and microset by hand in our ateliers\r\nColor: Rose gold', 'In a refined workshop, the Dainty Rose Gold Ring is carefully shaped and polished to achieve a soft, warm glow that highlights its delicate form. Each piece is finished by hand to ensure a smooth, minimalist elegance designed for everyday wear.\r\n', 1, 1),
 (4, 'Chunky Ice Ring', 95.00, 289.00, 'supplier@luxgems.com.au', '2026-04-13 11:29:33', '2026-05-14 20:43:47', 'Sterling silver intertwines with paths of brilliant stones to reflect the geometric patterns created by broken ice.\r\nAll our products are handcrafted in our ateliers\r\nMaterial: Sterling silver\r\nStone: White cubic zirconia\r\nColor: Silver', 'In a bold atelier, the Chunky Ice Ring is cast with substantial volume and carefully sculpted edges, then polished to a high, glass-like shine for maximum impact. Each piece is finished by hand to enhance its crisp, modern brilliance and sculptural presence.\r\n', 1, 1),
 (5, 'LOVE Morse Code Ring', 28.00, 115.00, 'supplier@goldcraft.com.au', '2026-04-13 11:29:33', '2026-05-04 21:22:02', 'This collection is using Morse code as a secret Love language.\r\nThis ring is embellished with the code LOVE on it, and the word LOVE is also engraved inside.\r\nMaterial: Rose Alloy made of 95% recycled material and 18k gold plated (3 microns), white cubic zirconia, anti-tarnishing and anti-allergenic\r\nAll our products are handcrafted and microset by hand in our ateliers\r\nColor: Rose gold', 'In a precise atelier, the LOVE Morse Code Ring is crafted with tiny, carefully placed stones and metal beads that encode the word \"LOVE\" in subtle rhythmic patterning. Each ring is hand-finished to ensure the message is both discreet and beautifully refined in its minimalist design.\r\n', 1, 1),
-(6, 'Art Deco Adjustable Necklace', 65.00, 225.00, 'supplier@luxgems.com.au', '2026-04-13 11:29:33', '2026-05-14 20:27:42', 'This necklace is meticulously crafted for a perfect balance between bold structure and refined elegance.\r\nMaterial: Sterling silver\r\nStone: White cubic zirconia\r\nColor: Silver\r\nPendant size: Length 4.6 cm ; Width 0.7 cm\r\nTotal chain length: Adjustable to 48 cm maximum with sliding clasp', 'In a precision-led atelier, the Art Deco Adjustable Necklace is crafted with clean geometric lines, each element carefully shaped and assembled by hand. The adjustable mechanism is seamlessly integrated, ensuring both versatility and refined elegance in a timeless design.\r\n', 0, 3),
-                                                                                                                         (7, 'Art Deco Pavé Choker', 285.00, 769.00, 'supplier@goldcraft.com.au', '2026-04-13 11:29:33', '2026-05-04 22:00:10', 'This choker is meticulously crafted for a perfect balance between bold structure and refined elegance.\r\nMaterial: Sterling silver\r\nStone: Over 210 white cubic zirconia\r\nColor: Silver\r\nTotal chain length: 40 cm ; Width 0.8 cm', 'In a meticulous atelier, the Art Deco Pavé Choker is crafted with precise geometric forms, each tiny stone hand-set to create a seamless ribbon of light. The piece is carefully assembled to sit elegantly at the neckline, capturing the bold symmetry of the Art Deco era.\r\n', 0, 2),
+(7, 'Art Deco Pavé Choker', 285.00, 769.00, 'supplier@goldcraft.com.au', '2026-04-13 11:29:33', '2026-05-04 22:00:10', 'This choker is meticulously crafted for a perfect balance between bold structure and refined elegance.\r\nMaterial: Sterling silver\r\nStone: Over 210 white cubic zirconia\r\nColor: Silver\r\nTotal chain length: 40 cm ; Width 0.8 cm', 'In a meticulous atelier, the Art Deco Pavé Choker is crafted with precise geometric forms, each tiny stone hand-set to create a seamless ribbon of light. The piece is carefully assembled to sit elegantly at the neckline, capturing the bold symmetry of the Art Deco era.\r\n', 0, 2),
                                                                                                                          (8, 'Lilac Torsade Adjustable Necklace', 55.00, 199.00, 'supplier@goldcraft.com.au', '2026-04-13 11:29:33', '2026-05-04 21:22:01', 'This necklace embodies elegance and versatility.\r\nMaterial: Yellow Alloy made of 95% recycled material and 18k yellow gold plated\r\nStone: Purple cubic zirconia\r\nColor: Yellow\r\nTotal chain length: Adjustable to 65 cm maximum with sliding clasp', 'In a refined atelier, the Lilac Torsade Adjustable Necklace is crafted by delicately twisting metal into a graceful spiral, then accented with soft lilac tones that catch the light. The adjustable design is seamlessly integrated, blending versatility with elegant, handcrafted detail.\r\n', 1, 2),
                                                                                                                          (9, 'Lumière Pavé Choker', 175.00, 599.00, 'supplier@luxgems.com.au', '2026-04-13 11:29:33', '2026-05-04 21:22:04', 'This minimalist and versatile choker perfectly captures the essence of spring.\r\nMaterial: Sterling silver\r\nStone: White cubic zirconia\r\nColor: Silver', 'In a precision-focused atelier, the Lumière Pavé Choker is meticulously assembled as artisans hand-set each stone to create a continuous band of brilliance. The finished piece is carefully polished to enhance its radiant glow, embodying refined craftsmanship and modern elegance.\r\n', 1, 2),
                                                                                                                          (10, 'Maille Marine Chain Necklace', 135.00, 395.00, 'supplier@pearlsea.com.au', '2026-04-13 11:29:33', '2026-05-04 21:22:04', 'Material: Rose Alloy made of 95% recycled material and 18k gold plated, white cubic zirconia\r\nColor: Rose gold\r\nTotal chain length: 45 cm', 'In a skilled workshop, the Maille Marine Chain Necklace is crafted by interlinking polished metal loops in a classic marine-inspired pattern, each connection carefully secured by hand. The piece is then refined to a smooth finish, highlighting its strength, rhythm, and understated elegance.\r\n', 1, 2),
@@ -416,7 +410,8 @@ INSERT INTO `products` (`id`, `name`, `purchase_price`, `sale_price`, `supplier_
                                                                                                                          (51, 'Chenille Throw', 22.00, 55.00, 'supplier@textilecraft.com.au', '2026-05-11 16:28:01', '2026-05-11 16:28:01', 'Colour: Warm taupe\r\nMaterial: Chenille yarn, polyester backing\r\nDimensions: 130cm (W) x 160cm (L)\r\nWeight: 900g', 'The Chenille Throw is crafted from soft, tufted chenille yarn that creates a velvety pile with a gentle sheen. Each throw is carefully finished for weight and drape, resulting in a piece that feels substantial yet supple — designed to cocoon and comfort through every season.', 0, 10),
                                                                                                                          (52, 'Double Width Linen Curtain', 62.00, 145.00, 'supplier@textilecraft.com.au', '2026-05-11 16:30:27', '2026-05-11 16:30:27', 'Colour: Natural linen\r\nMaterial: 100% European linen\r\nDimensions: 250cm (H) x 270cm (W)\r\nHeader: 7cm rod pocket tape', 'Cut from a single length of heavy European linen, the Double Width Curtain filters light with a quiet warmth, casting a soft glow across any room. The natural fibres are left largely untreated to preserve their texture and character, each panel finished with a generous hem that holds its fall with effortless grace.', 0, 11),
                                                                                                                          (53, 'Distressed Textured Ceramic Vase', 44.00, 109.00, 'supplier@ceramicarts.com.au', '2026-05-11 16:32:55', '2026-05-11 16:32:55', 'Colour: Aged white with terracotta undertones\r\nMaterial: Stoneware ceramic\r\nDimensions: 38cm (H) x 16cm (Dia.)', 'Thrown on a wheel in a small ceramics studio, the Distressed Textured Ceramic Vase is shaped by hand and then finished with deliberate surface marking to create its characteristic aged quality. The natural clay body is fired at high temperature before a weathered glaze is applied in warm, earthy tones — a vessel that carries the honest marks of its making.', 0, 7),
-                                                                                                                         (54, 'Textured Ceramic Vase', 28.00, 72.00, 'supplier@ceramicarts.com.au', '2026-05-11 16:34:17', '2026-05-11 16:34:17', 'Colour: Matte stone grey\r\nMaterial: Stoneware ceramic\r\nDimensions: 26cm (H) x 12cm (Dia.)', 'Hand-thrown and surface-textured in a studio setting, the Textured Ceramic Vase is shaped with deliberate ridges and soft impressions that catch light and shadow across its form. Fired in a matte stone glaze, it feels considered and grounded — a quiet vessel that complements cut stems and dried botanicals equally well.', 0, 7);
+                                                                                                                         (54, 'Textured Ceramic Vase', 28.00, 72.00, 'supplier@ceramicarts.com.au', '2026-05-11 16:34:17', '2026-05-11 16:34:17', 'Colour: Matte stone grey\r\nMaterial: Stoneware ceramic\r\nDimensions: 26cm (H) x 12cm (Dia.)', 'Hand-thrown and surface-textured in a studio setting, the Textured Ceramic Vase is shaped with deliberate ridges and soft impressions that catch light and shadow across its form. Fired in a matte stone glaze, it feels considered and grounded — a quiet vessel that complements cut stems and dried botanicals equally well.', 0, 7),
+                                                                                                                         (57, 'Art Deco Adjustable Necklace', 65.00, 225.00, 'supplier@luxgems.com.au', '2026-05-15 01:42:11', '2026-05-15 01:42:11', 'This necklace is meticulously crafted for a perfect balance between bold structure and refined elegance.\r\nMaterial: Sterling silver\r\nStone: White cubic zirconia\r\nColor: Silver\r\nPendant size: Length 4.6 cm ; Width 0.7 cm\r\nTotal chain length: Adjustable to 48 cm maximum with sliding clasp', 'In a precision-led atelier, the Art Deco Adjustable Necklace is crafted with clean geometric lines, each element carefully shaped and assembled by hand. The adjustable mechanism is seamlessly integrated, ensuring both versatility and refined elegance in a timeless design.\r\n', 0, 3);
 
 -- --------------------------------------------------------
 
@@ -431,7 +426,7 @@ CREATE TABLE IF NOT EXISTS `product_images` (
     `filename` varchar(4096) NOT NULL,
     PRIMARY KEY (`id`),
     KEY `product_id` (`product_id`)
-    ) ENGINE=InnoDB AUTO_INCREMENT=186 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+    ) ENGINE=InnoDB AUTO_INCREMENT=190 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `product_images`
@@ -476,8 +471,6 @@ INSERT INTO `product_images` (`id`, `product_id`, `filename`) VALUES
                                                                   (141, 36, '7253548a-e787-48b7-a439-4dcaedf7cf83.png'),
                                                                   (142, 35, '185081e2-bcdd-47ee-93bf-6648f82ee9a8.png'),
                                                                   (143, 34, 'dcbe07bd-b2d5-4cc8-ba96-142777353154.png'),
-                                                                  (148, 6, 'Copilot_20260506_212001.png'),
-                                                                  (149, 6, 'Copilot_20260504_165515.png'),
                                                                   (161, 38, 'Copilot_20260511_155247.png'),
                                                                   (162, 38, 'Copilot_20260511_155416.png'),
                                                                   (163, 39, 'Copilot_20260511_155554.png'),
@@ -501,7 +494,9 @@ INSERT INTO `product_images` (`id`, `product_id`, `filename`) VALUES
                                                                   (181, 53, '46317046800-a7.webp'),
                                                                   (182, 53, '46317046800-p1.webp'),
                                                                   (183, 54, '45377046802-a7.webp'),
-                                                                  (184, 54, '45377046802-r1.webp');
+                                                                  (184, 54, '45377046802-r1.webp'),
+                                                                  (188, 57, 'Copilot_20260506_212001.png'),
+                                                                  (189, 57, 'Copilot_20260504_165515.png');
 
 -- --------------------------------------------------------
 
@@ -549,7 +544,6 @@ INSERT INTO `product_variants` (`id`, `product_id`, `size`, `stock`) VALUES
                                                                          (23, 5, 'Size 7', 10),
                                                                          (24, 5, 'Size 8', 8),
                                                                          (25, 5, 'Size 9', 6),
-                                                                         (26, 6, 'One Size', 18),
                                                                          (27, 7, 'One Size', 6),
                                                                          (28, 8, 'One Size', 15),
                                                                          (29, 9, 'One Size', 8),

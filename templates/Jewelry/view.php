@@ -82,6 +82,69 @@ $oneSizeVariant = $isOneSizeOnly ? $inStockVariants[0] : null;
                 <?php endif; ?>
             </div>
 
+            <?php if ($hasStock): ?>
+                <?= $this->Form->create(null, [
+                    'url'        => ['controller' => 'Jewelry', 'action' => 'addToCart'],
+                    'class'      => 'add-to-cart-form',
+                    'novalidate' => true,
+                ]) ?>
+                <?= $this->Form->hidden('product_id', ['value' => $product->id]) ?>
+                <?= $this->Form->hidden('variant_id', ['id' => 'variant-id-input', 'value' => $isOneSizeOnly ? $oneSizeVariant->id : '']) ?>
+
+                <div class="detail-section">
+                    <div class="detail-section-label">
+                        Size<?php if (!$isOneSizeOnly): ?> <span id="selected-size-name" class="selected-size-name"></span><?php endif; ?>
+                    </div>
+                    <?php if ($isOneSizeOnly): ?>
+                        <span class="one-size-pill"><?= h($oneSizeVariant->size) ?></span>
+                    <?php else: ?>
+                        <div class="size-pills">
+                            <?php foreach ($product->product_variants as $v): ?>
+                                <?php if ($v->stock > 0): ?>
+                                    <button type="button" class="size-pill"
+                                        data-id="<?= $v->id ?>"
+                                        data-stock="<?= $v->stock ?>"
+                                        data-name="<?= h($v->size) ?>">
+                                        <?= h($v->size) ?>
+                                    </button>
+                                <?php else: ?>
+                                    <button type="button" class="size-pill size-pill--out" disabled>
+                                        <?= h($v->size) ?>
+                                    </button>
+                                <?php endif; ?>
+                            <?php endforeach; ?>
+                        </div>
+                    <?php endif; ?>
+                </div>
+
+                <div class="detail-section">
+                    <div class="detail-section-label">Quantity</div>
+                    <div class="qty-stepper">
+                        <button type="button" class="qty-stepper-btn" id="qty-minus"<?= !$isOneSizeOnly ? ' disabled' : '' ?>>−</button>
+                        <input type="number" name="quantity" id="quantity"
+                            value="1" min="1"
+                            max="<?= $isOneSizeOnly ? $oneSizeVariant->stock : 99 ?>"
+                            class="qty-stepper-input">
+                        <button type="button" class="qty-stepper-btn" id="qty-plus"<?= !$isOneSizeOnly ? ' disabled' : '' ?>>+</button>
+                    </div>
+                    <span id="qty-toast" class="qty-toast" role="alert" aria-live="assertive"></span>
+                </div>
+
+                <div class="detail-add-row">
+                    <?= $this->Form->button('Add to Cart', [
+                        'class'    => 'jewelry-add-to-cart-btn',
+                        'id'       => 'add-to-cart-btn',
+                        'disabled' => !$isOneSizeOnly,
+                    ]) ?>
+                </div>
+
+                <?= $this->Form->end() ?>
+            <?php else: ?>
+                <div class="detail-add-row" style="margin-top:1.8rem">
+                    <button class="jewelry-add-to-cart-btn" disabled>Out of Stock</button>
+                </div>
+            <?php endif; ?>
+
             <?php if (!empty($product->description)): ?>
                 <details class="detail-accordion" open>
                     <summary class="detail-accordion-summary">Product Details</summary>
@@ -100,141 +163,73 @@ $oneSizeVariant = $isOneSizeOnly ? $inStockVariants[0] : null;
                 </details>
             <?php endif; ?>
 
-            <?php if ($hasStock): ?>
-                <?= $this->Form->create(null, [
-                    'url'        => ['controller' => 'Jewelry', 'action' => 'addToCart'],
-                    'class'      => 'add-to-cart-form',
-                    'novalidate' => true,
-                ]) ?>
-                <?= $this->Form->hidden('product_id', ['value' => $product->id]) ?>
-
-                <div class="quantity-group">
-                    <label class="quantity-label">Size</label>
-                    <div class="qty-box">
-                        <?php if ($isOneSizeOnly): ?>
-                            <?= $this->Form->hidden('variant_id', ['value' => $oneSizeVariant->id]) ?>
-                            <span class="one-size-pill"><?= h($oneSizeVariant->size) ?></span>
-                        <?php else: ?>
-                            <select name="variant_id" id="variant-select" class="detail-size-select">
-                                <option value="">Select a size</option>
-                                <?php foreach ($product->product_variants as $v): ?>
-                                    <?php if ($v->stock > 0): ?>
-                                        <option value="<?= $v->id ?>" data-stock="<?= $v->stock ?>">
-                                            <?= h($v->size) ?>
-                                        </option>
-                                    <?php else: ?>
-                                        <option value="" disabled><?= h($v->size) ?> — Out of Stock</option>
-                                    <?php endif; ?>
-                                <?php endforeach; ?>
-                            </select>
-                        <?php endif; ?>
-                    </div>
-                </div>
-
-                <div class="quantity-group">
-                    <label class="quantity-label" for="quantity">Quantity</label>
-                    <div class="qty-row">
-                        <div class="qty-box">
-                            <button type="button" class="jewelry-qty-minus">−</button>
-                            <input
-                                type="number"
-                                id="quantity"
-                                name="quantity"
-                                min="1"
-                                max="<?= $isOneSizeOnly ? $oneSizeVariant->stock : 1 ?>"
-                                value="1"
-                                class="jewelry-quantity-input"
-                            >
-                            <button type="button" class="jewelry-qty-plus">+</button>
-                        </div>
-                        <span id="qty-toast" class="qty-toast" role="alert" aria-live="assertive"></span>
-                    </div>
-                </div>
-
-                <div class="detail-actions">
-                    <?= $this->Form->button('Add to Cart', [
-                        'class' => 'jewelry-add-to-cart-btn',
-                        'id'    => 'add-to-cart-btn',
-                        'disabled' => !$isOneSizeOnly
-                    ]) ?>
-                </div>
-
-                <?= $this->Form->end() ?>
-            <?php else: ?>
-                <div class="detail-actions">
-                    <button class="jewelry-add-to-cart-btn" disabled>Add to Cart</button>
-                </div>
-            <?php endif; ?>
-
         </div>
     </div>
 </div>
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        var select   = document.getElementById('variant-select');
-        var qtyInput = document.getElementById('quantity');
-        var addBtn   = document.getElementById('add-to-cart-btn');
-        var toast    = document.getElementById('qty-toast');
+        var variantInput = document.getElementById('variant-id-input');
+        var qtyInput     = document.getElementById('quantity');
+        var addBtn       = document.getElementById('add-to-cart-btn');
+        var minusBtn     = document.getElementById('qty-minus');
+        var plusBtn      = document.getElementById('qty-plus');
+        var toast        = document.getElementById('qty-toast');
         var toastTimer;
 
-        function showQtyToast(msg) {
+        function showToast(msg) {
             clearTimeout(toastTimer);
             toast.textContent = msg;
             toast.classList.add('qty-toast--show');
-            toastTimer = setTimeout(function () {
-                toast.classList.remove('qty-toast--show');
-            }, 2500);
+            toastTimer = setTimeout(function () { toast.classList.remove('qty-toast--show'); }, 2500);
         }
 
-        if (select) {
-            select.addEventListener('change', function () {
-                var selected = this.options[this.selectedIndex];
-                var stock = parseInt(selected.getAttribute('data-stock') || 0, 10);
-                if (stock > 0) {
-                    qtyInput.max = stock;
-                    qtyInput.value = 1;
-                    addBtn.disabled = false;
-                } else {
-                    qtyInput.max = 1;
-                    addBtn.disabled = true;
-                }
+        function getMax() { return parseInt(qtyInput.max || 99, 10); }
+        function getVal() { return parseInt(qtyInput.value || 1, 10); }
+
+        if (minusBtn) {
+            minusBtn.addEventListener('click', function () {
+                var v = getVal();
+                if (v > 1) qtyInput.value = v - 1;
+            });
+        }
+
+        if (plusBtn) {
+            plusBtn.addEventListener('click', function () {
+                var v = getVal(), m = getMax();
+                if (v < m) { qtyInput.value = v + 1; }
+                else { showToast('Only ' + m + ' item' + (m === 1 ? '' : 's') + ' available'); }
             });
         }
 
         if (qtyInput) {
             qtyInput.addEventListener('input', function () {
-                var value = parseInt(this.value, 10);
-                var max   = parseInt(this.max || 999, 10);
-                if (isNaN(value) || value < 1) {
-                    this.value = 1;
-                } else if (value > max) {
-                    this.value = max;
-                    showQtyToast('Only ' + max + ' item' + (max === 1 ? '' : 's') + ' available');
-                }
+                var v = parseInt(this.value, 10), m = getMax();
+                if (isNaN(v) || v < 1) { this.value = 1; }
+                else if (v > m) { this.value = m; showToast('Only ' + m + ' item' + (m === 1 ? '' : 's') + ' available'); }
             });
         }
 
-        document.querySelectorAll('.qty-box').forEach(function (wrapper) {
-            var input = wrapper.querySelector('input[type="number"]');
-            if (!input) return;
-            var minus = wrapper.querySelector('.jewelry-qty-minus');
-            var plus  = wrapper.querySelector('.jewelry-qty-plus');
-            if (!minus || !plus) return;
+        // Size pill selection
+        document.querySelectorAll('.size-pill:not(.size-pill--out)').forEach(function (pill) {
+            pill.addEventListener('click', function () {
+                document.querySelectorAll('.size-pill').forEach(function (p) { p.classList.remove('size-pill--selected'); });
+                this.classList.add('size-pill--selected');
 
-            minus.addEventListener('click', function () {
-                var value = parseInt(input.value || 1, 10);
-                if (value > 1) input.value = value - 1;
-            });
+                var id    = this.dataset.id;
+                var stock = parseInt(this.dataset.stock, 10);
+                var name  = this.dataset.name;
 
-            plus.addEventListener('click', function () {
-                var value = parseInt(input.value || 1, 10);
-                var max   = parseInt(input.max || 999, 10);
-                if (value < max) {
-                    input.value = value + 1;
-                } else {
-                    showQtyToast('Only ' + max + ' item' + (max === 1 ? '' : 's') + ' available');
-                }
+                variantInput.value = id;
+                qtyInput.max       = stock;
+                qtyInput.value     = 1;
+
+                var label = document.getElementById('selected-size-name');
+                if (label) label.textContent = '— ' + name;
+
+                if (addBtn) addBtn.disabled = false;
+                if (minusBtn) minusBtn.disabled = false;
+                if (plusBtn) plusBtn.disabled = false;
             });
         });
     });

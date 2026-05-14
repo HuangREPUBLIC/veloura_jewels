@@ -15,6 +15,7 @@ class ActivityLog extends Entity
         'model_id'    => true,
         'model_label' => true,
         'changes'     => true,
+        'is_archived' => true,
         'created'     => true,
     ];
 }

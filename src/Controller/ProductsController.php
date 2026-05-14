@@ -39,7 +39,7 @@ class ProductsController extends AppController
 
         try {
             $productLogs = $this->fetchTable('ActivityLogs')->find()
-                ->where(['model' => 'Product'])
+                ->where(['model' => 'Product', 'is_archived' => false])
                 ->orderByDesc('created')
                 ->limit(50)
                 ->all();
@@ -137,7 +137,9 @@ class ProductsController extends AppController
             }
 
             if ($this->Products->save($product, ['associated' => ['ProductVariants']])) {
-                $this->logActivity('Product', $product->id, 'updated', $product->name, $changes ?: null);
+                if (!empty($changes)) {
+                    $this->logActivity('Product', $product->id, 'updated', $product->name, $changes);
+                }
                 $this->_saveProductImages($product->id);
                 $deleteIds = $this->request->getData('delete_images') ?? [];
                 if (!empty($deleteIds)) {
@@ -300,9 +302,12 @@ class ProductsController extends AppController
         }
 
         $product = $this->Products->get($id);
-        $product->featured = !$product->featured;
+        $wasFeature = $product->featured;
+        $product->featured = !$wasFeature;
         $this->Products->save($product);
-        $this->logActivity('Product', $product->id, 'updated', $product->name, ['is_featured' => $product->featured]);
+        $this->logActivity('Product', $product->id, 'updated', $product->name, [
+            'featured' => ['from' => $wasFeature, 'to' => $product->featured],
+        ]);
 
         return $this->response->withType('application/json')
             ->withStringBody(json_encode(['featured' => (bool)$product->featured]));
@@ -332,21 +337,154 @@ class ProductsController extends AppController
         $adminId = $identity->get('id');
         $adminEmail = $identity->get('email');
 
+        $imageFilenames = $this->fetchTable('ProductImages')
+            ->find()
+            ->select(['filename'])
+            ->where(['product_id' => $id])
+            ->all()
+            ->map(fn($img) => $img->filename)
+            ->toList();
+
         $this->fetchTable('OrderItems')->updateAll(['product_id' => null], ['product_id' => $id]);
 
         if ($this->Products->delete($product)) {
             Log::write('info', "Product deleted: id={$product->id}, name=\"{$product->name}\" by admin id={$adminId} ({$adminEmail})");
             $this->logActivity('Product', (int)$id, 'deleted', $product->name, [
                 'name'           => $product->name,
-                'type'           => $product->type,
                 'sale_price'     => (string)$product->sale_price,
                 'purchase_price' => (string)$product->purchase_price,
                 'supplier_email' => $product->supplier_email,
+                'description'    => $product->description,
+                'story'          => $product->story,
+                'category_id'    => $product->category_id,
+                'featured'       => $product->featured,
+                'images'         => $imageFilenames,
             ]);
             $this->Flash->success(__('The product has been deleted.'));
         } else {
             $this->Flash->error(__('The product could not be deleted. Please, try again.'));
         }
+
+        return $this->redirect(['action' => 'index']);
+    }
+
+    public function restoreProduct($logId = null)
+    {
+        $this->request->allowMethod(['post']);
+
+        $identity = $this->Authentication->getIdentity();
+        if (!$identity || $identity->get('role') !== 'admin') {
+            $this->Flash->error(__('You do not have permission.'));
+            return $this->redirect(['action' => 'index']);
+        }
+
+        $logsTable = $this->fetchTable('ActivityLogs');
+        try {
+            $log = $logsTable->get($logId);
+        } catch (\Exception $e) {
+            $this->Flash->error(__('Log entry not found.'));
+            return $this->redirect(['action' => 'index']);
+        }
+
+        if ($log->model !== 'Product') {
+            $this->Flash->error(__('Invalid log entry.'));
+            return $this->redirect(['action' => 'index']);
+        }
+
+        $success = false;
+        $productName = $log->model_label;
+
+        if ($log->action === 'deleted') {
+            $data = $log->changes ?? [];
+            if (empty($data)) {
+                $this->Flash->error(__('No restore data available for this entry.'));
+                return $this->redirect(['action' => 'index']);
+            }
+            $imageFilenames = $data['images'] ?? [];
+            unset($data['images']);
+            $product = $this->Products->patchEntity($this->Products->newEmptyEntity(), $data);
+            if ($this->Products->save($product)) {
+                if (!empty($imageFilenames)) {
+                    $productImagesTable = $this->fetchTable('ProductImages');
+                    foreach ($imageFilenames as $filename) {
+                        $img = $productImagesTable->newEmptyEntity();
+                        $img->product_id = $product->id;
+                        $img->filename   = $filename;
+                        $productImagesTable->save($img);
+                    }
+                }
+                $productName = $product->name;
+                $success = true;
+                $this->Flash->success(sprintf('"%s" has been restored.', $product->name));
+            } else {
+                $this->Flash->error(__('Could not restore the product.'));
+            }
+        } elseif ($log->action === 'updated') {
+            try {
+                $product = $this->Products->get($log->model_id);
+            } catch (\Exception $e) {
+                $this->Flash->error(__('Product no longer exists and cannot be reverted.'));
+                return $this->redirect(['action' => 'index']);
+            }
+            $revertData = [];
+            foreach ($log->changes ?? [] as $field => $change) {
+                if (is_array($change) && array_key_exists('from', $change)) {
+                    $revertData[$field] = $change['from'];
+                }
+            }
+            if (empty($revertData)) {
+                $this->Flash->error(__('Nothing to revert for this entry.'));
+                return $this->redirect(['action' => 'index']);
+            }
+            $product = $this->Products->patchEntity($product, $revertData);
+            if ($this->Products->save($product)) {
+                $productName = $product->name;
+                $success = true;
+                $this->Flash->success(sprintf('"%s" has been reverted to its previous state.', $product->name));
+            } else {
+                $this->Flash->error(__('Could not revert the product.'));
+            }
+        }
+
+        if ($success) {
+            // Archive the original log entry
+            $logsTable->updateAll(['is_archived' => true], ['id' => $log->id]);
+            // Save a restored log entry and immediately archive it too
+            $logsTable->save($logsTable->newEntity([
+                'user_id'     => $identity->get('id'),
+                'user_name'   => $identity->get('name') ?? $identity->get('email') ?? 'System',
+                'action'      => 'restored',
+                'model'       => 'Product',
+                'model_id'    => $log->model_id,
+                'model_label' => $productName,
+                'changes'     => null,
+                'is_archived' => true,
+                'created'     => new \Cake\I18n\DateTime(),
+            ]));
+        }
+
+        return $this->redirect(['action' => 'index']);
+    }
+
+    public function archiveLog($logId = null)
+    {
+        $this->request->allowMethod(['post']);
+
+        $identity = $this->Authentication->getIdentity();
+        if (!$identity || $identity->get('role') !== 'admin') {
+            $this->Flash->error(__('You do not have permission.'));
+            return $this->redirect(['action' => 'index']);
+        }
+
+        $logsTable = $this->fetchTable('ActivityLogs');
+        try {
+            $log = $logsTable->get($logId);
+        } catch (\Exception $e) {
+            $this->Flash->error(__('Log entry not found.'));
+            return $this->redirect(['action' => 'index']);
+        }
+
+        $logsTable->updateAll(['is_archived' => true], ['id' => $log->id]);
 
         return $this->redirect(['action' => 'index']);
     }
