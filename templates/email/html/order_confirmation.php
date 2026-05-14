@@ -26,10 +26,6 @@ $shopUrl = $this->Url->build('/jewelry', ['fullBase' => true]);
   and is being prepared with care.
 </p>
 
-<?php
-echo $this->Html->image('homepage.png', ['alt' => 'CakePHP']);
-?>
-
 <!-- Divider -->
 <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%"
        style="margin:24px 0 20px;">
