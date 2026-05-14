@@ -1,4 +1,21 @@
-/* Shared */
+/* ============================================
+   GLOBAL SAFETY — prevent horizontal overflow
+   ============================================ */
+.home-page {
+    overflow-x: hidden;
+    width: 100%;
+}
+
+.home-page img,
+.home-page video {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* ============================================
+   Shared
+   ============================================ */
 .hp-label {
     font-size: 0.68rem;
     font-weight: 700;
@@ -8,8 +25,6 @@
     margin-bottom: 1rem;
     display: block;
 }
-
-
 
 .hp-btn {
     display: inline-block;
@@ -52,7 +67,10 @@
     margin: 0;
     letter-spacing: 0.01em;
 }
-/* Hero - full viewport video */
+
+/* ============================================
+   Hero — full viewport video
+   ============================================ */
 .hp-hero {
     display: block;
     min-height: auto;
@@ -67,7 +85,7 @@
     overflow: hidden;
 }
 
-.home-video {
+.hp-hero .home-video {
     position: absolute;
     inset: 0;
     width: 100%;
@@ -91,7 +109,6 @@
     padding: 1rem;
 }
 
-/* Override text colors for on-video readability */
 .hp-hero-overlay .hp-label {
     color: var(--earth-yellow);
 }
@@ -108,6 +125,7 @@
     color: rgba(255, 255, 255, 0.85);
     max-width: 480px;
     margin-bottom: 2rem;
+    padding: 0 1rem;
 }
 
 .hp-hero-overlay .hp-hero-actions {
@@ -125,7 +143,9 @@
     border-color: #fff;
 }
 
-/* New arrivals */
+/* ============================================
+   New arrivals
+   ============================================ */
 .hp-arrivals {
     padding: 5rem 2rem 4rem;
     background: var(--color-white);
@@ -139,7 +159,6 @@
     margin: 0 auto;
 }
 
-
 .hp-arrivals-footer {
     text-align: center;
     margin-top: 2.8rem;
@@ -147,6 +166,7 @@
     align-items: center;
     justify-content: center;
     gap: 1.2rem;
+    flex-wrap: wrap;
 }
 
 .hp-arrivals-link {
@@ -170,7 +190,9 @@
     font-size: 0.9rem;
 }
 
-/* Collection Modal */
+/* ============================================
+   Collection Modal
+   ============================================ */
 .collection-modal {
     display: none;
     position: fixed;
@@ -287,20 +309,13 @@
     margin: 0;
 }
 
-@media (max-width: 480px) {
-    .collection-modal-content {
-        padding: 2rem 1.5rem;
-    }
-
-    .collection-modal-cards {
-        grid-template-columns: 1fr;
-    }
-}
-
-/* Featured Collection (shared) */
+/* ============================================
+   Featured Collection (shared)
+   ============================================ */
 .hp-featured {
     padding: 6rem 0;
     background: var(--color-white);
+    overflow: hidden;       /* prevent any child overflow */
 }
 
 .hp-featured-inner {
@@ -308,22 +323,33 @@
     grid-template-columns: 1fr 1fr;
     gap: 3rem;
     max-width: 1400px;
+    width: 100%;
     margin: 0 auto;
     align-items: stretch;
     min-height: 600px;
+    box-sizing: border-box;
+    padding: 0 2rem;
 }
 
-.hp-featured-image {
+.hp-featured-image,
+.hp-featured-img-decor {
     width: 100%;
+    max-width: 100%;
     background: transparent;
     overflow: hidden;
 }
 
-.hp-featured-image img {
+.hp-featured-image img,
+.hp-featured-img-decor img {
     width: 100%;
     height: 100%;
-    object-fit: contain;
+    object-fit: cover;
     object-position: center;
+    display: block;
+}
+
+.hp-featured-image img {
+    object-fit: contain;    /* keeps the marble texture from being cropped weirdly */
 }
 
 .hp-featured-content {
@@ -331,6 +357,11 @@
     flex-direction: column;
     justify-content: center;
     padding: 3rem 3rem 3rem 0;
+    min-width: 0;           /* lets grid item shrink below content size */
+}
+
+.hp-featured--reverse .hp-featured-content {
+    padding: 3rem 0 3rem 3rem;
 }
 
 .hp-featured-title {
@@ -354,90 +385,53 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 0.5rem;
+    width: 100%;
+    min-width: 0;
+}
+
+.hp-featured-products .product-card-wrap {
+    min-width: 0;           /* allow shrinking inside grid */
 }
 
 .hp-featured-products .product-card {
     border-radius: 8px;
     overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background: var(--color-white);
+}
+
+/* Matching hover for featured product cards (same feel as New Arrivals) */
+.hp-featured-products .product-card-link:hover .product-card {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.08);
 }
 
 .hp-featured-products .product-image-wrapper {
     aspect-ratio: 4 / 5;
     background: #f5f5f0;
     padding: 1.2rem;
+    overflow: hidden;
+    width: 100%;
 }
 
 .hp-featured-products .product-image--primary {
     object-fit: contain;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.4s ease;
+}
+
+.hp-featured-products .product-card-link:hover .product-image--primary {
+    transform: scale(1.04);
 }
 
 .hp-featured-products .product-card-body {
     padding: 0.8rem 0.4rem;
 }
 
-.hp-featured-img-decor {
-    width: 100%;
-    overflow: hidden;
-}
-
-.hp-featured-img-decor img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-}
-
-@media (max-width: 768px) {
-    .hp-featured {
-        padding: 4rem 1rem;
-    }
-
-    .hp-featured-inner {
-        grid-template-columns: 1fr;
-        min-height: auto;
-    }
-
-    .hp-featured-image {
-        aspect-ratio: 16 / 9;
-        overflow: hidden;
-    }
-
-    .hp-featured-content {
-        padding: 2rem 0;
-    }
-
-    .hp-featured-products {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-@media (max-width: 480px) {
-    .hp-featured-products {
-        grid-template-columns: 1fr;
-    }
-}
-/* Responsive */
-@media (max-width: 768px) {
-    .hp-featured { padding: 4rem 1rem; }
-    .hp-featured-inner { grid-template-columns: 1fr; min-height: auto; }
-    .hp-featured-img-jewellery,
-    .hp-featured-img-decor { aspect-ratio: 16 / 9; }
-    .hp-featured-content { padding: 2rem 0; }
-    .hp-featured-products { grid-template-columns: repeat(2, 1fr); }
-
-    .hp-featured--reverse .hp-featured-inner {
-        grid-template-columns: 1fr 1.2fr;
-    }
-    .hp-featured--reverse .hp-featured-img-decor { order: -1; }
-    .hp-featured--reverse .hp-featured-content { padding: 2rem 0; }
-}
-
-@media (max-width: 480px) {
-    .hp-featured-products { grid-template-columns: 1fr; }
-}
-
-
-/* Brand story */
+/* ============================================
+   Brand story
+   ============================================ */
 .hp-story {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -452,6 +446,15 @@
     position: relative;
     background: var(--beige);
     overflow: hidden;
+    min-height: 320px;
+}
+
+.hp-story-image-wrap .home-video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .hp-story-image-tag {
@@ -520,7 +523,9 @@
     border-color: var(--emerald);
 }
 
-/* Contact CTA */
+/* ============================================
+   Contact CTA
+   ============================================ */
 .hp-cta {
     background: var(--beige);
     padding: 4rem 2rem;
@@ -576,10 +581,33 @@
     transform: translateY(-2px);
 }
 
+/* ============================================
+   RESPONSIVE — consolidated, no conflicts
+   ============================================ */
 
-/* Responsive */
+/* Tablet + small laptop */
+@media (max-width: 1024px) {
+    .hp-arrivals-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
 
+    .hp-featured-inner {
+        gap: 2rem;
+        padding: 0 1.5rem;
+    }
+
+    .hp-featured-content {
+        padding: 2rem 1rem 2rem 0;
+    }
+
+    .hp-featured--reverse .hp-featured-content {
+        padding: 2rem 0 2rem 1rem;
+    }
+}
+
+/* Tablet portrait + large phones */
 @media (max-width: 768px) {
+    /* HERO */
     .hero-panel {
         height: 85vh;
         min-height: 480px;
@@ -588,46 +616,12 @@
     .hp-hero-overlay {
         padding: 2rem 1.5rem;
     }
-}
 
-@media (max-width: 1024px) {
-    .hp-arrivals-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-@media (max-width: 768px) {
-    .hp-hero {
-        grid-template-columns: 1fr;
+    .hp-hero-overlay .hp-hero-actions {
+        margin-bottom: 2rem;
     }
 
-    .hp-hero-image {
-        min-height: 320px;
-        order: -1;
-    }
-
-    .hp-hero-text {
-        padding: 3rem 2rem;
-    }
-
-    .hp-hero-sub {
-        max-width: 100%;
-    }
-
-    .hp-story {
-        grid-template-columns: 1fr;
-        margin: 0 1rem 2rem;
-        border-radius: 16px;
-    }
-
-    .hp-story-image-wrap {
-        min-height: 260px;
-    }
-
-    .hp-story-text {
-        padding: 2.5rem 2rem;
-    }
-
+    /* NEW ARRIVALS */
     .hp-arrivals {
         padding: 3.5rem 1rem;
     }
@@ -636,14 +630,113 @@
         gap: 1rem;
     }
 
+    /* FEATURED — stack vertically, single column */
+    .hp-featured {
+        padding: 3.5rem 0;
+    }
+
+    .hp-featured-inner,
+    .hp-featured--reverse .hp-featured-inner {
+        grid-template-columns: 1fr;
+        min-height: auto;
+        gap: 1.5rem;
+        padding: 0 1rem;
+    }
+
+    .hp-featured-image,
+    .hp-featured-img-decor {
+        width: 100%;
+        max-width: 100%;
+        aspect-ratio: 16 / 9;
+        max-height: 340px;
+    }
+
+    .hp-featured-image img,
+    .hp-featured-img-decor img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .hp-featured-content,
+    .hp-featured--reverse .hp-featured-content {
+        padding: 0.5rem 0;
+    }
+
+    /* On reverse layout image goes first on mobile */
+    .hp-featured--reverse .hp-featured-img-decor {
+        order: -1;
+    }
+
+    .hp-featured-products {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.75rem;
+    }
+
+    .hp-featured-sub {
+        margin-bottom: 1.8rem;
+    }
+
+    /* BRAND STORY */
+    .hp-story {
+        grid-template-columns: 1fr;
+        margin: 0 1rem 2rem;
+        border-radius: 16px;
+        min-height: auto;
+    }
+
+    .hp-story-image-wrap {
+        min-height: 260px;
+        aspect-ratio: 16 / 10;
+    }
+
+    .hp-story-text {
+        padding: 2.5rem 2rem;
+    }
+
+    /* CTA */
     .hp-cta {
-        padding: 4.5rem 1.5rem;
+        padding: 4rem 1.5rem;
     }
 }
 
+/* Phones */
 @media (max-width: 480px) {
     .hp-arrivals-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.75rem;
+    }
+
+    .hp-featured {
+        padding: 3rem 0;
+    }
+
+    .hp-featured-products {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.6rem;
+    }
+
+    .hp-featured-products .product-image-wrapper {
+        padding: 0.8rem;
+        aspect-ratio: 1 / 1;
+    }
+
+    .hp-featured-image,
+    .hp-featured-img-decor {
+        aspect-ratio: 4 / 3;
+        max-height: 280px;
+    }
+
+    .hp-story {
+        margin: 0 0.75rem 1.5rem;
+    }
+
+    .hp-story-text {
+        padding: 2rem 1.5rem;
+    }
+
+    .hp-cta {
+        padding: 3.5rem 1.25rem;
     }
 
     .hp-hero-actions {
@@ -653,6 +746,14 @@
     .hp-btn {
         text-align: center;
         width: 100%;
+        max-width: 280px;
+    }
+
+    .collection-modal-content {
+        padding: 2rem 1.5rem;
+    }
+
+    .collection-modal-cards {
+        grid-template-columns: 1fr;
     }
 }
-
