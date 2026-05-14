@@ -216,7 +216,7 @@
 }
 
 .product-badge--featured {
-    background: #a88445;
+    background: var(--emerald-light);
     color: var(--color-white);
 }
 

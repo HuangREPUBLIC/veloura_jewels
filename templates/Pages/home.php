@@ -14,11 +14,8 @@ $this->Html->css(['home', 'jewelry'], ['block' => true]);
             </video>
 
             <div class="hp-hero-overlay">
-                <?php if (!empty($pageContent['hero_label'])): ?>
-                    <p class="hp-label"><?= h($pageContent['hero_label']) ?></p>
-                <?php endif; ?>
-                <h1 class="hp-hero-heading"><?= nl2br(h($pageContent['hero_heading'] ?? 'Jewels that tell your story.')) ?></h1>
-                <p class="hp-hero-sub"><?= h($pageContent['hero_subtext'] ?? 'Artisan-made pieces, each shaped by hand to bring warmth and meaning into your everyday.') ?></p>
+                <h1 class="hp-hero-heading">Jewels that tell <br> your story.</h1>
+                <p class="hp-hero-sub">Artisan-made pieces, each shaped by hand to bring warmth and meaning into your everyday.</p>
                 <div class="hp-hero-actions">
                     <button class="hp-btn hp-btn--primary" id="explore-btn" type="button">Explore the Collection</button>
                 </div>
@@ -129,8 +126,8 @@ $this->Html->css(['home', 'jewelry'], ['block' => true]);
                     <?= $this->Html->image('featuredJewellery.png', ['alt' => 'Featured collection']) ?>
                 </div>
                 <div class="hp-featured-content">
-                    <h2 class="hp-featured-title"><?= h($pageContent['featured_jewellery_title'] ?? 'Every piece has a story.') ?></h2>
-                    <p class="hp-featured-sub"><?= h($pageContent['featured_jewellery_subtext'] ?? 'Trace the journey that made your jewellery one of a kind.') ?></p>
+                    <h2 class="hp-featured-title">Every piece has a story.</h2>
+                    <p class="hp-featured-sub">Trace the journey that made your jewellery one of a kind.</p>
                     <div class="hp-featured-products">
                         <?php foreach ($featuredJewelry as $product): ?>
                             <?php
@@ -165,8 +162,8 @@ $this->Html->css(['home', 'jewelry'], ['block' => true]);
         <section class="hp-featured hp-featured--reverse">
             <div class="hp-featured-inner">
                 <div class="hp-featured-content">
-                    <h2 class="hp-featured-title"><?= h($pageContent['featured_home_title'] ?? 'Make your space yours.') ?></h2>
-                    <p class="hp-featured-sub"><?= h($pageContent['featured_home_subtext'] ?? 'Handcrafted home accents designed to bring warmth and character to every room.') ?></p>
+                    <h2 class="hp-featured-title">Make your space yours.</h2>
+                    <p class="hp-featured-sub">Handcrafted home accents designed to bring warmth and character to every room.</p>
                     <div class="hp-featured-products">
                         <?php foreach ($featuredHomeDecor as $product): ?>
                             <?php
@@ -209,11 +206,11 @@ $this->Html->css(['home', 'jewelry'], ['block' => true]);
 
         </div>
         <div class="hp-story-text">
-            <p class="hp-label"><?= h($pageContent['brand_story_tag'] ?? 'Our Journey') ?></p>
-            <h2 class="hp-story-title"><?= nl2br(h($pageContent['brand_story_title'] ?? 'About Veloura Jewels')) ?></h2>
+            <p class="hp-label">Our Journey</p>
+            <h2 class="hp-story-title">About<br>Veloura Jewels</h2>
             <div class="hp-story-divider"></div>
-            <p class="hp-story-body"><?= h($pageContent['brand_story_body_1'] ?? 'Founded by Sarah Smith in Brooksdale, Veloura Jewels is dedicated to creating unique, handcrafted pieces that blend creativity and meaningful design. Every ring, necklace, and home accent is shaped with intention — to bring beauty and elegance into your home and wardrobe.') ?></p>
-            <p class="hp-story-body"><?= h($pageContent['brand_story_body_2'] ?? "We believe that what you wear and what surrounds you should feel personal. That's why no two Veloura pieces are exactly alike.") ?></p>
+            <p class="hp-story-body">Founded by Sarah Smith in Brooksdale, Veloura Jewels is dedicated to creating unique, handcrafted pieces that blend creativity and meaningful design. Every ring, necklace, and home accent is shaped with intention — to bring beauty and elegance into your home and wardrobe.</p>
+            <p class="hp-story-body">We believe that what you wear and what surrounds you should feel personal. That's why no two Veloura pieces are exactly alike.</p>
             <?= $this->Html->link('Our full story →', ['controller' => 'OurStory', 'action' => 'index'], ['class' => 'hp-story-link']) ?>
         </div>
     </section>
@@ -222,9 +219,9 @@ $this->Html->css(['home', 'jewelry'], ['block' => true]);
     <section class="hp-cta">
         <div class="hp-cta-inner">
             <div class="hp-cta-ornament"></div>
-            <p class="hp-label"><?= h($pageContent['contact_cta_label'] ?? "We'd love to hear from you") ?></p>
-            <h2 class="hp-cta-title"><?= h($pageContent['contact_cta_title'] ?? 'Have a question or a special request?') ?></h2>
-            <p class="hp-cta-sub"><?= h($pageContent['contact_cta_subtext'] ?? "Our team is always happy to help — whether it's a custom order, a gift idea, or just a chat about what we make.") ?></p>
+            <p class="hp-label">We'd love to hear from you</p>
+            <h2 class="hp-cta-title">Have a question or a special request?</h2>
+            <p class="hp-cta-sub">Our team is always happy to help — whether it's a custom order, a gift idea, or just a chat about what we make.</p>
             <?= $this->Html->link('Get in Touch', ['controller' => 'ContactSubmissions', 'action' => 'add'], ['class' => 'hp-btn hp-btn--cta']) ?>        </div>
     </section>
 
