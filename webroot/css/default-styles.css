@@ -228,18 +228,18 @@ img {
 
 .wishlist-btn svg {
     fill: none;
-    stroke: rgba(var(--oakwood-rgb), 0.6);
+    stroke: rgba(var(--emerald-rgb), 0.6);
     stroke-width: 4px;
     filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.18));
     transition: fill 0.2s ease, stroke 0.2s ease;
 }
 
 .wishlist-btn:hover svg {
-    stroke: var(--oakwood);
+    stroke: var(--emerald);
 }
 
 .wishlist-btn.wishlisted svg {
-    fill: var(--oakwood);
-    stroke: var(--oakwood);
-    filter: drop-shadow(0 1px 2px rgba(var(--oakwood-rgb), 0.3));
+    fill: var(--emerald);
+    stroke: var(--emerald);
+    filter: drop-shadow(0 1px 2px rgba(var(--emerald-rgb), 0.3));
 }
