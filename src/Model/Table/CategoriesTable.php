@@ -48,6 +48,15 @@ class CategoriesTable extends Table
         ]);
     }
 
+    public function getSchema(): \Cake\Database\Schema\TableSchemaInterface
+    {
+        $schema = parent::getSchema();
+        if ($schema->hasColumn('sizes')) {
+            $schema->setColumnType('sizes', 'json');
+        }
+        return $schema;
+    }
+
     /**
      * Default validation rules.
      *

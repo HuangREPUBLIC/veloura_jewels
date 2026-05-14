@@ -14,7 +14,7 @@
     gap: 2rem;
     padding: 2.5rem 3rem;
     background: var(--color-white);
-    border: 1px solid rgba(var(--oakwood-rgb), 0.14);
+    border: 1px solid rgba(var(--emerald-rgb), 0.14);
     border-radius: 10px;
     margin-bottom: 2.5rem;
     box-shadow: 0 1px 4px rgba(0,0,0,0.04);
@@ -24,7 +24,7 @@
     width: 72px;
     height: 72px;
     border-radius: 50%;
-    background: var(--oakwood);
+    background: var(--emerald);
     color: var(--color-white);
     font-family: var(--font-display);
     font-size: 1.8rem;
@@ -66,7 +66,7 @@
 /* Cards */
 .profile-card {
     background: var(--color-white);
-    border: 1px solid rgba(var(--oakwood-rgb), 0.14);
+    border: 1px solid rgba(var(--emerald-rgb), 0.14);
     border-radius: 10px;
     padding: 2rem 2.2rem;
     box-shadow: 0 1px 4px rgba(0,0,0,0.04);
@@ -82,7 +82,7 @@
     justify-content: space-between;
     margin-bottom: 1.5rem;
     padding-bottom: 1rem;
-    border-bottom: 1px solid rgba(var(--oakwood-rgb), 0.1);
+    border-bottom: 1px solid rgba(var(--emerald-rgb), 0.1);
 }
 
 .profile-card-header h2 {
@@ -146,10 +146,10 @@
     font-weight: 600;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: var(--oakwood);
+    color: var(--emerald);
     text-decoration: none;
     padding: 0.4rem 1rem;
-    border: 1.5px solid var(--oakwood);
+    border: 1.5px solid var(--emerald);
     border-radius: 5px;
     transition: all 0.2s ease;
     white-space: nowrap;
@@ -165,13 +165,13 @@
 
 .profile-table-link {
     font-size: 0.8rem;
-    color: var(--oakwood);
+    color: var(--emerald);
     text-decoration: none;
     font-weight: 600;
 }
 
 .profile-table-link:hover {
-    color: var(--oakwood-dark);
+    color: var(--emerald-dark);
     text-decoration: underline;
 }
 
@@ -201,7 +201,7 @@
     text-transform: uppercase;
     color: var(--gray-400);
     padding: 0.7rem 1rem;
-    border-bottom: 1px solid rgba(var(--oakwood-rgb), 0.14);
+    border-bottom: 1px solid rgba(var(--emerald-rgb), 0.14);
     text-align: left;
     white-space: nowrap;
 }
@@ -218,7 +218,7 @@
 }
 
 .profile-orders-table tfoot td {
-    border-top: 2px solid rgba(var(--oakwood-rgb), 0.2);
+    border-top: 2px solid rgba(var(--emerald-rgb), 0.2);
     border-bottom: none;
     font-weight: 600;
     padding: 1rem;
@@ -227,7 +227,7 @@
 .order-id {
     font-family: var(--font-display);
     font-weight: 600;
-    color: var(--oakwood);
+    color: var(--emerald);
     font-size: 0.85rem;
 }
 
@@ -244,7 +244,7 @@
 .order-total-highlight {
     font-weight: 600;
     font-size: 1.05rem;
-    color: var(--oakwood);
+    color: var(--emerald);
 }
 
 .order-ref {
@@ -268,7 +268,7 @@
 .order-status--pending   { background: var(--color-message-warning-bg); color: var(--color-message-warning-text); }
 .order-status--paid      { background: var(--color-message-success-bg); color: var(--color-message-success-text); }
 .order-status--shipped   { background: var(--color-message-info-bg); color: var(--color-message-info-text); }
-.order-status--completed { background: var(--beige-light); color: var(--oakwood); }
+.order-status--completed { background: var(--beige-light); color: var(--emerald); }
 .order-status--cancelled { background: var(--color-message-error-bg); color: var(--color-message-error-text); }
 
 .order-cancel-badge {
@@ -317,7 +317,7 @@
     font-family: var(--font-display);
     font-size: 1.8rem;
     font-weight: 400;
-    color: var(--oakwood);
+    color: var(--emerald);
     letter-spacing: 0.04em;
     line-height: 1;
 }
@@ -375,13 +375,13 @@
 
 .profile-back-link {
     font-size: 0.82rem;
-    color: var(--oakwood);
+    color: var(--emerald);
     text-decoration: none;
     letter-spacing: 0.04em;
 }
 
 .profile-back-link:hover {
-    color: var(--oakwood-dark);
+    color: var(--emerald-dark);
     text-decoration: underline;
 }
 
@@ -429,7 +429,7 @@
 .profile-form-group input:focus,
 .profile-form-group textarea:focus {
     outline: none;
-    border-color: var(--oakwood);
+    border-color: var(--emerald);
     background: var(--color-white);
 }
 
@@ -438,7 +438,7 @@
     align-items: center;
     gap: 1rem;
     padding-top: 1.5rem;
-    border-top: 1px solid rgba(var(--oakwood-rgb), 0.1);
+    border-top: 1px solid rgba(var(--emerald-rgb), 0.1);
 }
 
 .profile-save-btn {
@@ -489,7 +489,7 @@
     text-transform: uppercase;
     padding: 0.4rem 1rem;
     border-radius: 20px;
-    border: 1.5px solid rgba(var(--oakwood-rgb), 0.25);
+    border: 1.5px solid rgba(var(--emerald-rgb), 0.25);
     color: var(--gray-500);
     text-decoration: none;
     transition: all 0.2s ease;
@@ -534,14 +534,14 @@
 }
 
 .profile-pagination a {
-    color: var(--oakwood);
+    color: var(--emerald);
     padding: 0.3rem 0.6rem;
     border-radius: 4px;
     transition: background 0.2s ease;
 }
 
 .profile-pagination a:hover {
-    background: rgba(var(--oakwood-rgb), 0.08);
+    background: rgba(var(--emerald-rgb), 0.08);
     text-decoration: none;
 }
 
@@ -568,7 +568,7 @@
     align-items: center;
     font-size: 0.86rem;
     font-weight: 600;
-    color: var(--oakwood);
+    color: var(--emerald);
     text-decoration: none;
     letter-spacing: 0.03em;
     border-bottom: 1px solid transparent;
@@ -576,7 +576,7 @@
     margin-bottom: 1.2rem;
 }
 .wishlist-back-link:hover {
-    border-bottom-color: rgba(var(--oakwood-rgb), 0.4);
+    border-bottom-color: rgba(var(--emerald-rgb), 0.4);
     text-decoration: none;
 }
 
@@ -612,17 +612,17 @@
     border-radius: 6px;
     cursor: pointer;
     transition: all 0.18s ease;
-    border: 1.5px solid rgba(var(--oakwood-rgb), 0.35);
+    border: 1.5px solid rgba(var(--emerald-rgb), 0.35);
     background: none;
-    color: var(--oakwood);
+    color: var(--emerald);
     white-space: nowrap;
     -webkit-appearance: none;
     appearance: none;
     outline: none;
 }
 .wishlist-share-btn:hover {
-    border-color: var(--oakwood);
-    background: rgba(var(--oakwood-rgb), 0.05);
+    border-color: var(--emerald);
+    background: rgba(var(--emerald-rgb), 0.05);
 }
 
 /* X remove button */
@@ -654,12 +654,12 @@
 .wishlist-remove-btn svg {
     display: block;
     fill: none;
-    stroke: rgba(var(--oakwood-rgb), 0.55);
+    stroke: rgba(var(--emerald-rgb), 0.55);
     filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.18));
     transition: stroke 0.18s ease;
 }
 .wishlist-remove-btn:hover svg {
-    stroke: var(--oakwood);
+    stroke: var(--emerald);
 }
 
 /* Size row */
@@ -679,10 +679,10 @@
     letter-spacing: 0.08em;
     text-transform: uppercase;
     text-align: center;
-    border: 1.5px solid rgba(var(--oakwood-rgb), 0.2);
+    border: 1.5px solid rgba(var(--emerald-rgb), 0.2);
     border-radius: 6px;
-    color: var(--oakwood);
-    background: rgba(var(--oakwood-rgb), 0.04);
+    color: var(--emerald);
+    background: rgba(var(--emerald-rgb), 0.04);
 }
 
 .wishlist-size-select {
@@ -694,13 +694,13 @@
     font-size: 0.78rem;
     font-weight: 600;
     letter-spacing: 0.04em;
-    border: 1.5px solid rgba(var(--oakwood-rgb), 0.35);
+    border: 1.5px solid rgba(var(--emerald-rgb), 0.35);
     border-radius: 6px;
-    color: var(--oakwood);
+    color: var(--emerald);
     background-color: var(--color-white);
     -webkit-appearance: none;
     appearance: none;
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='11' height='11' viewBox='0 0 20 20'><path d='M5 7l5 5 5-5' stroke='%23786c3b' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='11' height='11' viewBox='0 0 20 20'><path d='M5 7l5 5 5-5' stroke='%23284d40' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>");
     background-repeat: no-repeat;
     background-position: right 0.75rem center;
     text-align: center;
@@ -709,7 +709,7 @@
     transition: border-color 0.18s;
 }
 .wishlist-size-select:focus {
-    border-color: var(--oakwood);
+    border-color: var(--emerald);
 }
 .wishlist-add-to-bag-btn {
     margin-top: 0.4rem;
@@ -732,17 +732,17 @@
     text-transform: uppercase;
     text-align: center;
     text-decoration: none;
-    color: var(--oakwood);
+    color: var(--emerald);
     background: none;
-    border: 1.5px solid rgba(var(--oakwood-rgb), 0.35);
+    border: 1.5px solid rgba(var(--emerald-rgb), 0.35);
     border-radius: 6px;
     cursor: pointer;
     transition: all 0.18s ease;
     white-space: nowrap;
 }
 .wishlist-add-to-bag-btn:hover {
-    background: var(--oakwood);
-    border-color: var(--oakwood);
+    background: var(--emerald);
+    border-color: var(--emerald);
     color: var(--color-white);
     text-decoration: none;
 }
@@ -752,6 +752,6 @@
 }
 .wishlist-add-to-bag-btn--sold-out:hover {
     background: none;
-    border-color: rgba(var(--oakwood-rgb), 0.35);
-    color: var(--oakwood);
+    border-color: rgba(var(--emerald-rgb), 0.35);
+    color: var(--emerald);
 }

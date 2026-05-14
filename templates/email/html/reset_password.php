@@ -12,7 +12,7 @@ $resetUrl = $this->Url->build(['controller' => 'Auth', 'action' => 'resetPasswor
 </p>
 
 <h1 style="margin:0 0 24px;font-family:Georgia,'Times New Roman',serif;
-            font-size:28px;font-weight:400;color:#786c3b;line-height:1.2;">
+            font-size:28px;font-weight:400;color:#284d40;line-height:1.2;">
   Reset your password.
 </h1>
 
@@ -24,7 +24,7 @@ $resetUrl = $this->Url->build(['controller' => 'Auth', 'action' => 'resetPasswor
 
 <p style="margin:0 0 36px;font-family:Arial,sans-serif;font-size:14px;
            color:#5c5549;line-height:1.8;">
-  This link is valid for <strong style="color:#786c3b;">7 days</strong>.
+  This link is valid for <strong style="color:#284d40;">7 days</strong>.
   If you didn&rsquo;t request a reset, you can safely ignore this email.
 </p>
 
@@ -32,7 +32,7 @@ $resetUrl = $this->Url->build(['controller' => 'Auth', 'action' => 'resetPasswor
 <table role="presentation" cellpadding="0" cellspacing="0" border="0"
        align="center" style="margin:0 auto 32px;">
   <tr>
-    <td align="center" style="background-color:#786c3b;border-radius:2px;">
+    <td align="center" style="background-color:#284d40;border-radius:2px;">
       <a href="<?= h($resetUrl) ?>" target="_blank"
          style="display:inline-block;padding:15px 44px;
                 font-family:Arial,Helvetica,sans-serif;

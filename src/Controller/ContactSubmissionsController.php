@@ -99,11 +99,8 @@ class ContactSubmissionsController extends AppController
             }
 
             if ($this->ContactSubmissions->save($contactSubmission)) {
-                \Cake\Log\Log::error('DEBUG: About to send email to ' . $contactSubmission->email);
                 try {
-                    \Cake\Log\Log::error('DEBUG: Transport class = ' . get_class(\Cake\Mailer\TransportFactory::get('default')));
                     $this->getMailer('Contact')->send('confirmation', [$contactSubmission]);
-                    \Cake\Log\Log::error('DEBUG: send() completed successfully');
                     $this->Flash->success(__('Thanks for reaching out! We have received your message and sent a confirmation email.'));
                 } catch (\Exception $e) {
                     \Cake\Log\Log::error('Confirmation email failed: ' . $e->getMessage());

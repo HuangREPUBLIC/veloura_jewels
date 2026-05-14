@@ -1,6 +1,9 @@
 <?php
 $this->assign('title', 'Home');
 $this->Html->css(['home', 'jewelry'], ['block' => true]);
+
+$identity    = $this->request->getAttribute('identity');
+$wishlistIds = $wishlistIds ?? [];
 ?>
 
     <div class="home-page">
@@ -9,13 +12,13 @@ $this->Html->css(['home', 'jewelry'], ['block' => true]);
         <section class="hp-hero">
             <div class="hero-panel">
                 <video class="home-video" autoplay muted loop playsinline>
-                    <source src="webroot/videos/homeVideo.mp4" type="video/mp4">
+                    <source src="<?= $this->Url->build('/videos/homeVideo.mp4') ?>" type="video/mp4">
                     Your browser does not support the video tag.
                 </video>
 
                 <div class="hp-hero-overlay">
-                    <h1 class="hp-hero-heading">Jewels that tell <br> your story.</h1>
-                    <p class="hp-hero-sub">Artisan-made pieces, each shaped by hand to bring warmth and meaning into your everyday.</p>
+                    <h1 class="hp-hero-heading"><?= nl2br(h($pageContent['hero_heading'] ?? "Jewels that tell\nyour story.")) ?></h1>
+                    <p class="hp-hero-sub"><?= h($pageContent['hero_subtext'] ?? '') ?></p>
                     <div class="hp-hero-actions">
                         <button class="hp-btn hp-btn--primary" id="explore-btn" type="button">Explore the Collection</button>
                     </div>
@@ -24,34 +27,7 @@ $this->Html->css(['home', 'jewelry'], ['block' => true]);
         </section>
 
         <!-- COLLECTION MODAL -->
-        <div class="collection-modal" id="collectionModal">
-            <div class="collection-modal-overlay"></div>
-            <div class="collection-modal-content">
-                <button class="collection-modal-close" type="button" aria-label="Close">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
-                    </svg>
-                </button>
-                <h2 class="collection-modal-title">Explore Our Collections</h2>
-                <p class="collection-modal-sub">What are you looking for?</p>
-                <div class="collection-modal-cards">
-                    <a href="<?= $this->Url->build(['controller' => 'Jewelry', 'action' => 'index']) ?>" class="collection-modal-card">
-                        <?= $this->Html->image('greenNecklace.jpg', ['alt' => 'Jewellery collection', 'class' => 'collection-modal-card-img']) ?>
-                        <div class="collection-modal-card-body">
-                            <h3>Jewellery</h3>
-                            <p>Rings, necklaces, bracelets & more</p>
-                        </div>
-                    </a>
-                    <a href="<?= $this->Url->build(['controller' => 'Jewelry', 'action' => 'homeDecor']) ?>" class="collection-modal-card">
-                        <?= $this->Html->image('oliveVase.jpg', ['alt' => 'Home décor collection', 'class' => 'collection-modal-card-img']) ?>
-                        <div class="collection-modal-card-body">
-                            <h3>Home Décor</h3>
-                            <p>Handcrafted accents for your space</p>
-                        </div>
-                    </a>
-                </div>
-            </div>
-        </div>
+        <?= $this->element('collection_modal') ?>
 
         <!-- NEW ARRIVALS -->
         <?php if (!empty($featuredProducts)): ?>
@@ -59,10 +35,6 @@ $this->Html->css(['home', 'jewelry'], ['block' => true]);
                 <div class="hp-section-header">
                     <h2 class="hp-section-header-title">New Arrivals</h2>
                 </div>
-                <?php
-                $identity    = $this->request->getAttribute('identity');
-                $wishlistIds = $wishlistIds ?? [];
-                ?>
                 <div class="hp-arrivals-grid">
                     <?php foreach ($featuredProducts as $product): ?>
                         <?php
@@ -107,9 +79,7 @@ $this->Html->css(['home', 'jewelry'], ['block' => true]);
                                         data-product-id="<?= $product->id ?>"
                                         type="button"
                                         aria-label="Save to wishlist">
-                                    <svg width="20" height="20" viewBox="0 0 64 64" fill="none">
-                                        <path d="M32,57C31,56.5 5,42 5,23.5C5,13.8 12.2,6.5 21,6.5C26,6.5 30.4,9 32,11.2C33.6,9 38,6.5 43,6.5C51.8,6.5 59,13.8 59,23.5C59,42 33,56.5 32,57Z"/>
-                                    </svg>
+                                    <?= $this->element('wishlist_heart') ?>
                                 </button>
                             <?php endif; ?>
                         </div>
@@ -126,8 +96,8 @@ $this->Html->css(['home', 'jewelry'], ['block' => true]);
                         <?= $this->Html->image('featuredJewellery.png', ['alt' => 'Featured collection']) ?>
                     </div>
                     <div class="hp-featured-content">
-                        <h2 class="hp-featured-title">Every piece has a story.</h2>
-                        <p class="hp-featured-sub">Trace the journey that made your jewellery one of a kind.</p>
+                        <h2 class="hp-featured-title"><?= h($pageContent['featured_jewellery_title'] ?? 'Every piece has a story.') ?></h2>
+                        <p class="hp-featured-sub"><?= h($pageContent['featured_jewellery_subtext'] ?? '') ?></p>
                         <div class="hp-featured-products">
                             <?php foreach ($featuredJewelry as $product): ?>
                                 <?php
@@ -172,8 +142,8 @@ $this->Html->css(['home', 'jewelry'], ['block' => true]);
             <section class="hp-featured hp-featured--reverse">
                 <div class="hp-featured-inner">
                     <div class="hp-featured-content">
-                        <h2 class="hp-featured-title">Make your space yours.</h2>
-                        <p class="hp-featured-sub">Handcrafted home accents designed to bring warmth and character to every room.</p>
+                        <h2 class="hp-featured-title"><?= h($pageContent['featured_home_title'] ?? 'Make your space yours.') ?></h2>
+                        <p class="hp-featured-sub"><?= h($pageContent['featured_home_subtext'] ?? '') ?></p>
                         <div class="hp-featured-products">
                             <?php foreach ($featuredHomeDecor as $product): ?>
                                 <?php
@@ -220,17 +190,16 @@ $this->Html->css(['home', 'jewelry'], ['block' => true]);
         <section class="hp-story">
             <div class="hp-story-image-wrap">
                 <video class="home-video" autoplay muted loop playsinline>
-                    <source src="webroot/videos/handmadeDiamondRing.mp4" type="video/mp4">
+                    <source src="<?= $this->Url->build('/videos/handmadeDiamondRing.mp4') ?>" type="video/mp4">
                     Your browser does not support the video tag.
                 </video>
-
             </div>
             <div class="hp-story-text">
-                <p class="hp-label">Our Journey</p>
-                <h2 class="hp-story-title">About<br>Veloura Jewels</h2>
+                <p class="hp-label"><?= h($pageContent['brand_story_tag'] ?? 'Our Journey') ?></p>
+                <h2 class="hp-story-title"><?= nl2br(h($pageContent['brand_story_title'] ?? "About\nVeloura Jewels")) ?></h2>
                 <div class="hp-story-divider"></div>
-                <p class="hp-story-body">Founded by Sarah Smith in Brooksdale, Veloura Jewels is dedicated to creating unique, handcrafted pieces that blend creativity and meaningful design. Every ring, necklace, and home accent is shaped with intention — to bring beauty and elegance into your home and wardrobe.</p>
-                <p class="hp-story-body">We believe that what you wear and what surrounds you should feel personal. That's why no two Veloura pieces are exactly alike.</p>
+                <p class="hp-story-body"><?= h($pageContent['brand_story_body_1'] ?? '') ?></p>
+                <p class="hp-story-body"><?= h($pageContent['brand_story_body_2'] ?? '') ?></p>
                 <?= $this->Html->link('Our full story →', ['controller' => 'OurStory', 'action' => 'index'], ['class' => 'hp-story-link']) ?>
             </div>
         </section>
@@ -239,28 +208,17 @@ $this->Html->css(['home', 'jewelry'], ['block' => true]);
         <section class="hp-cta">
             <div class="hp-cta-inner">
                 <div class="hp-cta-ornament"></div>
-                <p class="hp-label">We'd love to hear from you</p>
-                <h2 class="hp-cta-title">Have a question or a special request?</h2>
-                <p class="hp-cta-sub">Our team is always happy to help — whether it's a custom order, a gift idea, or just a chat about what we make.</p>
-                <?= $this->Html->link('Get in Touch', ['controller' => 'ContactSubmissions', 'action' => 'add'], ['class' => 'hp-btn hp-btn--cta']) ?>        </div>
+                <p class="hp-label"><?= h($pageContent['contact_cta_label'] ?? "We'd love to hear from you") ?></p>
+                <h2 class="hp-cta-title"><?= h($pageContent['contact_cta_title'] ?? 'Have a question or a special request?') ?></h2>
+                <p class="hp-cta-sub"><?= h($pageContent['contact_cta_subtext'] ?? '') ?></p>
+                <?= $this->Html->link('Get in Touch', ['controller' => 'ContactSubmissions', 'action' => 'add'], ['class' => 'hp-btn hp-btn--cta']) ?>
+            </div>
         </section>
 
     </div>
 
 
-<?php $this->Html->scriptBlock("
-    document.addEventListener('DOMContentLoaded', () => {
-        const btn = document.getElementById('explore-btn');
-        const modal = document.getElementById('collectionModal');
-        const overlay = modal.querySelector('.collection-modal-overlay');
-        const close = modal.querySelector('.collection-modal-close');
-
-        btn.addEventListener('click', () => modal.classList.add('is-open'));
-        overlay.addEventListener('click', () => modal.classList.remove('is-open'));
-        close.addEventListener('click', () => modal.classList.remove('is-open'));
-
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') modal.classList.remove('is-open');
-        });
-    });
-", ['block' => true]); ?>
+<?php
+$this->Html->scriptBlock("window.collectionModalTriggerId = 'explore-btn';", ['block' => true]);
+$this->Html->script('collection-modal', ['block' => true]);
+?>

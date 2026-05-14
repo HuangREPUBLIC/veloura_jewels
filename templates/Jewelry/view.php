@@ -33,32 +33,23 @@ $oneSizeVariant = $isOneSizeOnly ? $inStockVariants[0] : null;
         ? $back
         : ($section === 'home_decor' ? '/home-decor' : '/jewelry');
     ?>
-    <?= $this->Html->link(__('← Back'), $backUrl, ['class' => 'jewelry-back-link']) ?>
+    <?= $this->Html->link('← Back', $backUrl, ['class' => 'jewelry-back-link']) ?>
+
     <div class="product-detail">
+
         <div class="product-detail-image">
             <?php if (!empty($product->product_images)): ?>
-                <div class="detail-gallery">
-                    <?php if (count($product->product_images) > 1): ?>
-                        <div class="detail-thumbs">
-                            <?php foreach ($product->product_images as $i => $img): ?>
-                                <button
-                                    type="button"
-                                    class="detail-thumb <?= $i === 0 ? 'active' : '' ?>"
-                                    data-src="<?= $this->Url->image('products/' . h($img->filename)) ?>"
-                                >
-                                    <img src="<?= $this->Url->image('products/' . h($img->filename)) ?>" alt="">
-                                </button>
-                            <?php endforeach; ?>
+                <div class="detail-image-stack">
+                    <?php foreach ($product->product_images as $i => $img): ?>
+                        <div class="detail-stack-item">
+                            <img
+                                src="<?= $this->Url->image('products/' . h($img->filename)) ?>"
+                                alt="<?= h($product->name) ?>"
+                                class="detail-stack-img"
+                                <?= $i > 0 ? 'loading="lazy"' : '' ?>
+                            >
                         </div>
-                    <?php endif; ?>
-                    <div class="detail-main-wrap">
-                        <img
-                            id="detail-main-img"
-                            src="<?= $this->Url->image('products/' . h($product->product_images[0]->filename)) ?>"
-                            alt="<?= h($product->name) ?>"
-                            class="detail-image"
-                        >
-                    </div>
+                    <?php endforeach; ?>
                 </div>
             <?php else: ?>
                 <div class="detail-placeholder"><span>No Image</span></div>
@@ -66,11 +57,22 @@ $oneSizeVariant = $isOneSizeOnly ? $inStockVariants[0] : null;
         </div>
 
         <div class="product-detail-info">
-            <p class="detail-label">Veloura Jewels</p>
-            <h1 class="detail-name"><?= h($product->name) ?></h1>
-            <p class="detail-price">$<?= number_format((float)$product->sale_price, 2) ?></p>
 
-            <p class="detail-stock">
+            <?php if (!empty($product->featured) || !empty($product->is_bestsales)): ?>
+                <div class="detail-badges">
+                    <?php if (!empty($product->featured)): ?>
+                        <span class="product-badge product-badge--featured">Featured</span>
+                    <?php endif; ?>
+                    <?php if (!empty($product->is_bestsales)): ?>
+                        <span class="product-badge product-badge--bestsales">Best Sales</span>
+                    <?php endif; ?>
+                </div>
+            <?php endif; ?>
+
+            <h1 class="detail-name"><?= h($product->name) ?></h1>
+
+            <div class="detail-price-row">
+                <span class="detail-price">$<?= number_format((float)$product->sale_price, 2) ?></span>
                 <?php if ($totalStock <= 0): ?>
                     <span class="stock-pill stock-pill--out">Out of Stock</span>
                 <?php elseif ($totalStock < 5): ?>
@@ -78,17 +80,25 @@ $oneSizeVariant = $isOneSizeOnly ? $inStockVariants[0] : null;
                 <?php else: ?>
                     <span class="stock-pill stock-pill--in">In Stock</span>
                 <?php endif; ?>
-            </p>
-
-            <div class="detail-description">
-                <h3>Product Details</h3>
-                <p><?= nl2br(h($product->description)) ?></p>
             </div>
 
-            <div class="detail-description">
-                <h3>Story</h3>
-                <p><?= nl2br(h($product->story)) ?></p>
-            </div>
+            <?php if (!empty($product->description)): ?>
+                <details class="detail-accordion" open>
+                    <summary class="detail-accordion-summary">Product Details</summary>
+                    <div class="detail-accordion-body">
+                        <p><?= nl2br(h($product->description)) ?></p>
+                    </div>
+                </details>
+            <?php endif; ?>
+
+            <?php if (!empty($product->story)): ?>
+                <details class="detail-accordion">
+                    <summary class="detail-accordion-summary">The Story</summary>
+                    <div class="detail-accordion-body">
+                        <p><?= nl2br(h($product->story)) ?></p>
+                    </div>
+                </details>
+            <?php endif; ?>
 
             <?php if ($hasStock): ?>
                 <?= $this->Form->create(null, [
@@ -105,15 +115,15 @@ $oneSizeVariant = $isOneSizeOnly ? $inStockVariants[0] : null;
                             <?= $this->Form->hidden('variant_id', ['value' => $oneSizeVariant->id]) ?>
                             <span class="one-size-pill"><?= h($oneSizeVariant->size) ?></span>
                         <?php else: ?>
-                            <select name="variant_id" id="variant-select">
-                                <option value="">-- Select --</option>
+                            <select name="variant_id" id="variant-select" class="detail-size-select">
+                                <option value="">Select a size</option>
                                 <?php foreach ($product->product_variants as $v): ?>
                                     <?php if ($v->stock > 0): ?>
                                         <option value="<?= $v->id ?>" data-stock="<?= $v->stock ?>">
                                             <?= h($v->size) ?>
                                         </option>
                                     <?php else: ?>
-                                        <option value="" disabled><?= h($v->size) ?> (Out of Stock)</option>
+                                        <option value="" disabled><?= h($v->size) ?> — Out of Stock</option>
                                     <?php endif; ?>
                                 <?php endforeach; ?>
                             </select>
@@ -155,6 +165,7 @@ $oneSizeVariant = $isOneSizeOnly ? $inStockVariants[0] : null;
                     <button class="jewelry-add-to-cart-btn" disabled>Add to Cart</button>
                 </div>
             <?php endif; ?>
+
         </div>
     </div>
 </div>
@@ -203,19 +214,6 @@ $oneSizeVariant = $isOneSizeOnly ? $inStockVariants[0] : null;
                 }
             });
         }
-
-        var mainImg = document.getElementById('detail-main-img');
-        document.querySelectorAll('.detail-thumb').forEach(function (btn) {
-            btn.addEventListener('click', function () {
-                document.querySelectorAll('.detail-thumb').forEach(function (b) { b.classList.remove('active'); });
-                btn.classList.add('active');
-                mainImg.classList.add('fading');
-                setTimeout(function () {
-                    mainImg.src = btn.getAttribute('data-src');
-                    mainImg.classList.remove('fading');
-                }, 220);
-            });
-        });
 
         document.querySelectorAll('.qty-box').forEach(function (wrapper) {
             var input = wrapper.querySelector('input[type="number"]');

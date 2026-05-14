@@ -6,8 +6,8 @@
     --color-lightgray: #606c76;
     --color-white: #fff;
     --color-main-bg: #f5f7fa;
-    --color-links: #786c3b;
-    --color-links-active: #284d40;
+    --color-links: #284d40;
+    --color-links-active: #18382f;
     --color-headings: #1c1c1a;
     --color-message-success-bg: #e3fcec;
     --color-message-success-text: #1f9d55;
@@ -171,7 +171,7 @@ img {
 .error-page-divider {
     width: 40px;
     height: 1px;
-    background: var(--oakwood);
+    background: var(--emerald);
     margin: 0 auto 1.5rem;
 }
 
@@ -186,7 +186,7 @@ img {
 .error-page-btn {
     display: inline-block;
     padding: 0.85rem 2.4rem;
-    background: var(--oakwood);
+    background: var(--emerald);
     color: var(--color-white);
     font-size: 0.78rem;
     font-weight: 500;
@@ -197,7 +197,7 @@ img {
 }
 
 .error-page-btn:hover {
-    background: var(--oakwood-dark);
+    background: var(--emerald-dark);
     color: var(--color-white);
 }
 

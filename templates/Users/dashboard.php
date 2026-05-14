@@ -76,7 +76,7 @@ $cards = [
                 <a href="<?= $this->Url->build($card['url']) ?>" class="dashboard-card">
                     <div class="dashboard-icon">
                         <svg width="26" height="26" viewBox="0 0 24 24"
-                             fill="none" stroke="#786c3b" stroke-width="1.8"
+                             fill="none" stroke="#284d40" stroke-width="1.8"
                              stroke-linecap="round" stroke-linejoin="round">
                             <?= $card['icon'] ?>
                         </svg>

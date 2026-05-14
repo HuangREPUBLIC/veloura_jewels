@@ -38,9 +38,9 @@
     padding: 2rem;
     margin: 0;
     background-color: rgba(255, 255, 255, 0.94);
-    border: 1px solid rgba(var(--oakwood-rgb), 0.14);
+    border: 1px solid rgba(var(--emerald-rgb), 0.14);
     border-radius: 10px;
-    box-shadow: 0 18px 44px rgba(var(--oakwood-rgb), 0.12);
+    box-shadow: 0 18px 44px rgba(var(--emerald-rgb), 0.12);
 }
 
 .contact-page fieldset {
@@ -97,7 +97,7 @@
     width: 100%;
     padding: 0.78rem 0.85rem;
     font-size: 0.95rem;
-    border: 1px solid rgba(var(--oakwood-rgb), 0.22);
+    border: 1px solid rgba(var(--emerald-rgb), 0.22);
     border-radius: 8px;
     background: #fbfaf7;
     transition: border-color 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
@@ -110,8 +110,8 @@
 
 .contact-page input:focus,
 .contact-page textarea:focus {
-    border-color: rgba(var(--oakwood-rgb), 0.52);
-    box-shadow: 0 0 0 3px rgba(var(--oakwood-rgb), 0.1);
+    border-color: rgba(var(--emerald-rgb), 0.52);
+    box-shadow: 0 0 0 3px rgba(var(--emerald-rgb), 0.1);
     background: var(--color-white);
     outline: none;
 }
@@ -120,7 +120,7 @@
     font-weight: 700;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--oakwood);
+    color: var(--emerald);
     margin-bottom: 0.35rem;
 }
 .contact-page .required-asterisk {

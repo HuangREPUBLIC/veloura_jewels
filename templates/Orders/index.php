@@ -4,6 +4,9 @@
  * @var iterable<\App\Model\Entity\Order> $orders
  */
 $this->assign('title', 'Orders');
+$this->Html->css('https://cdn.datatables.net/2.2.2/css/dataTables.dataTables.min.css', ['block' => true]);
+$this->Html->script('https://code.jquery.com/jquery-3.6.0.min.js', ['block' => true]);
+$this->Html->script('https://cdn.datatables.net/2.2.2/js/dataTables.min.js', ['block' => true]);
 
 $now = new \DateTime();
 $todayStr   = $now->format('Y-m-d');

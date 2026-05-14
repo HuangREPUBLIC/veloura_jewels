@@ -92,6 +92,16 @@ return function (RouteBuilder $routes): void {
         //Dashboard Route
         $builder->connect('/dashboard', ['controller' => 'Users', 'action' => 'dashboard']);
 
+        // Category management (AJAX, admin only)
+        $builder->connect('/categories/delete/{id}', ['controller' => 'Categories', 'action' => 'deleteCategory'])
+            ->setPass(['id'])
+            ->setPatterns(['id' => '\d+'])
+            ->setMethods(['POST']);
+        $builder->connect('/categories/{id}/remove-size', ['controller' => 'Categories', 'action' => 'removeSize'])
+            ->setPass(['id'])
+            ->setPatterns(['id' => '\d+'])
+            ->setMethods(['POST']);
+
         // Product featured toggle
         $builder->connect('/products/toggle-featured/{id}', ['controller' => 'Products', 'action' => 'toggleFeatured'])
             ->setPass(['id'])

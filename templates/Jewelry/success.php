@@ -7,7 +7,7 @@ $this->assign('title', 'Payment Successful');
     <div class="result-card">
 
         <div class="result-icon">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#786c3b" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#284d40" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                 <circle cx="12" cy="12" r="10"/>
                 <polyline points="9 12 11.5 14.5 15.5 9.5"/>
             </svg>

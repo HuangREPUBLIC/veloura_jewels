@@ -11,7 +11,7 @@ $shopUrl = $this->Url->build('/jewelry', ['fullBase' => true]);
 </p>
 
 <h1 style="margin:0 0 24px;font-family:Georgia,'Times New Roman',serif;
-            font-size:28px;font-weight:400;color:#786c3b;line-height:1.2;">
+            font-size:28px;font-weight:400;color:#284d40;line-height:1.2;">
   Your account is ready.
 </h1>
 
@@ -29,7 +29,7 @@ $shopUrl = $this->Url->build('/jewelry', ['fullBase' => true]);
 <table role="presentation" cellpadding="0" cellspacing="0" border="0"
        align="center" style="margin:0 auto;">
   <tr>
-    <td align="center" style="background-color:#786c3b;border-radius:2px;">
+    <td align="center" style="background-color:#284d40;border-radius:2px;">
       <a href="<?= h($shopUrl) ?>"
          style="display:inline-block;padding:15px 44px;
                 font-family:Arial,Helvetica,sans-serif;

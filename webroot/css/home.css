@@ -173,9 +173,9 @@
     font-size: 0.78rem;
     font-weight: 600;
     letter-spacing: 0.1em;
-    color: var(--oakwood);
+    color: var(--emerald);
     text-decoration: none;
-    border-bottom: 1px solid rgba(var(--oakwood-rgb), 0.35);
+    border-bottom: 1px solid rgba(var(--emerald-rgb), 0.35);
     padding-bottom: 0.1rem;
     transition: color 0.2s ease, border-color 0.2s ease;
 }
@@ -215,13 +215,15 @@
 
 .collection-modal-content {
     position: relative;
-    background: #fff;
-    border-radius: 16px;
-    padding: 3rem;
+    background: var(--color-white, #fff);
+    border-radius: 22px;
+    padding: 2.4rem 2.4rem 2rem;
     max-width: 620px;
     width: 90%;
     text-align: center;
     animation: modalIn 0.3s ease;
+    box-shadow: 0 20px 60px rgba(var(--emerald-rgb, 40, 77, 64), 0.14);
+    border: 1px solid rgba(var(--emerald-rgb, 40, 77, 64), 0.1);
 }
 
 @keyframes modalIn {
@@ -274,37 +276,43 @@
 .collection-modal-card {
     display: block;
     text-decoration: none;
-    border-radius: 12px;
+    border-radius: 16px;
     overflow: hidden;
-    border: 1.5px solid #e8e8e4;
-    transition: border-color 0.25s ease, box-shadow 0.25s ease;
+    border: 1px solid rgba(var(--emerald-rgb, 40, 77, 64), 0.14);
+    box-shadow: 0 14px 34px rgba(var(--emerald-rgb, 40, 77, 64), 0.07);
+    background: var(--color-white, #fff);
+    transition: border-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
 }
 
 .collection-modal-card:hover {
-    border-color: var(--emerald);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    border-color: rgba(var(--emerald-rgb, 40, 77, 64), 0.28);
+    box-shadow: 0 18px 42px rgba(var(--emerald-rgb, 40, 77, 64), 0.12);
+    transform: translateY(-2px);
 }
 
 .collection-modal-card-img {
     width: 100%;
     aspect-ratio: 4 / 3;
     object-fit: cover;
+    display: block;
 }
 
 .collection-modal-card-body {
-    padding: 1.2rem 1rem;
+    padding: 1.2rem 1.1rem 1.3rem;
+    text-align: left;
 }
 
 .collection-modal-card-body h3 {
     font-family: var(--font-display);
     font-size: 1.1rem;
-    font-weight: 600;
+    font-weight: 500;
     color: var(--color-headings);
-    margin-bottom: 0.3rem;
+    margin: 0 0 0.3rem;
+    letter-spacing: 0.02em;
 }
 
 .collection-modal-card-body p {
-    font-size: 0.78rem;
+    font-size: 0.8rem;
     color: var(--color-text-muted);
     margin: 0;
 }
@@ -469,8 +477,8 @@
     font-weight: 700;
     letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: var(--oakwood);
-    border: 1px solid rgba(var(--oakwood-rgb), 0.12);
+    color: var(--emerald);
+    border: 1px solid rgba(var(--emerald-rgb), 0.12);
 }
 
 .hp-story-text {
@@ -492,7 +500,7 @@
 .hp-story-divider {
     width: 36px;
     height: 1.5px;
-    background: var(--emerald-neon);
+    background: var(--emerald);
     margin-bottom: 1.8rem;
 }
 
@@ -509,9 +517,9 @@
     font-weight: 700;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: var(--oakwood);
+    color: var(--emerald);
     text-decoration: none;
-    border-bottom: 1px solid rgba(var(--oakwood-rgb), 0.35);
+    border-bottom: 1px solid rgba(var(--emerald-rgb), 0.35);
     padding-bottom: 0.15rem;
     align-self: flex-start;
     transition: color 0.2s ease, border-color 0.2s ease;

@@ -6,7 +6,7 @@
  */
 
 $this->assign('title', 'Cart');
-$this->Html->css('jewelry', ['block' => true]);
+$this->Html->css(['jewelry', 'home'], ['block' => true]);
 ?>
 
 <div class="jewelry-page">
@@ -96,12 +96,23 @@ $this->Html->css('jewelry', ['block' => true]);
                 </div>
                 <div class="summary-actions">
                     <a href="<?= $this->Url->build('/checkout') ?>" class="jewelry-cart-primary-btn">Proceed to Checkout</a>
-                    <a href="<?= $this->Url->build('/jewelry') ?>" class="jewelry-cart-secondary-btn">Continue Shopping</a>
+                    <button type="button" class="jewelry-cart-secondary-btn" id="continueShoppingBtn">Continue Shopping</button>
                 </div>
             </aside>
         </div>
     <?php endif; ?>
 </div>
+
+<!-- Continue Shopping modal -->
+<?= $this->element('collection_modal', [
+    'modalTitle'    => 'Continue Shopping',
+    'modalSubtitle' => 'Where would you like to browse?',
+]) ?>
+
+<?php
+$this->Html->scriptBlock("window.collectionModalTriggerId = 'continueShoppingBtn';", ['block' => true]);
+$this->Html->script('collection-modal', ['block' => true]);
+?>
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {

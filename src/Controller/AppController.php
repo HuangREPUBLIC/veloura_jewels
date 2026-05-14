@@ -16,6 +16,7 @@ declare(strict_types=1);
  */
 namespace App\Controller;
 
+use Cake\Cache\Cache;
 use Cake\Controller\Controller;
 use Cake\Event\EventInterface;
 
@@ -55,7 +56,39 @@ class AppController extends Controller
     public function beforeRender(EventInterface $event): void
     {
         parent::beforeRender($event);
-        $siteSettings = $this->fetchTable('PageContents')->getForPage('global');
+        $siteSettings = Cache::remember('site_settings_global', function () {
+            return $this->fetchTable('PageContents')->getForPage('global');
+        }, 'default');
         $this->set('siteSettings', $siteSettings);
+    }
+
+    protected function requireRole(array $roles): void
+    {
+        $identity = $this->Authentication->getIdentity();
+        if (!$identity || !in_array($identity->get('role'), $roles, true)) {
+            $this->Flash->error('You do not have permission to access this page.');
+            $this->redirect('/');
+        }
+    }
+
+    protected function logActivity(string $model, int $modelId, string $action, string $modelLabel = '', ?array $changes = null): void
+    {
+        try {
+            $identity = $this->Authentication->getIdentity();
+            $this->fetchTable('ActivityLogs')->save(
+                $this->fetchTable('ActivityLogs')->newEntity([
+                    'user_id'     => $identity?->get('id'),
+                    'user_name'   => $identity?->get('name') ?? $identity?->get('email') ?? 'System',
+                    'action'      => $action,
+                    'model'       => $model,
+                    'model_id'    => $modelId,
+                    'model_label' => $modelLabel,
+                    'changes'     => $changes,
+                    'created'     => new \Cake\I18n\DateTime(),
+                ])
+            );
+        } catch (\Exception $e) {
+            // Never let logging failure break the main flow
+        }
     }
 }

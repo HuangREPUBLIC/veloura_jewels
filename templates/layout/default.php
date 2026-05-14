@@ -10,7 +10,7 @@
 $cakeDescription = 'Veloura Jewels';
 ?>
 <!DOCTYPE html>
-<html lang="">
+<html lang="en">
 <head>
     <?= $this->Html->charset() ?>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -26,9 +26,7 @@ $cakeDescription = 'Veloura Jewels';
 
     <?= $this->Html->css(['normalize.min', 'fonts', 'default-styles', 'cake', 'search']) ?>
 
-    <link rel="stylesheet" href="https://cdn.datatables.net/2.2.2/css/dataTables.dataTables.min.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.datatables.net/2.2.2/js/dataTables.min.js"></script>
+
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>
     <?= $this->fetch('script') ?>

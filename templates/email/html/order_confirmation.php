@@ -12,7 +12,7 @@ $shopUrl = $this->Url->build('/jewelry', ['fullBase' => true]);
 </p>
 
 <h1 style="margin:0 0 24px;font-family:Georgia,'Times New Roman',serif;
-            font-size:28px;font-weight:400;color:#786c3b;line-height:1.2;">
+            font-size:28px;font-weight:400;color:#284d40;line-height:1.2;">
   Thank you for your purchase.
 </h1>
 
@@ -22,7 +22,7 @@ $shopUrl = $this->Url->build('/jewelry', ['fullBase' => true]);
 
 <p style="margin:0 0 6px;font-family:Arial,sans-serif;font-size:14px;
            color:#5c5549;line-height:1.8;">
-  Your order <strong style="color:#786c3b;">#<?= h($order->id) ?></strong> has been confirmed
+  Your order <strong style="color:#284d40;">#<?= h($order->id) ?></strong> has been confirmed
   and is being prepared with care.
 </p>
 
@@ -90,12 +90,12 @@ echo $this->Html->image('homepage.png', ['alt' => 'CakePHP']);
     <td colspan="2"
         style="padding:14px 0 0;font-family:Arial,sans-serif;font-size:13px;
                 letter-spacing:0.1em;text-transform:uppercase;
-                color:#786c3b;font-weight:700;">
+                color:#284d40;font-weight:700;">
       Total
     </td>
     <td align="right"
         style="padding:14px 0 0;font-family:Georgia,'Times New Roman',serif;font-size:16px;
-                color:#786c3b;font-weight:700;white-space:nowrap;">
+                color:#284d40;font-weight:700;white-space:nowrap;">
       $<?= number_format((float)$order->total_amount, 2) ?>
       <span style="font-family:Arial,sans-serif;font-size:11px;
                    color:#9b9080;font-weight:400;"> <?= strtoupper(h($order->currency)) ?></span>
@@ -111,7 +111,7 @@ echo $this->Html->image('homepage.png', ['alt' => 'CakePHP']);
 <table role="presentation" cellpadding="0" cellspacing="0" border="0"
        align="center" style="margin:0 auto;">
   <tr>
-    <td align="center" style="background-color:#786c3b;border-radius:2px;">
+    <td align="center" style="background-color:#284d40;border-radius:2px;">
       <a href="<?= h($shopUrl) ?>"
          style="display:inline-block;padding:15px 44px;
                 font-family:Arial,Helvetica,sans-serif;

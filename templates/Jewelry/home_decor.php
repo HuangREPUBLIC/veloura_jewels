@@ -20,6 +20,17 @@ $this->Html->css('jewelry', ['block' => true]);
     </section>
 
     <!-- Filter Bar -->
+    <?php
+    // Materialize categories so we can iterate it more than once safely.
+    $categoriesArr = is_array($categories) ? $categories : iterator_to_array($categories);
+    $activeCategory = null;
+    foreach ($categoriesArr as $cat) {
+        if ((int)$cat->id === (int)$categoryId) {
+            $activeCategory = $cat;
+            break;
+        }
+    }
+    ?>
     <div class="jewelry-filter-bar">
         <?= $this->Form->create(null, [
             'type' => 'get',
@@ -32,19 +43,15 @@ $this->Html->css('jewelry', ['block' => true]);
             <div class="filter-dropdown" id="filter-category">
                 <button type="button" class="filter-dropdown-btn <?= $categoryId > 0 ? 'is-active' : '' ?>" aria-expanded="false" aria-controls="filter-category-menu">
                     Category
-                    <?php if ($categoryId > 0): ?>
-                        <?php foreach ($categories as $cat): ?>
-                            <?php if ($cat->id === $categoryId): ?>
-                                <span class="filter-active-label">: <?= h($cat->name) ?></span>
-                            <?php endif; ?>
-                        <?php endforeach; ?>
+                    <?php if ($activeCategory): ?>
+                        <span class="filter-active-label">: <?= h($activeCategory->name) ?></span>
                     <?php endif; ?>
                     <svg class="filter-chevron" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
                 </button>
                 <div class="filter-dropdown-menu" id="filter-category-menu">
                     <a href="<?= $this->Url->build(['controller' => 'Jewelry', 'action' => 'home_decor', '?' => array_filter(['min_price' => $minPrice, 'max_price' => $maxPrice, 'sort' => $sortBy !== 'newest' ? $sortBy : null])]) ?>"
                        class="filter-dropdown-item <?= $categoryId === 0 ? 'active' : '' ?>">All</a>
-                    <?php foreach ($categories as $cat): ?>
+                    <?php foreach ($categoriesArr as $cat): ?>
                         <a href="<?= $this->Url->build(['controller' => 'Jewelry', 'action' => 'home_decor', '?' => array_filter(['category' => $cat->id, 'min_price' => $minPrice, 'max_price' => $maxPrice, 'sort' => $sortBy !== 'newest' ? $sortBy : null])]) ?>"
                            class="filter-dropdown-item <?= $categoryId === $cat->id ? 'active' : '' ?>">
                             <?= h($cat->name) ?>
@@ -226,9 +233,7 @@ $this->Html->css('jewelry', ['block' => true]);
                         data-product-id="<?= $product->id ?>"
                         type="button"
                         aria-label="Save to wishlist">
-                    <svg width="20" height="20" viewBox="0 0 64 64" fill="none">
-                        <path d="M32,57C31,56.5 5,42 5,23.5C5,13.8 12.2,6.5 21,6.5C26,6.5 30.4,9 32,11.2C33.6,9 38,6.5 43,6.5C51.8,6.5 59,13.8 59,23.5C59,42 33,56.5 32,57Z"/>
-                    </svg>
+                    <?= $this->element('wishlist_heart') ?>
                 </button>
                 <?php endif; ?>
                 </div>

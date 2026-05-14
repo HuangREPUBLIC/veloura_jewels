@@ -46,7 +46,7 @@
         <!-- HEADER -->
         <tr>
           <td align="center"
-              style="background-color:#786c3b;padding:32px 40px 26px;">
+              style="background-color:#284d40;padding:32px 40px 26px;">
             <p style="margin:0 0 4px;
                       font-family:Georgia,'Times New Roman',serif;
                       font-size:22px;font-weight:400;
@@ -120,7 +120,7 @@
         <!-- FOOTER -->
         <tr>
           <td align="center"
-              style="background-color:#786c3b;padding:28px 40px 26px;">
+              style="background-color:#284d40;padding:28px 40px 26px;">
             <p style="margin:0 0 14px;font-family:Georgia,'Times New Roman',serif;
                       font-size:13px;letter-spacing:0.22em;
                       color:#f0ede4;text-transform:uppercase;">

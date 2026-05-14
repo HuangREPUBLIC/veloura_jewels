@@ -11,7 +11,7 @@
 </p>
 
 <h1 style="margin:0 0 24px;font-family:Georgia,'Times New Roman',serif;
-            font-size:28px;font-weight:400;color:#786c3b;line-height:1.2;">
+            font-size:28px;font-weight:400;color:#284d40;line-height:1.2;">
   Thank you for reaching out.
 </h1>
 
@@ -36,5 +36,5 @@
 <p style="margin:0;font-family:Arial,sans-serif;font-size:14px;
            color:#5c5549;line-height:1.8;">
   Kind regards,<br>
-  <strong style="color:#786c3b;">Veloura Jewels</strong>
+  <strong style="color:#284d40;">Veloura Jewels</strong>
 </p>

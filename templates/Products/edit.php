@@ -8,7 +8,14 @@
  */
 $this->Html->css('login', ['block' => true]);
 
-$currentType = $product->category->type ?? $product->type ?? '';
+$currentType   = $product->category->type ?? $product->type ?? '';
+$selectedCatId = $product->category_id ?? null;
+
+// Collect existing variant sizes for JS pre-selection.
+$existingVariants = [];
+foreach ($product->product_variants as $v) {
+    $existingVariants[] = ['id' => (int)$v->id, 'size' => $v->size, 'stock' => (int)$v->stock];
+}
 ?>
 <div class="login-page">
     <div class="users form content login-card--wide">
@@ -27,9 +34,11 @@ $currentType = $product->category->type ?? $product->type ?? '';
             <?= $this->Flash->render() ?>
 
             <?php
-            echo $this->Form->control('name',           ['label' => ['text' => 'Name <span style="color:red">*</span>',           'escape' => false], 'required' => true]);
+            echo $this->Form->control('name', ['label' => ['text' => 'Name <span style="color:red">*</span>', 'escape' => false], 'required' => true]);
+            ?><div class="price-row"><?php
             echo $this->Form->control('purchase_price', ['label' => ['text' => 'Purchase Price <span style="color:red">*</span>', 'escape' => false], 'required' => true]);
             echo $this->Form->control('sale_price',     ['label' => ['text' => 'Sale Price <span style="color:red">*</span>',     'escape' => false], 'required' => true]);
+            ?></div><?php
             echo $this->Form->control('supplier_email', ['label' => 'Supplier Email']);
             ?>
 
@@ -47,7 +56,6 @@ $currentType = $product->category->type ?? $product->type ?? '';
             </div>
 
             <!-- Category: filtered by type -->
-            <?php $selectedCatId = $product->category_id ?? null; ?>
             <div class="input">
                 <label for="categories-select">Category <span style="color:red">*</span></label>
                 <select name="category_id" id="categories-select" required
@@ -61,6 +69,10 @@ $currentType = $product->category->type ?? $product->type ?? '';
                     <input type="text" name="new_category_name" id="new-category-name"
                            placeholder="New category name"
                            style="width:100%;box-sizing:border-box;">
+                </div>
+                <div id="category-pills-wrap" style="display:none;margin-top:0.6rem;">
+                    <p class="mgmt-pills-label">Manage existing categories:</p>
+                    <div class="mgmt-pills" id="category-pills"></div>
                 </div>
             </div>
 
@@ -86,7 +98,7 @@ $currentType = $product->category->type ?? $product->type ?? '';
                 </div>
             <?php endif; ?>
 
-            <!-- Add new images: drag to reorder before saving -->
+            <!-- Add new images -->
             <div class="input">
                 <label>Add New Images</label>
                 <div class="img-upload-zone" id="img-upload-zone">
@@ -109,39 +121,28 @@ $currentType = $product->category->type ?? $product->type ?? '';
             <div class="input">
                 <label>Size &amp; Stock <span style="color:red">*</span></label>
                 <div id="variants-container">
-                    <?php if (!empty($product->product_variants)): ?>
-                        <?php foreach ($product->product_variants as $i => $variant): ?>
-                            <?php
-                            $categoryName = $product->category->name ?? '';
-                            $sizes = $categoryName === 'Rings'
-                                ? ['Size 5','Size 6','Size 7','Size 8','Size 9','Size 10','Size 11','Size 12','One Size']
-                                : ['One Size'];
-                            ?>
-                            <div class="variant-row">
-                                <input type="hidden" name="product_variants[<?= $i ?>][id]"
-                                       value="<?= (int)$variant->id ?>">
-                                <?php if (count($sizes) === 1): ?>
-                                    <input type="hidden" name="product_variants[<?= $i ?>][size]"
-                                           value="<?= h($sizes[0]) ?>">
-                                    <span class="size-text-label"><?= h($sizes[0]) ?></span>
-                                <?php else: ?>
-                                    <select name="product_variants[<?= $i ?>][size]" class="size-select">
-                                        <?php foreach ($sizes as $s): ?>
-                                            <option value="<?= $s ?>"
-                                                <?= $variant->size === $s ? 'selected' : '' ?>>
-                                                <?= $s ?>
-                                            </option>
-                                        <?php endforeach; ?>
-                                    </select>
-                                <?php endif; ?>
-                                <input type="number" name="product_variants[<?= $i ?>][stock]"
-                                       value="<?= (int)$variant->stock ?>" placeholder="Qty" min="0">
-                                <button type="button" onclick="this.parentNode.remove()">✕</button>
+                    <?php foreach ($existingVariants as $i => $v): ?>
+                        <div class="variant-row">
+                            <input type="hidden" name="product_variants[<?= $i ?>][id]"
+                                   value="<?= $v['id'] ?>">
+                            <select name="product_variants[<?= $i ?>][size]" class="size-select"
+                                    onchange="onSizeChange(this)"></select>
+                            <div class="new-size-div" style="display:none">
+                                <input type="text" class="new-size-input"
+                                       name="product_variants[<?= $i ?>][new_size_name]"
+                                       placeholder="New size name">
                             </div>
-                        <?php endforeach; ?>
-                    <?php endif; ?>
+                            <input type="number" name="product_variants[<?= $i ?>][stock]"
+                                   value="<?= $v['stock'] ?>" placeholder="Qty" min="0">
+                            <button type="button" onclick="removeVariantRow(this)">✕</button>
+                        </div>
+                    <?php endforeach; ?>
                 </div>
                 <button type="button" class="btn-add-variant" onclick="addVariantRow()">+ Add Size</button>
+                <div id="size-pills-wrap" style="display:none;margin-top:0.6rem;">
+                    <p class="mgmt-pills-label">Manage available sizes:</p>
+                    <div class="mgmt-pills" id="size-pills"></div>
+                </div>
             </div>
         </fieldset>
 
@@ -151,264 +152,12 @@ $currentType = $product->category->type ?? $product->type ?? '';
 </div>
 
 <script>
-    // Toggle existing image delete
-    function toggleImgDelete(btn, imgId) {
-        var thumb    = document.getElementById('img-' + imgId);
-        var checkbox = document.getElementById('del-' + imgId);
-        var marked   = thumb.classList.toggle('marked-delete');
-        checkbox.checked = marked;
-        btn.classList.toggle('undo', marked);
-        btn.title = marked ? 'Undo deletion' : 'Mark for deletion';
-    }
-
-    // Image upload with drag-to-reorder
-    var fileList    = [];
-    var realInput   = document.getElementById('real-file-input');
-    var previewGrid = document.getElementById('img-preview-grid');
-    var uploadZone  = document.getElementById('img-upload-zone');
-    var dragSrcIndex = null;
-
-    realInput.addEventListener('change', function() {
-        Array.from(this.files).forEach(function(f) { fileList.push(f); });
-        renderPreviews();
-        realInput.value = '';
-    });
-
-    uploadZone.addEventListener('dragover', function(e) {
-        if (Array.from(e.dataTransfer.types).indexOf('Files') !== -1) {
-            e.preventDefault();
-            this.classList.add('zone-hover');
-        }
-    });
-    uploadZone.addEventListener('dragleave', function(e) {
-        if (e.relatedTarget && this.contains(e.relatedTarget)) return;
-        this.classList.remove('zone-hover');
-    });
-    uploadZone.addEventListener('drop', function(e) {
-        if (Array.from(e.dataTransfer.types).indexOf('Files') !== -1) {
-            e.preventDefault();
-            this.classList.remove('zone-hover');
-            Array.from(e.dataTransfer.files).forEach(function(f) {
-                if (f.type.startsWith('image/')) fileList.push(f);
-            });
-            renderPreviews();
-        }
-    });
-
-    function renderPreviews() {
-        previewGrid.innerHTML = '';
-        fileList.forEach(function(file, i) {
-            var url = URL.createObjectURL(file);
-            var div = document.createElement('div');
-            div.className = 'img-thumb';
-            div.draggable = true;
-            div.dataset.index = i;
-            div.innerHTML = '<img src="' + url + '" alt="">'
-                + '<button type="button" class="img-remove-btn" data-i="' + i + '">×</button>';
-
-            div.querySelector('.img-remove-btn').addEventListener('click', function() {
-                fileList.splice(parseInt(this.dataset.i), 1);
-                renderPreviews();
-            });
-
-            div.addEventListener('dragstart', function(e) {
-                dragSrcIndex = parseInt(this.dataset.index);
-                this.classList.add('dragging');
-                e.dataTransfer.effectAllowed = 'move';
-            });
-            div.addEventListener('dragover', function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-                e.dataTransfer.dropEffect = 'move';
-                document.querySelectorAll('.img-thumb').forEach(function(el) {
-                    el.classList.remove('drag-over');
-                });
-                this.classList.add('drag-over');
-            });
-            div.addEventListener('drop', function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-                var targetIndex = parseInt(this.dataset.index);
-                if (dragSrcIndex !== null && dragSrcIndex !== targetIndex) {
-                    var moved = fileList.splice(dragSrcIndex, 1)[0];
-                    fileList.splice(targetIndex, 0, moved);
-                    renderPreviews();
-                }
-            });
-            div.addEventListener('dragend', function() {
-                document.querySelectorAll('.img-thumb').forEach(function(el) {
-                    el.classList.remove('dragging', 'drag-over');
-                });
-                dragSrcIndex = null;
-            });
-
-            previewGrid.appendChild(div);
-        });
-    }
-
-    function mergeAndRenumberVariants() {
-        var container = document.getElementById('variants-container');
-        var sizeMap = {};
-        Array.from(container.querySelectorAll('.variant-row')).forEach(function(row) {
-            var sizeEl = row.querySelector('select[name*="[size]"], input[name*="[size]"]');
-            if (!sizeEl || !sizeEl.value) return;
-            var size = sizeEl.value;
-            var stockEl = row.querySelector('input[type="number"]');
-            var stock = parseInt(stockEl ? stockEl.value : '0') || 0;
-            if (sizeMap[size]) {
-                var keeperStock = sizeMap[size].querySelector('input[type="number"]');
-                if (keeperStock) keeperStock.value = (parseInt(keeperStock.value) || 0) + stock;
-                row.remove();
-            } else {
-                sizeMap[size] = row;
-            }
-        });
-        container.querySelectorAll('.variant-row').forEach(function(row, i) {
-            row.querySelectorAll('[name]').forEach(function(el) {
-                el.name = el.name.replace(/product_variants\[\d+\]/, 'product_variants[' + i + ']');
-            });
-        });
-    }
-
-    document.getElementById('product-form').addEventListener('submit', function() {
-        mergeAndRenumberVariants();
-        if (fileList.length > 0) {
-            var dt = new DataTransfer();
-            fileList.forEach(function(f) { dt.items.add(f); });
-            realInput.files = dt.files;
-        }
-    });
-
-    // Category / type logic
-    var allCategories = <?= $categoriesJson ?>;
-    var selectedCatId = <?= json_encode($selectedCatId) ?>;
-    var variantIndex   = <?= !empty($product->product_variants) ? count($product->product_variants) : 0 ?>;
-
-    var ringSizes = ['Size 5','Size 6','Size 7','Size 8','Size 9','Size 10','Size 11','Size 12','One Size'];
-
-    function getSizes() {
-        var catId = document.getElementById('categories-select').value;
-        var cat = allCategories.find(function(c) { return c.id == catId; });
-        return (cat && cat.name === 'Rings') ? ringSizes : ['One Size'];
-    }
-
-    (function init() {
-        var currentType = document.getElementById('type-select').value;
-        if (currentType) populateCategories(currentType, selectedCatId);
-        updateAllSizeSelects();
-    })();
-
-    function onTypeChange(type) {
-        populateCategories(type, []);
-        updateAllSizeSelects();
-    }
-
-    function populateCategories(type, preselected) {
-        var select      = document.getElementById('categories-select');
-        var newCatDiv   = document.getElementById('new-category-input');
-        var newCatInput = document.getElementById('new-category-name');
-
-        newCatDiv.style.display = 'none';
-        newCatInput.required = false;
-        newCatInput.value = '';
-
-        if (!type) {
-            select.disabled = true;
-            select.innerHTML = '<option value="">-- Select a type first --</option>';
-            return;
-        }
-
-        select.disabled = false;
-        select.innerHTML = '<option value="">-- Select a category --</option>';
-        allCategories.filter(function(c) { return c.type === type; }).forEach(function(c) {
-            var opt = document.createElement('option');
-            opt.value = c.id;
-            opt.textContent = c.name;
-            if (c.id == preselected) opt.selected = true;
-            select.appendChild(opt);
-        });
-        var newOpt = document.createElement('option');
-        newOpt.value = '__new__';
-        newOpt.textContent = '+ Add new category...';
-        select.appendChild(newOpt);
-    }
-
-    function onCategoryChange(value) {
-        var newCatDiv   = document.getElementById('new-category-input');
-        var newCatInput = document.getElementById('new-category-name');
-        if (value === '__new__') {
-            newCatDiv.style.display = 'block';
-            newCatInput.required = true;
-        } else {
-            newCatDiv.style.display = 'none';
-            newCatInput.required = false;
-            newCatInput.value = '';
-        }
-        updateAllSizeSelects();
-    }
-
-    function buildSizeOptions(selectedValue) {
-        var sizes = getSizes();
-        var html = '';
-        sizes.forEach(function(s) {
-            html += '<option value="' + s + '"' + (s === selectedValue ? ' selected' : '') + '>' + s + '</option>';
-        });
-        return html;
-    }
-
-    function buildSizeField(name) {
-        var sizes = getSizes();
-        if (sizes.length === 1) {
-            return '<input type="hidden" name="' + name + '" value="' + sizes[0] + '">'
-                + '<span class="size-text-label">' + sizes[0] + '</span>';
-        }
-        return '<select name="' + name + '" class="size-select">' + buildSizeOptions('') + '</select>';
-    }
-
-    function updateAllSizeSelects() {
-        var sizes = getSizes();
-        document.querySelectorAll('#variants-container .variant-row').forEach(function(row) {
-            var sel = row.querySelector('select[name*="[size]"]');
-            var hid = row.querySelector('input[type="hidden"][name*="[size]"]');
-            var lbl = row.querySelector('.size-text-label');
-
-            if (sizes.length === 1) {
-                if (sel) {
-                    var name = sel.name;
-                    var hidden = document.createElement('input');
-                    hidden.type = 'hidden'; hidden.name = name; hidden.value = sizes[0];
-                    var span = document.createElement('span');
-                    span.className = 'size-text-label'; span.textContent = sizes[0];
-                    row.insertBefore(hidden, sel);
-                    row.insertBefore(span, sel);
-                    sel.remove();
-                } else if (hid) {
-                    hid.value = sizes[0];
-                    if (lbl) lbl.textContent = sizes[0];
-                }
-            } else {
-                if (hid) {
-                    var name = hid.name;
-                    var select = document.createElement('select');
-                    select.name = name; select.className = 'size-select';
-                    select.innerHTML = buildSizeOptions('');
-                    row.insertBefore(select, hid);
-                    hid.remove();
-                    if (lbl) lbl.remove();
-                } else if (sel) {
-                    sel.innerHTML = buildSizeOptions(sel.value);
-                }
-            }
-        });
-    }
-
-    function addVariantRow() {
-        var row = document.createElement('div');
-        row.className = 'variant-row';
-        row.innerHTML = buildSizeField('product_variants[' + variantIndex + '][size]')
-            + '<input type="number" name="product_variants[' + variantIndex + '][stock]" placeholder="Qty" min="0">'
-            + '<button type="button" onclick="this.parentNode.remove()">✕</button>';
-        document.getElementById('variants-container').appendChild(row);
-        variantIndex++;
-    }
+    window.csrfToken         = "<?= h($this->request->getAttribute('csrfToken') ?? '') ?>";
+    window.allCategories     = <?= $categoriesJson ?>;
+    window.selectedCatId     = <?= json_encode($selectedCatId) ?>;
+    window.variantIndex      = <?= count($existingVariants) ?>;
+    window.existingSizes     = <?= json_encode(array_column($existingVariants, 'size')) ?>;
+    window.urlDeleteCategory = "<?= $this->Url->build('/categories/delete/') ?>";
+    window.urlRemoveSize     = "<?= $this->Url->build('/categories/') ?>";
 </script>
+<script src="<?= $this->Url->script('product-form') ?>"></script>

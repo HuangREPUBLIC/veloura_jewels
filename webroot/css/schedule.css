@@ -18,14 +18,14 @@
     gap: 5px;
     width: fit-content;
     margin-bottom: 8px;
-    color: var(--oakwood);
+    color: var(--emerald);
     font-size: 0.9rem;
     font-weight: 600;
     text-decoration: none;
 }
 
 .back-link:hover {
-    color: var(--oakwood-dark);
+    color: var(--emerald-dark);
     text-decoration: underline;
 }
 
@@ -101,8 +101,8 @@ h3.page-title,
 
 .sched-week-input:focus,
 .schedule-time-input:focus {
-    border-color: var(--oakwood);
-    box-shadow: 0 0 0 3px rgba(var(--oakwood-rgb), 0.12);
+    border-color: var(--emerald);
+    box-shadow: 0 0 0 3px rgba(var(--emerald-rgb), 0.12);
 }
 
 .sched-week-label,
@@ -133,29 +133,29 @@ h3.page-title,
 
 .btn-primary-sched {
     color: var(--color-white) !important;
-    background: var(--oakwood);
-    border: 1px solid var(--oakwood);
+    background: var(--emerald);
+    border: 1px solid var(--emerald);
 }
 
 .btn-primary-sched:hover {
     color: var(--color-white) !important;
-    background: var(--oakwood-dark);
-    border-color: var(--oakwood-dark);
-    box-shadow: 0 4px 12px rgba(var(--oakwood-rgb), 0.18);
+    background: var(--emerald-dark);
+    border-color: var(--emerald-dark);
+    box-shadow: 0 4px 12px rgba(var(--emerald-rgb), 0.18);
 }
 
 .btn-secondary-sched,
 .sched-nav-btn {
-    color: var(--oakwood) !important;
+    color: var(--emerald) !important;
     background: var(--color-white);
-    border: 1px solid rgba(var(--oakwood-rgb), 0.28);
+    border: 1px solid rgba(var(--emerald-rgb), 0.28);
 }
 
 .btn-secondary-sched:hover,
 .sched-nav-btn:hover {
-    color: var(--oakwood-dark) !important;
+    color: var(--emerald-dark) !important;
     background: var(--beige-light);
-    border-color: rgba(var(--oakwood-rgb), 0.45);
+    border-color: rgba(var(--emerald-rgb), 0.45);
 }
 
 .sched-grid-wrap {
@@ -163,7 +163,7 @@ h3.page-title,
     background: var(--color-white);
     border: 1px solid #e6e2da;
     border-radius: 14px;
-    box-shadow: 0 4px 18px rgba(var(--oakwood-rgb), 0.06);
+    box-shadow: 0 4px 18px rgba(var(--emerald-rgb), 0.06);
 }
 
 .sched-grid {
@@ -210,7 +210,7 @@ h3.page-title,
 
 .sched-day-head--today {
     background: #f1eadc;
-    box-shadow: inset 0 -2px 0 var(--oakwood);
+    box-shadow: inset 0 -2px 0 var(--emerald);
 }
 
 .sched-day-name {
@@ -253,8 +253,8 @@ h3.page-title,
     height: 36px;
     flex: 0 0 36px;
     border-radius: 50%;
-    background: rgba(var(--oakwood-rgb), 0.1);
-    color: var(--oakwood);
+    background: rgba(var(--emerald-rgb), 0.1);
+    color: var(--emerald);
     font-size: 0.84rem;
     font-weight: 800;
 }
@@ -288,17 +288,17 @@ h3.page-title,
     min-height: 62px;
     padding: 9px 10px;
     background: #f6f1e7;
-    border: 1px solid rgba(var(--oakwood-rgb), 0.18);
-    border-left: 4px solid var(--oakwood);
+    border: 1px solid rgba(var(--emerald-rgb), 0.18);
+    border-left: 4px solid var(--emerald);
     border-radius: 8px;
 }
 
 .sched-shift-card:hover {
-    box-shadow: 0 3px 10px rgba(var(--oakwood-rgb), 0.12);
+    box-shadow: 0 3px 10px rgba(var(--emerald-rgb), 0.12);
 }
 
 .sched-shift-times {
-    color: var(--oakwood-dark);
+    color: var(--emerald-dark);
     font-size: 0.82rem;
     font-weight: 800;
 }
@@ -332,14 +332,14 @@ h3.page-title,
 }
 
 .sched-shift-edit {
-    color: var(--oakwood);
+    color: var(--emerald);
     background: var(--color-white);
-    border: 1px solid rgba(var(--oakwood-rgb), 0.24);
+    border: 1px solid rgba(var(--emerald-rgb), 0.24);
 }
 
 .sched-shift-edit:hover {
     color: var(--color-white);
-    background: var(--oakwood);
+    background: var(--emerald);
     text-decoration: none;
 }
 
@@ -389,8 +389,8 @@ h3.page-title,
 }
 
 .sched-add-btn:hover {
-    border-color: var(--oakwood);
-    color: var(--oakwood);
+    border-color: var(--emerald);
+    color: var(--emerald);
     background: var(--beige-light);
     text-decoration: none;
 }
@@ -440,7 +440,7 @@ h3.page-title,
     background: var(--color-white);
     border: 1px solid #e6e2da;
     border-radius: 14px;
-    box-shadow: 0 4px 18px rgba(var(--oakwood-rgb), 0.06);
+    box-shadow: 0 4px 18px rgba(var(--emerald-rgb), 0.06);
 }
 
 .schedule-selector {
@@ -479,8 +479,8 @@ h3.page-title,
 
 .schedule-row--active {
     background: #fffdf8;
-    border-color: rgba(var(--oakwood-rgb), 0.35);
-    box-shadow: inset 3px 0 0 var(--oakwood);
+    border-color: rgba(var(--emerald-rgb), 0.35);
+    box-shadow: inset 3px 0 0 var(--emerald);
 }
 
 .schedule-day-toggle {
@@ -496,7 +496,7 @@ h3.page-title,
 .schedule-checkbox {
     width: 18px;
     height: 18px;
-    accent-color: var(--oakwood);
+    accent-color: var(--emerald);
     cursor: pointer;
 }
 
@@ -592,7 +592,7 @@ h3.page-title,
 
 .dashboard-schedule-link {
     margin-left: auto;
-    color: var(--oakwood);
+    color: var(--emerald);
     font-size: 0.82rem;
     font-weight: 800;
     text-decoration: none;
@@ -621,7 +621,7 @@ h3.page-title,
 
 .dashboard-schedule-day--on {
     background: #f6f1e7;
-    border-color: rgba(var(--oakwood-rgb), 0.18);
+    border-color: rgba(var(--emerald-rgb), 0.18);
 }
 
 .dashboard-schedule-day--off {
@@ -629,8 +629,8 @@ h3.page-title,
 }
 
 .dashboard-schedule-day--today {
-    border-color: var(--oakwood);
-    box-shadow: inset 0 0 0 1px var(--oakwood);
+    border-color: var(--emerald);
+    box-shadow: inset 0 0 0 1px var(--emerald);
 }
 
 .dashboard-schedule-label {
@@ -648,7 +648,7 @@ h3.page-title,
 }
 
 .dashboard-schedule-time {
-    color: var(--oakwood-dark);
+    color: var(--emerald-dark);
     font-size: 0.76rem;
     font-weight: 800;
 }

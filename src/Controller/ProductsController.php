@@ -37,7 +37,17 @@ class ProductsController extends AppController
             ->distinct(['Products.id'])
             ->all();
 
-        $this->set(compact('products', 'lowStockProducts'));
+        try {
+            $productLogs = $this->fetchTable('ActivityLogs')->find()
+                ->where(['model' => 'Product'])
+                ->orderByDesc('created')
+                ->limit(50)
+                ->all();
+        } catch (\Exception $e) {
+            $productLogs = [];
+        }
+
+        $this->set(compact('products', 'lowStockProducts', 'productLogs'));
     }
 
     public function view($id = null)
@@ -63,21 +73,20 @@ class ProductsController extends AppController
             $data = $this->request->getData();
             $typeValue = $data['type'] ?? '';
 
-            if (($data['category_id'] ?? '') === '__new__') {
-                $newCatName = trim($data['new_category_name'] ?? '');
-                if ($newCatName !== '' && $typeValue !== '') {
-                    $categoriesTable = $this->fetchTable('Categories');
-                    $newCat = $categoriesTable->newEntity(['name' => $newCatName, 'type' => $typeValue]);
-                    $savedCat = $categoriesTable->save($newCat);
-                    if ($savedCat) {
-                        $data['category_id'] = $savedCat->id;
-                    }
-                }
-            }
+            $this->resolveNewCategory($data, $typeValue);
+            $this->resolveNewSizes($data);
 
             $product = $this->Products->patchEntity($product, $data, ['associated' => ['ProductVariants']]);
             if ($this->Products->save($product, ['associated' => ['ProductVariants']])) {
                 $this->_saveProductImages($product->id);
+                $this->logActivity('Product', $product->id, 'created', $product->name, [
+                    'name'           => $product->name,
+                    'type'           => $product->type,
+                    'sale_price'     => (string)$product->sale_price,
+                    'purchase_price' => (string)$product->purchase_price,
+                    'supplier_email' => $product->supplier_email,
+                    'description'    => $product->description,
+                ]);
                 $this->Flash->success(__('The product has been saved.'));
                 return $this->redirect(['action' => 'index']);
             }
@@ -110,20 +119,25 @@ class ProductsController extends AppController
             $from = $data['from'] ?? $from;
             $typeValue = $data['type'] ?? '';
 
-            if (($data['category_id'] ?? '') === '__new__') {
-                $newCatName = trim($data['new_category_name'] ?? '');
-                if ($newCatName !== '' && $typeValue !== '') {
-                    $categoriesTable = $this->fetchTable('Categories');
-                    $newCat = $categoriesTable->newEntity(['name' => $newCatName, 'type' => $typeValue]);
-                    $savedCat = $categoriesTable->save($newCat);
-                    if ($savedCat) {
-                        $data['category_id'] = $savedCat->id;
-                    }
+            $this->resolveNewCategory($data, $typeValue);
+            $this->resolveNewSizes($data);
+
+            $trackFields = ['name', 'sale_price', 'purchase_price', 'description', 'story', 'supplier_email', 'featured', 'category_id'];
+
+            $product = $this->Products->patchEntity($product, $data, ['associated' => ['ProductVariants']]);
+
+            $changes = [];
+            foreach ($product->getDirty() as $field) {
+                if (in_array($field, $trackFields)) {
+                    $changes[$field] = [
+                        'from' => $product->getOriginal($field),
+                        'to'   => $product->$field,
+                    ];
                 }
             }
 
-            $product = $this->Products->patchEntity($product, $data, ['associated' => ['ProductVariants']]);
             if ($this->Products->save($product, ['associated' => ['ProductVariants']])) {
+                $this->logActivity('Product', $product->id, 'updated', $product->name, $changes ?: null);
                 $this->_saveProductImages($product->id);
                 $deleteIds = $this->request->getData('delete_images') ?? [];
                 if (!empty($deleteIds)) {
@@ -159,7 +173,7 @@ class ProductsController extends AppController
     private function getProductFormCategories(): array
     {
         $categoriesRaw = $this->fetchTable('Categories')->find()
-            ->select(['id', 'name', 'type'])
+            ->select(['id', 'name', 'type', 'sizes'])
             ->orderBy(['type' => 'ASC', 'name' => 'ASC'])
             ->all()
             ->toArray();
@@ -170,9 +184,10 @@ class ProductsController extends AppController
         }
 
         $categoriesJson = json_encode(array_map(fn($cat) => [
-            'id'   => $cat->id,
-            'name' => $cat->name,
-            'type' => $cat->type,
+            'id'    => $cat->id,
+            'name'  => $cat->name,
+            'type'  => $cat->type,
+            'sizes' => $cat->sizes ?? ['One Size'],
         ], $categoriesRaw), JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT) ?: '[]';
 
         $types = [];
@@ -186,6 +201,47 @@ class ProductsController extends AppController
         }
 
         return [$categories, $categoriesJson, $types];
+    }
+
+    private function resolveNewCategory(array &$data, string $typeValue): void
+    {
+        if (($data['category_id'] ?? '') !== '__new__') return;
+        $newCatName = trim($data['new_category_name'] ?? '');
+        if ($newCatName === '' || $typeValue === '') return;
+        $categoriesTable = $this->fetchTable('Categories');
+        $newCat = $categoriesTable->newEntity(['name' => $newCatName, 'type' => $typeValue, 'sizes' => ['One Size']]);
+        $savedCat = $categoriesTable->save($newCat);
+        if ($savedCat) {
+            $data['category_id'] = $savedCat->id;
+        }
+    }
+
+    // Apply new-size entries in variant rows, updating the category's sizes list.
+    private function resolveNewSizes(array &$data): void
+    {
+        $catId = (int)($data['category_id'] ?? 0);
+        if ($catId <= 0) return;
+
+        $categoriesTable = $this->fetchTable('Categories');
+        $cat = $categoriesTable->get($catId);
+        $sizes = $cat->sizes ?? ['One Size'];
+        $updated = false;
+
+        foreach ($data['product_variants'] ?? [] as $i => $variant) {
+            if (($variant['size'] ?? '') !== '__new__') continue;
+            $newName = trim($variant['new_size_name'] ?? '');
+            if ($newName !== '' && !in_array($newName, $sizes)) {
+                $sizes[] = $newName;
+                $updated = true;
+            }
+            $data['product_variants'][$i]['size'] = $newName !== '' ? $newName : '';
+            unset($data['product_variants'][$i]['new_size_name']);
+        }
+
+        if ($updated) {
+            $cat->sizes = $sizes;
+            $categoriesTable->save($cat);
+        }
     }
 
     /**
@@ -246,6 +302,7 @@ class ProductsController extends AppController
         $product = $this->Products->get($id);
         $product->featured = !$product->featured;
         $this->Products->save($product);
+        $this->logActivity('Product', $product->id, 'updated', $product->name, ['is_featured' => $product->featured]);
 
         return $this->response->withType('application/json')
             ->withStringBody(json_encode(['featured' => (bool)$product->featured]));
@@ -275,8 +332,17 @@ class ProductsController extends AppController
         $adminId = $identity->get('id');
         $adminEmail = $identity->get('email');
 
+        $this->fetchTable('OrderItems')->updateAll(['product_id' => null], ['product_id' => $id]);
+
         if ($this->Products->delete($product)) {
             Log::write('info', "Product deleted: id={$product->id}, name=\"{$product->name}\" by admin id={$adminId} ({$adminEmail})");
+            $this->logActivity('Product', (int)$id, 'deleted', $product->name, [
+                'name'           => $product->name,
+                'type'           => $product->type,
+                'sale_price'     => (string)$product->sale_price,
+                'purchase_price' => (string)$product->purchase_price,
+                'supplier_email' => $product->supplier_email,
+            ]);
             $this->Flash->success(__('The product has been deleted.'));
         } else {
             $this->Flash->error(__('The product could not be deleted. Please, try again.'));

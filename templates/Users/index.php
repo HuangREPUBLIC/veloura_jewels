@@ -4,6 +4,9 @@
  * @var iterable<\App\Model\Entity\User> $users
  */
 $this->assign('title', 'Users');
+$this->Html->css('https://cdn.datatables.net/2.2.2/css/dataTables.dataTables.min.css', ['block' => true]);
+$this->Html->script('https://code.jquery.com/jquery-3.6.0.min.js', ['block' => true]);
+$this->Html->script('https://cdn.datatables.net/2.2.2/js/dataTables.min.js', ['block' => true]);
 $identity = $this->request->getAttribute('identity');
 ?>
 <?php $this->Html->css('admincontact', ['block' => true]); ?>
