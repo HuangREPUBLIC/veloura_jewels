@@ -66,8 +66,9 @@ class ProductsController extends AppController
             if (($data['category_id'] ?? '') === '__new__') {
                 $newCatName = trim($data['new_category_name'] ?? '');
                 if ($newCatName !== '' && $typeValue !== '') {
-                    $newCat = $this->Products->Category->newEntity(['name' => $newCatName, 'type' => $typeValue]);
-                    $savedCat = $this->Products->Category->save($newCat);
+                    $categoriesTable = $this->fetchTable('Categories');
+                    $newCat = $categoriesTable->newEntity(['name' => $newCatName, 'type' => $typeValue]);
+                    $savedCat = $categoriesTable->save($newCat);
                     if ($savedCat) {
                         $data['category_id'] = $savedCat->id;
                     }
@@ -83,31 +84,7 @@ class ProductsController extends AppController
             $this->Flash->error(__('The product could not be saved. Please, try again.'));
         }
 
-        $categoriesRaw = $this->Products->Category->find()
-            ->select(['id', 'name', 'type'])
-            ->orderBy(['type' => 'ASC', 'name' => 'ASC'])
-            ->all()->toArray();
-
-        $categories = [];
-        foreach ($categoriesRaw as $cat) {
-            $categories[$cat->id] = $cat->name;
-        }
-
-        $categoriesJson = json_encode(array_map(fn($cat) => [
-            'id'   => $cat->id,
-            'name' => $cat->name,
-            'type' => $cat->type,
-        ], $categoriesRaw));
-
-        $types = [];
-        foreach (array_unique(array_map(fn($cat) => $cat->type, $categoriesRaw)) as $key) {
-            if (!empty($key)) {
-                $types[$key] = ucwords(str_replace('_', ' ', $key));
-            }
-        }
-        if (empty($types)) {
-            $types = ['jewelry' => 'Jewelry', 'home_decor' => 'Home Decor'];
-        }
+        [$categories, $categoriesJson, $types] = $this->getProductFormCategories();
 
         $preselectedType = $this->request->getQuery('type') ?? '';
         $this->set(compact('product', 'categories', 'categoriesJson', 'types', 'preselectedType'));
@@ -136,8 +113,9 @@ class ProductsController extends AppController
             if (($data['category_id'] ?? '') === '__new__') {
                 $newCatName = trim($data['new_category_name'] ?? '');
                 if ($newCatName !== '' && $typeValue !== '') {
-                    $newCat = $this->Products->Category->newEntity(['name' => $newCatName, 'type' => $typeValue]);
-                    $savedCat = $this->Products->Category->save($newCat);
+                    $categoriesTable = $this->fetchTable('Categories');
+                    $newCat = $categoriesTable->newEntity(['name' => $newCatName, 'type' => $typeValue]);
+                    $savedCat = $categoriesTable->save($newCat);
                     if ($savedCat) {
                         $data['category_id'] = $savedCat->id;
                     }
@@ -174,10 +152,17 @@ class ProductsController extends AppController
 
         $this->set('from', $from);
 
-        $categoriesRaw = $this->Products->Category->find()
+        [$categories, $categoriesJson, $types] = $this->getProductFormCategories();
+        $this->set(compact('product', 'categories', 'categoriesJson', 'types'));
+    }
+
+    private function getProductFormCategories(): array
+    {
+        $categoriesRaw = $this->fetchTable('Categories')->find()
             ->select(['id', 'name', 'type'])
             ->orderBy(['type' => 'ASC', 'name' => 'ASC'])
-            ->all()->toArray();
+            ->all()
+            ->toArray();
 
         $categories = [];
         foreach ($categoriesRaw as $cat) {
@@ -188,7 +173,7 @@ class ProductsController extends AppController
             'id'   => $cat->id,
             'name' => $cat->name,
             'type' => $cat->type,
-        ], $categoriesRaw));
+        ], $categoriesRaw), JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT) ?: '[]';
 
         $types = [];
         foreach (array_unique(array_map(fn($cat) => $cat->type, $categoriesRaw)) as $key) {
@@ -199,7 +184,8 @@ class ProductsController extends AppController
         if (empty($types)) {
             $types = ['jewelry' => 'Jewelry', 'home_decor' => 'Home Decor'];
         }
-        $this->set(compact('product', 'categories', 'categoriesJson', 'types'));
+
+        return [$categories, $categoriesJson, $types];
     }
 
     /**

@@ -295,6 +295,7 @@ $currentType = $product->category->type ?? $product->type ?? '';
     (function init() {
         var currentType = document.getElementById('type-select').value;
         if (currentType) populateCategories(currentType, selectedCatId);
+        updateAllSizeSelects();
     })();
 
     function onTypeChange(type) {
