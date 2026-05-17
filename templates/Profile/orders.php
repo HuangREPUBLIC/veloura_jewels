@@ -72,11 +72,11 @@ $statuses = ['pending', 'paid', 'shipped', 'completed', 'cancelled'];
                 </div>
 
                 <!-- Pagination -->
-                <div class="profile-pagination">
+                <ul class="profile-pagination">
                     <?= $this->Paginator->prev('← Previous') ?>
                     <?= $this->Paginator->numbers() ?>
                     <?= $this->Paginator->next('Next →') ?>
-                </div>
+                </ul>
             <?php endif; ?>
         </div>
 

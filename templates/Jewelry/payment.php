@@ -25,16 +25,18 @@
 <div class="vp-checkout">
 
     <div class="vp-left">
-        <a href="<?= $this->Url->build(['action' => 'cancel', '?' => ['session_id' => $sessionId]]) ?>" class="vp-back-link">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
-            Back
-        </a>
-
-        <div class="vp-left-brand">
-            <a href="<?= $this->Url->build('/') ?>" class="vp-logo">
-                <?= $this->Html->image('icon.png', ['alt' => 'Veloura Jewels', 'class' => 'vp-logo-img']) ?>
-                <span class="vp-logo-name">Veloura Jewels</span>
+        <div class="vp-left-top">
+            <a href="<?= $this->Url->build(['action' => 'cancel', '?' => ['session_id' => $sessionId]]) ?>" class="vp-back-link">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+                Back to cart
             </a>
+            <div class="vp-logo">
+                <?= $this->Html->image('icon.png', ['alt' => 'Veloura Jewels', 'class' => 'vp-logo-img']) ?>
+                <div class="vp-logo-block">
+                    <span class="vp-logo-name">Veloura Jewels</span>
+                    <span class="vp-logo-tag">Secure Checkout</span>
+                </div>
+            </div>
         </div>
 
         <div id="checkout"></div>

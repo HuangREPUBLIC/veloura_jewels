@@ -363,29 +363,6 @@
     font-size: 0.95rem;
 }
 
-.jewelry-page .detail-size-select {
-    appearance: none;
-    -webkit-appearance: none;
-    background-color: var(--color-white);
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='7' viewBox='0 0 11 7'%3E%3Cpath d='M1 1l4.5 4.5L10 1' stroke='%23284d40' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 0.9rem center;
-    border: 1.5px solid rgba(var(--emerald-rgb), 0.25);
-    border-radius: 999px;
-    padding: 0.6rem 2.6rem 0.6rem 1.1rem;
-    font-family: var(--font-body);
-    font-size: 0.88rem;
-    color: var(--color-body);
-    cursor: pointer;
-    min-width: 180px;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
-}
-
-.jewelry-page .detail-size-select:focus {
-    outline: none;
-    border-color: var(--emerald);
-    box-shadow: 0 0 0 3px rgba(var(--emerald-rgb), 0.08);
-}
 
 .jewelry-page .detail-name {
     font-family: var(--font-display);
@@ -440,12 +417,6 @@
     color: var(--emerald);
 }
 
-.jewelry-page .detail-description p {
-    margin: 0;
-    color: var(--gray-600);
-    line-height: 1.82;
-    font-size: 0.95rem;
-}
 
 .jewelry-page .add-to-cart-form {
     margin-top: 1.4rem;
@@ -453,28 +424,6 @@
     border-top: 1px solid rgba(var(--emerald-rgb), 0.1);
 }
 
-.jewelry-page .quantity-group {
-    margin-bottom: 1.25rem;
-}
-
-.jewelry-page .quantity-label {
-    display: block;
-    margin-bottom: 0.7rem;
-    font-family: var(--font-body);
-    font-weight: 600;
-    font-size: 0.82rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--emerald);
-}
-
-.jewelry-page .detail-actions {
-    display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
-    align-items: center;
-    margin-top: 1.4rem;
-}
 
 /* Refined purchase panel */
 
@@ -642,59 +591,6 @@
     transform: translateY(1px);
 }
 
-.jewelry-page .quantity-group .qty-box {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.8rem;
-    max-width: 100%;
-}
-
-.jewelry-page .jewelry-qty-minus,
-.jewelry-page .jewelry-qty-plus {
-    border: 1px solid rgba(var(--emerald-rgb), 0.2);
-    background: rgba(var(--beige-light-rgb), 0.55);
-    color: var(--color-headings);
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    line-height: 1;
-    padding: 0;
-    margin: 0;
-    transition: all 0.2s ease;
-}
-
-.jewelry-page .jewelry-qty-minus:hover,
-.jewelry-page .jewelry-qty-plus:hover {
-    background: var(--emerald);
-    color: var(--color-white);
-}
-
-.jewelry-page .quantity-group .jewelry-qty-minus,
-.jewelry-page .quantity-group .jewelry-qty-plus {
-    width: 36px;
-    height: 36px;
-    border-radius: 999px;
-    font-size: 1rem;
-}
-
-.jewelry-page .quantity-group .jewelry-quantity-input {
-    width: 64px;
-    max-width: 64px;
-    height: 44px;
-    min-height: 44px;
-    padding: 0.35rem 0.4rem;
-    font-family: var(--font-body);
-    font-size: 1rem;
-    font-weight: 600;
-    border: 1.5px solid rgba(var(--emerald-rgb), 0.2);
-    border-radius: 999px;
-    background: var(--color-white);
-    box-shadow: none;
-    box-sizing: border-box;
-    text-align: center;
-    margin: 0;
-}
 
 .jewelry-page .cart-layout {
     display: grid;
@@ -971,20 +867,7 @@
         overflow-y: visible;
         padding: 0.4rem 0 0;
     }
-    .jewelry-page .detail-gallery { flex-direction: column; }
-    .jewelry-page .detail-thumbs {
-        flex-direction: row;
-        max-height: none;
-        overflow-x: auto;
-        overflow-y: hidden;
-        padding: 10px 12px 6px;
-        order: 2;
-    }
-    .jewelry-page .detail-thumb {
-        width: 68px;
-        height: 68px;
-    }
-    .jewelry-page .detail-main-wrap { order: 1; border-radius: 0; }
+
     .jewelry-page .detail-image,
     .jewelry-page .detail-placeholder { height: 440px; }
     .jewelry-page .cart-layout { grid-template-columns: 1fr; }
@@ -1005,65 +888,6 @@
     }
 }
 
-.jewelry-page .result-card {
-    max-width: 520px;
-    margin: 4rem auto;
-    text-align: center;
-    background: var(--color-white);
-    border-radius: 20px;
-    padding: 3rem 2rem;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.07);
-}
-
-
-
-.jewelry-page .result-title {
-    font-family: var(--font-display);
-    font-size: 2rem;
-    font-weight: 400;
-    color: var(--color-headings);
-    margin-bottom: 0.5rem;
-    letter-spacing: 0.02em;
-}
-
-.jewelry-page .result-subtitle {
-    font-family: var(--font-body);
-    color: var(--gray-600);
-    font-size: 0.92rem;
-    margin-bottom: 1.8rem;
-}
-
-.jewelry-page .result-order-info {
-    background: #f9f7f2;
-    border: 1px solid #e8e2d4;
-    border-radius: 12px;
-    padding: 1.2rem;
-    margin-bottom: 1.8rem;
-    text-align: left;
-}
-
-.jewelry-page .result-order-row {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 0.5rem;
-}
-
-.jewelry-page .result-order-row:last-child { margin-bottom: 0; }
-
-.jewelry-page .result-order-label {
-    font-family: var(--font-body);
-    color: var(--gray-500);
-    font-size: 0.88rem;
-}
-
-.jewelry-page .result-order-value {
-    font-family: var(--font-body);
-    font-weight: 600;
-    color: var(--gray-800);
-    font-size: 0.88rem;
-}
-
-.jewelry-page .result-order-value.status { color: var(--emerald); }
 
 .cc-page {
     min-height: 100vh;
@@ -1343,25 +1167,6 @@
     border-color: rgba(185, 51, 51, 0.55);
 }
 
-.jewelry-page .result-btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    padding: 0.95rem;
-    background: var(--emerald);
-    color: var(--color-white) !important;
-    border-radius: 12px;
-    font-family: var(--font-body);
-    font-size: 0.85rem;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    text-decoration: none !important;
-    transition: background 0.2s ease;
-}
-
-.jewelry-page .result-btn:hover { background: var(--emerald-dark); }
 
 .jewelry-page .jewelry-filter-bar {
     margin: 0 0 2.4rem;
@@ -1895,45 +1700,7 @@
     .product-grid { grid-template-columns: 1fr; }
 }
 
-.jewelry-page .result-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 1.2rem;
-}
 
-.jewelry-page .result-actions {
-    display: flex;
-    flex-direction: column;
-    gap: 0.7rem;
-    width: 100%;
-}
-
-.jewelry-page .quantity-group select {
-    height: 46px;
-    border: 1px solid rgba(var(--emerald-rgb), 0.22);
-    border-radius: 8px;
-    font-family: var(--font-body);
-    font-size: 0.95rem;
-    background-color: var(--color-white);
-    color: var(--gray-800);
-    cursor: pointer;
-    outline: none;
-    appearance: none;
-    -webkit-appearance: none;
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 20 20'><path d='M5 7l5 5 5-5' stroke='%23666' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>");
-    background-repeat: no-repeat;
-    background-position: right 0.8rem center;
-    padding: 0 2rem 0 1rem;
-    min-width: 180px;
-    width: 100%;
-    transition: border-color 0.2s, box-shadow 0.2s;
-}
-
-.jewelry-page .quantity-group select:focus {
-    border-color: var(--emerald);
-    box-shadow: 0 0 0 3px rgba(var(--emerald-rgb), 0.1);
-}
 
 /* Payment Page - left/right split (payment.php) */
 
@@ -1949,17 +1716,26 @@ body:has(.vp-checkout) {
 
 .vp-left {
     background: var(--color-white);
-    padding: 2.4rem 3rem 3rem;
+    padding: 0 3rem 3rem;
     display: flex;
     flex-direction: column;
-    border-right: 1px solid rgba(var(--emerald-rgb), 0.1);
+    border-right: 1px solid rgba(var(--emerald-rgb), 0.22);
+    border-top: 3px solid var(--emerald-gold);
+}
+
+.vp-left-top {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    padding: 2rem 0 1.6rem;
+    margin-bottom: 1.6rem;
+    border-bottom: 1px solid rgba(var(--emerald-rgb), 0.1);
 }
 
 .vp-back-link {
     display: inline-flex;
     align-items: center;
     gap: 0.35rem;
-    margin-bottom: 1.6rem;
     font-size: 0.78rem;
     font-weight: 500;
     color: var(--color-text-muted);
@@ -1970,32 +1746,41 @@ body:has(.vp-checkout) {
 
 .vp-back-link:hover { color: var(--emerald); }
 
-.vp-left-brand {
-    margin-bottom: 2rem;
-    padding-bottom: 1.6rem;
-    border-bottom: 1px solid rgba(var(--emerald-rgb), 0.1);
-}
-
 .vp-logo {
     display: inline-flex;
     align-items: center;
-    gap: 0.6rem;
+    gap: 0.75rem;
     text-decoration: none;
 }
 
 .vp-logo-img {
-    width: 36px;
-    height: 36px;
+    width: 40px;
+    height: 40px;
     object-fit: contain;
+}
+
+.vp-logo-block {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
 }
 
 .vp-logo-name {
     font-family: var(--font-display);
-    font-size: 1.05rem;
+    font-size: 1.1rem;
     font-weight: 400;
     letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--color-headings);
+    line-height: 1;
+}
+
+.vp-logo-tag {
+    font-size: 0.62rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--emerald-gold);
+    font-weight: 600;
 }
 
 #checkout {
@@ -2004,12 +1789,16 @@ body:has(.vp-checkout) {
 }
 
 .vp-right {
-    background: var(--beige-light);
+    background: var(--emerald-dark);
     padding: 2.4rem 2rem 3rem;
     display: flex;
     flex-direction: column;
     gap: 1.4rem;
-    border-left: 1px solid rgba(var(--emerald-rgb), 0.12);
+    align-self: start;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
 }
 
 .vp-summary-title {
@@ -2018,7 +1807,7 @@ body:has(.vp-checkout) {
     font-weight: 700;
     letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: var(--emerald);
+    color: var(--emerald-gold);
     margin: 0;
 }
 
@@ -2026,17 +1815,20 @@ body:has(.vp-checkout) {
     display: flex;
     flex-direction: column;
     gap: 0.85rem;
+    overflow-y: auto;
+    flex: 1;
+    min-height: 0;
 }
 
 .vp-item {
     display: flex;
     align-items: center;
     gap: 0.9rem;
-    background: var(--color-white);
-    border: 1px solid rgba(var(--emerald-rgb), 0.1);
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: 14px;
     padding: 0.75rem;
-    box-shadow: 0 2px 8px rgba(var(--emerald-rgb), 0.05);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
 }
 
 .vp-item-img-wrap {
@@ -2061,12 +1853,12 @@ body:has(.vp-checkout) {
     width: 60px;
     height: 60px;
     border-radius: 10px;
-    background: rgba(var(--beige-light-rgb), 0.8);
-    border: 1px solid rgba(var(--emerald-rgb), 0.1);
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.15);
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--gray-400);
+    color: rgba(255, 255, 255, 0.4);
 }
 
 .vp-item-qty {
@@ -2076,14 +1868,14 @@ body:has(.vp-checkout) {
     width: 20px;
     height: 20px;
     border-radius: 50%;
-    background: var(--emerald);
+    background: var(--emerald-gold);
     color: #fff;
     font-size: 0.65rem;
     font-weight: 700;
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 2px solid var(--beige-light);
+    border: 2px solid var(--emerald-dark);
 }
 
 .vp-item-info { flex: 1; min-width: 0; }
@@ -2092,7 +1884,7 @@ body:has(.vp-checkout) {
     font-family: var(--font-display);
     font-size: 0.85rem;
     font-weight: 500;
-    color: var(--color-headings);
+    color: #fff;
     line-height: 1.35;
     white-space: nowrap;
     overflow: hidden;
@@ -2102,26 +1894,26 @@ body:has(.vp-checkout) {
 
 .vp-item-meta {
     font-size: 0.74rem;
-    color: var(--color-text-muted);
+    color: rgba(255, 255, 255, 0.55);
     margin-top: 0.2rem;
 }
 
 .vp-item-price {
     font-size: 0.85rem;
     font-weight: 600;
-    color: var(--color-price);
+    color: var(--emerald-gold);
     white-space: nowrap;
 }
 
 .vp-summary-totals {
-    background: var(--color-white);
-    border: 1px solid rgba(var(--emerald-rgb), 0.1);
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: 14px;
     padding: 1rem 1.1rem;
     display: flex;
     flex-direction: column;
     gap: 0.55rem;
-    box-shadow: 0 2px 8px rgba(var(--emerald-rgb), 0.05);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
 }
 
 .vp-summary-row {
@@ -2129,11 +1921,11 @@ body:has(.vp-checkout) {
     justify-content: space-between;
     align-items: center;
     font-size: 0.84rem;
-    color: var(--color-body);
+    color: rgba(255, 255, 255, 0.8);
 }
 
 .vp-muted {
-    color: var(--color-text-muted);
+    color: rgba(255, 255, 255, 0.45);
     font-size: 0.76rem;
     font-style: italic;
 }
@@ -2142,8 +1934,8 @@ body:has(.vp-checkout) {
     font-family: var(--font-display);
     font-weight: 700;
     font-size: 0.98rem;
-    color: var(--color-headings);
-    border-top: 1px solid rgba(var(--emerald-rgb), 0.1);
+    color: var(--emerald-gold);
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
     padding-top: 0.55rem;
     margin-top: 0.15rem;
     letter-spacing: 0.01em;
@@ -2159,7 +1951,7 @@ body:has(.vp-checkout) {
     font-weight: 700;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: var(--color-text-muted);
+    color: rgba(255, 255, 255, 0.5);
     margin-bottom: 0.55rem;
 }
 
@@ -2181,7 +1973,7 @@ body:has(.vp-checkout) {
     align-items: center;
     gap: 0.4rem;
     font-size: 0.71rem;
-    color: var(--color-text-muted);
+    color: rgba(255, 255, 255, 0.45);
     margin: 0;
 }
 
@@ -2189,29 +1981,23 @@ body:has(.vp-checkout) {
     .vp-checkout { grid-template-columns: 1fr; }
     .vp-right {
         order: -1;
-        border-left: none;
-        border-bottom: 1px solid rgba(var(--emerald-rgb), 0.12);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.12);
         padding: 2rem 1.5rem 1.5rem;
+        position: static;
+        height: auto;
+        overflow-y: visible;
+    }
+    .vp-items {
+        overflow-y: visible;
+        flex: none;
     }
     .vp-left {
         border-right: none;
-        padding: 2rem 1.5rem 2.5rem;
+        border-top: none;
+        padding: 1.5rem 1.5rem 2.5rem;
     }
+    .vp-left-top { padding-top: 0; }
     .vp-apm { margin-top: 0; }
 }
 
 /* Wishlist heart button — APM-style: outline by default, filled when saved */
-
-/* Wishlist page grid */
-.wishlist-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 1.5rem;
-    margin-top: 0;
-}
-
-.wishlist-item {
-    display: flex;
-    flex-direction: column;
-    gap: 0.6rem;
-}

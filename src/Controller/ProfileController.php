@@ -187,7 +187,7 @@ class ProfileController extends AppController
 
         $order = $ordersTable->find()
             ->where(['Orders.id' => $id, 'Orders.user_id' => $userId])
-            ->contain(['OrderItems'])
+            ->contain(['OrderItems' => ['Products' => ['ProductImages']]])
             ->first();
 
         if (!$order) {

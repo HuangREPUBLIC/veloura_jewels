@@ -50,11 +50,17 @@ $this->Html->css('profile', ['block' => true]);
                         <span class="order-cancel-timer" id="order-cancel-timer">--:--</span>
                         <span class="order-cancel-expired" id="order-cancel-expired" style="display:none">Window closed</span>
                     </div>
-                    <div id="order-cancel-btn-wrap">
-                        <?= $this->Form->create(null, ['url' => '/checkout/cancel', 'method' => 'post']) ?>
-                        <?= $this->Form->hidden('session_id', ['value' => $order->stripe_session_id]) ?>
-                        <?= $this->Form->button('Cancel Order', ['type' => 'submit', 'class' => 'order-cancel-btn']) ?>
-                        <?= $this->Form->end() ?>
+                    <div class="order-cancel-actions">
+                        <a href="<?= $this->Url->build(['controller' => 'Jewelry', 'action' => 'resumeCheckout', '?' => ['session_id' => $order->stripe_session_id]]) ?>"
+                           class="order-resume-btn" id="order-resume-btn">
+                            Return to Payment
+                        </a>
+                        <div id="order-cancel-btn-wrap">
+                            <?= $this->Form->create(null, ['url' => '/checkout/cancel', 'method' => 'post']) ?>
+                            <?= $this->Form->hidden('session_id', ['value' => $order->stripe_session_id]) ?>
+                            <?= $this->Form->button('Cancel Order', ['type' => 'submit', 'class' => 'order-cancel-btn']) ?>
+                            <?= $this->Form->end() ?>
+                        </div>
                     </div>
                 </div>
                 <script>
@@ -63,12 +69,14 @@ $this->Html->css('profile', ['block' => true]);
                         const timerEl  = document.getElementById('order-cancel-timer');
                         const btnWrap  = document.getElementById('order-cancel-btn-wrap');
                         const expiredEl = document.getElementById('order-cancel-expired');
+                        const resumeBtn = document.getElementById('order-resume-btn');
 
                         function tick() {
                             const remaining = end - Date.now();
                             if (remaining <= 0) {
                                 timerEl.style.display = 'none';
                                 if (btnWrap) btnWrap.style.display = 'none';
+                                if (resumeBtn) resumeBtn.style.display = 'none';
                                 expiredEl.style.display = 'block';
                                 return;
                             }
@@ -84,39 +92,38 @@ $this->Html->css('profile', ['block' => true]);
         <?php endif; ?>
 
         <!-- Order Items -->
-        <div class="profile-card">
-            <div class="profile-card-header">
-                <h2>Items</h2>
+        <div class="profile-card od-card">
+            <h2 class="od-title">Items</h2>
+            <div class="od-items">
+                <?php foreach ($order->order_items as $item): ?>
+                <div class="od-item">
+                    <div class="od-item-img-wrap">
+                        <?php if (!empty($item->product->product_images)): ?>
+                            <img src="<?= $this->Url->image('products/' . h($item->product->product_images[0]->filename)) ?>"
+                                 alt="<?= h($item->product_name) ?>" class="od-item-img">
+                        <?php else: ?>
+                            <div class="od-item-placeholder">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                    <div class="od-item-info">
+                        <div class="od-item-name"><?= h($item->product_name) ?></div>
+                        <?php if ($item->selected_size): ?>
+                            <div class="od-item-meta">Size: <?= h($item->selected_size) ?></div>
+                        <?php endif; ?>
+                        <div class="od-item-meta">Qty: <?= (int)$item->quantity ?></div>
+                    </div>
+                    <div class="od-item-right">
+                        <div class="od-item-unit">$<?= number_format((float)$item->unit_price, 2) ?> each</div>
+                        <div class="od-item-subtotal">$<?= number_format((float)$item->subtotal, 2) ?></div>
+                    </div>
+                </div>
+                <?php endforeach; ?>
             </div>
-            <div class="profile-orders-table-wrap">
-                <table class="profile-orders-table">
-                    <thead>
-                    <tr>
-                        <th>Product</th>
-                        <th>Size</th>
-                        <th>Unit Price</th>
-                        <th>Qty</th>
-                        <th>Subtotal</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <?php foreach ($order->order_items as $item): ?>
-                        <tr>
-                            <td class="order-item-name"><?= h($item->product_name) ?></td>
-                            <td><?= h($item->selected_size) ?: '—' ?></td>
-                            <td>$<?= number_format((float)$item->unit_price, 2) ?></td>
-                            <td><?= h($item->quantity) ?></td>
-                            <td>$<?= number_format((float)$item->subtotal, 2) ?></td>
-                        </tr>
-                    <?php endforeach; ?>
-                    </tbody>
-                    <tfoot>
-                    <tr class="order-total-row">
-                        <td colspan="4">Total</td>
-                        <td>$<?= number_format((float)$order->total_amount, 2) ?></td>
-                    </tr>
-                    </tfoot>
-                </table>
+            <div class="od-total">
+                <span class="od-total-label">Order Total</span>
+                <span class="od-total-value">$<?= number_format((float)$order->total_amount, 2) ?> AUD</span>
             </div>
         </div>
 

@@ -298,8 +298,7 @@ class JewelryController extends AppController
             return $this->redirect(['action' => 'cart']);
         }
 
-        $publishableKey = Configure::read('Stripe.publishableKey');
-        $this->set(compact('products', 'total', 'publishableKey'));
+        $this->set(compact('products', 'total'));
     }
 
     public function createCheckoutSession()
