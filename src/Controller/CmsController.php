@@ -45,6 +45,9 @@ class CmsController extends AppController
             $allowedMimes = ['image/jpeg', 'image/png', 'image/webp', 'image/gif', 'video/mp4', 'video/webm'];
             $uploads      = $this->request->getUploadedFiles();
 
+
+
+
             foreach ($this->request->getData() as $key => $value) {
                 if (!is_string($value)) continue;
                 $record = $pageContentsTable->find()

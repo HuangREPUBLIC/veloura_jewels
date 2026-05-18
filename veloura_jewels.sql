@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 18, 2026 at 05:25 PM
+-- Generation Time: May 18, 2026 at 05:50 PM
 -- Server version: 11.8.6-MariaDB
 -- PHP Version: 8.4.16
 
@@ -20,8 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `veloura_jewels`
 --
-CREATE DATABASE IF NOT EXISTS `veloura_jewels` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_uca1400_ai_ci;
-USE `veloura_jewels`;
 
 -- --------------------------------------------------------
 
@@ -366,7 +364,7 @@ INSERT INTO `page_content` (`id`, `page_id`, `content_key`, `content_value`, `la
                                                                                                                         (36, 8, 'contact_heading', 'Contact Veloura Jewels', 'Page Heading', 'text', 1),
                                                                                                                         (37, 8, 'contact_subtext', 'We\'d love to hear from you! Whether you have questions about our handcrafted jewellery, want to discuss a custom piece, or simply want to learn more about our story, feel free to reach out.', 'Page Subtext', 'textarea', 2),
 (38, 2, 'home_video', 'homeVideo.mp4', 'Home Video', 'video', 8),
-(40, 2, 'diamond_ring_video', 'handmadeDiamondRing.mp4', 'Diamond Ring Video', 'video', 9),
+(40, 2, 'about_us_video', 'homeDecorTest.mp4', 'About Us Video', 'video', 9),
 (41, 2, 'featured_jewellery_image', 'featuredJewellery.png', 'Featured Jewellery Image', 'image', 10),
 (42, 2, 'featured_homedecor_image', 'homedecor.png', 'Featured Home Decor Image', 'image', 11),
 (43, 1, 'modal_jewellery_image', 'greenNecklace.jpg', 'Modal Jewellery Image', 'image', 1),

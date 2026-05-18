@@ -187,7 +187,7 @@ $wishlistIds = $wishlistIds ?? [];
         <section class="hp-story">
             <div class="hp-story-image-wrap">
                 <video class="home-video" autoplay muted loop playsinline>
-                    <source src="<?= $this->Url->build('/img/' . h($pageContent['diamond_ring_video'] ?? 'handmadeDiamondRing.mp4')) ?>" type="video/mp4">
+                    <source src="<?= $this->Url->build('/img/' . h($pageContent['about_us_video'] ?? 'handmadeDiamondRing.mp4')) ?>" type="video/mp4">
                     Your browser does not support the video tag.
                 </video>
             </div>
