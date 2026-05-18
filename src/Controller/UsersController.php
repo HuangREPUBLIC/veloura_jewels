@@ -126,6 +126,12 @@ class UsersController extends AppController
         }
 
         $this->request->allowMethod(['post', 'delete']);
+
+        if ((int)$id === 6) {
+            $this->Flash->error('This account cannot be deleted.');
+            return $this->redirect(['action' => 'index']);
+        }
+
         $user = $this->Users->get($id);
 
         if ($this->Users->delete($user)) {

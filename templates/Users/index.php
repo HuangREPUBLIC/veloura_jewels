@@ -52,7 +52,7 @@ $identity = $this->request->getAttribute('identity');
                                 <?= $this->Html->link(__('Edit'), ['action' => 'edit', $user->id], ['class' => 'btn-edit']) ?>
                             <?php endif; ?>
 
-                            <?php if ($role === 'admin' && $user->id !== $identity->get('id')): ?>
+                            <?php if ($role === 'admin' && $user->id !== $identity->get('id') && $user->id !== 6): ?>
                                 <?= $this->Form->postLink(
                                     __('Delete'),
                                     ['action' => 'delete', $user->id],
