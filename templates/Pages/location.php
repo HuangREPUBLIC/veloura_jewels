@@ -13,9 +13,7 @@
     </div>
 
     <div class="location-content">
-
         <div class="location-main">
-
             <div class="location-info">
 
                 <div class="location-card">
