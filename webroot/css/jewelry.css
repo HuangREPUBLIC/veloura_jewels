@@ -311,6 +311,7 @@
 
 .jewelry-page .detail-accordion {
     border-top: 1px solid rgba(var(--emerald-rgb), 0.1);
+    margin-top: 1.5rem;
     margin-bottom: 0;
 }
 
@@ -577,14 +578,14 @@
     letter-spacing: 0.12em;
     text-transform: uppercase;
     cursor: pointer;
-    box-shadow: 0 10px 24px rgba(var(--emerald-rgb), 0.18);
+    box-shadow: none;
     transition: all 0.2s ease;
 }
 
 .jewelry-page .jewelry-add-to-cart-btn:hover {
     background: var(--emerald-dark);
     color: var(--color-white);
-    box-shadow: 0 14px 30px rgba(var(--emerald-rgb), 0.24);
+    box-shadow: none;
 }
 
 .jewelry-page .jewelry-add-to-cart-btn:active {
