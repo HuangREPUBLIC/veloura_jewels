@@ -174,37 +174,41 @@
 
 .search-suggest-img-wrap .product-card-badges {
     position: absolute;
-    top: 0.5rem;
-    left: 0.5rem;
+    top: 0.6rem;
+    left: 0.6rem;
     z-index: 3;
     display: flex;
     flex-direction: column;
-    gap: 0.25rem;
+    gap: 0.3rem;
     pointer-events: none;
 }
 
 .search-suggest-img-wrap .product-badge {
     display: inline-block;
-    min-width: 68px;
-    font-size: 0.55rem;
+    min-width: 76px;
+    font-size: 0.58rem;
     font-weight: 700;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
     text-align: center;
-    padding: 0.2rem 0.45rem;
+    padding: 0.25rem 0.55rem;
     border-radius: 999px;
 }
 
 .search-suggest-img-wrap .product-badge--featured {
-    background: rgba(40, 77, 64, 0.12);
-    color: var(--emerald);
-    border: 1px solid rgba(40, 77, 64, 0.25);
+    background: rgba(40, 77, 64, 0.55);
+    color: #fff;
+    border: 1px solid rgba(40, 77, 64, 0.4);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
 }
 
 .search-suggest-img-wrap .product-badge--bestsales {
-    background: rgba(183, 151, 90, 0.15);
-    color: #8a6a28;
-    border: 1px solid rgba(183, 151, 90, 0.3);
+    background: rgba(183, 151, 90, 0.6);
+    color: #fff;
+    border: 1px solid rgba(183, 151, 90, 0.45);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
 }
 
 .search-suggest-info {
