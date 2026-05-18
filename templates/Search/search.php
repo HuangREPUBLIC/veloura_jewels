@@ -82,14 +82,12 @@ $this->Html->css('jewelry', ['block' => true]);
                         </div>
                     </div>
                 </a>
-                <?php if ($identity): ?>
                 <button class="wishlist-btn<?= in_array($product->id, $wishlistIds) ? ' wishlisted' : '' ?>"
                         data-product-id="<?= $product->id ?>"
                         type="button"
                         aria-label="Save to wishlist">
                     <?= $this->element('wishlist_heart') ?>
                 </button>
-                <?php endif; ?>
                 </div>
             <?php endforeach; ?>
         </div>

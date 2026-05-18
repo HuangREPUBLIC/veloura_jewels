@@ -1,8 +1,5 @@
 :root {
-    --color-cakephp-red: #d33c43;
-    --color-cakephp-gray: #404041;
     --color-cakephp-blue: #2f85ae;
-    --color-cakephp-lightblue: #34bdd7;
     --color-lightgray: #606c76;
     --color-white: #fff;
     --color-main-bg: #f5f7fa;
@@ -23,11 +20,7 @@
     --color-message-info-border: #6cb2eb;
     --beige: #dad7c5;
     --beige-light: #f0ede4;
-    --sage: #c7d8ca;
     --earth-yellow: #e1a95e;
-    --oakwood: #786c3b;
-    --oakwood-dark: #5a5029;
-    --oakwood-rgb: 120, 108, 59;
     --beige-light-rgb: 240, 237, 228;
 
     --color-body: #3d3d3a;

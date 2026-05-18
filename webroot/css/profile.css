@@ -826,7 +826,6 @@
     appearance: none;
     -webkit-appearance: none;
     border-style: none;
-    background-color: transparent;
     background: transparent;
     outline: none;
     cursor: pointer;
@@ -881,10 +880,6 @@
 .wishlist-size-select:focus {
     border-color: var(--emerald);
 }
-.wishlist-add-to-bag-btn {
-    margin-top: 0.4rem;
-}
-
 /* Per-card Add to Bag */
 .wishlist-atb-form {
     display: block;
@@ -924,4 +919,15 @@
     background: none;
     border-color: rgba(var(--emerald-rgb), 0.35);
     color: var(--emerald);
+}
+
+.wishlist-guest-hint {
+    font-size: 0.9rem;
+    color: var(--color-muted, #888);
+    margin: 0.5rem 0 1.5rem;
+}
+.wishlist-guest-hint a {
+    color: var(--emerald, #2d6a4f);
+    text-decoration: underline;
+    text-underline-offset: 2px;
 }

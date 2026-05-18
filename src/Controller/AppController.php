@@ -60,6 +60,17 @@ class AppController extends Controller
             return $this->fetchTable('PageContents')->getForPage('global');
         }, 'default');
         $this->set('siteSettings', $siteSettings);
+
+        $identity = $this->Authentication->getIdentity();
+        if ($identity) {
+            $wishlistCount = $this->fetchTable('Wishlists')
+                ->find()
+                ->where(['user_id' => $identity->get('id')])
+                ->count();
+        } else {
+            $wishlistCount = count($this->request->getSession()->read('GuestWishlist') ?? []);
+        }
+        $this->set('wishlistCount', $wishlistCount);
     }
 
     protected function requireRole(array $roles): void

@@ -601,7 +601,7 @@ class JewelryController extends AppController
     {
         $identity = $this->request->getAttribute('identity');
         if (!$identity) {
-            return [];
+            return $this->request->getSession()->read('GuestWishlist') ?? [];
         }
         return $this->fetchTable('Wishlists')->find()
             ->where(['user_id' => $identity->get('id')])

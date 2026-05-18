@@ -93,6 +93,14 @@ $role = $identity ? $identity->get('role') : null;
             ['class' => 'nav-icon-btn nav-cart-wrap', 'escape' => false, 'title' => 'Cart']
         ) ?>
 
+        <!-- Wishlist icon -->
+        <?= $this->Html->link(
+            '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>'
+            . ($wishlistCount > 0 ? '<span class="nav-cart-badge">' . $wishlistCount . '</span>' : ''),
+            ['controller' => 'Profile', 'action' => 'wishlist'],
+            ['class' => 'nav-icon-btn nav-cart-wrap', 'escape' => false, 'title' => 'Wishlist']
+        ) ?>
+
         <!-- User dropdown -->
         <div class="nav-dropdown-wrap">
             <button class="nav-icon-btn" id="navUserBtn" onclick="toggleNavDropdown()" title="Account">
@@ -286,6 +294,15 @@ $role = $identity ? $identity->get('role') : null;
 </footer>
 
 <script>
+    (function () {
+        var navbar = document.querySelector('.navbar');
+        function onScroll() {
+            navbar.classList.toggle('scrolled', window.scrollY > 8);
+        }
+        window.addEventListener('scroll', onScroll, { passive: true });
+        onScroll();
+    }());
+
     function toggleNavDropdown() {
         document.getElementById('navDropdown').classList.toggle('open');
     }
@@ -376,11 +393,9 @@ $role = $identity ? $identity->get('role') : null;
                 + (r.images[0] ? '<img src="' + r.images[0] + '" alt="' + r.name + '" class="search-suggest-img search-suggest-img--primary">' : '<div class="search-suggest-img--empty"></div>')
                 + (r.images[1] ? '<img src="' + r.images[1] + '" alt="' + r.name + '" class="search-suggest-img search-suggest-img--hover">' : '')
                 + '</div>';
-            var wishlistBtn = wishlistEnabled
-                ? '<button class="wishlist-btn' + (r.wishlisted ? ' wishlisted' : '') + '" data-product-id="' + r.id + '" type="button" aria-label="Save to wishlist">'
-                    + '<svg width="20" height="20" viewBox="0 0 64 64" fill="currentColor"><path d="M32,57C31,56.5 5,42 5,23.5C5,13.8 12.2,6.5 21,6.5C26,6.5 30.4,9 32,11.2C33.6,9 38,6.5 43,6.5C51.8,6.5 59,13.8 59,23.5C59,42 33,56.5 32,57Z"/></svg>'
-                    + '</button>'
-                : '';
+            var wishlistBtn = '<button class="wishlist-btn' + (wishlistEnabled && r.wishlisted ? ' wishlisted' : '') + '" data-product-id="' + r.id + '" type="button" aria-label="Save to wishlist">'
+                + '<svg width="20" height="20" viewBox="0 0 64 64" fill="currentColor"><path d="M32,57C31,56.5 5,42 5,23.5C5,13.8 12.2,6.5 21,6.5C26,6.5 30.4,9 32,11.2C33.6,9 38,6.5 43,6.5C51.8,6.5 59,13.8 59,23.5C59,42 33,56.5 32,57Z"/></svg>'
+                + '</button>';
             return '<div class="product-card-wrap">'
                 + '<a href="' + r.url + '?back=' + encodeURIComponent(currentPagePath) + '" class="search-suggest-item">'
                 + imgWrap
@@ -430,12 +445,12 @@ $role = $identity ? $identity->get('role') : null;
         });
     });
 
-    <?php if ($identity): ?>
     document.addEventListener('click', function (e) {
         var btn = e.target.closest('.wishlist-btn');
         if (!btn) return;
         e.preventDefault();
         e.stopPropagation();
+
         var id = btn.dataset.productId;
         var wasWishlisted = btn.classList.contains('wishlisted');
         btn.disabled = true;
@@ -447,7 +462,11 @@ $role = $identity ? $identity->get('role') : null;
                 if (!r.ok) throw new Error('Wishlist request failed');
                 return r.json();
             })
-            .then(function (data) { btn.classList.toggle('wishlisted', data.wishlisted); })
+            .then(function (data) {
+                btn.classList.toggle('wishlisted', data.wishlisted);
+                if (data.guest) showWishlistToast();
+                updateWishlistBadge(data.wishlisted ? 1 : -1);
+            })
             .catch(function (err) {
                 btn.classList.toggle('wishlisted', wasWishlisted);
                 console.error('Wishlist error:', err);
@@ -455,7 +474,40 @@ $role = $identity ? $identity->get('role') : null;
             })
             .finally(function () { btn.disabled = false; });
     });
-    <?php endif; ?>
+
+    function updateWishlistBadge(delta) {
+        var wrap = document.querySelector('a[title="Wishlist"].nav-cart-wrap');
+        if (!wrap) return;
+        var badge = wrap.querySelector('.nav-cart-badge');
+        var current = badge ? parseInt(badge.textContent, 10) : 0;
+        var next = Math.max(0, current + delta);
+        if (next > 0) {
+            if (badge) {
+                badge.textContent = next;
+            } else {
+                badge = document.createElement('span');
+                badge.className = 'nav-cart-badge';
+                badge.textContent = next;
+                wrap.appendChild(badge);
+            }
+        } else if (badge) {
+            badge.remove();
+        }
+    }
+
+    function showWishlistToast() {
+        var existing = document.getElementById('wishlist-guest-toast');
+        if (existing) { existing.remove(); }
+        var toast = document.createElement('div');
+        toast.id = 'wishlist-guest-toast';
+        toast.innerHTML = 'To save your wishlist please <a href="<?= $this->Url->build(['controller' => 'Auth', 'action' => 'login']) ?>">login</a> or <a href="<?= $this->Url->build(['controller' => 'Auth', 'action' => 'register']) ?>">sign up</a>.';
+        document.body.appendChild(toast);
+        setTimeout(function () { toast.classList.add('show'); }, 10);
+        setTimeout(function () {
+            toast.classList.remove('show');
+            setTimeout(function () { toast.remove(); }, 300);
+        }, 3500);
+    }
 </script>
 </body>
 </html>

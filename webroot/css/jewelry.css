@@ -216,15 +216,19 @@
 }
 
 .product-badge--featured {
-    background: rgba(40, 77, 64, 0.12);
-    color: var(--emerald);
-    border: 1px solid rgba(40, 77, 64, 0.25);
+    background: rgba(40, 77, 64, 0.55);
+    color: #fff;
+    border: 1px solid rgba(40, 77, 64, 0.4);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
 }
 
 .product-badge--bestsales {
-    background: rgba(183, 151, 90, 0.15);
-    color: #8a6a28;
-    border: 1px solid rgba(183, 151, 90, 0.3);
+    background: rgba(183, 151, 90, 0.6);
+    color: #fff;
+    border: 1px solid rgba(183, 151, 90, 0.45);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
 }
 
 .product-price {
@@ -1621,7 +1625,6 @@
     }
 
     .jewelry-page .filter-dropdown-menu--price .price-dropdown-row {
-        display: grid;
         grid-template-columns: minmax(0, 1fr);
         gap: 0.65rem;
     }
@@ -1633,13 +1636,6 @@
         justify-content: center;
     }
 
-    .jewelry-page .filter-dropdown-menu--price .price-prefix {
-        padding-left: 0.85rem;
-    }
-
-    .jewelry-page .filter-dropdown-menu--price .price-input {
-        height: 46px;
-    }
     .product-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 

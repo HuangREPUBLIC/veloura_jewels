@@ -2,10 +2,10 @@
 -- version 5.2.3
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: May 18, 2026 at 05:50 PM
--- Server version: 11.8.6-MariaDB
--- PHP Version: 8.4.16
+-- Host: localhost
+-- Generation Time: May 18, 2026 at 07:42 PM
+-- Server version: 12.2.2-MariaDB
+-- PHP Version: 8.4.18
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -20,6 +20,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `veloura_jewels`
 --
+CREATE DATABASE IF NOT EXISTS `veloura_jewels` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_uca1400_ai_ci;
+USE `veloura_jewels`;
 
 -- --------------------------------------------------------
 
@@ -28,18 +30,21 @@ SET time_zone = "+00:00";
 --
 
 DROP TABLE IF EXISTS `activity_logs`;
-CREATE TABLE `activity_logs` (
-                                 `id` int(11) NOT NULL,
-                                 `user_id` int(11) DEFAULT NULL,
-                                 `user_name` varchar(255) DEFAULT NULL,
-                                 `action` varchar(50) NOT NULL,
-                                 `model` varchar(100) NOT NULL,
-                                 `model_id` int(11) DEFAULT NULL,
-                                 `model_label` varchar(255) DEFAULT NULL,
-                                 `changes` text DEFAULT NULL,
-                                 `created` datetime NOT NULL,
-                                 `is_archived` tinyint(1) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+CREATE TABLE IF NOT EXISTS `activity_logs` (
+                                               `id` int(11) NOT NULL AUTO_INCREMENT,
+    `user_id` int(11) DEFAULT NULL,
+    `user_name` varchar(255) DEFAULT NULL,
+    `action` varchar(50) NOT NULL,
+    `model` varchar(100) NOT NULL,
+    `model_id` int(11) DEFAULT NULL,
+    `model_label` varchar(255) DEFAULT NULL,
+    `changes` text DEFAULT NULL,
+    `created` datetime NOT NULL,
+    `is_archived` tinyint(1) NOT NULL DEFAULT 0,
+    PRIMARY KEY (`id`),
+    KEY `idx_model` (`model`),
+    KEY `idx_created` (`created`)
+    ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `activity_logs`
@@ -57,15 +62,17 @@ INSERT INTO `activity_logs` (`id`, `user_id`, `user_name`, `action`, `model`, `m
 --
 
 DROP TABLE IF EXISTS `cake_migrations`;
-CREATE TABLE `cake_migrations` (
-                                   `id` int(11) NOT NULL,
-                                   `version` bigint(20) NOT NULL,
-                                   `migration_name` varchar(100) DEFAULT NULL,
-                                   `plugin` varchar(100) DEFAULT NULL,
-                                   `start_time` timestamp NULL DEFAULT NULL,
-                                   `end_time` timestamp NULL DEFAULT NULL,
-                                   `breakpoint` tinyint(1) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+CREATE TABLE IF NOT EXISTS `cake_migrations` (
+                                                 `id` int(11) NOT NULL AUTO_INCREMENT,
+    `version` bigint(20) NOT NULL,
+    `migration_name` varchar(100) DEFAULT NULL,
+    `plugin` varchar(100) DEFAULT NULL,
+    `start_time` timestamp NULL DEFAULT NULL,
+    `end_time` timestamp NULL DEFAULT NULL,
+    `breakpoint` tinyint(1) NOT NULL DEFAULT 0,
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `version_plugin_unique` (`version`,`plugin`)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -74,12 +81,13 @@ CREATE TABLE `cake_migrations` (
 --
 
 DROP TABLE IF EXISTS `categories`;
-CREATE TABLE `categories` (
-                              `id` int(11) NOT NULL,
-                              `name` varchar(64) NOT NULL,
-                              `type` varchar(20) NOT NULL DEFAULT 'jewelry',
-                              `sizes` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`sizes`))
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+CREATE TABLE IF NOT EXISTS `categories` (
+                                            `id` int(11) NOT NULL AUTO_INCREMENT,
+    `name` varchar(64) NOT NULL,
+    `type` varchar(20) NOT NULL DEFAULT 'jewelry',
+    `sizes` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`sizes`)),
+    PRIMARY KEY (`id`)
+    ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `categories`
@@ -105,12 +113,14 @@ INSERT INTO `categories` (`id`, `name`, `type`, `sizes`) VALUES
 --
 
 DROP TABLE IF EXISTS `cms_pages`;
-CREATE TABLE `cms_pages` (
-                             `id` int(11) NOT NULL,
-                             `slug` varchar(100) NOT NULL,
-                             `title` varchar(200) NOT NULL,
-                             `sort_order` int(11) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+CREATE TABLE IF NOT EXISTS `cms_pages` (
+                                           `id` int(11) NOT NULL AUTO_INCREMENT,
+    `slug` varchar(100) NOT NULL,
+    `title` varchar(200) NOT NULL,
+    `sort_order` int(11) NOT NULL DEFAULT 0,
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `uq_slug` (`slug`)
+    ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 
 --
 -- Dumping data for table `cms_pages`
@@ -133,15 +143,17 @@ INSERT INTO `cms_pages` (`id`, `slug`, `title`, `sort_order`) VALUES
 --
 
 DROP TABLE IF EXISTS `contact_replies`;
-CREATE TABLE `contact_replies` (
-                                   `id` int(11) NOT NULL,
-                                   `contact_submission_id` int(11) NOT NULL,
-                                   `subject` varchar(255) NOT NULL,
-                                   `message` text NOT NULL,
-                                   `sent_at` datetime DEFAULT current_timestamp(),
-                                   `created` datetime DEFAULT current_timestamp(),
-                                   `modified` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+CREATE TABLE IF NOT EXISTS `contact_replies` (
+                                                 `id` int(11) NOT NULL AUTO_INCREMENT,
+    `contact_submission_id` int(11) NOT NULL,
+    `subject` varchar(255) NOT NULL,
+    `message` text NOT NULL,
+    `sent_at` datetime DEFAULT current_timestamp(),
+    `created` datetime DEFAULT current_timestamp(),
+    `modified` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+    PRIMARY KEY (`id`),
+    KEY `fk_contact_replies_submission` (`contact_submission_id`)
+    ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 
 --
 -- Dumping data for table `contact_replies`
@@ -162,18 +174,19 @@ INSERT INTO `contact_replies` (`id`, `contact_submission_id`, `subject`, `messag
 --
 
 DROP TABLE IF EXISTS `contact_submissions`;
-CREATE TABLE `contact_submissions` (
-                                       `id` int(11) NOT NULL,
-                                       `first_name` varchar(50) NOT NULL,
-                                       `last_name` varchar(50) NOT NULL,
-                                       `email` varchar(255) NOT NULL,
-                                       `subject` varchar(255) NOT NULL,
-                                       `message` text NOT NULL,
-                                       `captcha_passed` tinyint(1) NOT NULL DEFAULT 0,
-                                       `is_replied` tinyint(1) NOT NULL DEFAULT 0,
-                                       `created` datetime DEFAULT current_timestamp(),
-                                       `modified` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+CREATE TABLE IF NOT EXISTS `contact_submissions` (
+                                                     `id` int(11) NOT NULL AUTO_INCREMENT,
+    `first_name` varchar(50) NOT NULL,
+    `last_name` varchar(50) NOT NULL,
+    `email` varchar(255) NOT NULL,
+    `subject` varchar(255) NOT NULL,
+    `message` text NOT NULL,
+    `captcha_passed` tinyint(1) NOT NULL DEFAULT 0,
+    `is_replied` tinyint(1) NOT NULL DEFAULT 0,
+    `created` datetime DEFAULT current_timestamp(),
+    `modified` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+    PRIMARY KEY (`id`)
+    ) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 
 --
 -- Dumping data for table `contact_submissions`
@@ -199,15 +212,16 @@ INSERT INTO `contact_submissions` (`id`, `first_name`, `last_name`, `email`, `su
 --
 
 DROP TABLE IF EXISTS `faq_items`;
-CREATE TABLE `faq_items` (
-                             `id` int(11) NOT NULL,
-                             `question` varchar(500) NOT NULL,
-                             `answer` text NOT NULL,
-                             `sort_order` int(11) NOT NULL DEFAULT 0,
-                             `is_active` tinyint(1) NOT NULL DEFAULT 1,
-                             `created` datetime NOT NULL,
-                             `modified` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+CREATE TABLE IF NOT EXISTS `faq_items` (
+                                           `id` int(11) NOT NULL AUTO_INCREMENT,
+    `question` varchar(500) NOT NULL,
+    `answer` text NOT NULL,
+    `sort_order` int(11) NOT NULL DEFAULT 0,
+    `is_active` tinyint(1) NOT NULL DEFAULT 1,
+    `created` datetime NOT NULL,
+    `modified` datetime NOT NULL,
+    PRIMARY KEY (`id`)
+    ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 
 --
 -- Dumping data for table `faq_items`
@@ -227,18 +241,20 @@ INSERT INTO `faq_items` (`id`, `question`, `answer`, `sort_order`, `is_active`, 
 --
 
 DROP TABLE IF EXISTS `orders`;
-CREATE TABLE `orders` (
-                          `id` int(11) NOT NULL,
-                          `user_id` int(11) DEFAULT NULL,
-                          `stripe_session_id` varchar(255) DEFAULT NULL,
-                          `stripe_payment_intent_id` varchar(255) DEFAULT NULL,
-                          `customer_email` varchar(255) DEFAULT NULL,
-                          `status` varchar(50) NOT NULL DEFAULT 'pending',
-                          `total_amount` decimal(10,2) NOT NULL DEFAULT 0.00,
-                          `currency` varchar(10) NOT NULL DEFAULT 'aud',
-                          `created` datetime DEFAULT current_timestamp(),
-                          `modified` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+CREATE TABLE IF NOT EXISTS `orders` (
+                                        `id` int(11) NOT NULL AUTO_INCREMENT,
+    `user_id` int(11) DEFAULT NULL,
+    `stripe_session_id` varchar(255) DEFAULT NULL,
+    `stripe_payment_intent_id` varchar(255) DEFAULT NULL,
+    `customer_email` varchar(255) DEFAULT NULL,
+    `status` varchar(50) NOT NULL DEFAULT 'pending',
+    `total_amount` decimal(10,2) NOT NULL DEFAULT 0.00,
+    `currency` varchar(10) NOT NULL DEFAULT 'aud',
+    `created` datetime DEFAULT current_timestamp(),
+    `modified` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+    PRIMARY KEY (`id`),
+    KEY `user_id` (`user_id`)
+    ) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `orders`
@@ -270,19 +286,23 @@ INSERT INTO `orders` (`id`, `user_id`, `stripe_session_id`, `stripe_payment_inte
 --
 
 DROP TABLE IF EXISTS `order_items`;
-CREATE TABLE `order_items` (
-                               `id` int(11) NOT NULL,
-                               `order_id` int(11) NOT NULL,
-                               `product_id` int(11) DEFAULT NULL,
-                               `variant_id` int(11) DEFAULT NULL,
-                               `product_name` varchar(255) NOT NULL,
-                               `selected_size` varchar(20) DEFAULT NULL,
-                               `unit_price` decimal(10,2) NOT NULL,
-                               `quantity` int(11) NOT NULL,
-                               `subtotal` decimal(10,2) NOT NULL,
-                               `created` datetime DEFAULT current_timestamp(),
-                               `modified` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+CREATE TABLE IF NOT EXISTS `order_items` (
+                                             `id` int(11) NOT NULL AUTO_INCREMENT,
+    `order_id` int(11) NOT NULL,
+    `product_id` int(11) DEFAULT NULL,
+    `variant_id` int(11) DEFAULT NULL,
+    `product_name` varchar(255) NOT NULL,
+    `selected_size` varchar(20) DEFAULT NULL,
+    `unit_price` decimal(10,2) NOT NULL,
+    `quantity` int(11) NOT NULL,
+    `subtotal` decimal(10,2) NOT NULL,
+    `created` datetime DEFAULT current_timestamp(),
+    `modified` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+    PRIMARY KEY (`id`),
+    KEY `order_id` (`order_id`),
+    KEY `product_id` (`product_id`),
+    KEY `variant_id` (`variant_id`)
+    ) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `order_items`
@@ -314,15 +334,17 @@ INSERT INTO `order_items` (`id`, `order_id`, `product_id`, `variant_id`, `produc
 --
 
 DROP TABLE IF EXISTS `page_content`;
-CREATE TABLE `page_content` (
-                                `id` int(11) NOT NULL,
-                                `page_id` int(11) NOT NULL,
-                                `content_key` varchar(100) NOT NULL,
-                                `content_value` text DEFAULT NULL,
-                                `label` varchar(200) NOT NULL,
-                                `content_type` enum('text','textarea','image','video') NOT NULL DEFAULT 'text',
-                                `sort_order` int(11) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+CREATE TABLE IF NOT EXISTS `page_content` (
+                                              `id` int(11) NOT NULL AUTO_INCREMENT,
+    `page_id` int(11) NOT NULL,
+    `content_key` varchar(100) NOT NULL,
+    `content_value` text DEFAULT NULL,
+    `label` varchar(200) NOT NULL,
+    `content_type` enum('text','textarea','image','video') NOT NULL DEFAULT 'text',
+    `sort_order` int(11) NOT NULL DEFAULT 0,
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `uq_page_key` (`page_id`,`content_key`)
+    ) ENGINE=InnoDB AUTO_INCREMENT=59 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 
 --
 -- Dumping data for table `page_content`
@@ -364,7 +386,7 @@ INSERT INTO `page_content` (`id`, `page_id`, `content_key`, `content_value`, `la
                                                                                                                         (36, 8, 'contact_heading', 'Contact Veloura Jewels', 'Page Heading', 'text', 1),
                                                                                                                         (37, 8, 'contact_subtext', 'We\'d love to hear from you! Whether you have questions about our handcrafted jewellery, want to discuss a custom piece, or simply want to learn more about our story, feel free to reach out.', 'Page Subtext', 'textarea', 2),
 (38, 2, 'home_video', 'homeVideo.mp4', 'Home Video', 'video', 8),
-(40, 2, 'about_us_video', 'homeDecorTest.mp4', 'About Us Video', 'video', 9),
+(40, 2, 'about_us_video', 'handmadeDiamondRing.mp4', 'About Us Video', 'video', 9),
 (41, 2, 'featured_jewellery_image', 'featuredJewellery.png', 'Featured Jewellery Image', 'image', 10),
 (42, 2, 'featured_homedecor_image', 'homedecor.png', 'Featured Home Decor Image', 'image', 11),
 (43, 1, 'modal_jewellery_image', 'greenNecklace.jpg', 'Modal Jewellery Image', 'image', 1),
@@ -391,8 +413,8 @@ INSERT INTO `page_content` (`id`, `page_id`, `content_key`, `content_value`, `la
 --
 
 DROP TABLE IF EXISTS `products`;
-CREATE TABLE `products` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `products` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(64) NOT NULL,
   `purchase_price` decimal(9,2) NOT NULL,
   `sale_price` decimal(9,2) NOT NULL,
@@ -402,8 +424,10 @@ CREATE TABLE `products` (
   `description` text DEFAULT NULL,
   `story` text DEFAULT NULL,
   `featured` tinyint(1) NOT NULL DEFAULT 0,
-  `category_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `category_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_products_category` (`category_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=58 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `products`
@@ -450,11 +474,13 @@ INSERT INTO `products` (`id`, `name`, `purchase_price`, `sale_price`, `supplier_
 --
 
 DROP TABLE IF EXISTS `product_images`;
-CREATE TABLE `product_images` (
-                                  `id` int(11) NOT NULL,
-                                  `product_id` int(11) NOT NULL,
-                                  `filename` varchar(4096) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+CREATE TABLE IF NOT EXISTS `product_images` (
+                                                `id` int(11) NOT NULL AUTO_INCREMENT,
+    `product_id` int(11) NOT NULL,
+    `filename` varchar(4096) NOT NULL,
+    PRIMARY KEY (`id`),
+    KEY `product_id` (`product_id`)
+    ) ENGINE=InnoDB AUTO_INCREMENT=190 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `product_images`
@@ -533,12 +559,14 @@ INSERT INTO `product_images` (`id`, `product_id`, `filename`) VALUES
 --
 
 DROP TABLE IF EXISTS `product_variants`;
-CREATE TABLE `product_variants` (
-                                    `id` int(11) NOT NULL,
-                                    `product_id` int(11) NOT NULL,
-                                    `size` varchar(20) NOT NULL,
-                                    `stock` int(11) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+CREATE TABLE IF NOT EXISTS `product_variants` (
+                                                  `id` int(11) NOT NULL AUTO_INCREMENT,
+    `product_id` int(11) NOT NULL,
+    `size` varchar(20) NOT NULL,
+    `stock` int(11) NOT NULL DEFAULT 0,
+    PRIMARY KEY (`id`),
+    KEY `product_id` (`product_id`)
+    ) ENGINE=InnoDB AUTO_INCREMENT=90 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `product_variants`
@@ -604,16 +632,18 @@ INSERT INTO `product_variants` (`id`, `product_id`, `size`, `stock`) VALUES
 --
 
 DROP TABLE IF EXISTS `schedules`;
-CREATE TABLE `schedules` (
-                             `id` int(11) NOT NULL,
-                             `user_id` int(11) NOT NULL,
-                             `week_start` date NOT NULL COMMENT 'Monday of the scheduled week',
-                             `day_of_week` tinyint(4) NOT NULL COMMENT '1=Mon, 2=Tue, 3=Wed, 4=Thu, 5=Fri, 6=Sat, 7=Sun',
-                             `start_time` time NOT NULL,
-                             `end_time` time NOT NULL,
-                             `created` datetime DEFAULT NULL,
-                             `modified` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+CREATE TABLE IF NOT EXISTS `schedules` (
+                                           `id` int(11) NOT NULL AUTO_INCREMENT,
+    `user_id` int(11) NOT NULL,
+    `week_start` date NOT NULL COMMENT 'Monday of the scheduled week',
+    `day_of_week` tinyint(4) NOT NULL COMMENT '1=Mon, 2=Tue, 3=Wed, 4=Thu, 5=Fri, 6=Sat, 7=Sun',
+    `start_time` time NOT NULL,
+    `end_time` time NOT NULL,
+    `created` datetime DEFAULT NULL,
+    `modified` datetime DEFAULT NULL,
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `unique_staff_week_day` (`user_id`,`week_start`,`day_of_week`)
+    ) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 
 --
 -- Dumping data for table `schedules`
@@ -646,20 +676,21 @@ INSERT INTO `schedules` (`id`, `user_id`, `week_start`, `day_of_week`, `start_ti
 --
 
 DROP TABLE IF EXISTS `users`;
-CREATE TABLE `users` (
-                         `id` int(11) NOT NULL,
-                         `email` varchar(255) NOT NULL,
-                         `password` varchar(255) NOT NULL,
-                         `first_name` varchar(100) DEFAULT NULL,
-                         `last_name` varchar(100) DEFAULT NULL,
-                         `phone` varchar(20) DEFAULT NULL,
-                         `address` varchar(500) DEFAULT NULL,
-                         `nonce` varchar(255) DEFAULT NULL,
-                         `nonce_expiry` datetime DEFAULT NULL,
-                         `created` datetime DEFAULT NULL,
-                         `modified` datetime DEFAULT NULL,
-                         `role` varchar(255) NOT NULL DEFAULT 'customer'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+CREATE TABLE IF NOT EXISTS `users` (
+                                       `id` int(11) NOT NULL AUTO_INCREMENT,
+    `email` varchar(255) NOT NULL,
+    `password` varchar(255) NOT NULL,
+    `first_name` varchar(100) DEFAULT NULL,
+    `last_name` varchar(100) DEFAULT NULL,
+    `phone` varchar(20) DEFAULT NULL,
+    `address` varchar(500) DEFAULT NULL,
+    `nonce` varchar(255) DEFAULT NULL,
+    `nonce_expiry` datetime DEFAULT NULL,
+    `created` datetime DEFAULT NULL,
+    `modified` datetime DEFAULT NULL,
+    `role` varchar(255) NOT NULL DEFAULT 'customer',
+    PRIMARY KEY (`id`)
+    ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 
 --
 -- Dumping data for table `users`
@@ -680,12 +711,16 @@ INSERT INTO `users` (`id`, `email`, `password`, `first_name`, `last_name`, `phon
 --
 
 DROP TABLE IF EXISTS `wishlists`;
-CREATE TABLE `wishlists` (
-                             `id` int(11) NOT NULL,
-                             `user_id` int(11) NOT NULL,
-                             `product_id` int(11) NOT NULL,
-                             `created` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+CREATE TABLE IF NOT EXISTS `wishlists` (
+                                           `id` int(11) NOT NULL AUTO_INCREMENT,
+    `user_id` int(11) NOT NULL,
+    `product_id` int(11) NOT NULL,
+    `created` datetime DEFAULT NULL,
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `user_product` (`user_id`,`product_id`),
+    KEY `user_id` (`user_id`),
+    KEY `product_id` (`product_id`)
+    ) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `wishlists`
@@ -709,223 +744,6 @@ INSERT INTO `wishlists` (`id`, `user_id`, `product_id`, `created`) VALUES
                                                                        (29, 6, 54, '2026-05-13 13:31:58'),
                                                                        (30, 6, 53, '2026-05-13 13:32:11'),
                                                                        (31, 6, 16, '2026-05-14 13:47:36');
-
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `activity_logs`
---
-ALTER TABLE `activity_logs`
-    ADD PRIMARY KEY (`id`),
-  ADD KEY `idx_model` (`model`),
-  ADD KEY `idx_created` (`created`);
-
---
--- Indexes for table `cake_migrations`
---
-ALTER TABLE `cake_migrations`
-    ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `version_plugin_unique` (`version`,`plugin`);
-
---
--- Indexes for table `categories`
---
-ALTER TABLE `categories`
-    ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `cms_pages`
---
-ALTER TABLE `cms_pages`
-    ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `uq_slug` (`slug`);
-
---
--- Indexes for table `contact_replies`
---
-ALTER TABLE `contact_replies`
-    ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_contact_replies_submission` (`contact_submission_id`);
-
---
--- Indexes for table `contact_submissions`
---
-ALTER TABLE `contact_submissions`
-    ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `faq_items`
---
-ALTER TABLE `faq_items`
-    ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `orders`
---
-ALTER TABLE `orders`
-    ADD PRIMARY KEY (`id`),
-  ADD KEY `user_id` (`user_id`);
-
---
--- Indexes for table `order_items`
---
-ALTER TABLE `order_items`
-    ADD PRIMARY KEY (`id`),
-  ADD KEY `order_id` (`order_id`),
-  ADD KEY `product_id` (`product_id`),
-  ADD KEY `variant_id` (`variant_id`);
-
---
--- Indexes for table `page_content`
---
-ALTER TABLE `page_content`
-    ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `uq_page_key` (`page_id`,`content_key`);
-
---
--- Indexes for table `products`
---
-ALTER TABLE `products`
-    ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_products_category` (`category_id`);
-
---
--- Indexes for table `product_images`
---
-ALTER TABLE `product_images`
-    ADD PRIMARY KEY (`id`),
-  ADD KEY `product_id` (`product_id`);
-
---
--- Indexes for table `product_variants`
---
-ALTER TABLE `product_variants`
-    ADD PRIMARY KEY (`id`),
-  ADD KEY `product_id` (`product_id`);
-
---
--- Indexes for table `schedules`
---
-ALTER TABLE `schedules`
-    ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `unique_staff_week_day` (`user_id`,`week_start`,`day_of_week`);
-
---
--- Indexes for table `users`
---
-ALTER TABLE `users`
-    ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `wishlists`
---
-ALTER TABLE `wishlists`
-    ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `user_product` (`user_id`,`product_id`),
-  ADD KEY `user_id` (`user_id`),
-  ADD KEY `product_id` (`product_id`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `activity_logs`
---
-ALTER TABLE `activity_logs`
-    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
-
---
--- AUTO_INCREMENT for table `cake_migrations`
---
-ALTER TABLE `cake_migrations`
-    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `categories`
---
-ALTER TABLE `categories`
-    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
-
---
--- AUTO_INCREMENT for table `cms_pages`
---
-ALTER TABLE `cms_pages`
-    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
-
---
--- AUTO_INCREMENT for table `contact_replies`
---
-ALTER TABLE `contact_replies`
-    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
---
--- AUTO_INCREMENT for table `contact_submissions`
---
-ALTER TABLE `contact_submissions`
-    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
-
---
--- AUTO_INCREMENT for table `faq_items`
---
-ALTER TABLE `faq_items`
-    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
---
--- AUTO_INCREMENT for table `orders`
---
-ALTER TABLE `orders`
-    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
-
---
--- AUTO_INCREMENT for table `order_items`
---
-ALTER TABLE `order_items`
-    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
-
---
--- AUTO_INCREMENT for table `page_content`
---
-ALTER TABLE `page_content`
-    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
-
---
--- AUTO_INCREMENT for table `products`
---
-ALTER TABLE `products`
-    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
-
---
--- AUTO_INCREMENT for table `product_images`
---
-ALTER TABLE `product_images`
-    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=190;
-
---
--- AUTO_INCREMENT for table `product_variants`
---
-ALTER TABLE `product_variants`
-    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=90;
-
---
--- AUTO_INCREMENT for table `schedules`
---
-ALTER TABLE `schedules`
-    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
-
---
--- AUTO_INCREMENT for table `users`
---
-ALTER TABLE `users`
-    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
-
---
--- AUTO_INCREMENT for table `wishlists`
---
-ALTER TABLE `wishlists`
-    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- Constraints for dumped tables

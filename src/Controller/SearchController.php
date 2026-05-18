@@ -39,11 +39,12 @@ class SearchController extends AppController
         }
 
         $identity = $this->request->getAttribute('identity');
-        $wishlistIds = [];
         if ($identity) {
             $wishlistIds = $this->fetchTable('Wishlists')->find()
                 ->where(['user_id' => $identity->get('id')])
                 ->all()->extract('product_id')->toList();
+        } else {
+            $wishlistIds = $this->request->getSession()->read('GuestWishlist') ?? [];
         }
         $this->set(compact('products', 'q', 'wishlistIds'));
     }

@@ -2,6 +2,7 @@
 /**
  * @var \App\View\AppView $this
  * @var iterable<\App\Model\Entity\Wishlist> $wishlistItems
+ * @var bool $isGuest
  */
 $this->assign('title', 'My Wishlist');
 $this->Html->css(['profile', 'jewelry'], ['block' => true]);
@@ -11,10 +12,17 @@ $this->Html->css(['profile', 'jewelry'], ['block' => true]);
 
     <?php $items = $wishlistItems->toArray(); ?>
 
-    <?= $this->Html->link('&larr; Back to Profile', ['action' => 'index'], ['class' => 'wishlist-back-link', 'escape' => false]) ?>
+    <?php if ($isGuest): ?>
+        <?= $this->Html->link('&larr; Back', '/jewelry', ['class' => 'wishlist-back-link', 'escape' => false]) ?>
+    <?php else: ?>
+        <?= $this->Html->link('&larr; Back to Profile', ['action' => 'index'], ['class' => 'wishlist-back-link', 'escape' => false]) ?>
+    <?php endif; ?>
 
     <div class="wishlist-hero">
         <h1 class="wishlist-title">Wishlist</h1>
+        <?php if ($isGuest): ?>
+            <p class="wishlist-guest-hint">To save your wishlist please <?= $this->Html->link('login', ['controller' => 'Auth', 'action' => 'login']) ?> or <?= $this->Html->link('sign up', ['controller' => 'Auth', 'action' => 'register']) ?>.</p>
+        <?php endif; ?>
         <?php if (!empty($items)): ?>
         <div class="wishlist-actions-row">
             <form method="post" action="<?= $this->Url->build(['action' => 'addWishlistToCart']) ?>" style="display:contents">

@@ -12,6 +12,12 @@ class ProfileController extends AppController
         parent::initialize();
     }
 
+    public function beforeFilter(EventInterface $event): void
+    {
+        parent::beforeFilter($event);
+        $this->Authentication->addUnauthenticatedActions(['wishlist', 'wishlistToggle', 'addWishlistToCart']);
+    }
+
     public function index()
     {
         $userId = $this->Authentication->getIdentity()->get('id');
@@ -28,11 +34,7 @@ class ProfileController extends AppController
             ->limit(5)
             ->all();
 
-        $wishlistCount = $this->fetchTable('Wishlists')->find()
-            ->where(['user_id' => $userId])
-            ->count();
-
-        $this->set(compact('user', 'recentOrders', 'wishlistCount'));
+        $this->set(compact('user', 'recentOrders'));
     }
 
     public function edit()
@@ -60,7 +62,28 @@ class ProfileController extends AppController
 
     public function wishlist()
     {
-        $userId = $this->Authentication->getIdentity()->get('id');
+        $identity = $this->Authentication->getIdentity();
+        $session  = $this->request->getSession();
+
+        if (!$identity) {
+            $guestIds = $session->read('GuestWishlist') ?? [];
+            if (!empty($guestIds)) {
+                $products = $this->fetchTable('Products')->find()
+                    ->where(['Products.id IN' => $guestIds])
+                    ->contain(['ProductImages', 'Category', 'ProductVariants'])
+                    ->all();
+                $wishlistItems = new \Cake\Collection\Collection(
+                    array_map(fn($p) => (object)['product' => $p], $products->toArray())
+                );
+            } else {
+                $wishlistItems = new \Cake\Collection\Collection([]);
+            }
+            $this->set('isGuest', true);
+            $this->set(compact('wishlistItems'));
+            return;
+        }
+
+        $userId = $identity->get('id');
 
         $wishlistItems = $this->fetchTable('Wishlists')->find()
             ->where(['Wishlists.user_id' => $userId])
@@ -68,6 +91,7 @@ class ProfileController extends AppController
             ->orderByDesc('Wishlists.created')
             ->all();
 
+        $this->set('isGuest', false);
         $this->set(compact('wishlistItems'));
     }
 
@@ -75,7 +99,32 @@ class ProfileController extends AppController
     {
         $this->request->allowMethod(['post']);
 
-        $userId = $this->Authentication->getIdentity()->get('id');
+        $identity = $this->Authentication->getIdentity();
+
+        if (!$identity) {
+            $session  = $this->request->getSession();
+            $guestIds = $session->read('GuestWishlist') ?? [];
+            $productExists = $this->fetchTable('Products')->exists(['id' => $id]);
+            if (!$productExists) {
+                return $this->response
+                    ->withStatus(404)
+                    ->withType('application/json')
+                    ->withStringBody(json_encode(['error' => 'Product not found']));
+            }
+            if (in_array($id, $guestIds)) {
+                $guestIds   = array_values(array_filter($guestIds, fn($pid) => $pid !== $id));
+                $wishlisted = false;
+            } else {
+                $guestIds[] = $id;
+                $wishlisted = true;
+            }
+            $session->write('GuestWishlist', $guestIds);
+            return $this->response
+                ->withType('application/json')
+                ->withStringBody(json_encode(['wishlisted' => $wishlisted, 'guest' => true]));
+        }
+
+        $userId = $identity->get('id');
         $wishlistsTable = $this->fetchTable('Wishlists');
 
         $productExists = $this->fetchTable('Products')->exists(['id' => $id]);
@@ -107,15 +156,31 @@ class ProfileController extends AppController
     {
         $this->request->allowMethod(['post']);
 
-        $userId = $this->Authentication->getIdentity()->get('id');
+        $identity = $this->Authentication->getIdentity();
+        $session  = $this->request->getSession();
 
-        $items = $this->fetchTable('Wishlists')->find()
-            ->where(['Wishlists.user_id' => $userId])
-            ->contain(['Products' => ['ProductVariants']])
-            ->all();
+        if (!$identity) {
+            $guestIds = $session->read('GuestWishlist') ?? [];
+            if (empty($guestIds)) {
+                $this->Flash->error('Your wishlist is empty.');
+                return $this->redirect('/profile/wishlist');
+            }
+            $products = $this->fetchTable('Products')->find()
+                ->where(['Products.id IN' => $guestIds])
+                ->contain(['ProductVariants'])
+                ->all();
+            $items = new \Cake\Collection\Collection(
+                array_map(fn($p) => (object)['product' => $p], $products->toArray())
+            );
+        } else {
+            $userId = $identity->get('id');
+            $items  = $this->fetchTable('Wishlists')->find()
+                ->where(['Wishlists.user_id' => $userId])
+                ->contain(['Products' => ['ProductVariants']])
+                ->all();
+        }
 
-        $session = $this->request->getSession();
-        $cart    = $session->read('Cart') ?? [];
+        $cart = $session->read('Cart') ?? [];
 
         $added = 0;
         $skipped = 0;
