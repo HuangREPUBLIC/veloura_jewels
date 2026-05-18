@@ -53,7 +53,7 @@ $this->Html->css('jewelry', ['block' => true]);
                                     <?php endif; ?>
 
                                     <?php if (!empty($product->is_bestsales)): ?>
-                                        <span class="product-badge product-badge--bestsales">Best Sales</span>
+                                        <span class="product-badge product-badge--bestsales">Best Seller</span>
                                     <?php endif; ?>
                                 </div>
                             <?php endif; ?>

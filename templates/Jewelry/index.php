@@ -96,7 +96,7 @@ $this->Html->css('jewelry', ['block' => true]);
             <!-- Sort Dropdown -->
             <div class="filter-dropdown filter-dropdown--right" id="filter-sort">
                 <?php
-                $sorts = ['newest' => 'Newest', 'price_asc' => 'Price: Low to High', 'price_desc' => 'Price: High to Low', 'featured' => 'Featured', 'bestsales' => 'Best Sales'];
+                $sorts = ['newest' => 'Newest', 'price_asc' => 'Price: Low to High', 'price_desc' => 'Price: High to Low', 'featured' => 'Featured', 'bestsales' => 'Best Seller'];
                 $sortLabel = $sorts[$sortBy] ?? 'Newest';
                 ?>
                 <button type="button" class="filter-dropdown-btn <?= $sortBy !== 'newest' ? 'is-active' : '' ?>" aria-expanded="false" aria-controls="filter-sort-menu">
@@ -199,7 +199,7 @@ $this->Html->css('jewelry', ['block' => true]);
                                     <?php endif; ?>
 
                                     <?php if (!empty($product->is_bestsales)): ?>
-                                        <span class="product-badge product-badge--bestsales">Best Sales</span>
+                                        <span class="product-badge product-badge--bestsales">Best Seller</span>
                                     <?php endif; ?>
                                 </div>
                             <?php endif; ?>

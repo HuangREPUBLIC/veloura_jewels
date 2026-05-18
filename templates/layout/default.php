@@ -385,7 +385,7 @@ $role = $identity ? $identity->get('role') : null;
                 badges.push('<span class="product-badge product-badge--featured">Featured</span>');
             }
             if (r.is_bestsales) {
-                badges.push('<span class="product-badge product-badge--bestsales">Best Sales</span>');
+                badges.push('<span class="product-badge product-badge--bestsales">Best Seller</span>');
             }
             var badge = badges.length ? '<div class="product-card-badges">' + badges.join('') + '</div>' : '';
             var imgWrap = '<div class="search-suggest-img-wrap' + hasHover + '">'
