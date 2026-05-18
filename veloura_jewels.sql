@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 18, 2026 at 01:53 PM
+-- Generation Time: May 18, 2026 at 05:25 PM
 -- Server version: 11.8.6-MariaDB
 -- PHP Version: 8.4.16
 
@@ -331,7 +331,7 @@ CREATE TABLE `page_content` (
 --
 
 INSERT INTO `page_content` (`id`, `page_id`, `content_key`, `content_value`, `label`, `content_type`, `sort_order`) VALUES
-                                                                                                                        (2, 1, 'footer_tagline', 'Handcrafted jewellery & home décor, made with love in Brooksdale.', 'Footer Tagline', 'textarea', 2),
+                                                                                                                        (2, 1, 'footer_tagline', 'Handcrafted jewellery & home décor, made with love in Brooksdale.', 'Footer Tagline', 'textarea', 15),
                                                                                                                         (4, 2, 'hero_heading', 'Jewels that tell\r\nyour story.', 'Hero Heading', 'textarea', 2),
                                                                                                                         (5, 2, 'hero_subtext', 'Artisan-made pieces, each shaped by hand to bring warmth and meaning into your everyday.', 'Hero Subtext', 'textarea', 3),
                                                                                                                         (6, 2, 'brand_story_tag', 'Our Journey', 'Brand Story Label', 'text', 4),
@@ -371,7 +371,20 @@ INSERT INTO `page_content` (`id`, `page_id`, `content_key`, `content_value`, `la
 (42, 2, 'featured_homedecor_image', 'homedecor.png', 'Featured Home Decor Image', 'image', 11),
 (43, 1, 'modal_jewellery_image', 'greenNecklace.jpg', 'Modal Jewellery Image', 'image', 1),
 (44, 1, 'modal_homedecor_image', 'oliveVase.jpg', 'Modal Home Decor Image', 'image', 2),
-(45, 1, 'logo_image', 'logo.png', 'Logo', 'image', 3);
+(45, 1, 'logo_image', 'logo.png', 'Logo', 'image', 3),
+(46, 6, 'our_story_background_image', 'storeInterior.png', 'Store Interior', 'image', 7),
+(47, 6, 'story_body_image', 'greenNecklace.jpg', 'Story Body Image', 'image', 8),
+(48, 2, 'cat_rings', 'ringCategory.png', 'Category: Rings', 'image', 15),
+(49, 2, 'cat_necklaces', 'necklaceCategory.png', 'Category: Necklaces', 'image', 16),
+(50, 2, 'cat_earrings', 'earRingCategory.png', 'Category: Earrings', 'image', 17),
+(51, 2, 'cat_bracelets', 'braceletCategory.png', 'Category: Bracelets', 'image', 18),
+(52, 2, 'cat_brooches', 'broochesCategory.png', 'Category: Brooches', 'image', 19),
+(53, 2, 'cat_candles', 'candlesCategory.png', 'Category: Candles', 'image', 20),
+(54, 2, 'cat_vases', 'vasesCategory.png', 'Category: Vases', 'image', 21),
+(55, 2, 'cat_cushions', 'cushionsCategory.png', 'Category: Cushions', 'image', 22),
+(56, 2, 'cat_wall_art', 'wallArtCategory.png', 'Category: Wall Art', 'image', 23),
+(57, 2, 'cat_throws', 'throwsCategory.png', 'Category: Throws', 'image', 24),
+(58, 2, 'cat_curtain', 'curtainsCategory.png', 'Category: Curtain', 'image', 25);
 
 -- --------------------------------------------------------
 
@@ -878,7 +891,7 @@ ALTER TABLE `order_items`
 -- AUTO_INCREMENT for table `page_content`
 --
 ALTER TABLE `page_content`
-    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
 
 --
 -- AUTO_INCREMENT for table `products`

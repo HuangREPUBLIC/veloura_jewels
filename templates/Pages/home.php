@@ -29,65 +29,6 @@ $wishlistIds = $wishlistIds ?? [];
         <!-- COLLECTION MODAL -->
         <?= $this->element('collection_modal') ?>
 
-        <!-- NEW ARRIVALS -->
-        <?php if (!empty($featuredProducts)): ?>
-            <section class="hp-arrivals">
-                <div class="hp-section-header">
-                    <h2 class="hp-section-header-title">New Arrivals</h2>
-                </div>
-                <div class="hp-arrivals-grid">
-                    <?php foreach ($featuredProducts as $product): ?>
-                        <?php
-                        $img = !empty($product->product_images) ? $product->product_images[0]->filename : null;
-                        $imgSrc = $img
-                            ? $this->Url->build('/img/products/' . rawurlencode($img))
-                            : $this->Url->build('/img/homepage.png');
-                        $isHomeDecor = ($product->category->type ?? '') === 'home_decor';
-                        $productUrl = $isHomeDecor
-                            ? $this->Url->build('/home-decor/view/' . $product->id) . '?back=/'
-                            : $this->Url->build(['controller' => 'Jewelry', 'action' => 'view', $product->id]) . '?back=/';
-                        ?>
-                        <div class="product-card-wrap">
-                            <a href="<?= $productUrl ?>" class="product-card-link">
-                                <div class="product-card">
-                                    <div class="product-image-wrapper<?= !empty($product->product_images[1]) ? ' has-hover-image' : '' ?>">
-                                        <?php if (!empty($product->featured) || !empty($product->is_bestsales)): ?>
-                                            <div class="product-card-badges">
-                                                <?php if (!empty($product->featured)): ?>
-                                                    <span class="product-badge product-badge--featured">Featured</span>
-                                                <?php endif; ?>
-                                                <?php if (!empty($product->is_bestsales)): ?>
-                                                    <span class="product-badge product-badge--bestsales">Best Sales</span>
-                                                <?php endif; ?>
-                                            </div>
-                                        <?php endif; ?>
-                                        <img src="<?= $imgSrc ?>" alt="<?= h($product->name) ?>" class="product-image product-image--primary" loading="lazy">
-                                        <?php if (!empty($product->product_images[1])): ?>
-                                            <img src="<?= $this->Url->build('/img/products/' . rawurlencode($product->product_images[1]->filename)) ?>"
-                                                 alt="<?= h($product->name) ?>"
-                                                 class="product-image product-image--hover" loading="lazy">
-                                        <?php endif; ?>
-                                    </div>
-                                    <div class="product-card-body">
-                                        <h4 class="product-name"><?= h($product->name) ?></h4>
-                                        <p class="product-price">$<?= number_format((float)$product->sale_price, 2) ?></p>
-                                    </div>
-                                </div>
-                            </a>
-                            <?php if ($identity): ?>
-                                <button class="wishlist-btn<?= in_array($product->id, $wishlistIds) ? ' wishlisted' : '' ?>"
-                                        data-product-id="<?= $product->id ?>"
-                                        type="button"
-                                        aria-label="Save to wishlist">
-                                    <?= $this->element('wishlist_heart') ?>
-                                </button>
-                            <?php endif; ?>
-                        </div>
-                    <?php endforeach; ?>
-                </div>
-            </section>
-        <?php endif; ?>
-
         <!-- FEATURED JEWELLERY -->
         <?php if (!empty($featuredJewelry)): ?>
             <section class="hp-featured">
@@ -137,6 +78,34 @@ $wishlistIds = $wishlistIds ?? [];
             </section>
         <?php endif; ?>
 
+        <section class="hp-categories">
+            <div class="hp-section-header">
+                <h2 class="hp-section-header-title">Shop by Category</h2>
+            </div>
+            <div class="hp-categories-grid">
+                <?php
+                $jewelryCategories = [
+                    ['name' => 'Rings',     'slug' => 'rings',     'key' => 'cat_rings'],
+                    ['name' => 'Necklaces', 'slug' => 'necklaces', 'key' => 'cat_necklaces'],
+                    ['name' => 'Earrings',  'slug' => 'earrings',  'key' => 'cat_earrings'],
+                    ['name' => 'Bracelets', 'slug' => 'bracelets', 'key' => 'cat_bracelets'],
+                    ['name' => 'Brooches',  'slug' => 'brooches',  'key' => 'cat_brooches'],
+                ];
+                foreach ($jewelryCategories as $cat):
+                    $img = $pageContent[$cat['key']] ?? null;
+                    ?>
+                    <a href="<?= $this->Url->build('/jewellery/' . $cat['slug']) ?>" class="hp-category-tile">
+                        <?php if ($img): ?>
+                            <img src="<?= $this->Url->build('/img/' . h($img)) ?>" alt="<?= h($cat['name']) ?>" class="hp-category-tile-img">
+                        <?php else: ?>
+                            <div class="hp-category-tile-img"></div>
+                        <?php endif; ?>
+                        <span class="hp-category-tile-name"><?= $cat['name'] ?></span>
+                    </a>
+                <?php endforeach; ?>
+            </div>
+        </section>
+
         <!-- FEATURED HOME DECOR -->
         <?php if (!empty($featuredHomeDecor)): ?>
             <section class="hp-featured hp-featured--reverse">
@@ -185,6 +154,34 @@ $wishlistIds = $wishlistIds ?? [];
                 </div>
             </section>
         <?php endif; ?>
+
+        <section class="hp-categories">
+            <div class="hp-section-header">
+                <h2 class="hp-section-header-title">Shop by Category</h2>
+            </div>
+            <div class="hp-categories-grid">
+                <?php
+                $decorCategories = [
+                    ['name' => 'Candles',  'slug' => 'candles',  'key' => 'cat_candles'],
+                    ['name' => 'Vases',    'slug' => 'vases',    'key' => 'cat_vases'],
+                    ['name' => 'Cushions', 'slug' => 'cushions', 'key' => 'cat_cushions'],
+                    ['name' => 'Wall Art', 'slug' => 'wall-art', 'key' => 'cat_wall_art'],
+                    ['name' => 'Throws',   'slug' => 'throws',   'key' => 'cat_throws'],
+                ];
+                foreach ($decorCategories as $cat):
+                    $img = $pageContent[$cat['key']] ?? null;
+                    ?>
+                    <a href="<?= $this->Url->build('/home-decor/' . $cat['slug']) ?>" class="hp-category-tile">
+                        <?php if ($img): ?>
+                            <img src="<?= $this->Url->build('/img/' . h($img)) ?>" alt="<?= h($cat['name']) ?>" class="hp-category-tile-img">
+                        <?php else: ?>
+                            <div class="hp-category-tile-img"></div>
+                        <?php endif; ?>
+                        <span class="hp-category-tile-name"><?= $cat['name'] ?></span>
+                    </a>
+                <?php endforeach; ?>
+            </div>
+        </section>
 
         <!-- BRAND STORY -->
         <section class="hp-story">

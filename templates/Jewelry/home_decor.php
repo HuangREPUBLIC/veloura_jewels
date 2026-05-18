@@ -49,10 +49,10 @@ $this->Html->css('jewelry', ['block' => true]);
                     <svg class="filter-chevron" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
                 </button>
                 <div class="filter-dropdown-menu" id="filter-category-menu">
-                    <a href="<?= $this->Url->build(['controller' => 'Jewelry', 'action' => 'home_decor', '?' => array_filter(['min_price' => $minPrice, 'max_price' => $maxPrice, 'sort' => $sortBy !== 'newest' ? $sortBy : null])]) ?>"
+                    <a href="<?= $this->Url->build('/home-decor') ?>"
                        class="filter-dropdown-item <?= $categoryId === 0 ? 'active' : '' ?>">All</a>
                     <?php foreach ($categoriesArr as $cat): ?>
-                        <a href="<?= $this->Url->build(['controller' => 'Jewelry', 'action' => 'home_decor', '?' => array_filter(['category' => $cat->id, 'min_price' => $minPrice, 'max_price' => $maxPrice, 'sort' => $sortBy !== 'newest' ? $sortBy : null])]) ?>"
+                        <a href="<?= $this->Url->build('/home-decor/' . strtolower(str_replace(' ', '-', $cat->name))) ?>"
                            class="filter-dropdown-item <?= $categoryId === $cat->id ? 'active' : '' ?>">
                             <?= h($cat->name) ?>
                         </a>

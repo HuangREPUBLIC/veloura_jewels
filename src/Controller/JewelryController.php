@@ -47,7 +47,7 @@ class JewelryController extends AppController
         $this->OrderItems = $this->fetchTable('OrderItems');
     }
 
-    public function index()
+    public function index(?string $categorySlug = null)
     {
         $productType = 'jewelry';
 
@@ -57,7 +57,17 @@ class JewelryController extends AppController
             ->orderBy(['name' => 'ASC'])
             ->all();
 
+        // Resolve slug to category ID
         $categoryId = (int)$this->request->getQuery('category');
+        if ($categorySlug !== null && $categoryId === 0) {
+            $cat = $categoriesTable->find()
+                ->where(['type' => $productType, 'LOWER(name)' => strtolower(str_replace('-', ' ', $categorySlug))])
+                ->first();
+            if ($cat) {
+                $categoryId = $cat->id;
+            }
+        }
+
         $minPrice   = $this->request->getQuery('min_price');
         $maxPrice   = $this->request->getQuery('max_price');
         $sortBy     = $this->request->getQuery('sort') ?? 'newest';
@@ -121,7 +131,7 @@ class JewelryController extends AppController
         $this->set(compact('products', 'categories', 'categoryId', 'minPrice', 'maxPrice', 'sortBy', 'pageContent', 'wishlistIds'));
     }
 
-    public function homeDecor()
+    public function homeDecor(?string $categorySlug = null)
     {
         $productType = 'home_decor';
 
@@ -131,7 +141,18 @@ class JewelryController extends AppController
             ->orderBy(['name' => 'ASC'])
             ->all();
 
+        // Resolve slug to category ID
         $categoryId = (int)$this->request->getQuery('category');
+        if ($categorySlug !== null && $categoryId === 0) {
+            $cat = $categoriesTable->find()
+                ->where(['type' => $productType, 'LOWER(name)' => strtolower(str_replace('-', ' ', $categorySlug))])
+                ->first();
+            if ($cat) {
+                $categoryId = $cat->id;
+            }
+        }
+
+
         $minPrice   = $this->request->getQuery('min_price');
         $maxPrice   = $this->request->getQuery('max_price');
         $sortBy     = $this->request->getQuery('sort') ?? 'newest';

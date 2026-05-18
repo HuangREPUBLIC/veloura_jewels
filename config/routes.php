@@ -73,6 +73,10 @@ return function (RouteBuilder $routes): void {
         $builder->connect('/checkout/cancel', ['controller' => 'Jewelry', 'action' => 'cancel']);
         $builder->connect('/checkout/resume', ['controller' => 'Jewelry', 'action' => 'resumeCheckout']);
         $builder->connect('/stripe/webhook', ['controller' => 'Jewelry', 'action' => 'webhook']);
+        $builder->connect('/jewellery/{categorySlug}', ['controller' => 'Jewelry', 'action' => 'index'])
+            ->setPass(['categorySlug']);
+        $builder->connect('/home-decor/{categorySlug}', ['controller' => 'Jewelry', 'action' => 'homeDecor'])
+            ->setPass(['categorySlug']);
 
 
         // Search routes
