@@ -22,6 +22,14 @@
     font-family: var(--font-admin) !important;
 }
 
+.cms-label[data-file]::after {
+    content: attr(data-file);
+    margin-left: 0.5rem;
+    font-size: 0.75rem;
+    color: var(--emerald);
+    font-weight: 400;
+}
+
 .admin-wrapper {
     font-size: 16px;
     padding: 24px;

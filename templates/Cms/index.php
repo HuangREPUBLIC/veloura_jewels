@@ -35,7 +35,7 @@ $faqSaveUrl = ['action' => 'faqItemSave'];
                         </option>
                     <?php endforeach; ?>
                 </select>
-                <?= $this->Form->button('Save', ['class' => 'btn-new-product']) ?>
+                <?= $this->Form->button('Save', ['class' => 'btn-new-product', 'id' => 'cms-save-btn']) ?>
             </div>
         </div>
 
@@ -163,3 +163,20 @@ $faqSaveUrl = ['action' => 'faqItemSave'];
         <?php endif; ?>
     </div>
 </div>
+
+
+<script>
+    document.querySelector('form[enctype="multipart/form-data"]').addEventListener('submit', function() {
+        var btn = document.getElementById('cms-save-btn');
+        btn.disabled = true;
+        btn.textContent = 'Saving...';
+    });
+    document.querySelectorAll('.cms-input[type="file"]').forEach(function(input) {
+        input.addEventListener('change', function() {
+            var label = this.closest('.cms-field').querySelector('.cms-label');
+            if (this.files[0]) {
+                label.setAttribute('data-file', '→ ' + this.files[0].name);
+            }
+        });
+    });
+</script>
