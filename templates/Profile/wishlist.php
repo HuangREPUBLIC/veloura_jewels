@@ -28,10 +28,9 @@ $this->Html->css(['profile', 'jewelry'], ['block' => true]);
             <form method="post" action="<?= $this->Url->build(['action' => 'addWishlistToCart']) ?>" style="display:contents">
                 <input type="hidden" name="_csrfToken" value="<?= h($this->request->getAttribute('csrfToken')) ?>">
                 <button type="submit" class="wishlist-share-btn">
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
-                        <line x1="3" y1="6" x2="21" y2="6"/>
-                        <path d="M16 10a4 4 0 01-8 0"/>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="4" y="8" width="16" height="13" rx="1.5"/>
+                        <path d="M8.5 8V6a3.5 3.5 0 0 1 7 0V8"/>
                     </svg>
                     Add Wishlist to Cart
                 </button>

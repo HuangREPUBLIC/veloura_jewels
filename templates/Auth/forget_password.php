@@ -3,23 +3,22 @@
  * @var \App\View\AppView $this
  */
 
-$this->assign('title', 'Forget Password');
+$this->assign('title', 'Forgot Password');
 $this->Html->css('login', ['block' => true]);
 ?>
 
 <div class="login-page">
     <div class="users form content">
-        <?= $this->Html->link(__('← Back'), ['action' => 'index']) ?>
 
         <?= $this->Form->create() ?>
 
         <fieldset>
-            <legend>Forget Password</legend>
+            <legend>Forgot Password</legend>
 
             <?= $this->Flash->render() ?>
 
             <p class="form-hint">
-                Enter your email address registered with our system below to reset your password.
+                Enter the email address on your account and we'll send you a reset link.
             </p>
 
             <?php
@@ -33,9 +32,13 @@ $this->Html->css('login', ['block' => true]);
 
         </fieldset>
 
-        <?= $this->Form->button('Send verification email', ['class' => 'login-button']) ?>
+        <?= $this->Form->button('Send Reset Link', ['class' => 'login-button']) ?>
         <?= $this->Form->end() ?>
 
+        <div class="login-divider"><span>or</span></div>
+
+        <p class="login-new-label">Remember your password?</p>
+        <?= $this->Html->link('Sign In', ['controller' => 'Auth', 'action' => 'login'], ['class' => 'login-register-btn']) ?>
 
     </div>
 </div>

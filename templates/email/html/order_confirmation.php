@@ -7,7 +7,7 @@
 $shopUrl = $this->Url->build('/jewelry', ['fullBase' => true]);
 ?>
 <p style="margin:0 0 10px;font-family:Arial,sans-serif;font-size:10px;
-           letter-spacing:0.2em;text-transform:uppercase;color:#e1a95e;">
+           letter-spacing:0.2em;text-transform:uppercase;color:#c9a84c;">
   Order Confirmed
 </p>
 
@@ -15,9 +15,6 @@ $shopUrl = $this->Url->build('/jewelry', ['fullBase' => true]);
             font-size:28px;font-weight:400;color:#284d40;line-height:1.2;">
   Thank you for your purchase.
 </h1>
-
-
-
 
 
 <p style="margin:0 0 6px;font-family:Arial,sans-serif;font-size:14px;

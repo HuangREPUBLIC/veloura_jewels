@@ -7,7 +7,7 @@
 $resetUrl = $this->Url->build(['controller' => 'Auth', 'action' => 'resetPassword', $nonce], ['fullBase' => true]);
 ?>
 <p style="margin:0 0 10px;font-family:Arial,sans-serif;font-size:10px;
-           letter-spacing:0.2em;text-transform:uppercase;color:#e1a95e;">
+           letter-spacing:0.2em;text-transform:uppercase;color:#c9a84c;">
   Account Security
 </p>
 

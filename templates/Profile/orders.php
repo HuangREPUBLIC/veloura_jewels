@@ -81,4 +81,4 @@ $statuses = ['pending', 'paid', 'shipped', 'completed', 'cancelled'];
         </div>
 
     </div>
-    </div><?php
+    </div>

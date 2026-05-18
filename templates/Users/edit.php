@@ -3,17 +3,20 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\User $user
  */
+$this->assign('title', 'Edit User');
 $this->Html->css('login', ['block' => true]);
 ?>
 
 <div class="login-page">
-    <div class="users form content">
-        <?= $this->Html->link(__('← Back'), ['action' => 'index']) ?>
+    <div class="users form content login-card--wide">
+        <div class="action-buttons">
+            <?= $this->Html->link(__('← Back to Users'), ['action' => 'index']) ?>
+        </div>
+
+        <h3><?= __('Edit User') ?></h3>
 
         <?= $this->Form->create($user) ?>
         <fieldset>
-            <legend><?= __('Edit User') ?></legend>
-
             <?= $this->Flash->render() ?>
 
             <?php
@@ -30,9 +33,9 @@ $this->Html->css('login', ['block' => true]);
                 echo $this->Form->control('role', [
                     'type'    => 'select',
                     'options' => [
-                        'admin'     => 'Admin',
-                        'staff' => 'Staff',
-                        'customer'  => 'Customer',
+                        'admin'    => 'Admin',
+                        'staff'    => 'Staff',
+                        'customer' => 'Customer',
                     ],
                     'label'    => 'Role',
                     'required' => true,

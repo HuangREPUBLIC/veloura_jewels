@@ -16,30 +16,22 @@ $this->Html->css('login', ['block' => true]);
 
             <?= $this->Form->control('email', ['required' => true, 'autofocus' => true]) ?>
 
-            <div class="row">
-                <?= $this->Form->control('first_name', [
-                    'required' => true,
-                    'templateVars' => ['container_class' => 'column']
-                ]) ?>
-                <?= $this->Form->control('last_name', [
-                    'required' => true,
-                    'templateVars' => ['container_class' => 'column']
-                ]) ?>
+            <div class="register-row">
+                <?= $this->Form->control('first_name', ['required' => true]) ?>
+                <?= $this->Form->control('last_name', ['required' => true]) ?>
             </div>
 
-            <div class="row">
+            <div class="register-row">
                 <?= $this->Form->control('password', [
-                    'type'     => 'password',
-                    'value'    => '',
+                    'type'  => 'password',
+                    'value' => '',
                     'required' => true,
-                    'templateVars' => ['container_class' => 'column']
                 ]) ?>
                 <?= $this->Form->control('password_confirm', [
                     'type'     => 'password',
                     'value'    => '',
                     'label'    => 'Confirm Password',
                     'required' => true,
-                    'templateVars' => ['container_class' => 'column']
                 ]) ?>
             </div>
 
@@ -48,6 +40,9 @@ $this->Html->css('login', ['block' => true]);
         <?= $this->Form->button('Create Account', ['class' => 'login-button']) ?>
         <?= $this->Form->end() ?>
 
-        <?= $this->Html->link('Already have an account? Login', ['controller' => 'Auth', 'action' => 'login']) ?>
+        <div class="login-divider"><span>or</span></div>
+
+        <p class="login-new-label">Already have an account?</p>
+        <?= $this->Html->link('Sign In', ['controller' => 'Auth', 'action' => 'login'], ['class' => 'login-register-btn']) ?>
     </div>
 </div>

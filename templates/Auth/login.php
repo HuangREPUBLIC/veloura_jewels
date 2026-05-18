@@ -55,15 +55,19 @@ $this->Html->meta([
             <blockquote id="turnstile-message" style="display:none; margin-top:10px;"></blockquote>
         </fieldset>
 
-        <?= $this->Form->button('Login', [
+        <?= $this->Form->button('Sign In', [
             'class' => 'login-button',
             'disabled' => true
         ]) ?>
 
         <?= $this->Form->end() ?>
 
-        <?= $this->Html->link('Register', ['controller' => 'Auth', 'action' => 'register'], ['class' => 'login-register-btn']) ?>
-        <?= $this->Html->link('Forgot password?', ['controller' => 'Auth', 'action' => 'forgetPassword']) ?>
+        <?= $this->Html->link('Forgot password?', ['controller' => 'Auth', 'action' => 'forgetPassword'], ['class' => 'login-forgot-link']) ?>
+
+        <div class="login-divider"><span>or</span></div>
+
+        <p class="login-new-label">New to Veloura?</p>
+        <?= $this->Html->link('Create Account', ['controller' => 'Auth', 'action' => 'register'], ['class' => 'login-register-btn']) ?>
     </div>
 </div>
 

@@ -1457,3 +1457,214 @@ td.actions button.btn-delete:hover {
     margin-bottom: 0.6rem;
     border: 1px solid rgba(0,0,0,0.1);
 }
+
+/* Admin Modals */
+
+.admin-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 900;
+}
+
+.admin-modal--detail {
+    z-index: 1100;
+}
+
+.admin-modal-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+}
+
+.admin-modal-panel {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--admin-surface);
+    border-radius: 14px;
+    width: 92%;
+    max-width: 960px;
+    max-height: 85vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+}
+
+.admin-modal-panel--sm {
+    max-width: 520px;
+    min-width: 320px;
+    max-height: 80vh;
+    border-radius: 10px;
+}
+
+.admin-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 24px 16px;
+    border-bottom: 1px solid var(--admin-border);
+    flex-shrink: 0;
+}
+
+.admin-modal-title {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--admin-text-dark);
+}
+
+.admin-modal-close {
+    background: none;
+    border: none;
+    font-size: 1.4rem;
+    cursor: pointer;
+    line-height: 1;
+    color: var(--admin-ink-mid);
+    padding: 0;
+    transition: color 0.15s;
+}
+
+.admin-modal-close:hover {
+    color: var(--admin-text-dark);
+}
+
+.admin-modal-body {
+    overflow: auto;
+    padding: 16px 24px 24px;
+    font-size: 0.9rem;
+    color: var(--admin-text);
+}
+
+/* Activity Logs */
+
+.al-filter-card {
+    background: var(--admin-surface);
+    border: 1px solid var(--admin-border);
+    border-radius: 16px;
+    padding: 1.4rem 1.6rem;
+    margin-bottom: 1.4rem;
+    box-shadow: var(--admin-shadow);
+}
+
+.al-filter-form {
+    display: flex;
+    gap: 1.2rem;
+    flex-wrap: wrap;
+    align-items: flex-end;
+}
+
+.al-filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+.al-filter-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--admin-ink-mid);
+}
+
+.al-filter-select {
+    padding: 0.45rem 0.75rem;
+    border: 1px solid var(--admin-border);
+    border-radius: 8px;
+    background: var(--color-white);
+    font-size: 0.88rem;
+    color: var(--admin-text);
+    cursor: pointer;
+    outline: none;
+    transition: border-color 0.15s;
+}
+
+.al-filter-select:focus {
+    border-color: var(--emerald);
+}
+
+.al-filter-actions {
+    display: flex;
+    gap: 0.6rem;
+    align-items: flex-end;
+}
+
+.al-table-card {
+    background: var(--admin-surface);
+    border: 1px solid var(--admin-border);
+    border-radius: 16px;
+    padding: 1.4rem 1.6rem;
+    box-shadow: var(--admin-shadow);
+    overflow-x: auto;
+}
+
+.al-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+}
+
+.al-table thead tr {
+    border-bottom: 2px solid var(--admin-border);
+}
+
+.al-table th {
+    text-align: left;
+    padding: 0.6rem 0.8rem;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--admin-ink-mid);
+    white-space: nowrap;
+}
+
+.al-table td {
+    padding: 0.55rem 0.8rem;
+    border-bottom: 1px solid var(--admin-surface-alt);
+    color: var(--admin-text);
+    vertical-align: middle;
+}
+
+.al-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.al-td-date {
+    white-space: nowrap;
+    color: var(--admin-ink-mid) !important;
+}
+
+.al-td-ip {
+    color: var(--admin-ink-mid) !important;
+    font-size: 0.82rem !important;
+}
+
+.al-badge {
+    display: inline-block;
+    padding: 0.2rem 0.55rem;
+    border-radius: 5px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
+.al-badge--created { background: var(--color-message-success-bg); color: var(--color-message-success-text); }
+.al-badge--updated { background: var(--color-message-info-bg);    color: var(--color-message-info-text); }
+.al-badge--deleted { background: var(--color-message-error-bg);   color: var(--color-message-error-text); }
+
+.al-empty {
+    text-align: center;
+    color: var(--admin-ink-mid);
+    padding: 2rem 0;
+}
+
+.al-pagination {
+    display: flex;
+    gap: 0.3rem;
+    margin-top: 1.2rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--admin-border);
+}

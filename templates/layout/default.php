@@ -31,14 +31,23 @@ $cakeDescription = 'Veloura Jewels';
     <?= $this->fetch('css') ?>
     <?= $this->fetch('script') ?>
 </head>
-<body>
-
 <?php
 $cart = $this->request->getSession()->read('Cart') ?? [];
 $count = count($cart);
 $identity = $this->request->getAttribute('identity');
 $role = $identity ? $identity->get('role') : null;
+$currentPagePath = $this->request->getPath() . ($this->request->getUri()->getQuery() ? '?' . $this->request->getUri()->getQuery() : '');
 ?>
+<body
+    data-search-suggest-url="<?= h($this->Url->build(['controller' => 'Search', 'action' => 'suggest'])) ?>"
+    data-search-url="<?= h($this->Url->build(['controller' => 'Search', 'action' => 'search'])) ?>"
+    data-wishlist-toggle-url="<?= h($this->Url->build('/profile/wishlist/toggle/')) ?>"
+    data-login-url="<?= h($this->Url->build(['controller' => 'Auth', 'action' => 'login'])) ?>"
+    data-register-url="<?= h($this->Url->build(['controller' => 'Auth', 'action' => 'register'])) ?>"
+    data-wishlist-enabled="<?= $identity ? '1' : '0' ?>"
+    data-csrf-token="<?= h($this->request->getAttribute('csrfToken')) ?>"
+    data-current-page-path="<?= h($currentPagePath) ?>"
+>
 
 <header class="navbar">
 
@@ -50,7 +59,7 @@ $role = $identity ? $identity->get('role') : null;
             ['escape' => false]
         ) ?>
 
-        <button class="nav-hamburger" id="navHamburger" onclick="toggleMobileMenu()" title="Menu" aria-label="Toggle menu">
+        <button class="nav-hamburger" id="navHamburger" title="Menu" aria-label="Toggle menu">
             <span></span>
             <span></span>
             <span></span>
@@ -74,12 +83,25 @@ $role = $identity ? $identity->get('role') : null;
         <?php else : ?>
             <?= $this->Html->link('Contact', '/contact', ['class' => str_starts_with($currentPath, '/contact') ? 'active' : '']) ?>
         <?php endif ?>
+
+        <!-- Mobile-only account section (replaces user icon in hamburger menu) -->
+        <div class="nav-mobile-account">
+            <div class="nav-mobile-account-divider"></div>
+            <?php if (!$this->Identity->isLoggedIn()): ?>
+                <?= $this->Html->link('Sign In', '/auth/login', ['class' => 'nav-mobile-account-link']) ?>
+                <?= $this->Html->link('Create Account', '/auth/register', ['class' => 'nav-mobile-account-link']) ?>
+            <?php else: ?>
+                <span class="nav-mobile-account-label">Hi, <?= h($identity->get('first_name')) ?></span>
+                <?= $this->Html->link('My Profile', ['controller' => 'Profile', 'action' => 'index'], ['class' => 'nav-mobile-account-link']) ?>
+                <?= $this->Html->link('Logout', '/auth/logout', ['class' => 'nav-mobile-account-link nav-mobile-account-link--danger']) ?>
+            <?php endif; ?>
+        </div>
     </nav>
 
 
     <div class="navbar-right">
         <!-- Search icon -->
-        <button class="nav-icon-btn" title="Search" onclick="openSearch()">
+        <button class="nav-icon-btn" id="searchOpenBtn" title="Search">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
                 <circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="22" y2="22"/>
             </svg>
@@ -87,7 +109,7 @@ $role = $identity ? $identity->get('role') : null;
 
         <!-- Cart icon -->
         <?= $this->Html->link(
-            '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>'
+            '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="8" width="16" height="13" rx="1.5"/><path d="M8.5 8V6a3.5 3.5 0 0 1 7 0V8"/></svg>'
             . ($count > 0 ? '<span class="nav-cart-badge">' . $count . '</span>' : ''),
             ['controller' => 'Jewelry', 'action' => 'cart'],
             ['class' => 'nav-icon-btn nav-cart-wrap', 'escape' => false, 'title' => 'Cart']
@@ -95,7 +117,7 @@ $role = $identity ? $identity->get('role') : null;
 
         <!-- Wishlist icon -->
         <?= $this->Html->link(
-            '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>'
+            '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12,21.375C11.625,21.1875 1.875,15.75 1.875,8.8125C1.875,5.175 4.575,2.4375 7.875,2.4375C9.75,2.4375 11.4,3.375 12,4.2C12.6,3.375 14.25,2.4375 16.125,2.4375C19.425,2.4375 22.125,5.175 22.125,8.8125C22.125,15.75 12.375,21.1875 12,21.375Z"/></svg>'
             . ($wishlistCount > 0 ? '<span class="nav-cart-badge">' . $wishlistCount . '</span>' : ''),
             ['controller' => 'Profile', 'action' => 'wishlist'],
             ['class' => 'nav-icon-btn nav-cart-wrap', 'escape' => false, 'title' => 'Wishlist']
@@ -103,7 +125,7 @@ $role = $identity ? $identity->get('role') : null;
 
         <!-- User dropdown -->
         <div class="nav-dropdown-wrap">
-            <button class="nav-icon-btn" id="navUserBtn" onclick="toggleNavDropdown()" title="Account">
+            <button class="nav-icon-btn" id="navUserBtn" title="Account">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
                     <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
                 </svg>
@@ -171,7 +193,7 @@ $role = $identity ? $identity->get('role') : null;
                 spellcheck="false"
                 value="<?= h($this->request->getQuery('q') ?? '') ?>"
             >
-            <button type="button" class="search-panel-close" onclick="closeSearch()" aria-label="Close search">
+            <button type="button" class="search-panel-close" id="searchCloseBtn" aria-label="Close search">
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
                     <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
                 </svg>
@@ -179,7 +201,7 @@ $role = $identity ? $identity->get('role') : null;
         </form>
         <div class="search-suggestions" id="searchSuggestions"></div>
     </div>
-    <div class="search-panel-backdrop" onclick="closeSearch()"></div>
+    <div class="search-panel-backdrop" id="searchBackdrop"></div>
 </div>
 
 <main class="main-content">
@@ -253,7 +275,7 @@ $role = $identity ? $identity->get('role') : null;
         <div class="footer-col footer-col--newsletter">
             <h6 class="footer-heading">Newsletter</h6>
             <p class="footer-newsletter-text">Subscribe for early access to new collections and exclusive offers.</p>
-            <form class="footer-newsletter-form" action="#" method="post" onsubmit="footerNewsletterSubmit(event)">
+            <form class="footer-newsletter-form" id="footerNewsletterForm" action="#" method="post">
                 <input type="email" name="email" placeholder="Your email address" class="footer-newsletter-input" required>
                 <button type="submit" class="footer-newsletter-btn">Subscribe</button>
             </form>
@@ -293,221 +315,6 @@ $role = $identity ? $identity->get('role') : null;
     </div>
 </footer>
 
-<script>
-    (function () {
-        var navbar = document.querySelector('.navbar');
-        function onScroll() {
-            navbar.classList.toggle('scrolled', window.scrollY > 8);
-        }
-        window.addEventListener('scroll', onScroll, { passive: true });
-        onScroll();
-    }());
-
-    function toggleNavDropdown() {
-        document.getElementById('navDropdown').classList.toggle('open');
-    }
-
-    function toggleMobileMenu() {
-        document.getElementById('navLinks').classList.toggle('open');
-        document.getElementById('navHamburger').classList.toggle('open');
-    }
-
-    function footerNewsletterSubmit(e) {
-        e.preventDefault();
-        e.target.style.display = 'none';
-        document.getElementById('newsletterThanks').style.display = 'block';
-    }
-
-    document.addEventListener('click', function(e) {
-        var wrap = document.querySelector('.nav-dropdown-wrap');
-        if (wrap && !wrap.contains(e.target)) {
-            document.getElementById('navDropdown').classList.remove('open');
-        }
-        var navbar = document.querySelector('.navbar');
-        if (navbar && !navbar.contains(e.target)) {
-            document.getElementById('navLinks').classList.remove('open');
-            document.getElementById('navHamburger').classList.remove('open');
-        }
-    });
-
-    var searchTimer;
-    var suggestUrl = <?= json_encode($this->Url->build(['controller' => 'Search', 'action' => 'suggest'])) ?>;
-    var searchUrl  = <?= json_encode($this->Url->build(['controller' => 'Search', 'action' => 'search'])) ?>;
-    var wishlistEnabled = <?= json_encode((bool)($identity ?? false)) ?>;
-    var csrfToken = <?= json_encode($this->request->getAttribute('csrfToken')) ?>;
-    var currentPagePath = <?= json_encode($this->request->getPath() . ($this->request->getUri()->getQuery() ? '?' . $this->request->getUri()->getQuery() : '')) ?>;
-
-    function openSearch() {
-        var panel = document.getElementById('searchPanel');
-        panel.style.display = 'block';
-        panel.setAttribute('aria-hidden', 'false');
-        setTimeout(function() { document.getElementById('searchInput').focus(); }, 50);
-    }
-
-    function closeSearch() {
-        var panel = document.getElementById('searchPanel');
-        panel.style.display = 'none';
-        panel.setAttribute('aria-hidden', 'true');
-        document.getElementById('searchSuggestions').innerHTML = '';
-        document.getElementById('searchInput').value = '';
-        clearTimeout(searchTimer);
-    }
-
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape') closeSearch();
-    });
-
-    document.getElementById('searchInput').addEventListener('input', function() {
-        clearTimeout(searchTimer);
-        var q = this.value.trim();
-        var box = document.getElementById('searchSuggestions');
-        if (q.length < 2) { box.innerHTML = ''; return; }
-
-        searchTimer = setTimeout(function() {
-            fetch(suggestUrl + '?q=' + encodeURIComponent(q), {
-                headers: { 'X-Requested-With': 'XMLHttpRequest' }
-            })
-                .then(function(r) { return r.json(); })
-                .then(function(data) { renderSuggestions(data.results, q); });
-        }, 220);
-    });
-
-    function renderSuggestions(results, q) {
-        var box = document.getElementById('searchSuggestions');
-        if (!results || results.length === 0) {
-            box.innerHTML = '<p class="search-no-results">No results for &ldquo;' + q + '&rdquo;</p>';
-            return;
-        }
-        var items = results.map(function(r) {
-            var hasHover = r.images.length > 1 ? ' has-hover-image' : '';
-            var badges = [];
-            if (r.featured) {
-                badges.push('<span class="product-badge product-badge--featured">Featured</span>');
-            }
-            if (r.is_bestsales) {
-                badges.push('<span class="product-badge product-badge--bestsales">Best Seller</span>');
-            }
-            var badge = badges.length ? '<div class="product-card-badges">' + badges.join('') + '</div>' : '';
-            var imgWrap = '<div class="search-suggest-img-wrap' + hasHover + '">'
-                + badge
-                + (r.images[0] ? '<img src="' + r.images[0] + '" alt="' + r.name + '" class="search-suggest-img search-suggest-img--primary">' : '<div class="search-suggest-img--empty"></div>')
-                + (r.images[1] ? '<img src="' + r.images[1] + '" alt="' + r.name + '" class="search-suggest-img search-suggest-img--hover">' : '')
-                + '</div>';
-            var wishlistBtn = '<button class="wishlist-btn' + (wishlistEnabled && r.wishlisted ? ' wishlisted' : '') + '" data-product-id="' + r.id + '" type="button" aria-label="Save to wishlist">'
-                + '<svg width="20" height="20" viewBox="0 0 64 64" fill="currentColor"><path d="M32,57C31,56.5 5,42 5,23.5C5,13.8 12.2,6.5 21,6.5C26,6.5 30.4,9 32,11.2C33.6,9 38,6.5 43,6.5C51.8,6.5 59,13.8 59,23.5C59,42 33,56.5 32,57Z"/></svg>'
-                + '</button>';
-            return '<div class="product-card-wrap">'
-                + '<a href="' + r.url + '?back=' + encodeURIComponent(currentPagePath) + '" class="search-suggest-item">'
-                + imgWrap
-                + '<div class="search-suggest-info">'
-                + '<span class="search-suggest-name">' + r.name + '</span>'
-                + '<span class="search-suggest-price">$' + r.price + '</span>'
-                + '</div>'
-                + '</a>'
-                + wishlistBtn
-                + '</div>';
-        }).join('');
-
-        var viewAll = '<a href="' + searchUrl + '?q=' + encodeURIComponent(q) + '" class="search-view-all">'
-            + 'View all results for &ldquo;' + q + '&rdquo;'
-            + '</a>';
-
-        box.innerHTML = '<div class="search-suggest-grid">' + items + '</div>' + viewAll;
-    }
-
-    document.addEventListener('DOMContentLoaded', function () {
-        document.querySelectorAll('.dt-search input[type="search"]').forEach(function (input) {
-            var wrap = document.createElement('div');
-            wrap.className = 'dt-search-wrap';
-            input.parentNode.insertBefore(wrap, input);
-            wrap.appendChild(input);
-
-            var btn = document.createElement('button');
-            btn.type = 'button';
-            btn.className = 'dt-search-clear';
-            btn.setAttribute('aria-label', 'Clear search');
-            btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>';
-            wrap.appendChild(btn);
-
-            function update() {
-                wrap.classList.toggle('has-value', input.value.length > 0);
-            }
-
-            input.addEventListener('input', update);
-            btn.addEventListener('click', function () {
-                input.value = '';
-                input.dispatchEvent(new Event('input', { bubbles: true }));
-                update();
-                input.focus();
-            });
-
-            update();
-        });
-    });
-
-    document.addEventListener('click', function (e) {
-        var btn = e.target.closest('.wishlist-btn');
-        if (!btn) return;
-        e.preventDefault();
-        e.stopPropagation();
-
-        var id = btn.dataset.productId;
-        var wasWishlisted = btn.classList.contains('wishlisted');
-        btn.disabled = true;
-        fetch('<?= $this->Url->build('/profile/wishlist/toggle/') ?>' + id, {
-            method: 'POST',
-            headers: { 'X-CSRF-Token': csrfToken }
-        })
-            .then(function (r) {
-                if (!r.ok) throw new Error('Wishlist request failed');
-                return r.json();
-            })
-            .then(function (data) {
-                btn.classList.toggle('wishlisted', data.wishlisted);
-                if (data.guest) showWishlistToast();
-                updateWishlistBadge(data.wishlisted ? 1 : -1);
-            })
-            .catch(function (err) {
-                btn.classList.toggle('wishlisted', wasWishlisted);
-                console.error('Wishlist error:', err);
-                window.alert('Could not update your wishlist. Please try again.');
-            })
-            .finally(function () { btn.disabled = false; });
-    });
-
-    function updateWishlistBadge(delta) {
-        var wrap = document.querySelector('a[title="Wishlist"].nav-cart-wrap');
-        if (!wrap) return;
-        var badge = wrap.querySelector('.nav-cart-badge');
-        var current = badge ? parseInt(badge.textContent, 10) : 0;
-        var next = Math.max(0, current + delta);
-        if (next > 0) {
-            if (badge) {
-                badge.textContent = next;
-            } else {
-                badge = document.createElement('span');
-                badge.className = 'nav-cart-badge';
-                badge.textContent = next;
-                wrap.appendChild(badge);
-            }
-        } else if (badge) {
-            badge.remove();
-        }
-    }
-
-    function showWishlistToast() {
-        var existing = document.getElementById('wishlist-guest-toast');
-        if (existing) { existing.remove(); }
-        var toast = document.createElement('div');
-        toast.id = 'wishlist-guest-toast';
-        toast.innerHTML = 'To save your wishlist please <a href="<?= $this->Url->build(['controller' => 'Auth', 'action' => 'login']) ?>">login</a> or <a href="<?= $this->Url->build(['controller' => 'Auth', 'action' => 'register']) ?>">sign up</a>.';
-        document.body.appendChild(toast);
-        setTimeout(function () { toast.classList.add('show'); }, 10);
-        setTimeout(function () {
-            toast.classList.remove('show');
-            setTimeout(function () { toast.remove(); }, 300);
-        }, 3500);
-    }
-</script>
+<?= $this->Html->script('layout') ?>
 </body>
 </html>

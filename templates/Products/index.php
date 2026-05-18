@@ -21,7 +21,7 @@ $this->Html->script('https://cdn.datatables.net/2.2.2/js/dataTables.min.js', ['b
                 <h3 class="page-title"><?= __('Products') ?></h3>
             </div>
 
-            <div style="display:flex;gap:10px;align-items:center">
+            <div class="action-buttons">
                 <?php if ($role === 'admin'): ?>
                     <button id="openActivityLogBtn" class="btn-activity-log">Activity Log</button>
                     <?= $this->Html->link(__('Add New Product'), ['action' => 'add'], ['class' => 'btn-new-product']) ?>
@@ -112,14 +112,14 @@ $this->Html->script('https://cdn.datatables.net/2.2.2/js/dataTables.min.js', ['b
 
 <?php if ($role === 'admin'): ?>
 <!-- Activity Log Modal -->
-<div id="activityLogModal" style="display:none;position:fixed;inset:0;z-index:900">
-    <div id="activityLogOverlay" style="position:absolute;inset:0;background:rgba(0,0,0,0.45)"></div>
-    <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:#fff;border-radius:14px;width:92%;max-width:960px;max-height:85vh;display:flex;flex-direction:column;box-shadow:0 12px 40px rgba(0,0,0,0.18);overflow:hidden">
-        <div style="display:flex;justify-content:space-between;align-items:center;padding:20px 24px 16px;border-bottom:1px solid #eee;flex-shrink:0">
-            <strong style="font-size:1.05rem;color:#2a2320">Product Activity Log</strong>
-            <button id="activityLogClose" style="background:none;border:none;font-size:1.4rem;cursor:pointer;line-height:1;color:#555">&times;</button>
+<div id="activityLogModal" class="admin-modal">
+    <div id="activityLogOverlay" class="admin-modal-overlay"></div>
+    <div class="admin-modal-panel">
+        <div class="admin-modal-header">
+            <span class="admin-modal-title">Product Activity Log</span>
+            <button id="activityLogClose" class="admin-modal-close">&times;</button>
         </div>
-        <div style="overflow:auto;padding:16px 24px 24px;font-family:var(--font-admin)">
+        <div class="admin-modal-body">
             <table id="activityLogsTable" class="display" style="width:100%">
                 <thead>
                     <tr>
@@ -197,14 +197,14 @@ $this->Html->script('https://cdn.datatables.net/2.2.2/js/dataTables.min.js', ['b
 <?php endif; ?>
 
 <!-- Changes detail popup (sits above the log modal) -->
-<div id="logModal" style="display:none;position:fixed;inset:0;z-index:1100">
-    <div id="logModalOverlay" style="position:absolute;inset:0;background:rgba(0,0,0,0.35)"></div>
-    <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:#fff;border-radius:10px;min-width:320px;max-width:520px;width:90%;box-shadow:0 8px 32px rgba(0,0,0,0.18);padding:28px 28px 20px">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
-            <strong style="font-size:1rem">Changes</strong>
-            <button id="logModalClose" style="background:none;border:none;font-size:1.3rem;cursor:pointer;line-height:1;color:#555">&times;</button>
+<div id="logModal" class="admin-modal admin-modal--detail">
+    <div id="logModalOverlay" class="admin-modal-overlay"></div>
+    <div class="admin-modal-panel admin-modal-panel--sm">
+        <div class="admin-modal-header">
+            <span class="admin-modal-title">Changes</span>
+            <button id="logModalClose" class="admin-modal-close">&times;</button>
         </div>
-        <div id="logModalBody" style="font-size:0.9rem;color:#333;max-height:60vh;overflow-y:auto;font-family:var(--font-admin)"></div>
+        <div id="logModalBody" class="admin-modal-body"></div>
     </div>
 </div>
 

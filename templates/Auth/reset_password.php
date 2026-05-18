@@ -12,32 +12,35 @@ $this->Html->css('login', ['block' => true]);
         <?= $this->Form->create($user) ?>
 
         <fieldset>
-            <legend>Reset Your Password</legend>
+            <legend>Reset Password</legend>
 
             <?= $this->Flash->render() ?>
 
             <?php
             echo $this->Form->control('password', [
-                'type' => 'password',
-                'label' => 'New Password',
+                'type'     => 'password',
+                'label'    => 'New Password',
                 'required' => true,
                 'autofocus' => true,
-                'value' => ''
+                'value'    => ''
             ]);
             echo $this->Form->control('password_confirm', [
-                'type' => 'password',
-                'label' => 'Confirm New Password',
+                'type'     => 'password',
+                'label'    => 'Confirm New Password',
                 'required' => true,
-                'value' => ''
+                'value'    => ''
             ]);
             ?>
 
         </fieldset>
 
         <?= $this->Form->button('Reset Password', ['class' => 'login-button']) ?>
-
         <?= $this->Form->end() ?>
 
+        <div class="login-divider"><span>or</span></div>
+
+        <p class="login-new-label">Remember your password?</p>
+        <?= $this->Html->link('Sign In', ['controller' => 'Auth', 'action' => 'login'], ['class' => 'login-register-btn']) ?>
 
     </div>
 </div>
