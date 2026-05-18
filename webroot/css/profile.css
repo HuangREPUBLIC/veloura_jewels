@@ -733,13 +733,21 @@
 
 /* Responsive */
 @media (max-width: 768px) {
-    .profile-hero { flex-direction: column; text-align: center; padding: 2rem 1.5rem; }
-    .profile-body { grid-template-columns: 1fr; }
+    .profile-page { padding: 1.25rem 1rem 3rem; }
+    .profile-hero { flex-direction: column; text-align: center; padding: 1.5rem 1.25rem; gap: 1rem; margin-bottom: 1.25rem; }
+    .profile-hero-info h1 { font-size: 1.4rem; }
+    .profile-body { grid-template-columns: 1fr; gap: 1rem; }
+    .profile-card { padding: 1.25rem 1.25rem; }
     .profile-card--full { grid-column: 1; }
+    .profile-card-header { margin-bottom: 1rem; flex-wrap: wrap; gap: 0.5rem; }
     .profile-info-grid { grid-template-columns: 1fr; }
     .profile-form-grid { grid-template-columns: 1fr; }
     .profile-form-group--full { grid-column: 1; }
     .profile-security-row { flex-direction: column; align-items: flex-start; gap: 1rem; }
+    .profile-orders-table th:nth-child(2),
+    .profile-orders-table td:nth-child(2),
+    .profile-orders-table th:nth-child(3),
+    .profile-orders-table td:nth-child(3) { display: none; }
 }
 
 

@@ -197,7 +197,6 @@ $this->Html->css('jewelry', ['block' => true]);
                                     <?php if (!empty($product->featured)): ?>
                                         <span class="product-badge product-badge--featured">Featured</span>
                                     <?php endif; ?>
-
                                     <?php if (!empty($product->is_bestsales)): ?>
                                         <span class="product-badge product-badge--bestsales">Best Seller</span>
                                     <?php endif; ?>

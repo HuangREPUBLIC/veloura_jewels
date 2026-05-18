@@ -39,7 +39,7 @@ $oneSizeVariant = $isOneSizeOnly ? $inStockVariants[0] : null;
 
         <div class="product-detail-image">
             <?php if (!empty($product->product_images)): ?>
-                <div class="detail-image-stack">
+                <div class="detail-image-stack" id="detail-image-stack">
                     <?php foreach ($product->product_images as $i => $img): ?>
                         <div class="detail-stack-item">
                             <img
@@ -51,6 +51,13 @@ $oneSizeVariant = $isOneSizeOnly ? $inStockVariants[0] : null;
                         </div>
                     <?php endforeach; ?>
                 </div>
+                <?php if (count($product->product_images) > 1): ?>
+                    <div class="detail-carousel-dots" id="detail-carousel-dots">
+                        <?php foreach ($product->product_images as $i => $_img): ?>
+                            <div class="detail-carousel-dot<?= $i === 0 ? ' active' : '' ?>" data-index="<?= $i ?>"></div>
+                        <?php endforeach; ?>
+                    </div>
+                <?php endif; ?>
             <?php else: ?>
                 <div class="detail-placeholder"><span>No Image</span></div>
             <?php endif; ?>
@@ -207,6 +214,22 @@ $oneSizeVariant = $isOneSizeOnly ? $inStockVariants[0] : null;
                 var v = parseInt(this.value, 10), m = getMax();
                 if (isNaN(v) || v < 1) { this.value = 1; }
                 else if (v > m) { this.value = m; showToast('Only ' + m + ' item' + (m === 1 ? '' : 's') + ' available'); }
+            });
+        }
+
+        // Mobile carousel dots
+        var stack = document.getElementById('detail-image-stack');
+        var dots  = document.querySelectorAll('.detail-carousel-dot');
+        if (stack && dots.length) {
+            stack.addEventListener('scroll', function () {
+                var idx = Math.round(stack.scrollLeft / stack.offsetWidth);
+                dots.forEach(function (d, i) { d.classList.toggle('active', i === idx); });
+            }, { passive: true });
+            dots.forEach(function (dot) {
+                dot.addEventListener('click', function () {
+                    var idx = parseInt(this.dataset.index, 10);
+                    stack.scrollTo({ left: idx * stack.offsetWidth, behavior: 'smooth' });
+                });
             });
         }
 

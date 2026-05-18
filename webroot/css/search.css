@@ -116,7 +116,7 @@
 .search-suggest-item {
     display: block;
     text-decoration: none;
-    border-radius: 14px;
+    border-radius: 0;
     overflow: hidden;
     background: var(--color-white);
     border: 1px solid rgba(var(--emerald-rgb), 0.1);
@@ -184,31 +184,23 @@
 }
 
 .search-suggest-img-wrap .product-badge {
-    display: inline-block;
-    min-width: 76px;
-    font-size: 0.58rem;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
+    display: block;
     text-align: center;
-    padding: 0.25rem 0.55rem;
-    border-radius: 999px;
+    font-size: 0.5rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 0.18rem 0.5rem;
+    border-radius: 0;
+    background: rgba(250, 248, 245, 0.96);
 }
 
 .search-suggest-img-wrap .product-badge--featured {
-    background: rgba(40, 77, 64, 0.55);
-    color: #fff;
-    border: 1px solid rgba(40, 77, 64, 0.4);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    color: var(--emerald);
 }
 
 .search-suggest-img-wrap .product-badge--bestsales {
-    background: rgba(183, 151, 90, 0.6);
-    color: #fff;
-    border: 1px solid rgba(183, 151, 90, 0.45);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    color: #9a7520;
 }
 
 .search-suggest-info {
@@ -264,6 +256,8 @@
 }
 
 @media (max-width: 768px) {
+    .search-panel { top: 72px; }
+
     .search-suggest-grid {
         grid: auto / auto-flow 36vw;
         overflow-x: auto;
