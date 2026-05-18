@@ -26,7 +26,7 @@ $this->Html->css('login', ['block' => true]);
             $identity = $this->request->getAttribute('identity');
             $role = $identity ? $identity->get('role') : null;
 
-            if ($role === 'admin') {
+            if ($role === 'admin' && $user->id !== 6) {
                 echo $this->Form->control('role', [
                     'type'    => 'select',
                     'options' => [
