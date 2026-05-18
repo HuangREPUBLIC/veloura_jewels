@@ -164,6 +164,12 @@
     display: block;
     text-decoration: none;
     color: var(--color-headings);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.hp-category-tile:hover {
+    opacity: 0.85;
+    transform: translateY(-3px);
 }
 
 .hp-category-tile-img {
