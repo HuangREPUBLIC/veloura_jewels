@@ -18,7 +18,7 @@ $cakeDescription = 'Veloura Jewels';
         <?= $cakeDescription ?>:
         <?= $this->fetch('title') ?>
     </title>
-    <?= $this->Html->meta('icon', '/img/icon.png') ?>
+    <?= $this->Html->meta('icon', '/img/' . ($siteSettings['icon_image'] ?? 'icon.png')) ?>
 
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -45,7 +45,7 @@ $role = $identity ? $identity->get('role') : null;
 
     <div class="navbar-brand">
         <?= $this->Html->link(
-            $this->Html->image('logo.png', ['alt' => 'Veloura Jewels', 'class' => 'navbar-logo']),
+            $this->Html->image($siteSettings['logo_image'] ?? 'logo.png', ['alt' => 'Veloura Jewels', 'class' => 'navbar-logo']),
             '/',
             ['escape' => false]
         ) ?>
@@ -184,7 +184,7 @@ $role = $identity ? $identity->get('role') : null;
 
         <div class="footer-col footer-col--brand">
             <?= $this->Html->link(
-                $this->Html->image('logo.png', ['alt' => 'Veloura Jewels', 'class' => 'footer-logo']),
+                $this->Html->image($siteSettings['logo_image'] ?? 'logo.png', ['alt' => 'Veloura Jewels', 'class' => 'footer-logo']),
                 '/',
                 ['escape' => false]
             ) ?>

@@ -54,12 +54,27 @@ $faqSaveUrl = ['action' => 'faqItemSave'];
                             <?php if (!empty($row->content_value)): ?>
                                 <?= $this->Html->image(h($row->content_value), ['class' => 'cms-image-preview']) ?>
                             <?php endif; ?>
+
                             <input
                                 id="field-<?= h($row->content_key) ?>"
                                 type="file"
                                 name="<?= h($row->content_key) ?>"
                                 accept="image/*"
                                 class="cms-input">
+
+                        <?php elseif ($row->content_type === 'video'): ?>
+                            <?php if (!empty($row->content_value)): ?>
+                                <video class="cms-image-preview" controls muted>
+                                    <source src="<?= $this->Url->build('/img/' . h($row->content_value)) ?>" type="video/mp4">
+                                </video>
+                            <?php endif; ?>
+                            <input
+                                id="field-<?= h($row->content_key) ?>"
+                                type="file"
+                                name="<?= h($row->content_key) ?>"
+                                accept="video/mp4,video/webm"
+                                class="cms-input">
+
                         <?php else: ?>
                             <input
                                 id="field-<?= h($row->content_key) ?>"

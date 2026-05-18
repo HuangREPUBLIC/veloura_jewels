@@ -42,7 +42,7 @@ class CmsController extends AppController
 
         if ($this->request->is('post')) {
             $uploadDir    = WWW_ROOT . 'img' . DS;
-            $allowedMimes = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
+            $allowedMimes = ['image/jpeg', 'image/png', 'image/webp', 'image/gif', 'video/mp4', 'video/webm'];
             $uploads      = $this->request->getUploadedFiles();
 
             foreach ($this->request->getData() as $key => $value) {
@@ -60,8 +60,7 @@ class CmsController extends AppController
                 if ($upload->getError() !== UPLOAD_ERR_OK) continue;
 
                 $record = $pageContentsTable->find()
-                    ->where(['page_id' => $currentPage->id, 'content_key' => $key, 'content_type' => 'image'])
-                    ->first();
+                    ->where(['page_id' => $currentPage->id, 'content_key' => $key, 'content_type IN' => ['image', 'video']])                    ->first();
                 if (!$record) continue;
 
                 $tmpPath = $upload->getStream()->getMetadata('uri');

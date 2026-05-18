@@ -162,7 +162,7 @@
     font-family: var(--font-display);
     font-size: clamp(2.4rem, 5vw, 4rem);
     font-weight: 300;
-    color: var(--color-white);
+    color: var(--color-white) !important;
     letter-spacing: 0.04em;
     line-height: 1.1;
     margin: 0 0 1.4rem;
@@ -226,7 +226,6 @@
     font-family: var(--font-display);
     font-size: clamp(1.7rem, 3vw, 2.5rem);
     font-weight: 300;
-    color: var(--color-headings);
     letter-spacing: 0.04em;
     margin: 0;
 }
@@ -248,11 +247,7 @@
     transition: transform 0.22s, box-shadow 0.22s, border-color 0.2s;
 }
 
-.story-value-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 32px rgba(var(--emerald-rgb), 0.11);
-    border-color: rgba(var(--emerald-rgb), 0.22);
-}
+
 
 .story-value-ornament {
     width: 24px;

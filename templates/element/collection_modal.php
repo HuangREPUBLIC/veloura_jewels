@@ -18,14 +18,14 @@
         <p class="collection-modal-sub"><?= h($modalSubtitle ?? 'What are you looking for?') ?></p>
         <div class="collection-modal-cards">
             <a href="<?= $this->Url->build(['controller' => 'Jewelry', 'action' => 'index']) ?>" class="collection-modal-card">
-                <?= $this->Html->image('greenNecklace.jpg', ['alt' => 'Jewellery collection', 'class' => 'collection-modal-card-img']) ?>
+                <?= $this->Html->image($siteSettings['modal_jewellery_image'] ?? 'greenNecklace.jpg', ['alt' => 'Jewellery collection', 'class' => 'collection-modal-card-img']) ?>
                 <div class="collection-modal-card-body">
                     <h3>Jewellery</h3>
                     <p>Rings, necklaces, bracelets &amp; more</p>
                 </div>
             </a>
             <a href="<?= $this->Url->build(['controller' => 'Jewelry', 'action' => 'homeDecor']) ?>" class="collection-modal-card">
-                <?= $this->Html->image('oliveVase.jpg', ['alt' => 'Home décor collection', 'class' => 'collection-modal-card-img']) ?>
+                <?= $this->Html->image($siteSettings['modal_homedecor_image'] ?? 'oliveVase.jpg', ['alt' => 'Home décor collection', 'class' => 'collection-modal-card-img']) ?>
                 <div class="collection-modal-card-body">
                     <h3>Home Décor</h3>
                     <p>Handcrafted accents for your space</p>
@@ -34,3 +34,4 @@
         </div>
     </div>
 </div>
+

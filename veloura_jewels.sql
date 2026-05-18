@@ -2,10 +2,10 @@
 -- version 5.2.3
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: May 15, 2026 at 01:45 AM
--- Server version: 12.2.2-MariaDB
--- PHP Version: 8.4.18
+-- Host: 127.0.0.1
+-- Generation Time: May 18, 2026 at 01:53 PM
+-- Server version: 11.8.6-MariaDB
+-- PHP Version: 8.4.16
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,27 +18,56 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
+-- Database: `veloura_jewels`
+--
+CREATE DATABASE IF NOT EXISTS `veloura_jewels` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_uca1400_ai_ci;
+USE `veloura_jewels`;
+
+-- --------------------------------------------------------
 
 --
 -- Table structure for table `activity_logs`
 --
 
 DROP TABLE IF EXISTS `activity_logs`;
-CREATE TABLE IF NOT EXISTS `activity_logs` (
-                                               `id` int(11) NOT NULL AUTO_INCREMENT,
-    `user_id` int(11) DEFAULT NULL,
-    `user_name` varchar(255) DEFAULT NULL,
-    `action` varchar(50) NOT NULL,
-    `model` varchar(100) NOT NULL,
-    `model_id` int(11) DEFAULT NULL,
-    `model_label` varchar(255) DEFAULT NULL,
-    `changes` text DEFAULT NULL,
-    `created` datetime NOT NULL,
-    `is_archived` tinyint(1) NOT NULL DEFAULT 0,
-    PRIMARY KEY (`id`),
-    KEY `idx_model` (`model`),
-    KEY `idx_created` (`created`)
-    ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+CREATE TABLE `activity_logs` (
+                                 `id` int(11) NOT NULL,
+                                 `user_id` int(11) DEFAULT NULL,
+                                 `user_name` varchar(255) DEFAULT NULL,
+                                 `action` varchar(50) NOT NULL,
+                                 `model` varchar(100) NOT NULL,
+                                 `model_id` int(11) DEFAULT NULL,
+                                 `model_label` varchar(255) DEFAULT NULL,
+                                 `changes` text DEFAULT NULL,
+                                 `created` datetime NOT NULL,
+                                 `is_archived` tinyint(1) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `activity_logs`
+--
+
+INSERT INTO `activity_logs` (`id`, `user_id`, `user_name`, `action`, `model`, `model_id`, `model_label`, `changes`, `created`, `is_archived`) VALUES
+                                                                                                                                                  (5, 6, 'admin@test.com', 'updated', 'Product', 15, 'Art Deco Pavé Bracelet', '{\"featured\":{\"from\":true,\"to\":false}}', '2026-05-18 12:36:48', 0),
+                                                                                                                                                  (6, 6, 'admin@test.com', 'updated', 'Product', 14, 'Asymmetric Cross Earrings', '{\"featured\":{\"from\":true,\"to\":false}}', '2026-05-18 12:36:50', 0),
+                                                                                                                                                  (7, 6, 'admin@test.com', 'updated', 'Product', 45, 'Crimson Candle', '{\"featured\":{\"from\":true,\"to\":false}}', '2026-05-18 12:36:53', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `cake_migrations`
+--
+
+DROP TABLE IF EXISTS `cake_migrations`;
+CREATE TABLE `cake_migrations` (
+                                   `id` int(11) NOT NULL,
+                                   `version` bigint(20) NOT NULL,
+                                   `migration_name` varchar(100) DEFAULT NULL,
+                                   `plugin` varchar(100) DEFAULT NULL,
+                                   `start_time` timestamp NULL DEFAULT NULL,
+                                   `end_time` timestamp NULL DEFAULT NULL,
+                                   `breakpoint` tinyint(1) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -47,13 +76,12 @@ CREATE TABLE IF NOT EXISTS `activity_logs` (
 --
 
 DROP TABLE IF EXISTS `categories`;
-CREATE TABLE IF NOT EXISTS `categories` (
-                                            `id` int(11) NOT NULL AUTO_INCREMENT,
-    `name` varchar(64) NOT NULL,
-    `type` varchar(20) NOT NULL DEFAULT 'jewelry',
-    `sizes` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`sizes`)),
-    PRIMARY KEY (`id`)
-    ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+CREATE TABLE `categories` (
+                              `id` int(11) NOT NULL,
+                              `name` varchar(64) NOT NULL,
+                              `type` varchar(20) NOT NULL DEFAULT 'jewelry',
+                              `sizes` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`sizes`))
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `categories`
@@ -79,14 +107,12 @@ INSERT INTO `categories` (`id`, `name`, `type`, `sizes`) VALUES
 --
 
 DROP TABLE IF EXISTS `cms_pages`;
-CREATE TABLE IF NOT EXISTS `cms_pages` (
-                                           `id` int(11) NOT NULL AUTO_INCREMENT,
-    `slug` varchar(100) NOT NULL,
-    `title` varchar(200) NOT NULL,
-    `sort_order` int(11) NOT NULL DEFAULT 0,
-    PRIMARY KEY (`id`),
-    UNIQUE KEY `uq_slug` (`slug`)
-    ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+CREATE TABLE `cms_pages` (
+                             `id` int(11) NOT NULL,
+                             `slug` varchar(100) NOT NULL,
+                             `title` varchar(200) NOT NULL,
+                             `sort_order` int(11) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 
 --
 -- Dumping data for table `cms_pages`
@@ -109,17 +135,15 @@ INSERT INTO `cms_pages` (`id`, `slug`, `title`, `sort_order`) VALUES
 --
 
 DROP TABLE IF EXISTS `contact_replies`;
-CREATE TABLE IF NOT EXISTS `contact_replies` (
-                                                 `id` int(11) NOT NULL AUTO_INCREMENT,
-    `contact_submission_id` int(11) NOT NULL,
-    `subject` varchar(255) NOT NULL,
-    `message` text NOT NULL,
-    `sent_at` datetime DEFAULT current_timestamp(),
-    `created` datetime DEFAULT current_timestamp(),
-    `modified` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-    PRIMARY KEY (`id`),
-    KEY `fk_contact_replies_submission` (`contact_submission_id`)
-    ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+CREATE TABLE `contact_replies` (
+                                   `id` int(11) NOT NULL,
+                                   `contact_submission_id` int(11) NOT NULL,
+                                   `subject` varchar(255) NOT NULL,
+                                   `message` text NOT NULL,
+                                   `sent_at` datetime DEFAULT current_timestamp(),
+                                   `created` datetime DEFAULT current_timestamp(),
+                                   `modified` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 
 --
 -- Dumping data for table `contact_replies`
@@ -140,19 +164,18 @@ INSERT INTO `contact_replies` (`id`, `contact_submission_id`, `subject`, `messag
 --
 
 DROP TABLE IF EXISTS `contact_submissions`;
-CREATE TABLE IF NOT EXISTS `contact_submissions` (
-                                                     `id` int(11) NOT NULL AUTO_INCREMENT,
-    `first_name` varchar(50) NOT NULL,
-    `last_name` varchar(50) NOT NULL,
-    `email` varchar(255) NOT NULL,
-    `subject` varchar(255) NOT NULL,
-    `message` text NOT NULL,
-    `captcha_passed` tinyint(1) NOT NULL DEFAULT 0,
-    `is_replied` tinyint(1) NOT NULL DEFAULT 0,
-    `created` datetime DEFAULT current_timestamp(),
-    `modified` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-    PRIMARY KEY (`id`)
-    ) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+CREATE TABLE `contact_submissions` (
+                                       `id` int(11) NOT NULL,
+                                       `first_name` varchar(50) NOT NULL,
+                                       `last_name` varchar(50) NOT NULL,
+                                       `email` varchar(255) NOT NULL,
+                                       `subject` varchar(255) NOT NULL,
+                                       `message` text NOT NULL,
+                                       `captcha_passed` tinyint(1) NOT NULL DEFAULT 0,
+                                       `is_replied` tinyint(1) NOT NULL DEFAULT 0,
+                                       `created` datetime DEFAULT current_timestamp(),
+                                       `modified` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 
 --
 -- Dumping data for table `contact_submissions`
@@ -178,16 +201,15 @@ INSERT INTO `contact_submissions` (`id`, `first_name`, `last_name`, `email`, `su
 --
 
 DROP TABLE IF EXISTS `faq_items`;
-CREATE TABLE IF NOT EXISTS `faq_items` (
-                                           `id` int(11) NOT NULL AUTO_INCREMENT,
-    `question` varchar(500) NOT NULL,
-    `answer` text NOT NULL,
-    `sort_order` int(11) NOT NULL DEFAULT 0,
-    `is_active` tinyint(1) NOT NULL DEFAULT 1,
-    `created` datetime NOT NULL,
-    `modified` datetime NOT NULL,
-    PRIMARY KEY (`id`)
-    ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+CREATE TABLE `faq_items` (
+                             `id` int(11) NOT NULL,
+                             `question` varchar(500) NOT NULL,
+                             `answer` text NOT NULL,
+                             `sort_order` int(11) NOT NULL DEFAULT 0,
+                             `is_active` tinyint(1) NOT NULL DEFAULT 1,
+                             `created` datetime NOT NULL,
+                             `modified` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 
 --
 -- Dumping data for table `faq_items`
@@ -207,20 +229,18 @@ INSERT INTO `faq_items` (`id`, `question`, `answer`, `sort_order`, `is_active`, 
 --
 
 DROP TABLE IF EXISTS `orders`;
-CREATE TABLE IF NOT EXISTS `orders` (
-                                        `id` int(11) NOT NULL AUTO_INCREMENT,
-    `user_id` int(11) DEFAULT NULL,
-    `stripe_session_id` varchar(255) DEFAULT NULL,
-    `stripe_payment_intent_id` varchar(255) DEFAULT NULL,
-    `customer_email` varchar(255) DEFAULT NULL,
-    `status` varchar(50) NOT NULL DEFAULT 'pending',
-    `total_amount` decimal(10,2) NOT NULL DEFAULT 0.00,
-    `currency` varchar(10) NOT NULL DEFAULT 'aud',
-    `created` datetime DEFAULT current_timestamp(),
-    `modified` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-    PRIMARY KEY (`id`),
-    KEY `user_id` (`user_id`)
-    ) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+CREATE TABLE `orders` (
+                          `id` int(11) NOT NULL,
+                          `user_id` int(11) DEFAULT NULL,
+                          `stripe_session_id` varchar(255) DEFAULT NULL,
+                          `stripe_payment_intent_id` varchar(255) DEFAULT NULL,
+                          `customer_email` varchar(255) DEFAULT NULL,
+                          `status` varchar(50) NOT NULL DEFAULT 'pending',
+                          `total_amount` decimal(10,2) NOT NULL DEFAULT 0.00,
+                          `currency` varchar(10) NOT NULL DEFAULT 'aud',
+                          `created` datetime DEFAULT current_timestamp(),
+                          `modified` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `orders`
@@ -252,23 +272,19 @@ INSERT INTO `orders` (`id`, `user_id`, `stripe_session_id`, `stripe_payment_inte
 --
 
 DROP TABLE IF EXISTS `order_items`;
-CREATE TABLE IF NOT EXISTS `order_items` (
-                                             `id` int(11) NOT NULL AUTO_INCREMENT,
-    `order_id` int(11) NOT NULL,
-    `product_id` int(11) DEFAULT NULL,
-    `variant_id` int(11) DEFAULT NULL,
-    `product_name` varchar(255) NOT NULL,
-    `selected_size` varchar(20) DEFAULT NULL,
-    `unit_price` decimal(10,2) NOT NULL,
-    `quantity` int(11) NOT NULL,
-    `subtotal` decimal(10,2) NOT NULL,
-    `created` datetime DEFAULT current_timestamp(),
-    `modified` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-    PRIMARY KEY (`id`),
-    KEY `order_id` (`order_id`),
-    KEY `product_id` (`product_id`),
-    KEY `variant_id` (`variant_id`)
-    ) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+CREATE TABLE `order_items` (
+                               `id` int(11) NOT NULL,
+                               `order_id` int(11) NOT NULL,
+                               `product_id` int(11) DEFAULT NULL,
+                               `variant_id` int(11) DEFAULT NULL,
+                               `product_name` varchar(255) NOT NULL,
+                               `selected_size` varchar(20) DEFAULT NULL,
+                               `unit_price` decimal(10,2) NOT NULL,
+                               `quantity` int(11) NOT NULL,
+                               `subtotal` decimal(10,2) NOT NULL,
+                               `created` datetime DEFAULT current_timestamp(),
+                               `modified` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `order_items`
@@ -300,17 +316,15 @@ INSERT INTO `order_items` (`id`, `order_id`, `product_id`, `variant_id`, `produc
 --
 
 DROP TABLE IF EXISTS `page_content`;
-CREATE TABLE IF NOT EXISTS `page_content` (
-                                              `id` int(11) NOT NULL AUTO_INCREMENT,
-    `page_id` int(11) NOT NULL,
-    `content_key` varchar(100) NOT NULL,
-    `content_value` text DEFAULT NULL,
-    `label` varchar(200) NOT NULL,
-    `content_type` enum('text','textarea','image') NOT NULL DEFAULT 'text',
-    `sort_order` int(11) NOT NULL DEFAULT 0,
-    PRIMARY KEY (`id`),
-    UNIQUE KEY `uq_page_key` (`page_id`,`content_key`)
-    ) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+CREATE TABLE `page_content` (
+                                `id` int(11) NOT NULL,
+                                `page_id` int(11) NOT NULL,
+                                `content_key` varchar(100) NOT NULL,
+                                `content_value` text DEFAULT NULL,
+                                `label` varchar(200) NOT NULL,
+                                `content_type` enum('text','textarea','image','video') NOT NULL DEFAULT 'text',
+                                `sort_order` int(11) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 
 --
 -- Dumping data for table `page_content`
@@ -350,7 +364,14 @@ INSERT INTO `page_content` (`id`, `page_id`, `content_key`, `content_value`, `la
 (34, 2, 'contact_cta_title', 'Have a question or a special request?', 'Contact CTA Title', 'text', 13),
 (35, 2, 'contact_cta_subtext', 'Our team is always happy to help — whether it\'s a custom order, a gift idea, or just a chat about what we make.', 'Contact CTA Subtext', 'textarea', 14),
                                                                                                                         (36, 8, 'contact_heading', 'Contact Veloura Jewels', 'Page Heading', 'text', 1),
-                                                                                                                        (37, 8, 'contact_subtext', 'We\'d love to hear from you! Whether you have questions about our handcrafted jewellery, want to discuss a custom piece, or simply want to learn more about our story, feel free to reach out.', 'Page Subtext', 'textarea', 2);
+                                                                                                                        (37, 8, 'contact_subtext', 'We\'d love to hear from you! Whether you have questions about our handcrafted jewellery, want to discuss a custom piece, or simply want to learn more about our story, feel free to reach out.', 'Page Subtext', 'textarea', 2),
+(38, 2, 'home_video', 'homeVideo.mp4', 'Home Video', 'video', 8),
+(40, 2, 'diamond_ring_video', 'handmadeDiamondRing.mp4', 'Diamond Ring Video', 'video', 9),
+(41, 2, 'featured_jewellery_image', 'featuredJewellery.png', 'Featured Jewellery Image', 'image', 10),
+(42, 2, 'featured_homedecor_image', 'homedecor.png', 'Featured Home Decor Image', 'image', 11),
+(43, 1, 'modal_jewellery_image', 'greenNecklace.jpg', 'Modal Jewellery Image', 'image', 1),
+(44, 1, 'modal_homedecor_image', 'oliveVase.jpg', 'Modal Home Decor Image', 'image', 2),
+(45, 1, 'logo_image', 'logo.png', 'Logo', 'image', 3);
 
 -- --------------------------------------------------------
 
@@ -359,8 +380,8 @@ INSERT INTO `page_content` (`id`, `page_id`, `content_key`, `content_value`, `la
 --
 
 DROP TABLE IF EXISTS `products`;
-CREATE TABLE IF NOT EXISTS `products` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `products` (
+  `id` int(11) NOT NULL,
   `name` varchar(64) NOT NULL,
   `purchase_price` decimal(9,2) NOT NULL,
   `sale_price` decimal(9,2) NOT NULL,
@@ -370,10 +391,8 @@ CREATE TABLE IF NOT EXISTS `products` (
   `description` text DEFAULT NULL,
   `story` text DEFAULT NULL,
   `featured` tinyint(1) NOT NULL DEFAULT 0,
-  `category_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `fk_products_category` (`category_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=58 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `category_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `products`
@@ -392,8 +411,8 @@ INSERT INTO `products` (`id`, `name`, `purchase_price`, `sale_price`, `supplier_
                                                                                                                          (11, 'Statement Art Deco Drop Earrings', 145.00, 419.00, 'supplier@luxgems.com.au', '2026-04-13 11:29:33', '2026-05-04 21:22:09', 'These earrings are meticulously crafted for a perfect balance between bold structure and refined elegance.\r\nMaterial: Sterling silver\r\nStone: White cubic zirconia\r\nColor: Silver\r\nLength: 7.1 cm ; Width : 2.2 cm', 'In a precision-driven atelier, the Statement Art Deco Drop Earrings take shape as artisans cut and assemble bold geometric elements, then hand-set each stone in crisp, symmetrical lines. The result is a striking pair that channels 1920s glamour through meticulous craftsmanship and modern refinement.', 1, 3),
                                                                                                                          (12, 'Torsade Pavé Hoop Earrings', 52.00, 199.00, 'supplier@goldcraft.com.au', '2026-04-13 11:29:33', '2026-05-04 21:22:15', 'These earrings embody elegance and versatility.\r\nMaterial: Yellow Alloy made of 95% recycled material and 18k yellow gold plated\r\nStone: White cubic zirconia\r\nColor: Yellow\r\nLength: 2.1 cm ; Width : 0.7 cm', 'In a meticulous workshop, the Torsade Pavé Hoop Earrings are formed by twisting fine metal strands into an elegant spiral, then hand-setting each tiny stone along the curves for a seamless sparkle. The process blends structural precision with delicate craftsmanship, creating hoops that shimmer with every turn.\r\n', 1, 3),
                                                                                                                          (13, 'Dainty Rose Gold Hoop Earrings', 90.00, 265.00, 'supplier@pearlsea.com.au', '2026-04-13 11:29:33', '2026-05-04 21:21:53', 'Material: Alloy made of 95% recycled material and 18k gold plated, white cubic zirconia\r\nColor: Rose gold\r\nSize: Small (Length: 2.8 cm ; Width : 0.5 cm)', 'In a refined workshop, the Dainty Rose Gold Hoop Earrings are carefully shaped from fine metal and polished to a soft, warm glow. Each pair is finished with precise detailing to achieve a lightweight, elegant design made for everyday wear.\r\n', 1, 3),
-                                                                                                                         (14, 'Asymmetric Cross Earrings', 62.00, 235.00, 'supplier@luxgems.com.au', '2026-04-13 11:29:33', '2026-05-04 21:21:22', 'Material: Platinum and rhodium plated on patented white alloy, made from recycled materials\r\nStone: Cubic zirconia\r\nDimensions: 39 mm length, 20 mm width', 'In a contemporary atelier, the Asymmetric Cross Earrings are thoughtfully crafted with mismatched silhouettes, each piece shaped and balanced by hand for a modern edge. The design comes together through careful finishing, highlighting contrast and individuality in every detail.\r\n', 1, 3),
-                                                                                                                         (15, 'Art Deco Pavé Bracelet', 88.00, 345.00, 'supplier@luxgems.com.au', '2026-04-13 11:29:33', '2026-05-04 21:21:18', 'This bracelet is meticulously crafted for a perfect balance between bold structure and refined elegance.\r\nMaterial: Sterling silver\r\nStone: White cubic zirconia\r\nColor: Silver', 'Under the glow of a 1920s ballroom chandelier, the Art Deco pavé bracelet caught every flicker of light, each stone set like a secret carefully placed in time. It wasn\'t just jewelry—it was a quiet declaration of elegance that outlived the night and everyone in it.', 1, 4),
+                                                                                                                         (14, 'Asymmetric Cross Earrings', 62.00, 235.00, 'supplier@luxgems.com.au', '2026-04-13 11:29:33', '2026-05-18 12:36:50', 'Material: Platinum and rhodium plated on patented white alloy, made from recycled materials\r\nStone: Cubic zirconia\r\nDimensions: 39 mm length, 20 mm width', 'In a contemporary atelier, the Asymmetric Cross Earrings are thoughtfully crafted with mismatched silhouettes, each piece shaped and balanced by hand for a modern edge. The design comes together through careful finishing, highlighting contrast and individuality in every detail.\r\n', 0, 3),
+                                                                                                                         (15, 'Art Deco Pavé Bracelet', 88.00, 345.00, 'supplier@luxgems.com.au', '2026-04-13 11:29:33', '2026-05-18 12:36:48', 'This bracelet is meticulously crafted for a perfect balance between bold structure and refined elegance.\r\nMaterial: Sterling silver\r\nStone: White cubic zirconia\r\nColor: Silver', 'Under the glow of a 1920s ballroom chandelier, the Art Deco pavé bracelet caught every flicker of light, each stone set like a secret carefully placed in time. It wasn\'t just jewelry—it was a quiet declaration of elegance that outlived the night and everyone in it.', 0, 4),
 (16, 'Lilac Lumière Pavé Bracelet', 85.00, 289.00, 'supplier@goldcraft.com.au', '2026-04-13 11:29:33', '2026-05-04 21:21:58', 'Material: Platinum and rhodium plated on patented white alloy\r\nStone: Lilac cubic zirconia\r\nDimensions: 4 mm width', 'In a quiet atelier, the Lilac Lumière Pavé Bracelet is brought to life as artisans delicately set each lilac-hued stone to capture a soft, radiant glow. Every detail is carefully crafted to reflect light with a gentle shimmer, evoking elegance in every movement.\r\n', 1, 4),
 (34, 'Waves Painting', 42.00, 109.00, 'supplier@artworks.com.au', '2026-04-21 12:58:01', '2026-05-04 23:42:22', 'Colour: Blue and Brown\r\nMaterial: Medium-density fibreboard (MDF), canvas and metal\r\nDimensions: 90cm (H) x 60cm (W) x 2.5cm (D)\r\nWeight: 3.1kg', 'A wave painting rises from the canvas as the artist layers sweeping strokes of deep blues and foaming whites, capturing the moment water gathers its strength. In its final form, the piece feels alive—an instant of motion frozen just before the sea breaks into thunder.', 1, 9),
 (35, 'Golden Blue Heart Painting', 18.00, 49.00, 'supplier@artworks.com.au', '2026-04-21 13:03:00', '2026-05-04 23:41:18', 'Colour: Blue and Gold\r\nMaterials: Medium-density fibreboard (MDF), canvas and metal\r\nDimensions: 42cm (H), 32cm (W), 3cm(D)', 'A half-blue, half-gold heart painting comes to life as the artist blends cool serenity with radiant warmth, letting the two colors meet in a luminous seam that feels almost electric. In its final form, the heart becomes a quiet symbol of contrast—softness and brilliance held together in a single, glowing shape.', 1, 9),
@@ -403,7 +422,7 @@ INSERT INTO `products` (`id`, `name`, `purchase_price`, `sale_price`, `supplier_
                                                                                                                          (39, 'Cauldron Candle', 12.00, 29.00, 'supplier@candleco.com.au', '2026-04-21 13:24:31', '2026-05-11 15:56:59', 'Colour: Black and White\r\nMaterial: Paraffin and Stone\r\nDimensions: 10cm (H) x 7.5cm (Dia.)', 'A candle in a stone cauldron takes form as wax is slowly poured into the carved vessel, the rough stone holding the warmth like an ancient hearth. When the flame is finally lit, it glows against the rugged surface, turning the cauldron into a quiet well of fire and shadow.', 1, 6),
                                                                                                                          (41, 'Linen Cushion', 10.00, 25.00, 'supplier@textilecraft.com.au', '2026-04-21 13:39:18', '2026-05-11 16:20:02', 'Colour: Red\r\nMaterial: Velvet and Cotton\r\nDimensions: 20cm (H), 20cm (W), 6cm (D)', 'A round red cushion comes to life as soft fabric is stretched over plush filling, its vibrant color giving the simple shape a warm, inviting presence. Once finished, it feels like a small circle of comfort—bold, bright, and ready to soften any space it touches.', 1, 8),
                                                                                                                          (42, 'Striped Cushion', 18.00, 45.00, 'supplier@textilecraft.com.au', '2026-04-21 13:43:41', '2026-05-11 16:18:48', 'Colour: White\r\nMaterial: Polyester\r\nDimensions: 42cm (L) x 42cm (W)', 'A classic square white cushion comes together as crisp fabric is stitched around soft filling, its clean lines giving it a timeless, effortless elegance. Once finished, it becomes a quiet anchor in any room—simple, bright, and ready to soften the space with understated comfort.', 1, 8),
-                                                                                                                         (45, 'Crimson Candle', 9.00, 24.00, 'supplier@candleco.com.au', '2026-04-22 18:49:04', '2026-05-11 16:02:52', 'Colour: Crimson Red\r\nMaterial: Paraffin\r\nDimensions: 29cm (H), 9cm (D)', 'In a small artisanal studio, the crimson candle is hand-poured in layers, blending richly pigmented wax to achieve its deep, glowing red hue. Each candle is carefully cured and finished to ensure a clean burn and a bold, atmospheric presence.\r\n', 1, 6),
+                                                                                                                         (45, 'Crimson Candle', 9.00, 24.00, 'supplier@candleco.com.au', '2026-04-22 18:49:04', '2026-05-18 12:36:53', 'Colour: Crimson Red\r\nMaterial: Paraffin\r\nDimensions: 29cm (H), 9cm (D)', 'In a small artisanal studio, the crimson candle is hand-poured in layers, blending richly pigmented wax to achieve its deep, glowing red hue. Each candle is carefully cured and finished to ensure a clean burn and a bold, atmospheric presence.\r\n', 0, 6),
                                                                                                                          (47, 'Jacquard Cushion', 30.00, 72.00, 'supplier@textilecraft.com.au', '2026-04-22 18:55:02', '2026-05-11 16:18:24', 'Colur: Orange\r\nMaterial: Polyester fabric\r\nDimensions: 60cm (H), 48cm (W)', 'In a carefully curated textile studio, the cushion is assembled by layering rich orange fabrics with bold mosaic-inspired prints, each panel precisely cut and aligned for visual rhythm. It is then hand-finished to ensure a balanced contrast between vibrant pattern and smooth, solid tones for a modern, expressive accent piece.\r\n', 1, 8),
                                                                                                                          (49, 'Floral Jacquard Throw', 38.00, 95.00, 'supplier@textilecraft.com.au', '2026-05-11 16:23:50', '2026-05-11 16:23:50', 'Colour: Ivory and blush\r\nMaterial: Woven jacquard fabric, polyester blend\r\nDimensions: 150cm (W) x 200cm (L)\r\nWeight: 800g', 'In a specialist textile studio, the Floral Jacquard Throw is woven on precision looms that interlace threads to form raised floral motifs across a soft, ivory ground. Each throw is finished with hand-rolled edges and carefully inspected for evenness of pattern before it leaves the mill — a piece designed to drape beautifully across a bed, sofa, or armchair.', 0, 10),
                                                                                                                          (50, 'Multipurpose Striped Throw', 20.00, 55.00, 'supplier@textilecraft.com.au', '2026-05-11 16:25:31', '2026-05-11 16:25:31', 'Colour: Natural and grey\r\nMaterial: Cotton and polyester blend\r\nDimensions: 130cm (W) x 180cm (L)\r\nWeight: 600g', 'Woven in a clean, rhythmic stripe on traditional looms, the Multipurpose Striped Throw blends the softness of cotton with the durability of polyester. Finished with neat fringe edges, it moves effortlessly from sofa accent to picnic blanket, adapting wherever warmth and texture are needed most.', 0, 10),
@@ -420,13 +439,11 @@ INSERT INTO `products` (`id`, `name`, `purchase_price`, `sale_price`, `supplier_
 --
 
 DROP TABLE IF EXISTS `product_images`;
-CREATE TABLE IF NOT EXISTS `product_images` (
-                                                `id` int(11) NOT NULL AUTO_INCREMENT,
-    `product_id` int(11) NOT NULL,
-    `filename` varchar(4096) NOT NULL,
-    PRIMARY KEY (`id`),
-    KEY `product_id` (`product_id`)
-    ) ENGINE=InnoDB AUTO_INCREMENT=190 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+CREATE TABLE `product_images` (
+                                  `id` int(11) NOT NULL,
+                                  `product_id` int(11) NOT NULL,
+                                  `filename` varchar(4096) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `product_images`
@@ -505,14 +522,12 @@ INSERT INTO `product_images` (`id`, `product_id`, `filename`) VALUES
 --
 
 DROP TABLE IF EXISTS `product_variants`;
-CREATE TABLE IF NOT EXISTS `product_variants` (
-                                                  `id` int(11) NOT NULL AUTO_INCREMENT,
-    `product_id` int(11) NOT NULL,
-    `size` varchar(20) NOT NULL,
-    `stock` int(11) NOT NULL DEFAULT 0,
-    PRIMARY KEY (`id`),
-    KEY `product_id` (`product_id`)
-    ) ENGINE=InnoDB AUTO_INCREMENT=90 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+CREATE TABLE `product_variants` (
+                                    `id` int(11) NOT NULL,
+                                    `product_id` int(11) NOT NULL,
+                                    `size` varchar(20) NOT NULL,
+                                    `stock` int(11) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `product_variants`
@@ -578,18 +593,16 @@ INSERT INTO `product_variants` (`id`, `product_id`, `size`, `stock`) VALUES
 --
 
 DROP TABLE IF EXISTS `schedules`;
-CREATE TABLE IF NOT EXISTS `schedules` (
-                                           `id` int(11) NOT NULL AUTO_INCREMENT,
-    `user_id` int(11) NOT NULL,
-    `week_start` date NOT NULL COMMENT 'Monday of the scheduled week',
-    `day_of_week` tinyint(4) NOT NULL COMMENT '1=Mon, 2=Tue, 3=Wed, 4=Thu, 5=Fri, 6=Sat, 7=Sun',
-    `start_time` time NOT NULL,
-    `end_time` time NOT NULL,
-    `created` datetime DEFAULT NULL,
-    `modified` datetime DEFAULT NULL,
-    PRIMARY KEY (`id`),
-    UNIQUE KEY `unique_staff_week_day` (`user_id`,`week_start`,`day_of_week`)
-    ) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+CREATE TABLE `schedules` (
+                             `id` int(11) NOT NULL,
+                             `user_id` int(11) NOT NULL,
+                             `week_start` date NOT NULL COMMENT 'Monday of the scheduled week',
+                             `day_of_week` tinyint(4) NOT NULL COMMENT '1=Mon, 2=Tue, 3=Wed, 4=Thu, 5=Fri, 6=Sat, 7=Sun',
+                             `start_time` time NOT NULL,
+                             `end_time` time NOT NULL,
+                             `created` datetime DEFAULT NULL,
+                             `modified` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 
 --
 -- Dumping data for table `schedules`
@@ -622,21 +635,20 @@ INSERT INTO `schedules` (`id`, `user_id`, `week_start`, `day_of_week`, `start_ti
 --
 
 DROP TABLE IF EXISTS `users`;
-CREATE TABLE IF NOT EXISTS `users` (
-                                       `id` int(11) NOT NULL AUTO_INCREMENT,
-    `email` varchar(255) NOT NULL,
-    `password` varchar(255) NOT NULL,
-    `first_name` varchar(100) DEFAULT NULL,
-    `last_name` varchar(100) DEFAULT NULL,
-    `phone` varchar(20) DEFAULT NULL,
-    `address` varchar(500) DEFAULT NULL,
-    `nonce` varchar(255) DEFAULT NULL,
-    `nonce_expiry` datetime DEFAULT NULL,
-    `created` datetime DEFAULT NULL,
-    `modified` datetime DEFAULT NULL,
-    `role` varchar(255) NOT NULL DEFAULT 'customer',
-    PRIMARY KEY (`id`)
-    ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+CREATE TABLE `users` (
+                         `id` int(11) NOT NULL,
+                         `email` varchar(255) NOT NULL,
+                         `password` varchar(255) NOT NULL,
+                         `first_name` varchar(100) DEFAULT NULL,
+                         `last_name` varchar(100) DEFAULT NULL,
+                         `phone` varchar(20) DEFAULT NULL,
+                         `address` varchar(500) DEFAULT NULL,
+                         `nonce` varchar(255) DEFAULT NULL,
+                         `nonce_expiry` datetime DEFAULT NULL,
+                         `created` datetime DEFAULT NULL,
+                         `modified` datetime DEFAULT NULL,
+                         `role` varchar(255) NOT NULL DEFAULT 'customer'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 
 --
 -- Dumping data for table `users`
@@ -657,16 +669,12 @@ INSERT INTO `users` (`id`, `email`, `password`, `first_name`, `last_name`, `phon
 --
 
 DROP TABLE IF EXISTS `wishlists`;
-CREATE TABLE IF NOT EXISTS `wishlists` (
-                                           `id` int(11) NOT NULL AUTO_INCREMENT,
-    `user_id` int(11) NOT NULL,
-    `product_id` int(11) NOT NULL,
-    `created` datetime DEFAULT NULL,
-    PRIMARY KEY (`id`),
-    UNIQUE KEY `user_product` (`user_id`,`product_id`),
-    KEY `user_id` (`user_id`),
-    KEY `product_id` (`product_id`)
-    ) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+CREATE TABLE `wishlists` (
+                             `id` int(11) NOT NULL,
+                             `user_id` int(11) NOT NULL,
+                             `product_id` int(11) NOT NULL,
+                             `created` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `wishlists`
@@ -690,6 +698,223 @@ INSERT INTO `wishlists` (`id`, `user_id`, `product_id`, `created`) VALUES
                                                                        (29, 6, 54, '2026-05-13 13:31:58'),
                                                                        (30, 6, 53, '2026-05-13 13:32:11'),
                                                                        (31, 6, 16, '2026-05-14 13:47:36');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `activity_logs`
+--
+ALTER TABLE `activity_logs`
+    ADD PRIMARY KEY (`id`),
+  ADD KEY `idx_model` (`model`),
+  ADD KEY `idx_created` (`created`);
+
+--
+-- Indexes for table `cake_migrations`
+--
+ALTER TABLE `cake_migrations`
+    ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `version_plugin_unique` (`version`,`plugin`);
+
+--
+-- Indexes for table `categories`
+--
+ALTER TABLE `categories`
+    ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `cms_pages`
+--
+ALTER TABLE `cms_pages`
+    ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `uq_slug` (`slug`);
+
+--
+-- Indexes for table `contact_replies`
+--
+ALTER TABLE `contact_replies`
+    ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_contact_replies_submission` (`contact_submission_id`);
+
+--
+-- Indexes for table `contact_submissions`
+--
+ALTER TABLE `contact_submissions`
+    ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `faq_items`
+--
+ALTER TABLE `faq_items`
+    ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `orders`
+--
+ALTER TABLE `orders`
+    ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`);
+
+--
+-- Indexes for table `order_items`
+--
+ALTER TABLE `order_items`
+    ADD PRIMARY KEY (`id`),
+  ADD KEY `order_id` (`order_id`),
+  ADD KEY `product_id` (`product_id`),
+  ADD KEY `variant_id` (`variant_id`);
+
+--
+-- Indexes for table `page_content`
+--
+ALTER TABLE `page_content`
+    ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `uq_page_key` (`page_id`,`content_key`);
+
+--
+-- Indexes for table `products`
+--
+ALTER TABLE `products`
+    ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_products_category` (`category_id`);
+
+--
+-- Indexes for table `product_images`
+--
+ALTER TABLE `product_images`
+    ADD PRIMARY KEY (`id`),
+  ADD KEY `product_id` (`product_id`);
+
+--
+-- Indexes for table `product_variants`
+--
+ALTER TABLE `product_variants`
+    ADD PRIMARY KEY (`id`),
+  ADD KEY `product_id` (`product_id`);
+
+--
+-- Indexes for table `schedules`
+--
+ALTER TABLE `schedules`
+    ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `unique_staff_week_day` (`user_id`,`week_start`,`day_of_week`);
+
+--
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+    ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `wishlists`
+--
+ALTER TABLE `wishlists`
+    ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `user_product` (`user_id`,`product_id`),
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `product_id` (`product_id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `activity_logs`
+--
+ALTER TABLE `activity_logs`
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `cake_migrations`
+--
+ALTER TABLE `cake_migrations`
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `categories`
+--
+ALTER TABLE `categories`
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- AUTO_INCREMENT for table `cms_pages`
+--
+ALTER TABLE `cms_pages`
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT for table `contact_replies`
+--
+ALTER TABLE `contact_replies`
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `contact_submissions`
+--
+ALTER TABLE `contact_submissions`
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT for table `faq_items`
+--
+ALTER TABLE `faq_items`
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `orders`
+--
+ALTER TABLE `orders`
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+
+--
+-- AUTO_INCREMENT for table `order_items`
+--
+ALTER TABLE `order_items`
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+
+--
+-- AUTO_INCREMENT for table `page_content`
+--
+ALTER TABLE `page_content`
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
+
+--
+-- AUTO_INCREMENT for table `products`
+--
+ALTER TABLE `products`
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
+
+--
+-- AUTO_INCREMENT for table `product_images`
+--
+ALTER TABLE `product_images`
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=190;
+
+--
+-- AUTO_INCREMENT for table `product_variants`
+--
+ALTER TABLE `product_variants`
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=90;
+
+--
+-- AUTO_INCREMENT for table `schedules`
+--
+ALTER TABLE `schedules`
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+
+--
+-- AUTO_INCREMENT for table `wishlists`
+--
+ALTER TABLE `wishlists`
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- Constraints for dumped tables

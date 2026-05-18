@@ -12,7 +12,7 @@ $wishlistIds = $wishlistIds ?? [];
         <section class="hp-hero">
             <div class="hero-panel">
                 <video class="home-video" autoplay muted loop playsinline>
-                    <source src="<?= $this->Url->build('/videos/homeVideo.mp4') ?>" type="video/mp4">
+                    <source src="<?= $this->Url->build('/img/' . h($pageContent['home_video'])) ?>" type="video/mp4">
                     Your browser does not support the video tag.
                 </video>
 
@@ -93,7 +93,7 @@ $wishlistIds = $wishlistIds ?? [];
             <section class="hp-featured">
                 <div class="hp-featured-inner">
                     <div class="hp-featured-image">
-                        <?= $this->Html->image('featuredJewellery.png', ['alt' => 'Featured collection']) ?>
+                        <?= $this->Html->image($pageContent['featured_jewellery_image'], ['alt' => 'Featured collection', 'class' => 'featured-jewellery-image']) ?>
                     </div>
                     <div class="hp-featured-content">
                         <h2 class="hp-featured-title"><?= h($pageContent['featured_jewellery_title'] ?? 'Every piece has a story.') ?></h2>
@@ -180,7 +180,7 @@ $wishlistIds = $wishlistIds ?? [];
                         </div>
                     </div>
                     <div class="hp-featured-img-decor">
-                        <?= $this->Html->image('homedecor.png', ['alt' => 'Featured collection']) ?>
+                        <?= $this->Html->image($pageContent['featured_homedecor_image'] ?? 'homedecor.png', ['alt' => 'Featured collection']) ?>
                     </div>
                 </div>
             </section>
@@ -190,7 +190,7 @@ $wishlistIds = $wishlistIds ?? [];
         <section class="hp-story">
             <div class="hp-story-image-wrap">
                 <video class="home-video" autoplay muted loop playsinline>
-                    <source src="<?= $this->Url->build('/videos/handmadeDiamondRing.mp4') ?>" type="video/mp4">
+                    <source src="<?= $this->Url->build('/img/' . h($pageContent['diamond_ring_video'] ?? 'handmadeDiamondRing.mp4')) ?>" type="video/mp4">
                     Your browser does not support the video tag.
                 </video>
             </div>

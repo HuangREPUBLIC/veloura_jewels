@@ -3,7 +3,6 @@
 <div class="story-page">
 
     <header class="story-hero">
-        <div class="story-hero-ornament"></div>
         <p class="story-label">Est. 2024</p>
         <h1 class="story-hero-title"><?= h($pageContent['page_heading'] ?? 'Our Story') ?></h1>
         <p class="story-hero-sub"><?= h($pageContent['hero_sub'] ?? '') ?></p>
