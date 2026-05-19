@@ -109,7 +109,7 @@ h3.page-title {
 
 /* Add / new button */
 
-.btn-new-product {
+.btn-new-product, .btn-archived {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -125,7 +125,7 @@ h3.page-title {
     transition: 0.2s ease;
 }
 
-.btn-new-product:hover {
+.btn-new-product:hover, .btn-archived:hover {
     background: var(--emerald-dark);
     border-color: var(--emerald-dark);
     color: var(--color-white) !important;
@@ -422,16 +422,31 @@ td.actions button {
     vertical-align: middle !important;
 }
 
-td.actions a:not(.btn-delete) {
-    color: var(--admin-text) !important;
-    border: 1.5px solid var(--admin-text) !important;
+/* View / neutral buttons */
+td.actions a:not(.btn-delete):not(.btn-archive) {
+    color: var(--admin-text);
+    border: 1.5px solid var(--admin-text);
 }
 
-td.actions a:not(.btn-delete):hover {
+td.actions a:not(.btn-delete):not(.btn-archive):hover {
     background: var(--admin-text) !important;
     color: var(--color-white) !important;
 }
 
+/* Archive button */
+td.actions .btn-archive,
+td.actions button.btn-archive {
+    color: var(--color-message-error-text) !important;
+    border: 1.5px solid var(--color-message-error-text) !important;
+}
+
+td.actions .btn-archive:hover,
+td.actions button.btn-archive:hover {
+    background: var(--color-message-error-text) !important;
+    color: var(--color-white) !important;
+}
+
+/* Delete button */
 td.actions .btn-delete,
 td.actions button.btn-delete {
     color: var(--color-message-error-text) !important;
@@ -479,13 +494,13 @@ td.actions button.btn-delete:hover {
     border-color: var(--admin-text-dark);
 }
 
-.btn-delete {
+.btn-delete, .btn-archive {
     border: 1.5px solid var(--color-message-error-text);
     background: transparent;
     color: var(--color-message-error-text) !important;
 }
 
-.btn-delete:hover { background: #f7e6e6; }
+.btn-delete:hover, .btn-archive:hover { background: #f7e6e6; }
 
 /* View table */
 
@@ -537,7 +552,7 @@ td.actions button.btn-delete:hover {
     transition: none;
 }
 
-.admin-wrapper .view.content .action-buttons a {
+.admin-wrapper .view.content .action-buttons a:not(.btn-archive) {
     border: 1px solid var(--admin-border);
     background: var(--color-white) !important;
     color: var(--admin-text-dark) !important;
@@ -549,13 +564,21 @@ td.actions button.btn-delete:hover {
     color: var(--admin-text-dark) !important;
 }
 
-.admin-wrapper .view.content .action-buttons .btn-delete {
-    border: 1px solid var(--color-message-error-text);
+/* With two separate rules: */
+.admin-wrapper .view.content .action-buttons .btn-delete,
+.admin-wrapper .view.content .action-buttons .btn-archive {
+    border: 1px solid var(--color-message-error-text) !important;
     background: transparent !important;
     color: var(--color-message-error-text) !important;
 }
 
-.admin-wrapper .view.content .action-buttons .btn-delete:hover {
+.admin-wrapper .view.content .action-buttons .btn-delete:hover,
+.admin-wrapper .view.content .action-buttons .btn-archive:hover {
+    background: #f7e6e6 !important;
+    color: var(--color-message-error-text) !important;
+}
+
+.admin-wrapper .view.content .action-buttons .btn-delete:hover .btn-archive:hover {
     background: #f7e6e6 !important;
     color: var(--color-message-error-text) !important;
 }
@@ -716,6 +739,7 @@ td.actions button.btn-delete:hover {
     font-weight: 700;
     color: var(--admin-ink);
     letter-spacing: -0.03em;
+    text-align: center;
 }
 
 .dashboard-hero p {
@@ -723,6 +747,8 @@ td.actions button.btn-delete:hover {
     font-size: 1.05rem;
     color: var(--admin-ink-mid);
     font-weight: 400;
+    text-align: center;
+
 }
 
 .dashboard-summary {

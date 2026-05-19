@@ -85,6 +85,22 @@ return function (RouteBuilder $routes): void {
 
         //Contact Form Route
         $builder->connect('/contact', ['controller' => 'ContactSubmissions', 'action' => 'add']);
+
+        $builder->connect('/contact-submissions/archive/{id}',
+            ['controller' => 'ContactSubmissions', 'action' => 'archive'])
+            ->setPass(['id'])
+            ->setPatterns(['id' => '\d+'])
+            ->setMethods(['POST']);
+
+        $builder->connect('/contact-submissions/archived',
+            ['controller' => 'ContactSubmissions', 'action' => 'archived']);
+
+        $builder->connect('/contact-submissions/unarchive/{id}',
+            ['controller' => 'ContactSubmissions', 'action' => 'unarchive'])
+            ->setPass(['id'])
+            ->setPatterns(['id' => '\d+'])
+            ->setMethods(['POST']);
+
         // FAQ Route
         $builder->connect('/faq', ['controller' => 'Faq', 'action' => 'index']);
         //Login Route

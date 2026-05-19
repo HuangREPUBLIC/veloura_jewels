@@ -31,7 +31,7 @@ class ContactSubmissionsController extends AppController
      */
     public function index()
     {
-        $contactSubmissions = $this->ContactSubmissions->find()->orderBy(['created' => 'DESC'])->all();
+        $contactSubmissions = $this->ContactSubmissions->find()->where(['archived' => false])->orderBy(['created' => 'DESC'])->all();
 
         $this->set(compact('contactSubmissions'));
     }
@@ -52,6 +52,12 @@ class ContactSubmissionsController extends AppController
     public function view($id = null)
     {
         $contactSubmission = $this->ContactSubmissions->get($id, contain: ['ContactReplies']);
+
+        if ($contactSubmission->archived) {
+            $this->Flash->error(__('This submission has been archived.'));
+            return $this->redirect(['action' => 'index']);
+        }
+
         $this->set(compact('contactSubmission'));
     }
 
@@ -126,6 +132,13 @@ class ContactSubmissionsController extends AppController
      */
     public function delete($id = null)
     {
+        $identity = $this->Authentication->getIdentity();
+
+        if ($identity->get('role') !== 'admin') {
+            $this->Flash->error('You do not have permission to delete archived messages.');
+            return $this->redirect(['action' => 'archived']);
+        }
+
         $this->request->allowMethod(['post', 'delete']);
         $contactSubmission = $this->ContactSubmissions->get($id);
         if ($this->ContactSubmissions->delete($contactSubmission)) {
@@ -180,4 +193,61 @@ class ContactSubmissionsController extends AppController
         $contactSubmission = $this->ContactSubmissions->get($id, contain: ['ContactReplies']);
         $this->set(compact('contactSubmission'));
     }
+
+
+    /**
+     * Archive method
+     *
+     * @param string|null $id Contact Submission id.
+     * @return \Cake\Http\Response|null Redirects to index.
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     */
+    public function archive($id = null)
+    {
+        $this->request->allowMethod(['post', 'put']);
+
+        $contactSubmission = $this->ContactSubmissions->get($id);
+        $contactSubmission->archived = true;
+
+        if ($this->ContactSubmissions->save($contactSubmission)) {
+            $this->Flash->success(__('The contact submission has been archived.'));
+        } else {
+            $this->Flash->error(__('The contact submission could not be archived. Please try again.'));
+        }
+
+        return $this->redirect(['action' => 'index']);
+    }
+
+    /**
+     * Archived method - lists all archived contact submissions
+     *
+     * @return \Cake\Http\Response|null|void Renders view.
+     */
+    public function archived()
+    {
+
+        $contactSubmissions = $this->ContactSubmissions->find()
+            ->where(['archived' => true])
+            ->orderBy(['created' => 'DESC'])
+            ->all();
+
+        $this->set(compact('contactSubmissions'));
+    }
+
+    public function unarchive($id = null)
+    {
+        $this->request->allowMethod(['post', 'put']);
+
+        $contactSubmission = $this->ContactSubmissions->get($id);
+        $contactSubmission->archived = false;
+
+        if ($this->ContactSubmissions->save($contactSubmission)) {
+            $this->Flash->success(__('The submission has been unarchived.'));
+        } else {
+            $this->Flash->error(__('The submission could not be unarchived. Please try again.'));
+        }
+
+        return $this->redirect(['action' => 'archived']);
+    }
+
 }

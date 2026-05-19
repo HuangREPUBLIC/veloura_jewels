@@ -16,6 +16,7 @@ use Cake\ORM\Entity;
  * @property string $message
  * @property bool $captcha_passed
  * @property bool $is_replied
+ * @property bool $archived
  * @property \Cake\I18n\DateTime $created
  */
 class ContactSubmission extends Entity
@@ -38,5 +39,6 @@ class ContactSubmission extends Entity
         'captcha_passed' => true,
         'is_replied' => true,
         'created' => true,
+        'archived' => true
     ];
 }

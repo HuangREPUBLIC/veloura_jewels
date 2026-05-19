@@ -19,12 +19,9 @@ $this->assign('title', 'View Submission');
             <div class="action-buttons">
                 <?= $this->Html->link(__('Reply'), ['action' => 'reply', $contactSubmission->id], ['class' => 'btn-edit']) ?>
                 <?= $this->Form->postLink(
-                    __('Delete'),
-                    ['action' => 'delete', $contactSubmission->id],
-                    [
-                        'confirm' => __('Are you sure you want to delete # {0}?', $contactSubmission->id),
-                        'class'   => 'btn-delete',
-                    ]
+                    'Archive',
+                    ['action' => 'archive', $contactSubmission->id],
+                    ['confirm' => 'Archive this submission?'],
                 ) ?>
             </div>
         </div>

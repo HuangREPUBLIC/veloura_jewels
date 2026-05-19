@@ -18,21 +18,21 @@ $todayStr = (new DateTime('today'))->format('Y-m-d');
 
 $cards = [
     [
-        'title' => 'Total Products',
+        'title' => 'Products',
         'value' => $totalProducts,
         'url'   => ['controller' => 'Products', 'action' => 'index'],
         'icon'  => '<path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/>',
         'admin' => false,
     ],
     [
-        'title' => 'Total Orders',
+        'title' => 'Orders',
         'value' => $totalOrders,
         'url'   => ['controller' => 'Orders', 'action' => 'index'],
         'icon'  => '<path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/>',
         'admin' => false,
     ],
     [
-        'title' => 'Total Enquiries',
+        'title' => 'Contact Submissions',
         'value' => $totalEnquiries,
         'url'   => ['controller' => 'ContactSubmissions', 'action' => 'index'],
         'icon'  => '<path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>',
@@ -46,7 +46,7 @@ $cards = [
         'admin' => false,
     ],
     [
-        'title' => 'Total Users',
+        'title' => 'Users',
         'value' => $totalUsers,
         'url'   => ['controller' => 'Users', 'action' => 'index'],
         'icon'  => '<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>',
@@ -67,7 +67,7 @@ $cards = [
 
         <div class="dashboard-hero">
             <h1>Admin Dashboard</h1>
-            <p>Hi, <?= h($authUser->first_name) ?></p>
+            <p>Hi <?= h($authUser->first_name) ?>!</p>
         </div>
 
         <div class="dashboard-summary <?= $role === 'staff' ? 'dashboard-summary--grid-2x2' : '' ?>">
