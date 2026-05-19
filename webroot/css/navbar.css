@@ -1,45 +1,3 @@
-:not(.admin-wrapper) h1,
-:not(.admin-wrapper) h2,
-:not(.admin-wrapper) h3,
-:not(.admin-wrapper) h4,
-:not(.admin-wrapper) h5,
-:not(.admin-wrapper) h6 {
-    font-family: var(--font-display);
-    font-weight: 400;
-    color: var(--color-headings);
-    letter-spacing: 0.01em;
-}
-
-a {
-    color: var(--color-links);
-    text-decoration: none;
-    transition: color 0.2s linear;
-}
-
-a:hover, a:focus, a:active {
-    color: var(--color-links-active);
-    transition: color 0.2s ease-out;
-}
-
-th a {
-    color: var(--color-lightgray);
-}
-
-.table-responsive {
-    display: block;
-    width: 100%;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    background: transparent;
-    border: none;
-    padding: 0;
-    box-shadow: none;
-    margin-top: 0.5rem;
-}
-
-th { white-space: nowrap; }
-
-
 /* navbar */
 
 .navbar {
@@ -84,8 +42,7 @@ th { white-space: nowrap; }
 .navbar-links a {
     font-family: var(--font-display);
     font-weight: 600;
-    font-size: 0.82rem;
-    letter-spacing: 0.11em;
+    font-size: 0.92rem;
     text-transform: uppercase;
     color: var(--color-ink);
     text-decoration: none;
@@ -222,9 +179,9 @@ th { white-space: nowrap; }
     gap: 10px;
     padding: 0.6rem 1.1rem;
     font-family: var(--font-display);
-    font-weight: 500;
-    font-size: 0.8rem;
-    letter-spacing: 0.09em;
+    font-weight: 600;
+    font-size: 0.82rem;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
     color: var(--color-ink);
     text-decoration: none;
@@ -303,115 +260,6 @@ th { white-space: nowrap; }
 .nav-hamburger.open span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
 .nav-hamburger.open span:nth-child(2) { opacity: 0; }
 .nav-hamburger.open span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
-
-/* flash messages */
-
-.message {
-    padding: 0.75rem 1.1rem 0.75rem 1.3rem;
-    margin-bottom: 1rem;
-    cursor: pointer;
-    border: 1px solid rgba(40, 77, 64, 0.2);
-    border-left: 3px solid rgba(40, 77, 64, 0.5);
-    border-radius: 8px;
-    font-size: 0.88rem;
-    font-family: var(--font-body);
-    line-height: 1.55;
-    background: rgba(40, 77, 64, 0.07);
-    color: var(--emerald);
-}
-
-.message.hidden { display: none; }
-
-.message.success {
-    background: rgba(40, 77, 64, 0.08);
-    color: var(--emerald-dark);
-    border-color: rgba(40, 77, 64, 0.22);
-    border-left-color: var(--emerald);
-}
-
-.message.warning {
-    background: rgba(183, 151, 90, 0.1);
-    color: #7a5c1a;
-    border-color: rgba(183, 151, 90, 0.28);
-    border-left-color: var(--emerald-gold);
-}
-
-.message.error {
-    background: rgba(204, 31, 26, 0.07);
-    color: #b91c1c;
-    border-color: rgba(204, 31, 26, 0.2);
-    border-left-color: #dc2626;
-}
-
-/* forms */
-
-.input { margin-bottom: 1.5rem; }
-.input input, .input select, .input textarea { margin-bottom: 0; }
-
-.input label:has(input[type='checkbox']),
-.input label:has(input[type='radio']) {
-    display: flex;
-    align-items: center;
-}
-
-.input label:has(~ label),
-.input label:has(input[type='radio']) { margin-bottom: 0; }
-
-.input label > input[type='checkbox'],
-.input label > input[type='radio'] { margin-right: 1rem; }
-
-input[type='color'] {
-    max-width: 4rem;
-    padding: 0.3rem 0.5rem;
-}
-
-.error-message { color: var(--color-message-error-text); }
-
-/* pagination */
-
-.paginator { text-align: right; }
-.paginator p { margin-bottom: 0; }
-
-.pagination {
-    display: flex;
-    justify-content: center;
-    list-style: none;
-    margin: 0 0 1rem 0;
-    padding: 0;
-}
-
-.pagination li {
-    display: inline-block;
-    margin: 0.25em;
-    text-align: center;
-}
-
-.pagination a {
-    display: inline-block;
-    min-width: 3rem;
-    padding: 0;
-    position: relative;
-    color: var(--color-cakephp-blue);
-    font-size: 1.25rem;
-    line-height: 3rem;
-    text-decoration: none;
-    transition: background 0.3s, color 0.3s;
-}
-
-.pagination li.active a,
-.pagination a:hover { text-decoration: underline; }
-
-.pagination .disabled a {
-    cursor: not-allowed;
-    color: var(--color-lightgray);
-    text-decoration: none;
-}
-
-.first a, .prev a, .next a, .last a { padding: 0 0.75rem; }
-.disabled a:hover { background: initial; color: initial; }
-.asc:after { content: " \2193"; }
-.desc:after { content: " \2191"; }
-
 
 /* footer */
 

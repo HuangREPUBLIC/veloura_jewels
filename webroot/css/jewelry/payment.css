@@ -1,0 +1,299 @@
+
+/* Payment Page - left/right split (payment.php) */
+
+body:has(.vp-checkout) {
+    background: var(--beige-light);
+}
+
+.vp-checkout {
+    display: grid;
+    grid-template-columns: 1fr 400px;
+    min-height: 100vh;
+}
+
+.vp-left {
+    background: var(--color-white);
+    padding: 0 3rem 3rem;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid rgba(var(--emerald-rgb), 0.22);
+    border-top: 3px solid var(--emerald-gold);
+}
+
+.vp-left-top {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    padding: 2rem 0 1.6rem;
+    margin-bottom: 1.6rem;
+    border-bottom: 1px solid rgba(var(--emerald-rgb), 0.1);
+}
+
+.vp-back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: var(--color-text-muted);
+    text-decoration: none;
+    transition: color 0.2s;
+    align-self: flex-start;
+}
+
+.vp-back-link:hover { color: var(--emerald); }
+
+.vp-logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    text-decoration: none;
+}
+
+.vp-logo-img {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+}
+
+.vp-logo-block {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+}
+
+.vp-logo-name {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    font-weight: 400;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-headings);
+    line-height: 1;
+}
+
+.vp-logo-tag {
+    font-size: 0.62rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--emerald-gold);
+    font-weight: 600;
+}
+
+#checkout {
+    flex: 1;
+    min-height: 500px;
+}
+
+.vp-right {
+    background: var(--emerald-dark);
+    padding: 2.4rem 2rem 3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.4rem;
+    align-self: start;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+}
+
+.vp-summary-title {
+    font-family: var(--font-display);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--emerald-gold);
+    margin: 0;
+}
+
+.vp-items {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    overflow-y: auto;
+    flex: 1;
+    min-height: 0;
+}
+
+.vp-item {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 14px;
+    padding: 0.75rem;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
+}
+
+.vp-item-img-wrap {
+    position: relative;
+    flex-shrink: 0;
+    width: 60px;
+    height: 60px;
+    border-radius: 10px;
+    overflow: visible;
+}
+
+.vp-item-img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 10px;
+    border: 1px solid rgba(var(--emerald-rgb), 0.1);
+    display: block;
+}
+
+.vp-item-placeholder {
+    width: 60px;
+    height: 60px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.vp-item-qty {
+    position: absolute;
+    top: -7px;
+    right: -7px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--emerald-gold);
+    color: #fff;
+    font-size: 0.65rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid var(--emerald-dark);
+}
+
+.vp-item-info { flex: 1; min-width: 0; }
+
+.vp-item-name {
+    font-family: var(--font-display);
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #fff;
+    line-height: 1.35;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    letter-spacing: 0.02em;
+}
+
+.vp-item-meta {
+    font-size: 0.74rem;
+    color: rgba(255, 255, 255, 0.55);
+    margin-top: 0.2rem;
+}
+
+.vp-item-price {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--emerald-gold);
+    white-space: nowrap;
+}
+
+.vp-summary-totals {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 14px;
+    padding: 1rem 1.1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
+}
+
+.vp-summary-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.84rem;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.vp-muted {
+    color: rgba(255, 255, 255, 0.45);
+    font-size: 0.76rem;
+    font-style: italic;
+}
+
+.vp-summary-total {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.98rem;
+    color: var(--emerald-gold);
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    padding-top: 0.55rem;
+    margin-top: 0.15rem;
+    letter-spacing: 0.01em;
+}
+
+.vp-apm {
+    margin-top: auto;
+}
+
+.vp-apm-label {
+    display: block;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.5);
+    margin-bottom: 0.55rem;
+}
+
+.vp-apm-icons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    align-items: center;
+}
+
+.vp-apm-icons svg {
+    border-radius: 5px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    display: block;
+}
+
+.vp-secure-note {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.71rem;
+    color: rgba(255, 255, 255, 0.45);
+    margin: 0;
+}
+
+@media (max-width: 880px) {
+    .vp-checkout { grid-template-columns: 1fr; }
+    .vp-right {
+        order: -1;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+        padding: 2rem 1.5rem 1.5rem;
+        position: static;
+        height: auto;
+        overflow-y: visible;
+    }
+    .vp-items {
+        overflow-y: visible;
+        flex: none;
+    }
+    .vp-left {
+        border-right: none;
+        border-top: none;
+        padding: 1.5rem 1.5rem 2.5rem;
+    }
+    .vp-left-top { padding-top: 0; }
+    .vp-apm { margin-top: 0; }
+}
+

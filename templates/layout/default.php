@@ -24,7 +24,7 @@ $cakeDescription = 'Veloura Jewels';
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <?= $this->Html->css(['normalize.min', 'fonts', 'default-styles', 'cake', 'search']) ?>
+    <?= $this->Html->css(['normalize.min', 'fonts', 'tokens', 'base', 'navbar', 'components', 'search']) ?>
 
 
     <?= $this->fetch('meta') ?>

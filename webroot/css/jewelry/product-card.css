@@ -1,0 +1,234 @@
+.product-card--add {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 300px;
+    border: 2px dashed #d0ccc4;
+    border-radius: 0;
+    background: #fafaf8;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+}
+
+.product-card--add:hover {
+    border-color: var(--emerald);
+    background: var(--beige-light);
+}
+
+.product-card-add-icon {
+    font-size: 2.5rem;
+    font-weight: 300;
+    color: #ccc;
+    line-height: 1;
+    transition: color 0.2s;
+}
+
+.product-card--add:hover .product-card-add-icon {
+    color: var(--emerald);
+}
+
+.product-card-add-label {
+    margin-top: 0.75rem;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: #bbb;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+}
+
+.product-card--add:hover .product-card-add-label {
+    color: var(--emerald);
+}
+
+.jewelry-page {
+    font-family: var(--font-body);
+    font-size: 1rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1rem 3rem;
+}
+
+.jewelry-page .jewelry-hero {
+    text-align: center;
+    margin-bottom: 2.2rem;
+}
+
+.jewelry-page .jewelry-hero h1 {
+    font-family: var(--font-display);
+    font-size: 3rem;
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    margin-bottom: 0.6rem;
+    color: var(--color-headings);
+}
+
+.jewelry-page .jewelry-hero p {
+    font-family: var(--font-body);
+    color: var(--color-text-muted);
+    font-size: 0.88rem;
+    font-weight: 400;
+    letter-spacing: 0.06em;
+    margin: 0;
+}
+
+.jewelry-page .empty-state {
+    background: rgba(var(--beige-light-rgb), 0.55);
+    border: 1px solid rgba(var(--emerald-rgb), 0.16);
+    border-radius: 22px;
+    padding: 2.2rem;
+    text-align: center;
+    color: var(--color-text-muted);
+    box-shadow: 0 14px 34px rgba(var(--emerald-rgb), 0.08);
+}
+
+.jewelry-page .empty-state a:not(.jewelry-cart-primary-btn) {
+    color: var(--emerald);
+    font-weight: 700;
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1.8rem;
+}
+
+.product-card-link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+}
+
+.product-card {
+    position: relative;
+    background: var(--color-white);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 0;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.25s ease;
+    height: 100%;
+}
+
+.product-card:hover {
+    border-color: rgba(var(--emerald-rgb), 0.24);
+    box-shadow: 0 18px 42px rgba(var(--emerald-rgb), 0.12);
+    transform: translateY(-4px);
+}
+
+.product-image-wrapper {
+    position: relative;
+    width: 100%;
+    height: 280px;
+    background: rgba(var(--beige-light-rgb), 0.65);
+    overflow: hidden;
+    border-radius: 0;
+}
+
+.product-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: opacity 0.55s ease, transform 0.55s ease;
+}
+
+.product-image--primary {
+    opacity: 1;
+    transform: scale(1);
+    z-index: 1;
+}
+
+.product-image--hover {
+    opacity: 0;
+    transform: scale(1.03);
+    z-index: 2;
+}
+
+.product-card:hover .product-image-wrapper.has-hover-image .product-image--primary {
+    opacity: 0;
+    transform: scale(1.03);
+}
+
+.product-card:hover .product-image-wrapper.has-hover-image .product-image--hover {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.product-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(var(--beige-light-rgb), 0.75);
+    color: var(--gray-400);
+    font-size: 0.85rem;
+    letter-spacing: 0.06em;
+    font-family: var(--font-body);
+}
+
+.product-card-body {
+    padding: 0.75rem 0.75rem 0.9rem;
+    text-align: left;
+    background: var(--color-main-bg);
+}
+
+.product-name {
+    font-family: var(--font-display);
+    font-size: 0.88rem;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    color: var(--color-headings);
+    margin: 0 0 0.2rem;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.product-card-badges {
+    position: absolute;
+    top: 0.6rem;
+    left: 0.6rem;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    pointer-events: none;
+}
+
+.product-badge {
+    display: block;
+    text-align: center;
+    font-size: 0.5rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 0.18rem 0.5rem;
+    border-radius: 0;
+    background: rgba(250, 248, 245, 0.96);
+}
+
+.product-badge--featured {
+    color: var(--emerald);
+}
+
+.product-badge--bestsales {
+    color: #9a7520;
+}
+
+.product-price {
+    font-family: var(--font-body);
+    font-size: 0.82rem;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    color: var(--color-ink);
+    margin: 0;
+}
+

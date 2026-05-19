@@ -1,0 +1,38 @@
+/* flash messages */
+
+.message {
+    padding: 0.75rem 1.1rem 0.75rem 1.3rem;
+    margin-bottom: 1rem;
+    cursor: pointer;
+    border: 1px solid rgba(40, 77, 64, 0.2);
+    border-left: 3px solid rgba(40, 77, 64, 0.5);
+    border-radius: 8px;
+    font-size: 0.88rem;
+    font-family: var(--font-body);
+    line-height: 1.55;
+    background: rgba(40, 77, 64, 0.07);
+    color: var(--emerald);
+}
+
+.message.hidden { display: none; }
+
+.message.success {
+    background: rgba(40, 77, 64, 0.08);
+    color: var(--emerald-dark);
+    border-color: rgba(40, 77, 64, 0.22);
+    border-left-color: var(--emerald);
+}
+
+.message.warning {
+    background: rgba(183, 151, 90, 0.1);
+    color: #7a5c1a;
+    border-color: rgba(183, 151, 90, 0.28);
+    border-left-color: var(--emerald-gold);
+}
+
+.message.error {
+    background: rgba(204, 31, 26, 0.07);
+    color: #b91c1c;
+    border-color: rgba(204, 31, 26, 0.2);
+    border-left-color: #dc2626;
+}

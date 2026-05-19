@@ -1,5 +1,5 @@
 /* ============================================
-   GLOBAL SAFETY — prevent horizontal overflow
+   GLOBAL SAFETY - prevent horizontal overflow
    ============================================ */
 .home-page {
     overflow-x: hidden;
@@ -71,7 +71,7 @@
 }
 
 /* ============================================
-   Hero — full viewport video
+   Hero - full viewport video
    ============================================ */
 .hp-hero {
     display: block;

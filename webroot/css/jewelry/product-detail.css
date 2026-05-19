@@ -1,0 +1,357 @@
+.jewelry-page .product-detail {
+    display: grid;
+    grid-template-columns: minmax(0, 1.08fr) minmax(340px, 0.92fr);
+    gap: 3rem;
+    align-items: start;
+    margin-top: 1.2rem;
+}
+
+.jewelry-page .product-detail-image {
+    min-height: 0;
+}
+
+.jewelry-page .detail-image-stack {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(48%, 1fr));
+    gap: 0.6rem;
+}
+
+.jewelry-page .detail-stack-item {
+    border-radius: 0;
+    overflow: hidden;
+    background: rgba(var(--beige-light-rgb), 0.65);
+}
+
+.jewelry-page .detail-stack-img {
+    width: 100%;
+    display: block;
+    object-fit: cover;
+    aspect-ratio: 4 / 5;
+}
+
+.jewelry-page .detail-placeholder {
+    aspect-ratio: 4 / 5;
+    border-radius: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(var(--beige-light-rgb), 0.7);
+    color: var(--gray-400);
+    font-size: 1rem;
+    letter-spacing: 0.04em;
+}
+
+.jewelry-page .product-detail-info {
+    position: sticky;
+    top: 96px;
+    align-self: start;
+    max-height: calc(100vh - 96px);
+    overflow-y: auto;
+    overflow-x: hidden;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    padding: 0.4rem 0 0;
+    box-shadow: none;
+}
+
+
+.jewelry-page .detail-badges {
+    display: flex;
+    gap: 0.45rem;
+    margin-bottom: 0.85rem;
+}
+
+.jewelry-page .detail-price-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.4rem;
+    flex-wrap: wrap;
+}
+
+
+.jewelry-page .detail-accordion {
+    border-top: 1px solid rgba(var(--emerald-rgb), 0.1);
+    margin-top: 1.5rem;
+    margin-bottom: 0;
+}
+
+.jewelry-page .detail-accordion:last-of-type {
+    border-bottom: 1px solid rgba(var(--emerald-rgb), 0.1);
+    margin-bottom: 1.4rem;
+}
+
+.jewelry-page .detail-accordion-summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 0;
+    font-family: var(--font-body);
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--emerald);
+    cursor: pointer;
+    list-style: none;
+    user-select: none;
+}
+
+.jewelry-page .detail-accordion-summary::-webkit-details-marker {
+    display: none;
+}
+
+.jewelry-page .detail-accordion-summary::after {
+    content: '+';
+    font-size: 1.1rem;
+    font-weight: 300;
+    color: var(--emerald);
+    transition: transform 0.2s ease;
+    line-height: 1;
+}
+
+.jewelry-page .detail-accordion[open] .detail-accordion-summary::after {
+    content: '−';
+}
+
+.jewelry-page .detail-accordion-body {
+    padding-bottom: 1.1rem;
+}
+
+.jewelry-page .detail-accordion-body p {
+    margin: 0;
+    color: var(--gray-600);
+    line-height: 1.82;
+    font-size: 0.95rem;
+}
+
+
+.jewelry-page .detail-name {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    margin: 0 0 0.9rem;
+    color: var(--color-headings);
+    line-height: 1.15;
+}
+
+.jewelry-page .detail-price {
+    font-family: var(--font-body);
+    font-size: 1.35rem;
+    font-weight: 600;
+    color: var(--color-price);
+    margin: 0;
+    letter-spacing: 0.02em;
+}
+
+
+.jewelry-page .stock-pill,
+.jewelry-page .one-size-pill {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 8px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    padding: 0.35rem 0.75rem;
+    text-transform: uppercase;
+}
+
+.jewelry-page .stock-pill--in {
+    background: var(--color-message-success-bg);
+    color: var(--color-message-success-text);
+}
+
+.jewelry-page .stock-pill--low {
+    background: var(--color-message-warning-bg);
+    color: var(--color-message-warning-text);
+}
+
+.jewelry-page .stock-pill--out {
+    background: var(--color-message-error-bg);
+    color: var(--color-message-error-text);
+}
+
+.jewelry-page .one-size-pill {
+    background: rgba(var(--beige-light-rgb), 0.75);
+    border: 1px solid rgba(var(--emerald-rgb), 0.18);
+    color: var(--emerald);
+}
+
+
+.jewelry-page .add-to-cart-form {
+    margin-top: 1.4rem;
+    padding-top: 1.4rem;
+    border-top: 1px solid rgba(var(--emerald-rgb), 0.1);
+}
+
+
+/* Refined purchase panel */
+
+.jewelry-page .detail-section {
+    margin-bottom: 1.5rem;
+}
+
+.jewelry-page .detail-section-label {
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--emerald);
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.jewelry-page .selected-size-name {
+    font-weight: 400;
+    color: var(--gray-600);
+    text-transform: none;
+    letter-spacing: 0;
+    font-size: 0.82rem;
+}
+
+.jewelry-page .size-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.jewelry-page .size-pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 48px;
+    height: 40px;
+    padding: 0 1rem;
+    border: 1.5px solid rgba(var(--emerald-rgb), 0.28);
+    border-radius: 999px;
+    background: transparent;
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--color-body);
+    cursor: pointer;
+    transition: border-color 0.18s ease, background 0.18s ease, color 0.18s ease;
+}
+
+.jewelry-page .size-pill:hover:not(:disabled) {
+    border-color: var(--emerald);
+    color: var(--emerald);
+}
+
+.jewelry-page .size-pill--selected {
+    background: var(--emerald);
+    border-color: var(--emerald);
+    color: var(--color-white) !important;
+}
+
+.jewelry-page .size-pill--out {
+    border-color: rgba(0,0,0,0.1);
+    color: #bbb;
+    cursor: not-allowed;
+    text-decoration: line-through;
+    opacity: 0.6;
+}
+
+.jewelry-page .qty-stepper {
+    display: inline-flex;
+    align-items: center;
+    border: 1.5px solid rgba(var(--emerald-rgb), 0.22);
+    border-radius: 999px;
+    overflow: hidden;
+    height: 44px;
+    background: var(--color-white);
+}
+
+.jewelry-page .qty-stepper-btn {
+    width: 44px;
+    height: 100%;
+    border: none;
+    background: transparent;
+    font-size: 1.15rem;
+    font-weight: 300;
+    color: var(--color-headings);
+    cursor: pointer;
+    transition: background 0.15s ease, color 0.15s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    padding: 0;
+    line-height: 1;
+}
+
+.jewelry-page .qty-stepper-btn:hover:not(:disabled) {
+    background: var(--emerald);
+    color: var(--color-white);
+}
+
+.jewelry-page .qty-stepper-btn:disabled {
+    color: #ccc;
+    cursor: not-allowed;
+}
+
+.jewelry-page .qty-stepper-input {
+    width: 52px;
+    border: none;
+    border-left: 1px solid rgba(var(--emerald-rgb), 0.15);
+    border-right: 1px solid rgba(var(--emerald-rgb), 0.15);
+    text-align: center;
+    font-family: var(--font-body);
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-headings);
+    background: transparent;
+    padding: 0;
+    height: 100%;
+    -moz-appearance: textfield;
+}
+
+.jewelry-page .qty-stepper-input::-webkit-inner-spin-button,
+.jewelry-page .qty-stepper-input::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+}
+
+.jewelry-page .detail-add-row {
+    margin-top: 0.5rem;
+}
+
+
+.jewelry-page .jewelry-add-to-cart-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-width: 0;
+    min-height: 50px;
+    padding: 0.95rem 1.6rem;
+    background: var(--emerald);
+    color: var(--color-white);
+    border: none;
+    border-radius: 999px;
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    cursor: pointer;
+    box-shadow: none;
+    transition: all 0.2s ease;
+}
+
+.jewelry-page .jewelry-add-to-cart-btn:hover {
+    background: var(--emerald-dark);
+    color: var(--color-white);
+    box-shadow: none;
+}
+
+.jewelry-page .jewelry-add-to-cart-btn:active {
+    transform: translateY(1px);
+}
+
+
