@@ -109,7 +109,7 @@ $currentPagePath = $this->request->getPath() . ($this->request->getUri()->getQue
 
         <!-- Cart icon -->
         <?= $this->Html->link(
-            '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="8" width="16" height="13" rx="1.5"/><path d="M8.5 8V6a3.5 3.5 0 0 1 7 0V8"/></svg>'
+            '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="7" width="16" height="13" rx="1.5"/><path d="M8.5 7V5a3.5 3.5 0 0 1 7 0V7"/></svg>'
             . ($count > 0 ? '<span class="nav-cart-badge">' . $count . '</span>' : ''),
             ['controller' => 'Jewelry', 'action' => 'cart'],
             ['class' => 'nav-icon-btn nav-cart-wrap', 'escape' => false, 'title' => 'Cart']

@@ -1655,6 +1655,54 @@ td.actions button.btn-delete:hover {
 .al-badge--updated { background: var(--color-message-info-bg);    color: var(--color-message-info-text); }
 .al-badge--deleted { background: var(--color-message-error-bg);   color: var(--color-message-error-text); }
 
+.al-td-changes { font-size: 0.8rem; min-width: 200px; }
+
+.al-change-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+    margin-bottom: 0.25rem;
+}
+
+.al-change-row--images { align-items: flex-start; }
+
+.al-change-field { font-weight: 600; color: var(--admin-ink-mid); white-space: nowrap; }
+.al-change-from  { color: #b91c1c; text-decoration: line-through; word-break: break-all; }
+.al-change-arrow { color: var(--admin-ink-mid); }
+.al-change-to    { color: #15803d; word-break: break-all; }
+
+.al-img-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+
+.al-img-thumb {
+    width: 48px;
+    height: 48px;
+    object-fit: cover;
+    border-radius: 4px;
+    border: 2px solid transparent;
+}
+
+.al-img-thumb--from { border-color: #fca5a5; opacity: 0.7; }
+.al-img-thumb--to   { border-color: #86efac; }
+
+.al-search-bar { padding: 0.75rem 1rem; border-bottom: 1px solid var(--admin-border); }
+.al-search-input {
+    width: 100%;
+    max-width: 360px;
+    padding: 0.45rem 0.75rem;
+    border: 1px solid var(--admin-border);
+    border-radius: 4px;
+    font-size: 0.88rem;
+    color: var(--admin-ink);
+    background: var(--admin-bg);
+    outline: none;
+}
+.al-search-input:focus { border-color: var(--admin-accent); box-shadow: 0 0 0 2px rgba(var(--admin-accent-rgb, 0,0,0), 0.1); }
+
 .al-empty {
     text-align: center;
     color: var(--admin-ink-mid);

@@ -76,6 +76,15 @@ class ProductsController extends AppController
             $this->resolveNewCategory($data, $typeValue);
             $this->resolveNewSizes($data);
 
+            $variants = array_filter($data['product_variants'] ?? [], fn($v) => !empty($v['size']));
+            if (empty($variants)) {
+                $this->Flash->error(__('Please add at least one size and stock entry.'));
+                [$categories, $categoriesJson, $types] = $this->getProductFormCategories();
+                $preselectedType = $this->request->getQuery('type') ?? '';
+                $this->set(compact('product', 'categories', 'categoriesJson', 'types', 'preselectedType'));
+                return;
+            }
+
             $product = $this->Products->patchEntity($product, $data, ['associated' => ['ProductVariants']]);
             if ($this->Products->save($product, ['associated' => ['ProductVariants']])) {
                 $this->_saveProductImages($product->id);
@@ -122,7 +131,20 @@ class ProductsController extends AppController
             $this->resolveNewCategory($data, $typeValue);
             $this->resolveNewSizes($data);
 
+            $variants = array_filter($data['product_variants'] ?? [], fn($v) => !empty($v['size']));
+            if (empty($variants)) {
+                $this->Flash->error(__('Please add at least one size and stock entry.'));
+                [$categories, $categoriesJson, $types] = $this->getProductFormCategories();
+                $this->set(compact('product', 'categories', 'categoriesJson', 'types'));
+                return;
+            }
+
             $trackFields = ['name', 'sale_price', 'purchase_price', 'description', 'story', 'supplier_email', 'featured', 'category_id'];
+
+            $variantsBefore = [];
+            foreach ($product->product_variants ?? [] as $v) {
+                $variantsBefore[] = ['size' => $v->size, 'stock' => (int)$v->stock];
+            }
 
             $product = $this->Products->patchEntity($product, $data, ['associated' => ['ProductVariants']]);
 
@@ -137,26 +159,50 @@ class ProductsController extends AppController
             }
 
             if ($this->Products->save($product, ['associated' => ['ProductVariants']])) {
+                $productImagesTable = $this->fetchTable('ProductImages');
+                $imagesBefore = array_map(
+                    fn($e) => $e->filename,
+                    $productImagesTable->find()->where(['product_id' => $product->id])->select(['filename'])->toArray()
+                );
+
+                $this->_saveProductImages($product->id);
+
+                $deleteIds = $this->request->getData('delete_images') ?? [];
+                if (!empty($deleteIds)) {
+                    $toDelete = $productImagesTable->find()
+                        ->where(['id IN' => $deleteIds, 'product_id' => $product->id])
+                        ->toArray();
+                    foreach ($toDelete as $img) {
+                        $filePath = WWW_ROOT . 'img' . DS . 'products' . DS . $img->filename;
+                        if (file_exists($filePath)) {
+                            unlink($filePath);
+                        }
+                        $productImagesTable->delete($img);
+                    }
+                }
+
+                $imagesAfter = array_map(
+                    fn($e) => $e->filename,
+                    $productImagesTable->find()->where(['product_id' => $product->id])->select(['filename'])->toArray()
+                );
+
+                if ($imagesBefore !== $imagesAfter) {
+                    $changes['images'] = ['from' => $imagesBefore, 'to' => $imagesAfter];
+                }
+
+                $variantsAfter = array_map(
+                    fn($v) => ['size' => $v->size, 'stock' => (int)$v->stock],
+                    $product->product_variants ?? []
+                );
+
+                if ($variantsBefore !== $variantsAfter) {
+                    $changes['sizes'] = ['from' => $variantsBefore, 'to' => $variantsAfter];
+                }
+
                 if (!empty($changes)) {
                     $this->logActivity('Product', $product->id, 'updated', $product->name, $changes);
                 }
-                $this->_saveProductImages($product->id);
-                $deleteIds = $this->request->getData('delete_images') ?? [];
-                if (!empty($deleteIds)) {
-                    $productImagesTable = $this->fetchTable('ProductImages');
-                    foreach ($deleteIds as $imgId) {
-                        $img = $productImagesTable->find()
-                            ->where(['id' => $imgId, 'product_id' => $product->id])
-                            ->first();
-                        if ($img) {
-                            $filePath = WWW_ROOT . 'img' . DS . 'products' . DS . $img->filename;
-                            if (file_exists($filePath)) {
-                                unlink($filePath);
-                            }
-                            $productImagesTable->delete($img);
-                        }
-                    }
-                }
+
                 $this->Flash->success(__('The product has been saved.'));
                 if ($from === 'dashboard') {
                     return $this->redirect(['controller' => 'Users', 'action' => 'dashboard']);

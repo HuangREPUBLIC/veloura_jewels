@@ -148,7 +148,6 @@ $this->Html->script('https://cdn.datatables.net/2.2.2/js/dataTables.min.js', ['b
                         $logChanges = [];
                         if (!empty($log->changes)) {
                             foreach ($log->changes as $k => $v) {
-                                if ($k === 'images') continue;
                                 $label = ucwords(str_replace('_', ' ', $k));
                                 if (is_array($v) && isset($v['from'], $v['to'])) {
                                     $logChanges[$label] = ['from' => $v['from'], 'to' => $v['to']];
@@ -220,7 +219,21 @@ $this->Html->script('https://cdn.datatables.net/2.2.2/js/dataTables.min.js', ['b
         });
 
         var csrfToken = '<?= $this->request->getAttribute('csrfToken') ?>';
+        var productImgBase = '<?= $this->Url->image('products/') ?>';
         var logTableInit = false;
+
+        function fmtChangeVal(val) {
+            if (Array.isArray(val)) {
+                if (val.length === 0) return '—';
+                if (typeof val[0] === 'object' && val[0] !== null && 'size' in val[0]) {
+                    return val.map(function(sv) { return sv.size + ': ' + sv.stock; }).join(', ');
+                }
+                return val.map(function(f) {
+                    return '<img src="' + productImgBase + f + '" style="width:40px;height:40px;object-fit:cover;border-radius:3px;border:1px solid #ddd;vertical-align:middle;margin:1px" title="' + f + '">';
+                }).join('');
+            }
+            return (val === null || val === undefined || val === '') ? '—' : val;
+        }
 
         $('#openActivityLogBtn').on('click', function() {
             $('#activityLogModal').fadeIn(180);
@@ -256,9 +269,9 @@ $this->Html->script('https://cdn.datatables.net/2.2.2/js/dataTables.min.js', ['b
                 var changeRows = Object.entries(data.changes).map(function([k, v]) {
                     var val;
                     if (v !== null && typeof v === 'object' && 'from' in v && 'to' in v) {
-                        val = '<span style="color:#721c24">' + (v.from ?? '—') + '</span>'
+                        val = '<span style="color:#721c24">' + fmtChangeVal(v.from) + '</span>'
                             + ' <span style="color:#aaa;margin:0 4px">→</span>'
-                            + '<span style="color:#155724">' + (v.to ?? '—') + '</span>';
+                            + '<span style="color:#155724">' + fmtChangeVal(v.to) + '</span>';
                     } else {
                         val = v;
                     }
