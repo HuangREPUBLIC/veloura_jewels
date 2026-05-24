@@ -283,15 +283,15 @@ $currentPagePath = $this->request->getPath() . ($this->request->getUri()->getQue
             <p class="footer-newsletter-disclaimer">No spam. Unsubscribe anytime.</p>
             <p class="footer-contact-detail">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                : 10:00AM – 6:00PM
+                : <?= h($footerLocation['hours'] ?? '10:00AM – 6:00PM') ?>
             </p>
             <p class="footer-contact-detail">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10a19.79 19.79 0 01-3-8.57A2 2 0 012 1.28h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 9.09a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
-                : 123 456 7890
+                : <?= h($footerLocation['phone'] ?? '123 456 7890') ?>
             </p>
             <p class="footer-contact-detail">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                : 88 Elizabeth Road, Melbourne VIC 3000
+                : <?= h($footerLocation['address'] ?? '88 Elizabeth Road, Melbourne VIC 3000') ?>
             </p>
         </div>
 

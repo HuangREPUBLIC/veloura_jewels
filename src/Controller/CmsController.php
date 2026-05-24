@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use Cake\Event\EventInterface;
+use Cake\Cache\Cache;
 
 class CmsController extends AppController
 {
@@ -79,6 +80,9 @@ class CmsController extends AppController
             }
 
             $this->Flash->success('Content saved.');
+            if ($pageSlug === 'location') {
+                Cache::delete('location_content_global');
+            }
             return $this->redirect(['action' => 'index', $pageSlug]);
         }
 

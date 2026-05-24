@@ -61,6 +61,11 @@ class AppController extends Controller
         }, 'default');
         $this->set('siteSettings', $siteSettings);
 
+        $footerLocation = Cache::remember('location_content_global', function () {
+            return $this->fetchTable('PageContents')->getForPage('location');
+        }, 'default');
+        $this->set('footerLocation', $footerLocation);
+
         $identity = $this->Authentication->getIdentity();
         if ($identity) {
             $wishlistCount = $this->fetchTable('Wishlists')
