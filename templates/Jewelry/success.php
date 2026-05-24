@@ -1,9 +1,9 @@
 <?php
 $this->assign('title', 'Payment Successful');
 ?>
-<?php $this->Html->css('jewelry', ['block' => true]); ?>
+<?php $this->Html->css('success', ['block' => true]); ?>
 
-<div class="jewelry-page">
+<div class="success-page">
     <div class="result-card">
 
         <div class="result-icon">
@@ -14,6 +14,7 @@ $this->assign('title', 'Payment Successful');
         </div>
 
         <h1 class="result-title">Payment Successful</h1>
+        <span class="result-divider"></span>
         <p class="result-subtitle">Thank you for your purchase from Veloura Jewels. A confirmation email will be sent shortly.</p>
 
         <?php if (!empty($order)): ?>
@@ -24,9 +25,9 @@ $this->assign('title', 'Payment Successful');
                         <div class="result-order-row">
                             <span class="result-order-label"><?= h($item->product_name) ?></span>
                             <span class="result-order-value">
-                        <?= h($item->selected_size) ?> × <?= $item->quantity ?>
-                        — $<?= number_format((float)$item->subtotal, 2) ?>
-                    </span>
+                                <?= h($item->selected_size) ?> × <?= $item->quantity ?>
+                                — $<?= number_format((float)$item->subtotal, 2) ?>
+                            </span>
                         </div>
                     <?php endforeach; ?>
                 <?php endif; ?>

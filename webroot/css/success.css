@@ -1,0 +1,163 @@
+/* ─── Payment Success Page ─────────────────────────────────────────────────── */
+
+.success-page {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 72vh;
+    padding: 4rem 1.5rem;
+    background: var(--color-main-bg);
+}
+
+/* Card */
+.result-card {
+    background: var(--color-white);
+    max-width: 580px;
+    width: 100%;
+    padding: 3.5rem 3.5rem 3rem;
+    box-shadow: 0 4px 32px rgba(0, 0, 0, 0.07);
+    border-top: 3px solid var(--emerald);
+    animation: fadeSlideUp 0.5s ease both;
+}
+
+@keyframes fadeSlideUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Icon */
+.result-icon {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1.75rem;
+}
+
+.result-icon svg {
+    stroke: var(--emerald);
+    animation: popIn 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s both;
+}
+
+@keyframes popIn {
+    from { opacity: 0; transform: scale(0.6); }
+    to   { opacity: 1; transform: scale(1); }
+}
+
+/* Title */
+.result-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.6rem, 4vw, 2.2rem);
+    font-weight: 400;
+    color: var(--color-headings);
+    letter-spacing: 0.02em;
+    text-align: center;
+    margin-bottom: 0;
+}
+
+/* Gold divider under title */
+.result-divider {
+    display: block;
+    width: 44px;
+    height: 1px;
+    background: var(--emerald-gold);
+    margin: 1.1rem auto 1.4rem;
+}
+
+/* Subtitle */
+.result-subtitle {
+    text-align: center;
+    color: var(--color-text-muted);
+    font-size: 0.92rem;
+    line-height: 1.75;
+    margin-bottom: 2.25rem;
+}
+
+/* Order info box */
+.result-order-info {
+    background: var(--beige-light);
+    padding: 1.5rem 1.75rem;
+    margin-bottom: 2.25rem;
+}
+
+.result-order-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1.5rem;
+    padding: 0.65rem 0;
+    border-bottom: 1px solid rgba(var(--beige-light-rgb), 0.6);
+    font-size: 0.88rem;
+}
+
+.result-order-row:first-child {
+    padding-top: 0;
+}
+
+.result-order-row:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.result-order-label {
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.result-order-value {
+    color: var(--color-ink);
+    font-size: 0.9rem;
+    text-align: right;
+}
+
+.result-order-value.status {
+    color: var(--emerald);
+    font-size: 0.8rem;
+    letter-spacing: 0.06em;
+}
+
+/* Button */
+.result-btn {
+    display: block;
+    width: 100%;
+    padding: 1rem 2rem;
+    background: var(--emerald);
+    color: var(--color-white);
+    font-family: var(--font-body);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    text-align: center;
+    text-decoration: none;
+    transition: background 0.2s ease, letter-spacing 0.2s ease;
+}
+
+.result-btn:hover {
+    background: var(--emerald-dark);
+    color: var(--color-white);
+    letter-spacing: 0.24em;
+}
+
+/* ─── Responsive ────────────────────────────────────────────────────────────── */
+
+@media (max-width: 600px) {
+    .result-card {
+        padding: 2.5rem 1.75rem 2rem;
+    }
+
+    .result-order-info {
+        padding: 1.25rem 1.25rem;
+    }
+
+    .result-order-row {
+        flex-direction: column;
+        gap: 0.2rem;
+    }
+
+    .result-order-value {
+        text-align: left;
+    }
+}
