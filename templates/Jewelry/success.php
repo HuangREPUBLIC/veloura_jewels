@@ -1,7 +1,7 @@
 <?php
 $this->assign('title', 'Payment Successful');
 ?>
-<?php $this->Html->css('success', ['block' => true]); ?>
+<?php $this->Html->css(['success', 'home'], ['block' => true]); ?>
 
 <div class="success-page">
     <div class="result-card">
@@ -76,9 +76,18 @@ $this->assign('title', 'Payment Successful');
 
         <?php endif; ?>
 
-        <a href="<?= $this->Url->build(['controller' => 'Jewelry', 'action' => 'index']) ?>" class="result-btn">
-            Continue Shopping
-        </a>
+        <button type="button" class="result-btn" id="continueShoppingBtn">Continue Shopping</button>
+
+        <!-- Continue Shopping modal -->
+        <?= $this->element('collection_modal', [
+            'modalTitle'    => 'Continue Shopping',
+            'modalSubtitle' => 'Where would you like to browse?',
+        ]) ?>
+
+        <?php
+        $this->Html->scriptBlock("window.collectionModalTriggerId = 'continueShoppingBtn';", ['block' => true]);
+        $this->Html->script('collection-modal', ['block' => true]);
+        ?>
 
     </div>
 </div>
