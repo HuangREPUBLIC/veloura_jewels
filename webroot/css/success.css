@@ -1,4 +1,4 @@
-/* ─── Payment Success Page ─────────────────────────────────────────────────── */
+/* Payment Success Page */
 
 .success-page {
     display: flex;
@@ -141,7 +141,106 @@
     letter-spacing: 0.24em;
 }
 
-/* ─── Responsive ────────────────────────────────────────────────────────────── */
+/* Order Items */
+
+.result-items {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1.5rem;
+    border: 1px solid var(--beige-mid, #e8e0d4);
+}
+
+.result-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.9rem 1rem;
+    border-bottom: 1px solid var(--beige-mid, #e8e0d4);
+}
+
+.result-item:last-child {
+    border-bottom: none;
+}
+
+.result-item-img-wrap {
+    width: 56px;
+    height: 56px;
+    flex-shrink: 0;
+    background: var(--beige-light);
+    overflow: hidden;
+}
+
+.result-item-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.result-item-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-text-muted);
+}
+
+.result-item-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.result-item-name {
+    font-size: 0.88rem;
+    color: var(--color-ink);
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.result-item-meta {
+    font-size: 0.78rem;
+    color: var(--color-text-muted);
+    margin-top: 0.2rem;
+}
+
+.result-item-price {
+    font-size: 0.88rem;
+    color: var(--color-ink);
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+/* In-store Pickup */
+
+.result-pickup {
+    text-align: center;
+    padding: 1.25rem 0 0.25rem;
+    margin-bottom: 2rem;
+    border-top: 1px solid var(--beige-mid, #e8e0d4);
+}
+
+.result-pickup-label {
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    margin-bottom: 0.4rem;
+}
+
+.result-pickup-address {
+    font-size: 0.88rem;
+    color: var(--color-ink);
+    margin-bottom: 0.2rem;
+}
+
+.result-pickup-hours {
+    font-size: 0.82rem;
+    color: var(--color-text-muted);
+}
+
+/* Responsive */
 
 @media (max-width: 600px) {
     .result-card {

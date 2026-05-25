@@ -413,7 +413,7 @@ class JewelryController extends AppController
 
         if ($sessionId !== '') {
             $order = $this->Orders->find()
-                ->contain(['OrderItems'])
+                ->contain(['OrderItems' => ['Products' => ['ProductImages']]])
                 ->where(['stripe_session_id' => $sessionId])
                 ->first();
         }
