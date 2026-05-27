@@ -91,12 +91,14 @@ class ProductsTable extends Table
         $validator
             ->decimal('purchase_price')
             ->requirePresence('purchase_price', 'create')
-            ->notEmptyString('purchase_price');
+            ->notEmptyString('purchase_price')
+            ->greaterThan('purchase_price', 0, 'Purchase price must be greater than 0.');
 
         $validator
             ->decimal('sale_price')
             ->requirePresence('sale_price', 'create')
-            ->notEmptyString('sale_price');
+            ->notEmptyString('sale_price')
+            ->greaterThan('sale_price', 0, 'Sale price must be greater than 0.');
 
         $validator
             ->email('supplier_email')
