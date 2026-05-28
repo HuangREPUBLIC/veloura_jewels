@@ -155,7 +155,7 @@ foreach ($orders as $order) {
                         <td><span class="status-pill <?= $cls ?>"><?= h(ucfirst($order->status)) ?></span></td>
                         <td data-order="<?= (float)$order->total_amount ?>">$<?= number_format((float)$order->total_amount, 2) ?> <?= strtoupper(h($order->currency)) ?></td>
                         <td data-order="<?= $orderProfit ?>" style="color:<?= $profitColor ?>;font-weight:600;">$<?= number_format($orderProfit, 2) ?> <?= strtoupper(h($order->currency)) ?></td>
-                        <td><?= h($order->created) ?></td>
+                        <td data-order="<?= $order->created->format('U') ?>"><?= h($order->created) ?></td>
                         <td class="actions"><?= $this->Html->link(__('View'), ['action' => 'view', $order->id]) ?></td>
                     </tr>
                 <?php endforeach; ?>
