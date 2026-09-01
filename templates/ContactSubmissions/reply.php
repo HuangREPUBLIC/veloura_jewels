@@ -4,52 +4,55 @@
  * @var \App\Model\Entity\ContactSubmission $contactSubmission
  */
 $this->assign('title', 'Reply to Enquiry');
-$this->Html->css('login', ['block' => true]);
+$this->assign('crumbRecord', h($contactSubmission->first_name . ' ' . $contactSubmission->last_name));
+$formId = 'reply-form';
 ?>
 
-<div class="login-page">
-    <div class="users form content login-card--reply">
+<div class="page-header-row">
+    <div>
+        <p class="cms-eyebrow">Contact Submissions</p>
+        <h2 class="page-title"><?= h($contactSubmission->first_name . ' ' . $contactSubmission->last_name) ?></h2>
+    </div>
+    <div class="cms-header-right">
+        <button type="submit" form="<?= h($formId) ?>" class="btn-new-product"><?= __('Send Reply') ?></button>
+    </div>
+</div>
 
-        <div class="action-buttons">
-            <?= $this->Html->link(__('← Back to Submissions'), ['action' => 'index']) ?>
-        </div>
+<?= $this->Flash->render() ?>
 
-        <h3><?= __('Reply to Enquiry') ?></h3>
+<table class="view-table admin-view-table-spaced">
+    <tr>
+        <th><?= __('Email') ?></th>
+        <td><?= h($contactSubmission->email) ?></td>
+    </tr>
+    <tr>
+        <th><?= __('Message') ?></th>
+        <td><?= h($contactSubmission->message) ?></td>
+    </tr>
+</table>
 
-        <div class="enquiry-summary">
-            <div class="enquiry-row">
-                <span class="enquiry-label"><?= __('Name') ?></span>
-                <span class="enquiry-value"><?= h($contactSubmission->first_name . ' ' . $contactSubmission->last_name) ?></span>
-            </div>
-            <div class="enquiry-row">
-                <span class="enquiry-label"><?= __('Email') ?></span>
-                <span class="enquiry-value"><?= h($contactSubmission->email) ?></span>
-            </div>
-            <div class="enquiry-row enquiry-row--message">
-                <span class="enquiry-label"><?= __('Message') ?></span>
-                <span class="enquiry-value"><?= h($contactSubmission->message) ?></span>
-            </div>
-        </div>
-
-        <div class="login-divider">Your Reply</div>
-
-        <?= $this->Form->create() ?>
-        <fieldset>
-            <?= $this->Flash->render() ?>
+<?= $this->Form->create(null, ['id' => $formId]) ?>
+<div class="cms-group">
+    <div class="cms-group-label"><?= __('Your Reply') ?></div>
+    <div class="cms-group-fields">
+        <div class="cms-field">
             <?= $this->Form->control('subject', [
-                'label'    => 'Subject',
+                'label'    => ['text' => __('Subject'), 'class' => 'cms-label'],
+                'class'    => 'cms-input',
                 'required' => true,
                 'value'    => 'Re: ' . $contactSubmission->subject,
             ]) ?>
+        </div>
+        <div class="cms-field">
             <?= $this->Form->control('message', [
                 'type'     => 'textarea',
-                'label'    => 'Message',
+                'label'    => ['text' => __('Message'), 'class' => 'cms-label'],
+                'class'    => 'cms-textarea',
                 'required' => true,
                 'value'    => 'Hi ' . $contactSubmission->first_name . ',',
+                'rows'     => 6,
             ]) ?>
-        </fieldset>
-        <?= $this->Form->button(__('Send Reply'), ['class' => 'login-button']) ?>
-        <?= $this->Form->end() ?>
-
+        </div>
     </div>
 </div>
+<?= $this->Form->end() ?>

@@ -24,6 +24,7 @@ $this->Html->meta([
 
 <div class="login-page">
     <div class="users form content">
+        <p class="login-kicker">Welcome back</p>
         <?= $this->Form->create() ?>
         <fieldset>
             <legend>Login</legend>

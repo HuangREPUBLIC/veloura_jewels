@@ -17,6 +17,7 @@ $wishlistIds = $wishlistIds ?? [];
                 </video>
 
                 <div class="hp-hero-overlay">
+                    <p class="hp-label"><?= h($pageContent['hero_label'] ?? 'Handcrafted in Brooksdale') ?></p>
                     <h1 class="hp-hero-heading"><?= nl2br(h($pageContent['hero_heading'] ?? "Jewels that tell\nyour story.")) ?></h1>
                     <p class="hp-hero-sub"><?= h($pageContent['hero_subtext'] ?? '') ?></p>
                     <div class="hp-hero-actions">

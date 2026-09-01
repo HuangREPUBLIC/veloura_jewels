@@ -32,7 +32,20 @@ $oneSizeVariant = $isOneSizeOnly ? $inStockVariants[0] : null;
     $backUrl = ($back && str_starts_with($back, '/'))
         ? $back
         : ($section === 'home_decor' ? '/home-decor' : '/jewelry');
+
+    $sectionLabel = $section === 'home_decor' ? 'Home Décor' : 'Jewellery';
+    $sectionSlug  = $section === 'home_decor' ? 'home-decor' : 'jewellery';
+    $crumbs = [
+        ['label' => 'Home', 'url' => '/'],
+        ['label' => $sectionLabel, 'url' => ['controller' => 'Jewelry', 'action' => $section === 'home_decor' ? 'homeDecor' : 'index']],
+    ];
+    if (!empty($product->category)) {
+        $categorySlug = strtolower(str_replace(' ', '-', $product->category->name));
+        $crumbs[] = ['label' => $product->category->name, 'url' => '/' . $sectionSlug . '/' . $categorySlug];
+    }
+    $crumbs[] = ['label' => $product->name];
     ?>
+    <?= $this->element('breadcrumb', ['crumbs' => $crumbs]) ?>
     <?= $this->Html->link('← Back', $backUrl, ['class' => 'jewelry-back-link']) ?>
 
     <div class="product-detail">

@@ -33,9 +33,24 @@ class ContactSubmissionsController extends AppController
     {
         $this->viewBuilder()->setLayout('admin');
 
-        $contactSubmissions = $this->ContactSubmissions->find()->where(['archived' => false])->orderBy(['created' => 'DESC'])->all();
+        $q = (string)$this->request->getQuery('q', '');
+        $query = $this->ContactSubmissions->find()->where(['archived' => false]);
+        if ($q !== '') {
+            $query->where([
+                'OR' => [
+                    'first_name LIKE' => '%' . $q . '%',
+                    'last_name LIKE' => '%' . $q . '%',
+                    'email LIKE' => '%' . $q . '%',
+                    'subject LIKE' => '%' . $q . '%',
+                ],
+            ]);
+        }
+        $contactSubmissions = $this->paginate($query, [
+            'limit' => (int)$this->request->getQuery('limit', 10),
+            'order' => ['created' => 'DESC'],
+        ]);
 
-        $this->set(compact('contactSubmissions'));
+        $this->set(compact('contactSubmissions', 'q'));
     }
 
     public function beforeFilter(EventInterface $event)
@@ -156,6 +171,8 @@ class ContactSubmissionsController extends AppController
 
     public function reply($id = null)
     {
+        $this->viewBuilder()->setLayout('admin');
+
         $contactSubmission = $this->ContactSubmissions->get($id);
 
         if ($this->request->is(['post', 'put'])) {
@@ -231,12 +248,24 @@ class ContactSubmissionsController extends AppController
     {
         $this->viewBuilder()->setLayout('admin');
 
-        $contactSubmissions = $this->ContactSubmissions->find()
-            ->where(['archived' => true])
-            ->orderBy(['created' => 'DESC'])
-            ->all();
+        $q = (string)$this->request->getQuery('q', '');
+        $query = $this->ContactSubmissions->find()->where(['archived' => true]);
+        if ($q !== '') {
+            $query->where([
+                'OR' => [
+                    'first_name LIKE' => '%' . $q . '%',
+                    'last_name LIKE' => '%' . $q . '%',
+                    'email LIKE' => '%' . $q . '%',
+                    'subject LIKE' => '%' . $q . '%',
+                ],
+            ]);
+        }
+        $contactSubmissions = $this->paginate($query, [
+            'limit' => (int)$this->request->getQuery('limit', 10),
+            'order' => ['created' => 'DESC'],
+        ]);
 
-        $this->set(compact('contactSubmissions'));
+        $this->set(compact('contactSubmissions', 'q'));
     }
 
     public function unarchive($id = null)

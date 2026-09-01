@@ -23,16 +23,27 @@
     padding: 0;
 }
 
+.login-page .login-kicker {
+    display: block;
+    text-align: center;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--emerald-gold);
+    margin: 0 0 0.6rem;
+}
+
 .login-page .users legend {
-    font-family: var(--font-display);
+    font-family: var(--font-serif);
     width: 100%;
     text-align: center;
     color: var(--color-ink);
-    font-size: 1.7rem;
-    font-weight: 600;
-    letter-spacing: -0.02em;
-    line-height: 1.2;
-    margin: 0 0 2rem 0;
+    font-size: 2.3rem;
+    font-weight: 500;
+    letter-spacing: 0.005em;
+    line-height: 1.15;
+    margin: 0 0 1.8rem 0;
     padding: 0;
     display: block;
 }
@@ -271,412 +282,34 @@
     color: var(--color-white);
 }
 
-/* Reply page */
+/* Back link - same look as the admin-shell .back-link (admin-layout.css),
+   duplicated here since this bundle loads on pages the admin shell doesn't. */
 
-.login-card--reply {
-    max-width: 560px !important;
-}
-
-.enquiry-summary {
-    background: #f7f8fa;
-    border: 1.5px solid #e8e5e0;
-    border-radius: 12px;
-    padding: 0.2rem 0;
-    margin-bottom: 1.4rem;
-    overflow: hidden;
-}
-
-.enquiry-row {
-    display: flex;
-    align-items: baseline;
-    gap: 0.8rem;
-    padding: 0.65rem 1rem;
-    border-bottom: 1px solid #edeae5;
-}
-
-.enquiry-row:last-child {
-    border-bottom: none;
-}
-
-.enquiry-row--message {
-    align-items: flex-start;
-}
-
-.enquiry-label {
-    flex-shrink: 0;
-    width: 64px;
-    font-size: 0.72rem;
-    font-weight: 700;
-    letter-spacing: 0.07em;
-    text-transform: uppercase;
-    color: var(--color-text-muted);
-}
-
-.enquiry-value {
-    font-size: 0.9rem;
-    color: var(--color-ink);
-    line-height: 1.5;
-    word-break: break-word;
-}
-
-/* Product variant rows (Products/add, edit) */
-
-#variants-container {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 0.4rem;
-}
-
-.btn-add-variant {
-    display: inline-block;
-    margin-top: 0.2rem;
-    padding: 0.38rem 0.9rem;
-    background: transparent;
-    border: 1.5px solid var(--emerald);
-    border-radius: 6px;
-    color: var(--emerald);
-    font-size: 0.82rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.btn-add-variant:hover {
-    background: var(--emerald);
-    color: var(--color-white);
-}
-
-.variant-row {
-    display: flex;
-    gap: 0.6rem;
-    align-items: center;
-    background: #f7f8fa;
-    border: 1px solid #e5e7eb;
-    border-radius: 7px;
-    padding: 0.45rem 0.7rem;
-    margin-bottom: 0.4rem;
-}
-
-.size-text-label {
-    min-width: 90px;
-    font-size: 0.88rem;
-    color: var(--gray-800);
-}
-
-.variant-row select {
-    padding: 0.4rem 0.6rem;
-    border: 1px solid #d1d5db;
-    border-radius: 5px;
-    font-size: 0.88rem;
-    background: var(--color-white);
-    cursor: pointer;
-    min-width: 110px;
-}
-
-.variant-row input[type="number"] {
-    padding: 0.4rem 0.6rem;
-    border: 1px solid #d1d5db;
-    border-radius: 5px;
-    font-size: 0.88rem;
-    width: 70px;
-}
-
-.variant-row button {
-    margin-left: auto;
-    padding: 0.3rem 0.55rem;
-    border: 1px solid #e0e0e0;
-    border-radius: 5px;
-    background: var(--color-white);
-    color: #999;
-    cursor: pointer;
-    font-size: 0.8rem;
-    transition: all 0.15s ease;
-    line-height: 1;
-    flex-shrink: 0;
-}
-
-.variant-row button:hover {
-    border-color: var(--color-danger);
-    background: var(--color-danger);
-    color: var(--color-white);
-}
-
-/* Image upload zone (Products/add, edit) */
-
-.img-upload-zone {
-    border: 2px dashed #d1d5db;
-    border-radius: 8px;
-    padding: 0.8rem;
-    background: #fafafa;
-    transition: border-color 0.2s, background 0.2s;
-}
-
-.img-upload-zone.zone-hover {
-    border-color: var(--emerald);
-    background: rgba(var(--emerald-rgb), 0.04);
-}
-
-.img-upload-prompt {
-    text-align: center;
-    padding: 0.5rem;
-    color: var(--gray-600);
-    font-size: 0.88rem;
-    cursor: pointer;
-    user-select: none;
-}
-
-.img-upload-prompt:hover {
-    color: var(--emerald);
-}
-
-.img-preview-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.6rem;
-    margin-top: 0.6rem;
-}
-
-.img-thumb {
-    position: relative;
-    width: 80px;
-    height: 80px;
-    border-radius: 6px;
-    cursor: grab;
-    border: 2px solid transparent;
-    transition: border-color 0.15s, opacity 0.15s;
-    flex-shrink: 0;
-}
-
-.img-thumb img {
-    width: 80px;
-    height: 80px;
-    object-fit: cover;
-    border-radius: 5px;
-    display: block;
-    pointer-events: none;
-}
-
-.img-thumb.dragging {
-    opacity: 0.35;
-    cursor: grabbing;
-}
-
-.img-thumb.drag-over {
-    border-color: var(--emerald);
-}
-
-/* Remove button on new upload previews */
-.img-remove-btn {
-    position: absolute;
-    top: -7px;
-    right: -7px;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background: #e53e3e;
-    color: #fff;
-    border: 2px solid #fff;
-    cursor: pointer;
-    font-size: 0.8rem;
-    line-height: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0;
-    transition: background 0.15s;
-}
-
-.img-remove-btn:hover {
-    background: #c53030;
-}
-
-/* Existing image thumbnails (edit page) */
-
-.existing-images-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.8rem;
-    margin-top: 0.4rem;
-}
-
-.img-existing-thumb {
-    position: relative;
-    width: 80px;
-    flex-shrink: 0;
-}
-
-.img-existing-thumb img {
-    width: 80px;
-    height: 80px;
-    object-fit: cover;
-    border-radius: 6px;
-    border: 1.5px solid #e0e0e0;
-    display: block;
-    transition: opacity 0.2s;
-}
-
-.img-existing-thumb.marked-delete img {
-    opacity: 0.3;
-}
-
-.img-existing-thumb.marked-delete::after {
-    content: 'Delete';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    text-align: center;
-    background: rgba(197, 48, 48, 0.85);
-    color: #fff;
-    font-size: 0.65rem;
-    padding: 2px 0 3px;
-    border-radius: 0 0 5px 5px;
-    letter-spacing: 0.02em;
-    pointer-events: none;
-}
-
-/* Delete toggle button on existing image */
-.img-delete-btn {
-    position: absolute;
-    top: -7px;
-    right: -7px;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background: #e53e3e;
-    color: #fff;
-    border: 2px solid #fff;
-    cursor: pointer;
-    font-size: 0.85rem;
-    line-height: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0;
-    transition: background 0.15s;
-}
-
-.img-delete-btn:hover {
-    background: #c53030;
-}
-
-.img-delete-btn.undo {
-    background: #718096;
-}
-
-.img-delete-btn.undo:hover {
-    background: #4a5568;
-}
-
-/* Category / size management pills */
-
-.mgmt-pills-label {
-    font-size: 0.8rem;
-    color: var(--gray-600);
-    margin: 0 0 0.3rem 0;
-}
-
-.mgmt-pills {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.35rem;
-}
-
-.mgmt-pill {
+.back-link {
     display: inline-flex;
     align-items: center;
-    gap: 0.2rem;
-    background: #f1f3f5;
-    border: 1px solid #dee2e6;
-    border-radius: 4px;
-    padding: 0.18rem 0.45rem;
-    font-size: 0.8rem;
-    color: var(--gray-800);
+    gap: 7px;
+    min-height: 38px;
+    padding: 0 16px 0 12px;
+    border-radius: 999px;
+    border: 1px solid var(--admin-border, #ddd9cf);
+    background: var(--color-white);
+    color: var(--emerald-dark);
+    text-decoration: none;
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    transition-property: background-color, border-color, transform;
+    transition-duration: 0.15s;
+    transition-timing-function: ease-out;
 }
 
-.mgmt-pill-del {
-    background: none;
-    border: none;
-    color: #aaa;
-    cursor: pointer;
-    font-size: 0.78rem;
-    padding: 0;
-    line-height: 1;
-    transition: color 0.15s;
-    margin-left: 0.15rem;
+.back-link svg { width: 15px; height: 15px; flex-shrink: 0; }
+
+.back-link:hover {
+    background: rgba(var(--emerald-rgb), 0.08);
+    border-color: rgba(var(--emerald-rgb), 0.35);
 }
 
-.mgmt-pill-del:hover {
-    color: var(--color-danger);
-}
+.back-link:active { transform: scale(0.97); }
 
-/* Consistent styling for all form controls in admin product forms */
-
-.login-page .users input[type="text"],
-.login-page .users input[type="number"],
-.login-page .users select,
-.login-page .users textarea {
-    display: block;
-    width: 100%;
-    box-sizing: border-box;
-    font-size: 1rem;
-    color: var(--gray-800);
-    background-color: var(--color-white);
-    border: 1.5px solid #d8d8d8;
-    border-radius: 10px;
-    outline: none;
-    transition-property: border-color, box-shadow;
-    transition-duration: 0.2s;
-    transition-timing-function: ease;
-}
-
-.login-page .users input[type="text"],
-.login-page .users input[type="number"] {
-    height: 48px;
-    padding: 0 1rem;
-}
-
-.login-page .users select {
-    height: 48px;
-    padding: 0 1rem;
-    cursor: pointer;
-    appearance: auto;
-}
-
-.login-page .users textarea {
-    padding: 0.75rem 1rem;
-    min-height: 100px;
-    resize: vertical;
-    line-height: 1.5;
-}
-
-.login-page .users input[type="text"]:focus,
-.login-page .users input[type="number"]:focus,
-.login-page .users select:focus,
-.login-page .users textarea:focus {
-    border-color: var(--emerald);
-    box-shadow: 0 0 0 3px rgba(var(--emerald-rgb), 0.13);
-}
-
-.login-page .users input[type="number"] {
-    font-variant-numeric: tabular-nums;
-}
-
-/* Two-column layout for price fields */
-
-.price-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-    margin-bottom: 1.2rem;
-}
-
-.price-row .input {
-    margin-bottom: 0 !important;
-}
-
-@media (max-width: 520px) {
-    .price-row {
-        grid-template-columns: 1fr;
-    }
-}

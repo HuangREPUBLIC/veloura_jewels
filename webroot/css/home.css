@@ -117,9 +117,11 @@
 
 .hp-hero-overlay .hp-hero-heading {
     color: #fff;
-    font-size: clamp(1.8rem, 4vw, 3rem);
-    font-weight: 400;
-    line-height: 1.05;
+    font-family: var(--font-serif);
+    font-size: clamp(2.4rem, 5.4vw, 4.4rem);
+    font-weight: 500;
+    line-height: 1.08;
+    letter-spacing: 0.005em;
     margin-bottom: 1.2rem;
 }
 
@@ -164,12 +166,11 @@
     display: block;
     text-decoration: none;
     color: var(--color-headings);
-    transition: opacity 0.2s ease, transform 0.2s ease;
+    transition: transform 0.3s ease;
 }
 
 .hp-category-tile:hover {
-    opacity: 0.85;
-    transform: translateY(-3px);
+    transform: translateY(-4px);
 }
 
 .hp-category-tile-img {
@@ -179,14 +180,36 @@
     display: block;
     margin-bottom: 0.75rem;
     background: var(--beige);
+    transition: box-shadow 0.3s ease;
+}
+
+.hp-category-tile:hover .hp-category-tile-img {
+    box-shadow: 0 16px 34px rgba(var(--emerald-rgb), 0.2);
 }
 
 .hp-category-tile-name {
-    display: block;
+    position: relative;
+    display: inline-block;
+    padding-bottom: 3px;
     font-size: 0.72rem;
     font-weight: 700;
     letter-spacing: 0.18em;
     text-transform: uppercase;
+}
+
+.hp-category-tile-name::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 100%;
+    bottom: 0;
+    height: 1px;
+    background: currentColor;
+    transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hp-category-tile:hover .hp-category-tile-name::after {
+    right: 0;
 }
 
 
@@ -253,10 +276,10 @@
     color: var(--color-headings);
 }
 
-.collection-modal-title {
-    font-family: var(--font-display);
-    font-size: 1.6rem;
-    font-weight: 400;
+.collection-modal-content .collection-modal-title {
+    font-family: var(--font-serif);
+    font-size: 2rem;
+    font-weight: 500;
     color: var(--color-headings);
     margin-bottom: 0.4rem;
 }
@@ -485,10 +508,10 @@
     justify-content: center;
 }
 
-.hp-story-title {
-    font-family: var(--font-display);
-    font-size: clamp(2rem, 3.5vw, 2.8rem);
-    font-weight: 300;
+.hp-story .hp-story-title {
+    font-family: var(--font-serif);
+    font-size: clamp(2.3rem, 4vw, 3.4rem);
+    font-weight: 500;
     color: var(--color-headings);
     line-height: 1.1;
     margin-bottom: 1.6rem;
@@ -549,14 +572,14 @@
     margin: 0 auto 1.8rem;
 }
 
-.hp-cta-title {
-    font-family: var(--font-display);
-    font-size: clamp(1.8rem, 3.5vw, 2.6rem);
-    font-weight: 300;
+.hp-cta-inner .hp-cta-title {
+    font-family: var(--font-serif);
+    font-size: clamp(2rem, 3.8vw, 3rem);
+    font-weight: 500;
     color: var(--color-headings);
     margin-bottom: 1.2rem;
     line-height: 1.22;
-    letter-spacing: 0.01em;
+    letter-spacing: 0.005em;
 }
 
 .hp-cta-sub {

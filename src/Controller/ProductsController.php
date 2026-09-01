@@ -28,28 +28,15 @@ class ProductsController extends AppController
 
     public function index()
     {
-        $products = $this->Products->find()
-            ->contain(['Category', 'ProductVariants'])
-            ->all();
-        $lowStockProducts = $this->Products->find()
-            ->contain(['Category', 'ProductVariants'])
-            ->matching('ProductVariants', function ($q) {
-                return $q->where(['ProductVariants.stock <' => 5]);
-            })
-            ->distinct(['Products.id'])
-            ->all();
+        $q = (string)$this->request->getQuery('q', '');
 
-        try {
-            $productLogs = $this->fetchTable('ActivityLogs')->find()
-                ->where(['model' => 'Product', 'is_archived' => false])
-                ->orderByDesc('created')
-                ->limit(50)
-                ->all();
-        } catch (\Exception $e) {
-            $productLogs = [];
+        $query = $this->Products->find()->contain(['Category', 'ProductVariants']);
+        if ($q !== '') {
+            $query->where(['Products.name LIKE' => '%' . $q . '%']);
         }
+        $products = $this->paginate($query, ['limit' => (int)$this->request->getQuery('limit', 10)]);
 
-        $this->set(compact('products', 'lowStockProducts', 'productLogs'));
+        $this->set(compact('products', 'q'));
     }
 
     public function view($id = null)

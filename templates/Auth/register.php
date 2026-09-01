@@ -8,7 +8,7 @@ $this->Html->css('login', ['block' => true]);
 ?>
 <div class="login-page">
     <div class="users form content login-card--wide">
-
+        <p class="login-kicker">Join Veloura</p>
         <fieldset>
             <legend>Create Account</legend>
             <?= $this->Flash->render() ?>

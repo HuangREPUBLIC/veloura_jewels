@@ -20,7 +20,7 @@
     --color-message-info-border: #6cb2eb;
     --beige: #dad7c5;
     --beige-light: #f0ede4;
-    --earth-yellow: #e1a95e;
+    --earth-yellow: #d9a75e;
     --beige-light-rgb: 240, 237, 228;
 
     --color-body: #3d3d3a;
@@ -39,7 +39,10 @@
 
     --font-display: 'Raleway', 'Helvetica Neue', sans-serif;
     --font-body: 'Raleway', 'Helvetica Neue', sans-serif;
-    --font-admin: Arial, 'Helvetica Neue', Helvetica, sans-serif;
+    --font-admin: 'Raleway', 'Helvetica Neue', Helvetica, sans-serif;
+    /* Editorial accent serif - hero headlines, brand-voice moments on the
+       public storefront only. Not used in admin. */
+    --font-serif: 'Cormorant Garamond', Georgia, serif;
 
     --gray-900: #222;
     --gray-800: #333;

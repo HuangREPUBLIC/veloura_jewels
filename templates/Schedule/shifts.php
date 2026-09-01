@@ -7,12 +7,13 @@ $selectedStaffId = $staff->id ?? null;
 $selectedName = $staff
     ? trim($staff->first_name . ' ' . $staff->last_name) ?: $staff->email
     : null;
+if ($selectedName) {
+    $this->assign('crumbRecord', h($selectedName));
+}
 ?>
 
 <div class="sched-editor-page">
     <div class="sched-form-panel">
-
-        <?= $this->Html->link(__('← Back'), ['action' => 'index', '?' => ['week' => $weekStartStr]], ['class' => 'back-link']) ?>
 
         <div class="sched-form-header">
             <div>

@@ -13,28 +13,24 @@ class ActivityLogsController extends AppController
             return $this->redirect('/dashboard');
         }
 
-        $this->Html->css('https://cdn.datatables.net/2.2.2/css/dataTables.dataTables.min.css', ['block' => true]);
-        $this->Html->script('https://code.jquery.com/jquery-3.6.0.min.js', ['block' => true]);
-        $this->Html->script('https://cdn.datatables.net/2.2.2/js/dataTables.min.js', ['block' => true]);
+        $this->viewBuilder()->setLayout('admin');
 
-        $conditions = [];
         $filterModel = $this->request->getQuery('model');
         $filterAction = $this->request->getQuery('action');
 
+        $query = $this->fetchTable('ActivityLogs')->find()
+            ->where(['ActivityLogs.is_archived' => false]);
         if (!empty($filterModel)) {
-            $conditions['ActivityLogs.model'] = $filterModel;
+            $query->where(['ActivityLogs.model' => $filterModel]);
         }
         if (!empty($filterAction)) {
-            $conditions['ActivityLogs.action'] = $filterAction;
+            $query->where(['ActivityLogs.action' => $filterAction]);
         }
 
-        $this->paginate = [
-            'limit'  => 50,
-            'order'  => ['ActivityLogs.created' => 'DESC'],
-            'conditions' => $conditions,
-        ];
-
-        $activityLogs = $this->paginate($this->fetchTable('ActivityLogs'));
+        $activityLogs = $this->paginate($query, [
+            'limit' => (int)$this->request->getQuery('limit', 25),
+            'order' => ['ActivityLogs.created' => 'DESC'],
+        ]);
 
         $this->set(compact('activityLogs', 'filterModel', 'filterAction'));
     }

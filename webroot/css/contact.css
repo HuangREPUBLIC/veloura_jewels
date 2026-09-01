@@ -17,11 +17,11 @@
 }
 
 .contact-header h2 {
-    font-family: var(--font-display);
-    font-size: clamp(2rem, 4vw, 3rem);
-    font-weight: 400;
+    font-family: var(--font-serif);
+    font-size: clamp(2.4rem, 4.6vw, 3.6rem);
+    font-weight: 500;
     color: var(--color-headings);
-    letter-spacing: 0.04em;
+    letter-spacing: 0.005em;
     margin: 0 0 0.9rem;
 }
 

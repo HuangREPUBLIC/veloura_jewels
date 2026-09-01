@@ -4,32 +4,42 @@
  * @var \App\Model\Entity\User $user
  */
 $this->assign('title', 'Edit User');
-$this->Html->css('login', ['block' => true]);
+$this->assign('crumbRecord', h($user->email));
+
+$identity = $this->request->getAttribute('identity');
+$role = $identity ? $identity->get('role') : null;
+$formId = 'edit-user-form';
 ?>
 
-<div class="login-page">
-    <div class="users form content login-card--wide">
-        <div class="action-buttons">
-            <?= $this->Html->link(__('← Back to Users'), ['action' => 'index']) ?>
-        </div>
+<div class="page-header-row">
+    <div>
+        <p class="cms-eyebrow">Users</p>
+        <h2 class="page-title"><?= h($user->email) ?></h2>
+    </div>
+    <div class="cms-header-right">
+        <button type="submit" form="<?= h($formId) ?>" class="btn-new-product"><?= __('Save') ?></button>
+    </div>
+</div>
 
-        <h3><?= __('Edit User') ?></h3>
+<?= $this->Flash->render() ?>
 
-        <?= $this->Form->create($user) ?>
-        <fieldset>
-            <?= $this->Flash->render() ?>
-
+<?= $this->Form->create($user, ['id' => $formId]) ?>
+<div class="cms-group">
+    <div class="cms-group-fields">
+        <div class="cms-field">
             <?php
             echo $this->Form->control('email', [
-                'label'    => 'Email',
+                'label'    => ['text' => 'Email', 'class' => 'cms-label'],
+                'class'    => 'cms-input',
                 'required' => true,
                 'disabled' => true,
             ]);
+            ?>
+        </div>
 
-            $identity = $this->request->getAttribute('identity');
-            $role = $identity ? $identity->get('role') : null;
-
-            if ($role === 'admin' && $user->id !== 6) {
+        <?php if ($role === 'admin' && $user->id !== 6): ?>
+            <div class="cms-field">
+                <?php
                 echo $this->Form->control('role', [
                     'type'    => 'select',
                     'options' => [
@@ -37,15 +47,14 @@ $this->Html->css('login', ['block' => true]);
                         'staff'    => 'Staff',
                         'customer' => 'Customer',
                     ],
-                    'label'    => 'Role',
+                    'label'    => ['text' => 'Role', 'class' => 'cms-label'],
+                    'class'    => 'cms-input',
                     'required' => true,
                     'disabled' => $user->id === $identity->get('id'),
                 ]);
-            }
-            ?>
-        </fieldset>
-
-        <?= $this->Form->button(__('Save'), ['class' => 'login-button']) ?>
-        <?= $this->Form->end() ?>
+                ?>
+            </div>
+        <?php endif; ?>
     </div>
 </div>
+<?= $this->Form->end() ?>

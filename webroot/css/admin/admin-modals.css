@@ -7,9 +7,10 @@
     background: var(--emerald);
     color: var(--color-white) !important;
     text-decoration: none;
-    min-height: 40px;
+    height: 38px;
+    box-sizing: border-box;
     padding: 0 20px;
-    border-radius: 10px;
+    border-radius: 999px;
     border: 1px solid var(--emerald);
     font-weight: 600;
     font-size: 0.88rem;
@@ -32,7 +33,9 @@ a.btn-new-product:active {
     text-decoration: none !important;
 }
 
-/* Actions column */
+/* Actions column - row-level icon buttons live in admin-shell.css
+   (.data-table .actions ...); page-header actions use .btn-sm /
+   .btn-sm--danger, also in admin-shell.css. */
 
 td.actions,
 .actions {
@@ -47,156 +50,6 @@ td.actions form {
     padding: 0;
 }
 
-td.actions a,
-td.actions button {
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    margin-right: 0.3rem;
-    margin-top: 0 !important;
-    margin-bottom: 0 !important;
-    padding: 0 0.72rem !important;
-    font-size: 0.75rem !important;
-    font-weight: 600 !important;
-    border-radius: 999px !important;
-    text-decoration: none !important;
-    transition: all 0.2s ease;
-    cursor: pointer;
-    background: none !important;
-    line-height: 1 !important;
-    height: 28px !important;
-    box-sizing: border-box !important;
-    -webkit-appearance: none !important;
-    appearance: none !important;
-    font-family: inherit !important;
-    vertical-align: middle !important;
-}
-
-/* View / neutral buttons */
-td.actions a:not(.btn-delete):not(.btn-archive) {
-    color: var(--admin-text);
-    border: 1.5px solid var(--admin-text);
-}
-
-td.actions a:not(.btn-delete):not(.btn-archive):hover {
-    background: var(--admin-text) !important;
-    color: var(--color-white) !important;
-}
-
-/* Archive button */
-td.actions .btn-archive,
-td.actions button.btn-archive {
-    color: var(--color-message-error-text) !important;
-    border: 1.5px solid var(--color-message-error-text) !important;
-}
-
-td.actions .btn-archive:hover,
-td.actions button.btn-archive:hover {
-    background: var(--color-message-error-text) !important;
-    color: var(--color-white) !important;
-}
-
-/* Delete button */
-td.actions .btn-delete,
-td.actions button.btn-delete {
-    color: var(--color-message-error-text) !important;
-    border: 1.5px solid var(--color-message-error-text) !important;
-}
-
-td.actions .btn-delete:hover,
-td.actions button.btn-delete:hover {
-    background: var(--color-message-error-text) !important;
-    color: var(--color-white) !important;
-}
-
-/* Standalone button classes used outside td.actions */
-
-.actions a,
-.btn-view,
-.btn-edit,
-.btn-delete {
-    display: inline-block;
-    text-decoration: none;
-    padding: 9px 15px;
-    border-radius: 10px;
-    font-weight: 600;
-    font-size: 0.9rem;
-    margin-right: 8px;
-    transition: 0.2s ease;
-}
-
-.btn-view {
-    border: 1px solid var(--admin-text);
-    color: var(--admin-text) !important;
-    background: transparent;
-}
-
-.btn-view:hover { background: var(--admin-surface-hover); }
-
-.btn-edit {
-    border: 1px solid var(--admin-text);
-    color: var(--admin-text) !important;
-    background: transparent;
-}
-
-.btn-edit:hover { background: var(--admin-surface-hover); }
-
-.btn-delete, .btn-archive {
-    border: 1.5px solid var(--color-message-error-text);
-    background: transparent;
-    color: var(--color-message-error-text) !important;
-}
-
-.btn-delete:hover, .btn-archive:hover { background: #f7e6e6; }
-
-/* Activity log action buttons */
-
-.btn-activity-log {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 40px;
-    padding: 0 20px;
-    border-radius: 10px;
-    border: 1.5px solid var(--emerald);
-    background: transparent;
-    color: var(--emerald);
-    font-weight: 600;
-    font-size: 0.88rem;
-    font-family: inherit;
-    cursor: pointer;
-    transition: 0.2s ease;
-}
-
-.btn-activity-log:hover {
-    background: var(--emerald);
-    color: var(--color-white);
-}
-
-.btn-restore-log {
-    border: 1.5px solid #b45309 !important;
-    color: #b45309 !important;
-    background: transparent !important;
-}
-
-.btn-restore-log:hover {
-    background: #fef3c7 !important;
-    color: #92400e !important;
-    border-color: #92400e !important;
-}
-
-.btn-archive-log {
-    border: 1.5px solid #9ca3af !important;
-    color: #6b7280 !important;
-    background: transparent !important;
-}
-
-.btn-archive-log:hover {
-    background: #f3f4f6 !important;
-    color: #374151 !important;
-    border-color: #6b7280 !important;
-}
-
 .featured-toggle {
     background: none;
     border: none;
@@ -209,82 +62,3 @@ td.actions button.btn-delete:hover {
 }
 .featured-toggle:hover { color: var(--earth-yellow); transform: scale(1.2); }
 .featured-toggle.is-featured { color: var(--earth-yellow); }
-
-/* Admin Modals */
-
-.admin-modal {
-    display: none;
-    position: fixed;
-    inset: 0;
-    z-index: 900;
-}
-
-.admin-modal--detail {
-    z-index: 1100;
-}
-
-.admin-modal-overlay {
-    position: absolute;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.45);
-}
-
-.admin-modal-panel {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: var(--admin-surface);
-    border-radius: 14px;
-    width: 92%;
-    max-width: 960px;
-    max-height: 85vh;
-    display: flex;
-    flex-direction: column;
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
-    overflow: hidden;
-}
-
-.admin-modal-panel--sm {
-    max-width: 520px;
-    min-width: 320px;
-    max-height: 80vh;
-    border-radius: 10px;
-}
-
-.admin-modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px 24px 16px;
-    border-bottom: 1px solid var(--admin-border);
-    flex-shrink: 0;
-}
-
-.admin-modal-title {
-    font-size: 1.05rem;
-    font-weight: 600;
-    color: var(--admin-text-dark);
-}
-
-.admin-modal-close {
-    background: none;
-    border: none;
-    font-size: 1.4rem;
-    cursor: pointer;
-    line-height: 1;
-    color: var(--admin-ink-mid);
-    padding: 0;
-    transition: color 0.15s;
-}
-
-.admin-modal-close:hover {
-    color: var(--admin-text-dark);
-}
-
-.admin-modal-body {
-    overflow: auto;
-    padding: 16px 24px 24px;
-    font-size: 0.9rem;
-    color: var(--admin-text);
-}

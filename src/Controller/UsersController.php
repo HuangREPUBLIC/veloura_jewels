@@ -35,9 +35,20 @@ class UsersController extends AppController
 
         $this->viewBuilder()->setLayout('admin');
 
-        $users = $this->Users->find()->all();
+        $q = (string)$this->request->getQuery('q', '');
+        $query = $this->Users->find();
+        if ($q !== '') {
+            $query->where([
+                'OR' => [
+                    'first_name LIKE' => '%' . $q . '%',
+                    'last_name LIKE' => '%' . $q . '%',
+                    'email LIKE' => '%' . $q . '%',
+                ],
+            ]);
+        }
+        $users = $this->paginate($query, ['limit' => (int)$this->request->getQuery('limit', 10)]);
 
-        $this->set(compact('users'));
+        $this->set(compact('users', 'q'));
     }
 
     /**
@@ -197,6 +208,21 @@ class UsersController extends AppController
             'all'   => ['sales' => 0, 'profit' => 0],
         ];
 
+        // Sales trend buckets for the dashboard chart's Week/Month/Year tabs -
+        // zero-filled so empty periods still render bars.
+        $trendStart = (clone $now)->modify('-29 days')->setTime(0, 0, 0);
+        $dailySales = [];
+        for ($i = 0; $i < 30; $i++) {
+            $day = (clone $trendStart)->modify("+{$i} days");
+            $dailySales[$day->format('Y-m-d')] = 0.0;
+        }
+
+        $monthlySales = [];
+        for ($i = 11; $i >= 0; $i--) {
+            $m = (clone $now)->modify("-{$i} months");
+            $monthlySales[$m->format('Y-m')] = 0.0;
+        }
+
         $paidOrders = $ordersTable->find()
             ->where(['Orders.status' => 'paid'])
             ->contain(['OrderItems' => ['Products']])
@@ -211,9 +237,10 @@ class UsersController extends AppController
             }
 
             $d = $order->created;
+            $dKey = $d->format('Y-m-d');
             $revenueStats['all']['sales']  += $order->total_amount;
             $revenueStats['all']['profit'] += $profit;
-            if ($d->format('Y-m-d') === $todayStr) {
+            if ($dKey === $todayStr) {
                 $revenueStats['today']['sales']  += $order->total_amount;
                 $revenueStats['today']['profit'] += $profit;
             }
@@ -224,6 +251,13 @@ class UsersController extends AppController
             if ($d >= $monthStart) {
                 $revenueStats['month']['sales']  += $order->total_amount;
                 $revenueStats['month']['profit'] += $profit;
+            }
+            if (isset($dailySales[$dKey])) {
+                $dailySales[$dKey] += (float)$order->total_amount;
+            }
+            $mKey = $d->format('Y-m');
+            if (isset($monthlySales[$mKey])) {
+                $monthlySales[$mKey] += (float)$order->total_amount;
             }
         }
 
@@ -270,7 +304,54 @@ class UsersController extends AppController
             $weekRange = $upcomingDays[0]->format('j M') . ' - ' . $upcomingDays[6]->format('j M Y');
         }
 
-        $this->set(compact('totalProducts', 'totalUsers', 'totalEnquiries', 'revenueStats', 'lowStockProducts', 'schedule', 'upcomingDays', 'weekRange'));
+        $revenueTrendWeek = [];
+        foreach (array_slice($dailySales, -7, 7, true) as $dateStr => $amount) {
+            $revenueTrendWeek[] = ['date' => $dateStr, 'amount' => $amount, 'label' => (new \DateTime($dateStr))->format('D')];
+        }
+        $revenueTrendMonth = [];
+        foreach ($dailySales as $dateStr => $amount) {
+            $revenueTrendMonth[] = ['date' => $dateStr, 'amount' => $amount, 'label' => (new \DateTime($dateStr))->format('j M')];
+        }
+        $revenueTrendYear = [];
+        foreach ($monthlySales as $monthStr => $amount) {
+            $revenueTrendYear[] = ['date' => $monthStr, 'amount' => $amount, 'label' => (new \DateTime($monthStr . '-01'))->format('M')];
+        }
+
+        $topSellingProducts = $this->fetchTable('OrderItems')->find();
+        $topSellingProducts
+            ->select([
+                'product_id' => 'OrderItems.product_id',
+                'units_sold' => $topSellingProducts->func()->sum('OrderItems.quantity'),
+            ])
+            ->innerJoinWith('Orders', fn ($q) => $q->where(['Orders.status' => 'paid']))
+            ->groupBy('OrderItems.product_id')
+            ->orderBy(['units_sold' => 'DESC'])
+            ->limit(5);
+        $topSellingProducts = $topSellingProducts->all();
+
+        $topProductIds = array_column($topSellingProducts->toList(), 'product_id');
+        $topProductsById = [];
+        if ($topProductIds) {
+            foreach ($productsTable->find()->where(['id IN' => $topProductIds])->contain(['ProductImages']) as $p) {
+                $topProductsById[$p->id] = $p;
+            }
+        }
+
+        $this->set(compact(
+            'totalProducts',
+            'totalUsers',
+            'totalEnquiries',
+            'revenueStats',
+            'revenueTrendWeek',
+            'revenueTrendMonth',
+            'revenueTrendYear',
+            'topSellingProducts',
+            'topProductsById',
+            'lowStockProducts',
+            'schedule',
+            'upcomingDays',
+            'weekRange'
+        ));
         $this->set('authUser', $identity);
 
         return null;

@@ -66,7 +66,7 @@ class AppController extends Controller
         }, 'default');
         $this->set('footerLocation', $footerLocation);
 
-        $identity = $this->Authentication->getIdentity();
+        $identity = $this->components()->has('Authentication') ? $this->Authentication->getIdentity() : null;
         if ($identity) {
             $wishlistCount = $this->fetchTable('Wishlists')
                 ->find()

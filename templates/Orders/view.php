@@ -4,12 +4,9 @@
  * @var \App\Model\Entity\Order $order
  */
 $this->assign('title', 'Order ' . $order->id);
+$this->assign('crumbRecord', 'Order #' . h($order->id));
 ?>
 <?php $this->Html->css('admincontact', ['block' => true]); ?>
-
-<div class="admin-wrapper">
-    <div class="orders view content">
-        <?= $this->Html->link(__('← Back'), ['action' => 'index'], ['class' => 'back-link']) ?>
 
         <div class="page-header-row">
             <div>
@@ -113,6 +110,3 @@ $this->assign('title', 'Order ' . $order->id);
         <?php else: ?>
             <p class="text-muted">No items found for this order.</p>
         <?php endif; ?>
-
-    </div>
-</div>

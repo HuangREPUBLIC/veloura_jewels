@@ -4,14 +4,10 @@
  * @var \App\Model\Entity\User $user
  */
 $this->assign('title', 'View User');
+$this->assign('crumbRecord', h($user->email));
 ?>
 <?php $this->Html->css('admincontact', ['block' => true]); ?>
 <?php $role = $this->request->getAttribute('identity')->get('role'); ?>
-
-
-<div class="admin-wrapper">
-    <div class="users view content">
-        <?= $this->Html->link(__('← Back'), ['action' => 'index'], ['class' => 'back-link']) ?>
 
         <div class="page-header-row">
             <div>
@@ -24,7 +20,7 @@ $this->assign('title', 'View User');
 
             <div class="action-buttons">
                 <?php if ($role === 'admin'): ?>
-                    <?= $this->Html->link(__('Edit'), ['action' => 'edit', $user->id], ['class' => 'btn-edit']) ?>
+                    <?= $this->Html->link(__('Edit'), ['action' => 'edit', $user->id], ['class' => 'btn-sm']) ?>
                 <?php endif; ?>
 
                 <?php if ($role === 'admin' && $user->id !== $identity->get('id')): ?>
@@ -33,7 +29,7 @@ $this->assign('title', 'View User');
                         ['action' => 'delete', $user->id],
                         [
                             'confirm' => __('Are you sure you want to delete # {0}?', $user->id),
-                            'class' => 'btn-delete',
+                            'class' => 'btn-sm btn-sm--danger',
                         ]
                     ) ?>
                 <?php endif; ?>
@@ -74,5 +70,3 @@ $this->assign('title', 'View User');
                 <td><?= h($user->modified) ?></td>
             </tr>
         </table>
-    </div>
-</div>

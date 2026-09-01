@@ -1,9 +1,9 @@
 <?php
 /**
- * Admin shell layout: sidebar + topbar, used only by the /dashboard page
- * (UsersController::dashboard() sets this via setLayout('admin')). Other
- * admin pages (Products, Orders, Users...) still use the public
- * templates/layout/default.php with the admin-wrapper card style.
+ * Admin shell layout: sidebar + topbar. Set via setLayout('admin') from
+ * Dashboard, Products, Orders, Users, ContactSubmissions, Cms and Schedule
+ * controllers. Content renders flush against this shell (no boxed card
+ * wrapper) - see admin-layout.css / admin-shell.css.
  *
  * @var \App\View\AppView $this
  */
@@ -44,6 +44,7 @@
         </div>
     </div>
 
+    <?= $this->element('confirm_delete') ?>
     <?= $this->Html->script('admin-shell') ?>
 </body>
 </html>

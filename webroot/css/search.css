@@ -15,10 +15,11 @@
     text-align: center;
 }
 
-.search-results-title {
-    font-size: clamp(1.5rem, 2vw, 2rem);
-    font-weight: 400;
-    letter-spacing: 0.08em;
+.search-results-bar .search-results-title {
+    font-family: var(--font-serif);
+    font-size: clamp(1.9rem, 2.6vw, 2.6rem);
+    font-weight: 500;
+    letter-spacing: 0.01em;
     color: var(--color-ink);
     margin: 0 0 0.5rem;
 }

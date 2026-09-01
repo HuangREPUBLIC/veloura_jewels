@@ -2,85 +2,78 @@
 /**
  * @var \App\View\AppView $this
  * @var iterable<\App\Model\Entity\User> $users
+ * @var string $q
  */
 $this->assign('title', 'Users');
-$this->Html->css('https://cdn.datatables.net/2.2.2/css/dataTables.dataTables.min.css', ['block' => true]);
-$this->Html->script('https://code.jquery.com/jquery-3.6.0.min.js', ['block' => true]);
-$this->Html->script('https://cdn.datatables.net/2.2.2/js/dataTables.min.js', ['block' => true]);
 $identity = $this->request->getAttribute('identity');
+$role = $identity->get('role');
 ?>
-<?php $this->Html->css('admincontact', ['block' => true]); ?>
-<?php $role = $this->request->getAttribute('identity')->get('role'); ?>
 
-
-<div class="admin-wrapper">
-    <div class="users index content">
-        <?= $this->Html->link(__('← Back'), ['controller' => 'Users', 'action' => 'dashboard'], ['class' => 'back-link']) ?>
-
-        <div class="page-header-row">
-            <div>
-                <h3 class="page-title"><?= __('Users') ?></h3>
-            </div>
-
-            <?php if ($role === 'admin'): ?>
-                <?= $this->Html->link('Schedule', ['controller' => 'Schedule', 'action' => 'index'], ['class' => 'btn-new-product']) ?>
-            <?php endif; ?>
-        </div>
-
-        <div class="table-responsive" style="padding: 10px">
-            <table id="usersTable" class="display">
-                <thead>
-                <tr>
-                    <th>Email</th>
-                    <th>Name</th>
-                    <th>Role</th>
-                    <th>Created</th>
-                    <th class="actions"><?= __('Actions') ?></th>
-                </tr>
-                </thead>
-                <tbody>
-                <?php foreach ($users as $user): ?>
-                    <tr>
-                        <td><?= h($user->email) ?></td>
-                        <td><?= h(trim($user->first_name . ' ' . $user->last_name)) ?: '<span style="color:#bbb">—</span>' ?></td>
-                        <td><span class="role-pill role-pill-<?= h($user->role) ?>"><?= h($user->role) ?></span></td>
-                        <td><?= h($user->created) ?></td>
-                        <td class="actions">
-                            <?= $this->Html->link(__('View'), ['action' => 'view', $user->id], ['class' => 'btn-view']) ?>
-
-                            <?php if ($role === 'admin'): ?>
-                                <?= $this->Html->link(__('Edit'), ['action' => 'edit', $user->id], ['class' => 'btn-edit']) ?>
-                            <?php endif; ?>
-
-                            <?php if ($role === 'admin' && $user->id !== $identity->get('id') && $user->id !== 6): ?>
-                                <?= $this->Form->postLink(
-                                    __('Delete'),
-                                    ['action' => 'delete', $user->id],
-                                    [
-                                        'method'  => 'delete',
-                                        'confirm' => __('Are you sure you want to delete {0}?', $user->email),
-                                        'class'   => 'btn-delete',
-                                    ]
-                                ) ?>
-                            <?php endif; ?>
-                        </td>
-                    </tr>
-                <?php endforeach; ?>
-                </tbody>
-            </table>
-        </div>
+<div class="page-header-row">
+    <div>
+        <p class="cms-eyebrow">Admin</p>
+        <h2 class="page-title">Users</h2>
+    </div>
+    <div class="cms-header-right">
+        <?= $this->element('per_page_select') ?>
+        <?php if ($role === 'admin'): ?>
+            <?= $this->Html->link(__('Schedule'), ['controller' => 'Schedule', 'action' => 'index'], ['class' => 'btn-sm']) ?>
+        <?php endif; ?>
     </div>
 </div>
 
-<script>
-    $(document).ready(function() {
-        $('#usersTable').DataTable({
-            order: [[3, 'desc']],
-            language: {
-                lengthMenu: '_MENU_ Entries Per Page',
-                search: 'Search:'
-            },
-            columnDefs: [{ targets: [0, 1, 2, 3], searchable: true }]
-        });
-    });
-</script>
+<?= $this->Form->create(null, ['type' => 'get', 'class' => 'admin-search']) ?>
+    <input type="text" name="q" value="<?= h($q) ?>" placeholder="Search by name or email" class="admin-search__input">
+    <button type="submit" class="btn-sm"><?= $this->iconSvg('search') ?></button>
+<?= $this->Form->end() ?>
+
+<div class="table-wrap">
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th><?= $this->Paginator->sort('email') ?></th>
+                <th>Name</th>
+                <th><?= $this->Paginator->sort('role') ?></th>
+                <th><?= $this->Paginator->sort('created') ?></th>
+                <th class="actions"><?= __('Actions') ?></th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($users as $user): ?>
+                <tr>
+                    <td><?= h($user->email) ?></td>
+                    <td><?= h(trim($user->first_name . ' ' . $user->last_name)) ?: '—' ?></td>
+                    <td><span class="status-badge <?= $user->role === 'admin' ? 'status-badge--info' : 'status-badge--neutral' ?>"><?= h(ucfirst($user->role)) ?></span></td>
+                    <td><?= h($user->created->format('d M Y')) ?></td>
+                    <td class="actions">
+                        <?= $this->Html->link(
+                            $this->iconSvg('eye'),
+                            ['action' => 'view', $user->id],
+                            ['escape' => false, 'aria-label' => __('View')],
+                        ) ?>
+                        <?php if ($role === 'admin'): ?>
+                            <?= $this->Html->link(
+                                $this->iconSvg('edit'),
+                                ['action' => 'edit', $user->id],
+                                ['escape' => false, 'aria-label' => __('Edit')],
+                            ) ?>
+                            <?php if ($user->id !== $identity->get('id') && $user->id !== 6): ?>
+                                <button
+                                    type="button"
+                                    class="btn-sm btn-sm--danger"
+                                    aria-label="<?= h(__('Delete')) ?>"
+                                    data-confirm-delete
+                                    data-delete-url="<?= h($this->Url->build(['action' => 'delete', $user->id])) ?>"
+                                    data-confirm-title="<?= h(__('Delete {0}?', $user->email)) ?>"
+                                    data-confirm-body="<?= h(__('This removes their account. This cannot be undone.')) ?>"
+                                ><?= $this->iconSvg('trash') ?></button>
+                            <?php endif; ?>
+                        <?php endif; ?>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+<?= $this->element('paginator') ?>

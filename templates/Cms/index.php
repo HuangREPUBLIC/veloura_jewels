@@ -9,22 +9,22 @@
  */
 
 $this->assign('title', 'Content Management');
+$this->assign('crumbRecord', h($currentPage->title));
 $this->Html->css('admincontact', ['block' => true]);
 
 $saveUrl    = ['action' => 'index', $pageSlug];
 $faqSaveUrl = ['action' => 'faqItemSave'];
 ?>
 
-<div class="admin-wrapper">
-    <div class="siteSettings index content">
-        <?= $this->Html->link('← Back', ['controller' => 'Users', 'action' => 'dashboard'], ['class' => 'back-link']) ?>
-
-        <?= $this->Flash->render() ?>
+<?= $this->Flash->render() ?>
 
         <?= $this->Form->create(null, ['url' => $saveUrl, 'method' => 'post', 'enctype' => 'multipart/form-data']) ?>
 
         <div class="page-header-row">
-            <h3 class="page-title">Content Management: <?= h($currentPage->title) ?></h3>
+            <div>
+                <p class="cms-eyebrow">Admin</p>
+                <h3 class="page-title">Content Management: <?= h($currentPage->title) ?></h3>
+            </div>
             <div class="cms-header-right">
                 <select class="cms-page-select" onchange="window.location=this.value">
                     <?php foreach ($pages as $p): ?>
@@ -161,8 +161,6 @@ $faqSaveUrl = ['action' => 'faqItemSave'];
         }
         </script>
         <?php endif; ?>
-    </div>
-</div>
 
 
 <script>

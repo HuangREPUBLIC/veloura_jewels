@@ -15,85 +15,107 @@ $this->Html->css('schedule', ['block' => true]);
 
 $role = $authUser->get('role');
 $todayStr = (new DateTime('today'))->format('Y-m-d');
-
-// Stat tile: label + colour-coded icon chip on top, big count below, then a
-// "View X" footer row so the card reads as info-plus-an-action rather than
-// just a nav duplicate. These are counts the sidebar nav can't show — items
-// with nothing to count (Staff Schedule, CMS) stay sidebar-only. Accent
-// alternates emerald/gold across a section so the row reads apart.
-$arrowIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>';
-$accents = ['', 'gold'];
-$accentIndex = 0;
-$statTile = function (string $icon, int $value, string $label, array $url) use (&$accentIndex, $accents, $arrowIcon) {
-    $accent = $accents[$accentIndex++ % count($accents)];
-    $iconClass = 'stat-card__icon' . ($accent ? ' stat-card__icon--' . $accent : '');
-
-    $inner = '<span class="stat-card__top">'
-        . '<span class="stat-card__label">' . h($label) . '</span>'
-        . '<span class="' . $iconClass . '">' . $this->iconSvg($icon) . '</span>'
-        . '</span>'
-        . '<span class="stat-card__value">' . h((string)$value) . '</span>'
-        . '<span class="stat-card__footer">View ' . h($label) . $arrowIcon . '</span>';
-
-    return $this->Html->link($inner, $url, ['class' => 'stat-card', 'escape' => false]);
-};
 ?>
 
 <div class="page-header-row">
     <div>
         <h2 class="page-title">Hi, <?= h($authUser->first_name) ?></h2>
+        <p class="page-subtitle">Here's how Veloura Jewels is doing today.</p>
+    </div>
+    <div class="dash-date-chip">
+        <?= $this->iconSvg('calendar') ?>
+        <?= h((new DateTime('today'))->format('l, j F Y')) ?>
     </div>
 </div>
 
+<?php
+$renderBars = function (array $trend) use ($todayStr) {
+    $max = 0.0;
+    foreach ($trend as $d) {
+        $max = max($max, $d['amount']);
+    }
+    if ($max <= 0) {
+        echo '<p class="revenue-chart-empty">No sales in this period.</p>';
+        return;
+    }
+    $count = count($trend);
+    foreach ($trend as $i => $d) {
+        $pct = $max > 0 ? round(($d['amount'] / $max) * 100, 1) : 0;
+        $isToday = $d['date'] === $todayStr;
+        $showLabel = $count <= 12 || $i === 0 || $i === $count - 1 || $i % 6 === 0;
+        echo '<div class="revenue-bar-col">'
+            . '<div class="revenue-bar-track">'
+            . '<div class="revenue-bar' . ($isToday ? ' revenue-bar--today' : '') . '" style="height: ' . $pct . '%" aria-label="' . h($d['label']) . ': $' . number_format($d['amount'], 2) . '"></div>'
+            . '</div>'
+            . '<span class="revenue-bar-label">' . ($showLabel ? h($d['label']) : '') . '</span>'
+            . '</div>';
+    }
+};
+?>
 <section class="dash-section">
-    <div class="orders-summary-header">
-        <div>
-            <h4>Revenue Summary</h4>
-            <p>Track sales and estimated profit across different time periods.</p>
-        </div>
-    </div>
-
-    <div class="orders-stat-cards">
-        <?php foreach ([
-            'Today'      => $revenueStats['today'],
-            'This Week'  => $revenueStats['week'],
-            'This Month' => $revenueStats['month'],
-            'All Time'   => $revenueStats['all'],
-        ] as $label => $s): ?>
-            <div class="orders-stat-card">
-                <div class="stat-top">
-                    <span class="stat-label"><?= h($label) ?></span>
-                    <span class="stat-currency">AUD</span>
+    <div class="revenue-panel">
+        <div class="revenue-panel-header">
+            <div>
+                <h4>Revenue</h4>
+                <p>Estimated profit is sales minus each item's purchase price.</p>
+            </div>
+            <div class="revenue-panel-stats">
+                <div class="revenue-stat">
+                    <span class="revenue-stat-label">This Month</span>
+                    <span class="revenue-stat-value">$<?= number_format($revenueStats['month']['profit'], 2) ?></span>
+                    <span class="revenue-stat-sub">Sales $<?= number_format($revenueStats['month']['sales'], 2) ?></span>
                 </div>
-
-                <div class="stat-main">
-                    $<?= number_format($s['profit'], 2) ?>
-                </div>
-
-                <div class="stat-sub">
-                    Sales $<?= number_format($s['sales'], 2) ?>
+                <div class="revenue-stat">
+                    <span class="revenue-stat-label">All Time</span>
+                    <span class="revenue-stat-value">$<?= number_format($revenueStats['all']['profit'], 2) ?></span>
+                    <span class="revenue-stat-sub">Sales $<?= number_format($revenueStats['all']['sales'], 2) ?></span>
                 </div>
             </div>
-        <?php endforeach; ?>
+        </div>
+
+        <div class="revenue-panel-chart-head">
+            <span>Sales</span>
+            <div class="revenue-chart-tabs" role="tablist">
+                <button type="button" class="revenue-chart-tab" data-chart-tab="week" role="tab">Week</button>
+                <button type="button" class="revenue-chart-tab is-active" data-chart-tab="month" role="tab" aria-selected="true">Month</button>
+                <button type="button" class="revenue-chart-tab" data-chart-tab="year" role="tab">Year</button>
+            </div>
+        </div>
+        <div class="revenue-chart" data-chart-panel="week" hidden><?php $renderBars($revenueTrendWeek); ?></div>
+        <div class="revenue-chart" data-chart-panel="month"><?php $renderBars($revenueTrendMonth); ?></div>
+        <div class="revenue-chart" data-chart-panel="year" hidden><?php $renderBars($revenueTrendYear); ?></div>
     </div>
 </section>
 
 <section class="dash-section">
-    <div class="dash-subhead"><h3>Store</h3></div>
-    <div class="tile-grid">
-        <?= $statTile('tag', $totalProducts, 'Products', ['controller' => 'Products', 'action' => 'index']) ?>
-        <?= $statTile('mail', $totalEnquiries, 'Contact Submissions', ['controller' => 'ContactSubmissions', 'action' => 'index']) ?>
-    </div>
-</section>
-
-<?php if ($role === 'admin'): ?>
-    <section class="dash-section">
-        <div class="dash-subhead"><h3>Admin</h3></div>
-        <div class="tile-grid">
-            <?= $statTile('user', $totalUsers, 'Users', ['controller' => 'Users', 'action' => 'index']) ?>
+    <div class="dash-subhead"><h3>Top Selling Products</h3></div>
+    <?php if ($topSellingProducts->isEmpty()): ?>
+        <div class="admin-empty-state">
+            <span class="admin-empty-state__icon"><?= $this->iconSvg('tag') ?></span>
+            <p class="admin-empty-state__title">No sales yet</p>
         </div>
-    </section>
-<?php endif; ?>
+    <?php else: ?>
+        <div class="top-products-list">
+            <?php foreach ($topSellingProducts as $row):
+                $product = $topProductsById[$row->product_id] ?? null;
+                if (!$product) {
+                    continue;
+                }
+                $img = !empty($product->product_images) ? $product->product_images[0]->filename : null;
+                ?>
+                <?= $this->Html->link(
+                    ($img
+                        ? $this->Html->image('products/' . $img, ['alt' => '', 'class' => 'top-product-thumb'])
+                        : '<span class="top-product-thumb top-product-thumb--empty"></span>')
+                    . '<span class="top-product-name">' . h($product->name) . '</span>'
+                    . '<span class="top-product-units">' . (int)$row->units_sold . ' sold</span>',
+                    ['controller' => 'Products', 'action' => 'view', $product->id],
+                    ['class' => 'top-product-row', 'escape' => false]
+                ) ?>
+            <?php endforeach; ?>
+        </div>
+    <?php endif; ?>
+</section>
 
 <?php if ($role === 'staff' && !empty($upcomingDays)): ?>
     <div class="dashboard-schedule">

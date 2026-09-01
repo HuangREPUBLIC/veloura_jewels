@@ -22,7 +22,7 @@ $todayStr = (new DateTime('today'))->format('Y-m-d');
     <div class="sched-header">
 
         <div class="sched-header-left">
-            <?= $this->Html->link('← Back', ['controller' => 'Users', 'action' => 'dashboard'], ['class' => 'back-link']) ?>
+            <p class="cms-eyebrow">Store</p>
             <h3 class="page-title"><?= $this->fetch('title') ?></h3>
         </div>
 

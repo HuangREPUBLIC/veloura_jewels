@@ -218,7 +218,7 @@ class JewelryController extends AppController
 
     public function view($id = null)
     {
-        $product = $this->Products->get($id, contain: ['ProductImages', 'ProductVariants']);
+        $product = $this->Products->get($id, contain: ['ProductImages', 'ProductVariants', 'Category']);
         $section = str_starts_with($this->request->getPath(), '/home-decor') ? 'home_decor' : 'jewelry';
         $this->set(compact('product', 'section'));
     }

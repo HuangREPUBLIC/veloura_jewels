@@ -220,7 +220,7 @@ table.dataTable thead .sorting_desc:after {
     border-bottom: 1px solid var(--admin-border) !important;
     color: var(--admin-text);
     vertical-align: middle;
-    background: var(--admin-surface-alt) !important;
+    background: var(--admin-surface) !important;
 }
 
 #productsTable tbody td:first-child,
@@ -271,7 +271,7 @@ table.dataTable thead .sorting_desc:after {
     padding: 0.9rem 1.1rem;
     color: var(--admin-text);
     font-size: 0.9rem;
-    background: var(--admin-surface-alt);
+    background: var(--admin-surface);
     vertical-align: top;
     line-height: 1.6;
 }

@@ -4,12 +4,9 @@
  * @var \App\Model\Entity\ContactSubmission $contactSubmission
  */
 $this->assign('title', 'View Submission');
+$this->assign('crumbRecord', h($contactSubmission->first_name . ' ' . $contactSubmission->last_name));
 ?>
 <?php $this->Html->css('admincontact', ['block' => true]); ?>
-
-<div class="admin-wrapper">
-    <div class="contactSubmissions view content">
-        <?= $this->Html->link(__('← Back'), ['action' => 'index'], ['class' => 'back-link']) ?>
 
         <div class="page-header-row">
             <div>
@@ -17,11 +14,11 @@ $this->assign('title', 'View Submission');
             </div>
 
             <div class="action-buttons">
-                <?= $this->Html->link(__('Reply'), ['action' => 'reply', $contactSubmission->id], ['class' => 'btn-edit']) ?>
+                <?= $this->Html->link(__('Reply'), ['action' => 'reply', $contactSubmission->id], ['class' => 'btn-sm']) ?>
                 <?= $this->Form->postLink(
                     'Archive',
                     ['action' => 'archive', $contactSubmission->id],
-                    ['confirm' => 'Archive this submission?'],
+                    ['confirm' => 'Archive this submission?', 'class' => 'btn-sm btn-sm--danger'],
                 ) ?>
             </div>
         </div>
@@ -78,5 +75,3 @@ $this->assign('title', 'View Submission');
         <?php else: ?>
             <p class="text-muted"><?= __('No replies sent yet.') ?></p>
         <?php endif; ?>
-    </div>
-</div>

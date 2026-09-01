@@ -14,12 +14,6 @@ $this->Html->css('jewelry', ['block' => true]);
 ?>
 
 <div class="jewelry-page">
-    <section class="jewelry-hero">
-        <h1><?= h($pageContent['hero_heading'] ?? 'Our Home Decor Collection') ?></h1>
-        <p><?= h($pageContent['hero_subtext'] ?? '') ?></p>
-    </section>
-
-    <!-- Filter Bar -->
     <?php
     // Materialize categories so we can iterate it more than once safely.
     $categoriesArr = is_array($categories) ? $categories : iterator_to_array($categories);
@@ -30,7 +24,23 @@ $this->Html->css('jewelry', ['block' => true]);
             break;
         }
     }
+
+    $crumbs = [['label' => 'Home', 'url' => '/']];
+    $crumbs[] = $activeCategory
+        ? ['label' => 'Home Décor', 'url' => ['controller' => 'Jewelry', 'action' => 'homeDecor']]
+        : ['label' => 'Home Décor'];
+    if ($activeCategory) {
+        $crumbs[] = ['label' => $activeCategory->name];
+    }
     ?>
+    <?= $this->element('breadcrumb', ['crumbs' => $crumbs]) ?>
+
+    <section class="jewelry-hero">
+        <h1><?= h($pageContent['hero_heading'] ?? 'Our Home Decor Collection') ?></h1>
+        <p><?= h($pageContent['hero_subtext'] ?? '') ?></p>
+    </section>
+
+    <!-- Filter Bar -->
     <div class="jewelry-filter-bar">
         <?= $this->Form->create(null, [
             'type' => 'get',

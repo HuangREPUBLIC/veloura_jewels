@@ -23,6 +23,8 @@ $cakeDescription = 'Veloura Jewels';
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Editorial accent serif (--font-serif) for hero/brand-voice moments only; Raleway remains self-hosted for everything else -->
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
 
     <?= $this->Html->css(['normalize.min', 'fonts', 'tokens', 'base', 'navbar', 'components', 'search']) ?>
 

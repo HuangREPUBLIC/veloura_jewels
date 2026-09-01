@@ -705,7 +705,7 @@
     white-space: nowrap;
 }
 #wishlist-guest-toast a {
-    color: var(--champagne-gold, #c9a84c);
+    color: var(--earth-yellow);
     text-decoration: underline;
     pointer-events: all;
 }

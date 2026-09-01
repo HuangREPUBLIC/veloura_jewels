@@ -32,12 +32,45 @@ class OrdersController extends AppController
 
         $this->viewBuilder()->setLayout('admin');
 
-        $orders = $this->Orders->find()
-            ->contain(['OrderItems' => ['Products']])
-            ->orderBy(['Orders.created' => 'DESC'])
-            ->all();
+        $now        = new \DateTime();
+        $todayStr   = $now->format('Y-m-d');
+        $weekAgo    = (clone $now)->modify('-7 days')->setTime(0, 0, 0);
+        $monthStart = (clone $now)->modify('first day of this month')->setTime(0, 0, 0);
 
-        $this->set(compact('orders'));
+        $q        = (string)$this->request->getQuery('q', '');
+        $status   = (string)$this->request->getQuery('status', '');
+        $range    = (string)$this->request->getQuery('range', '');
+        $dateFrom = (string)$this->request->getQuery('date_from', '');
+        $dateTo   = (string)$this->request->getQuery('date_to', '');
+
+        $query = $this->Orders->find()->contain(['OrderItems' => ['Products']]);
+        if ($q !== '') {
+            $query->where(['Orders.customer_email LIKE' => '%' . $q . '%']);
+        }
+        if ($status !== '') {
+            $query->where(['Orders.status' => $status]);
+        }
+        if ($dateFrom !== '' || $dateTo !== '') {
+            if ($dateFrom !== '') {
+                $query->where(['Orders.created >=' => $dateFrom . ' 00:00:00']);
+            }
+            if ($dateTo !== '') {
+                $query->where(['Orders.created <=' => $dateTo . ' 23:59:59']);
+            }
+        } elseif ($range === 'today') {
+            $query->where(['Orders.created >=' => $todayStr . ' 00:00:00']);
+        } elseif ($range === 'week') {
+            $query->where(['Orders.created >=' => $weekAgo]);
+        } elseif ($range === 'month') {
+            $query->where(['Orders.created >=' => $monthStart]);
+        }
+
+        $orders = $this->paginate($query, [
+            'limit' => (int)$this->request->getQuery('limit', 10),
+            'order' => ['Orders.created' => 'DESC'],
+        ]);
+
+        $this->set(compact('orders', 'q', 'status', 'range', 'dateFrom', 'dateTo'));
     }
 
     /**

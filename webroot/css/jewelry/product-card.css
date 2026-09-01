@@ -56,10 +56,10 @@
 }
 
 .jewelry-page .jewelry-hero h1 {
-    font-family: var(--font-display);
-    font-size: 3rem;
-    font-weight: 400;
-    letter-spacing: 0.04em;
+    font-family: var(--font-serif);
+    font-size: clamp(2.6rem, 5vw, 3.6rem);
+    font-weight: 500;
+    letter-spacing: 0.005em;
     margin-bottom: 0.6rem;
     color: var(--color-headings);
 }
@@ -71,6 +71,39 @@
     font-weight: 400;
     letter-spacing: 0.06em;
     margin: 0;
+}
+
+/* Breadcrumb trail - templates/element/breadcrumb.php */
+.jewelry-page .crumb-trail {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.45rem;
+    font-family: var(--font-body);
+    font-size: 0.76rem;
+    letter-spacing: 0.03em;
+    color: var(--color-text-muted);
+    margin-bottom: 1.6rem;
+}
+
+.jewelry-page .crumb-link {
+    color: var(--color-text-muted);
+    text-decoration: none;
+    transition: color 0.18s ease;
+}
+
+.jewelry-page .crumb-link:hover {
+    color: var(--emerald);
+}
+
+.jewelry-page .crumb-sep {
+    color: rgba(0, 0, 0, 0.2);
+    font-size: 0.7rem;
+}
+
+.jewelry-page .crumb-current {
+    color: var(--emerald-dark);
+    font-weight: 600;
 }
 
 .jewelry-page .empty-state {
@@ -220,15 +253,15 @@
 }
 
 .product-badge--bestsales {
-    color: #9a7520;
+    color: var(--emerald-gold);
 }
 
 .product-price {
     font-family: var(--font-body);
     font-size: 0.82rem;
-    font-weight: 400;
+    font-weight: 600;
     letter-spacing: 0.02em;
-    color: var(--color-ink);
+    color: var(--color-price);
     margin: 0;
 }
 

@@ -4,14 +4,11 @@
  * @var \App\Model\Entity\Product $product
  */
 $this->assign('title', 'View Product');
+$this->assign('crumbRecord', h($product->name));
 
 $productType = $product->category->type ?? '';
 ?>
 <?php $this->Html->css('admincontact', ['block' => true]); ?>
-
-<div class="admin-wrapper">
-    <div class="products view content">
-        <?= $this->Html->link(__('← Back'), ['action' => 'index'], ['class' => 'back-link']) ?>
 
         <div class="page-header-row">
             <div>
@@ -22,13 +19,13 @@ $productType = $product->category->type ?? '';
 
             <div class="action-buttons">
                 <?php if ($role === 'admin'): ?>
-                    <?= $this->Html->link(__('Edit'), ['action' => 'edit', $product->id], ['class' => 'btn-edit']) ?>
+                    <?= $this->Html->link(__('Edit'), ['action' => 'edit', $product->id], ['class' => 'btn-sm']) ?>
                     <?= $this->Form->postLink(
                         __('Delete'),
                         ['action' => 'delete', $product->id],
                         [
                             'confirm' => __('Are you sure you want to delete # {0}?', $product->id),
-                            'class'   => 'btn-delete',
+                            'class'   => 'btn-sm btn-sm--danger',
                         ]
                     ) ?>
                 <?php endif; ?>
@@ -117,5 +114,3 @@ $productType = $product->category->type ?? '';
                 </td>
             </tr>
         </table>
-    </div>
-</div>
