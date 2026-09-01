@@ -22,6 +22,8 @@ class ProductsController extends AppController
             $this->Flash->error('You do not have permission to access product management.');
             return $this->redirect('/');
         }
+
+        $this->viewBuilder()->setLayout('admin');
     }
 
     public function index()

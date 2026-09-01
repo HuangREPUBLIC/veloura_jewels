@@ -40,6 +40,8 @@ class ScheduleController extends AppController
             return $this->redirect(['action' => 'index']);
         }
 
+        $this->viewBuilder()->setLayout('admin');
+
         return null;
     }
 

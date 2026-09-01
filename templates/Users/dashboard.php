@@ -5,7 +5,7 @@
  * @var int $totalProducts
  * @var int $totalUsers
  * @var int $totalEnquiries
- * @var int $totalOrders
+ * @var array<string, array{sales: float, profit: float}> $revenueStats
  * @var \Cake\ORM\ResultSet $lowStockProducts
  */
 
@@ -16,146 +16,147 @@ $this->Html->css('schedule', ['block' => true]);
 $role = $authUser->get('role');
 $todayStr = (new DateTime('today'))->format('Y-m-d');
 
-$cards = [
-    [
-        'title' => 'Products',
-        'value' => $totalProducts,
-        'url'   => ['controller' => 'Products', 'action' => 'index'],
-        'icon'  => '<path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/>',
-        'admin' => false,
-    ],
-    [
-        'title' => 'Orders',
-        'value' => $totalOrders,
-        'url'   => ['controller' => 'Orders', 'action' => 'index'],
-        'icon'  => '<path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/>',
-        'admin' => false,
-    ],
-    [
-        'title' => 'Contact Submissions',
-        'value' => $totalEnquiries,
-        'url'   => ['controller' => 'ContactSubmissions', 'action' => 'index'],
-        'icon'  => '<path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>',
-        'admin' => false,
-    ],
-    [
-        'title' => 'Staff Schedule',
-        'value' => null,
-        'url'   => ['controller' => 'Schedule', 'action' => 'index'],
-        'icon'  => '<rect x="3" y="4" width="18" height="17" rx="2"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h18"/>',
-        'admin' => false,
-    ],
-    [
-        'title' => 'Users',
-        'value' => $totalUsers,
-        'url'   => ['controller' => 'Users', 'action' => 'index'],
-        'icon'  => '<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>',
-        'admin' => true,
-    ],
-    [
-        'title' => 'Content Management System',
-        'value' => null,
-        'url'   => ['controller' => 'Cms', 'action' => 'index'],
-        'icon'  => '<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5z"/><path d="M8 7h8"/><path d="M8 11h6"/>',
-        'admin' => true,
-    ],
-];
+// Stat tile: label + colour-coded icon chip on top, big count below, then a
+// "View X" footer row so the card reads as info-plus-an-action rather than
+// just a nav duplicate. These are counts the sidebar nav can't show — items
+// with nothing to count (Staff Schedule, CMS) stay sidebar-only. Accent
+// alternates emerald/gold across a section so the row reads apart.
+$arrowIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>';
+$accents = ['', 'gold'];
+$accentIndex = 0;
+$statTile = function (string $icon, int $value, string $label, array $url) use (&$accentIndex, $accents, $arrowIcon) {
+    $accent = $accents[$accentIndex++ % count($accents)];
+    $iconClass = 'stat-card__icon' . ($accent ? ' stat-card__icon--' . $accent : '');
+
+    $inner = '<span class="stat-card__top">'
+        . '<span class="stat-card__label">' . h($label) . '</span>'
+        . '<span class="' . $iconClass . '">' . $this->iconSvg($icon) . '</span>'
+        . '</span>'
+        . '<span class="stat-card__value">' . h((string)$value) . '</span>'
+        . '<span class="stat-card__footer">View ' . h($label) . $arrowIcon . '</span>';
+
+    return $this->Html->link($inner, $url, ['class' => 'stat-card', 'escape' => false]);
+};
 ?>
 
-<div class="admin-wrapper">
-    <div class="admin-dashboard">
-
-        <div class="dashboard-hero">
-            <h1>Admin Dashboard</h1>
-            <p>Hi <?= h($authUser->first_name) ?>!</p>
-        </div>
-
-        <div class="dashboard-summary <?= $role === 'staff' ? 'dashboard-summary--grid-2x2' : '' ?>">
-            <?php foreach ($cards as $card): ?>
-                <?php if ($card['admin'] && $role !== 'admin') continue; ?>
-                <a href="<?= $this->Url->build($card['url']) ?>" class="dashboard-card">
-                    <div class="dashboard-icon">
-                        <svg width="26" height="26" viewBox="0 0 24 24"
-                             fill="none" stroke="#284d40" stroke-width="1.8"
-                             stroke-linecap="round" stroke-linejoin="round">
-                            <?= $card['icon'] ?>
-                        </svg>
-                    </div>
-                    <div class="dashboard-content">
-                        <h3><?= h($card['title']) ?></h3>
-                        <?php if ($card['value'] !== null): ?>
-                            <p><?= $card['value'] ?></p>
-                        <?php endif; ?>
-                    </div>
-                </a>
-            <?php endforeach; ?>
-        </div>
-
-        <?php if ($role === 'staff' && !empty($upcomingDays)): ?>
-            <div class="dashboard-schedule">
-                <div class="dashboard-schedule-header">
-                    <span class="dashboard-schedule-title">My Schedule</span>
-                    <span class="dashboard-schedule-range"><?= h($weekRange) ?></span>
-                    <?= $this->Html->link('View all', ['controller' => 'Schedule', 'action' => 'index'], ['class' => 'dashboard-schedule-link']) ?>
-                </div>
-
-                <div class="dashboard-schedule-grid">
-                    <?php foreach ($upcomingDays as $day): ?>
-                        <?php
-                        $dateStr = $day->format('Y-m-d');
-                        $shift = $schedule[$dateStr] ?? null;
-                        $isToday = $dateStr === $todayStr;
-                        ?>
-                        <div class="dashboard-schedule-day <?= $isToday ? 'dashboard-schedule-day--today' : '' ?> <?= $shift ? 'dashboard-schedule-day--on' : 'dashboard-schedule-day--off' ?>">
-                            <span class="dashboard-schedule-label"><?= h($day->format('D')) ?></span>
-                            <span class="dashboard-schedule-date"><?= h($day->format('j M')) ?></span>
-                            <?php if ($shift): ?>
-                                <span class="dashboard-schedule-time"><?= h($shift->time_range) ?></span>
-                            <?php else: ?>
-                                <span class="dashboard-schedule-off">Off</span>
-                            <?php endif; ?>
-                        </div>
-                    <?php endforeach; ?>
-                </div>
-            </div>
-        <?php endif; ?>
-
-        <?php if (!$lowStockProducts->isEmpty()): ?>
-            <div class="low-stock-warning">
-                <div class="low-stock-header">
-                    <div>
-                        <h3>Low Stock Products</h3>
-                    </div>
-                </div>
-
-                <div class="low-stock-list">
-                    <?php foreach ($lowStockProducts as $product): ?>
-                        <div class="low-stock-row">
-                            <div class="low-stock-row-top">
-                                <span class="low-stock-name"><?= h($product->name) ?></span>
-                                <?php if ($role === 'admin'): ?>
-                                    <?= $this->Html->link(
-                                        'Restock',
-                                        ['controller' => 'Products', 'action' => 'edit', $product->id],
-                                        ['class' => 'low-stock-btn']
-                                    ) ?>
-                                <?php endif; ?>
-                            </div>
-
-                            <div class="low-stock-pills">
-                                <?php foreach ($product->product_variants as $v): ?>
-                                    <?php if ($v->stock < 5): ?>
-                                        <span class="low-stock-pill <?= $v->stock === 0 ? 'pill-zero' : 'pill-low' ?>">
-                                            <?= h($v->size) ?>: <?= $v->stock ?>
-                                        </span>
-                                    <?php endif; ?>
-                                <?php endforeach; ?>
-                            </div>
-                        </div>
-                    <?php endforeach; ?>
-                </div>
-            </div>
-        <?php endif; ?>
-
+<div class="page-header-row">
+    <div>
+        <h2 class="page-title">Hi, <?= h($authUser->first_name) ?></h2>
     </div>
 </div>
+
+<section class="dash-section">
+    <div class="orders-summary-header">
+        <div>
+            <h4>Revenue Summary</h4>
+            <p>Track sales and estimated profit across different time periods.</p>
+        </div>
+    </div>
+
+    <div class="orders-stat-cards">
+        <?php foreach ([
+            'Today'      => $revenueStats['today'],
+            'This Week'  => $revenueStats['week'],
+            'This Month' => $revenueStats['month'],
+            'All Time'   => $revenueStats['all'],
+        ] as $label => $s): ?>
+            <div class="orders-stat-card">
+                <div class="stat-top">
+                    <span class="stat-label"><?= h($label) ?></span>
+                    <span class="stat-currency">AUD</span>
+                </div>
+
+                <div class="stat-main">
+                    $<?= number_format($s['profit'], 2) ?>
+                </div>
+
+                <div class="stat-sub">
+                    Sales $<?= number_format($s['sales'], 2) ?>
+                </div>
+            </div>
+        <?php endforeach; ?>
+    </div>
+</section>
+
+<section class="dash-section">
+    <div class="dash-subhead"><h3>Store</h3></div>
+    <div class="tile-grid">
+        <?= $statTile('tag', $totalProducts, 'Products', ['controller' => 'Products', 'action' => 'index']) ?>
+        <?= $statTile('mail', $totalEnquiries, 'Contact Submissions', ['controller' => 'ContactSubmissions', 'action' => 'index']) ?>
+    </div>
+</section>
+
+<?php if ($role === 'admin'): ?>
+    <section class="dash-section">
+        <div class="dash-subhead"><h3>Admin</h3></div>
+        <div class="tile-grid">
+            <?= $statTile('user', $totalUsers, 'Users', ['controller' => 'Users', 'action' => 'index']) ?>
+        </div>
+    </section>
+<?php endif; ?>
+
+<?php if ($role === 'staff' && !empty($upcomingDays)): ?>
+    <div class="dashboard-schedule">
+        <div class="dashboard-schedule-header">
+            <span class="dashboard-schedule-title">My Schedule</span>
+            <span class="dashboard-schedule-range"><?= h($weekRange) ?></span>
+            <?= $this->Html->link('View all', ['controller' => 'Schedule', 'action' => 'index'], ['class' => 'dashboard-schedule-link']) ?>
+        </div>
+
+        <div class="dashboard-schedule-grid">
+            <?php foreach ($upcomingDays as $day): ?>
+                <?php
+                $dateStr = $day->format('Y-m-d');
+                $shift = $schedule[$dateStr] ?? null;
+                $isToday = $dateStr === $todayStr;
+                ?>
+                <div class="dashboard-schedule-day <?= $isToday ? 'dashboard-schedule-day--today' : '' ?> <?= $shift ? 'dashboard-schedule-day--on' : 'dashboard-schedule-day--off' ?>">
+                    <span class="dashboard-schedule-label"><?= h($day->format('D')) ?></span>
+                    <span class="dashboard-schedule-date"><?= h($day->format('j M')) ?></span>
+                    <?php if ($shift): ?>
+                        <span class="dashboard-schedule-time"><?= h($shift->time_range) ?></span>
+                    <?php else: ?>
+                        <span class="dashboard-schedule-off">Off</span>
+                    <?php endif; ?>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    </div>
+<?php endif; ?>
+
+<?php if (!$lowStockProducts->isEmpty()): ?>
+    <div class="low-stock-warning">
+        <div class="low-stock-header">
+            <div>
+                <h3>Low Stock Products</h3>
+            </div>
+        </div>
+
+        <div class="low-stock-list">
+            <?php foreach ($lowStockProducts as $product): ?>
+                <div class="low-stock-row">
+                    <div class="low-stock-row-top">
+                        <span class="low-stock-name"><?= h($product->name) ?></span>
+                        <?php if ($role === 'admin'): ?>
+                            <?= $this->Html->link(
+                                'Restock',
+                                ['controller' => 'Products', 'action' => 'edit', $product->id],
+                                ['class' => 'low-stock-btn']
+                            ) ?>
+                        <?php endif; ?>
+                    </div>
+
+                    <div class="low-stock-pills">
+                        <?php foreach ($product->product_variants as $v): ?>
+                            <?php if ($v->stock < 5): ?>
+                                <span class="low-stock-pill <?= $v->stock === 0 ? 'pill-zero' : 'pill-low' ?>">
+                                    <?= h($v->size) ?>: <?= $v->stock ?>
+                                </span>
+                            <?php endif; ?>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    </div>
+<?php endif; ?>

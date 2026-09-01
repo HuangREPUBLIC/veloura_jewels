@@ -30,6 +30,8 @@ class OrdersController extends AppController
             return $this->redirect('/');
         }
 
+        $this->viewBuilder()->setLayout('admin');
+
         $orders = $this->Orders->find()
             ->contain(['OrderItems' => ['Products']])
             ->orderBy(['Orders.created' => 'DESC'])
@@ -49,6 +51,8 @@ class OrdersController extends AppController
             $this->Flash->error('You do not have permission to view this order.');
             return $this->redirect('/');
         }
+
+        $this->viewBuilder()->setLayout('admin');
 
         $order = $this->Orders->get($id, contain: ['OrderItems' => ['Products']]);
 

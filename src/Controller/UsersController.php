@@ -33,6 +33,8 @@ class UsersController extends AppController
             return $this->redirect('/');
         }
 
+        $this->viewBuilder()->setLayout('admin');
+
         $users = $this->Users->find()->all();
 
         $this->set(compact('users'));
@@ -54,6 +56,8 @@ class UsersController extends AppController
             return $this->redirect('/');
         }
 
+        $this->viewBuilder()->setLayout('admin');
+
         $user = $this->Users->get($id, contain: []);
         $this->set(compact('user'));
     }
@@ -73,6 +77,8 @@ class UsersController extends AppController
             $this->Flash->error('You do not have permission to do this.');
             return $this->redirect('/');
         }
+
+        $this->viewBuilder()->setLayout('admin');
 
         $user = $this->Users->get($id, contain: []);
 
@@ -156,6 +162,8 @@ class UsersController extends AppController
             return $this->redirect('/');
         }
 
+        $this->viewBuilder()->setLayout('admin');
+
         $productsTable = $this->fetchTable('Products');
         $usersTable = $this->fetchTable('Users');
         $contactSubmissionsTable = $this->fetchTable('ContactSubmissions');
@@ -173,7 +181,51 @@ class UsersController extends AppController
             ->all();
 
         $ordersTable = $this->fetchTable('Orders');
-        $totalOrders = $ordersTable->find()->count();
+
+        // Same revenue-by-period rollup as Orders/index.php's "Revenue Summary"
+        // panel, so the dashboard can show it without duplicating the plain
+        // Orders count the sidebar link already covers.
+        $now        = new \DateTime();
+        $todayStr   = $now->format('Y-m-d');
+        $weekAgo    = (clone $now)->modify('-7 days')->setTime(0, 0, 0);
+        $monthStart = (clone $now)->modify('first day of this month')->setTime(0, 0, 0);
+
+        $revenueStats = [
+            'today' => ['sales' => 0, 'profit' => 0],
+            'week'  => ['sales' => 0, 'profit' => 0],
+            'month' => ['sales' => 0, 'profit' => 0],
+            'all'   => ['sales' => 0, 'profit' => 0],
+        ];
+
+        $paidOrders = $ordersTable->find()
+            ->where(['Orders.status' => 'paid'])
+            ->contain(['OrderItems' => ['Products']])
+            ->all();
+
+        foreach ($paidOrders as $order) {
+            $profit = 0;
+            foreach ($order->order_items as $item) {
+                if ($item->product) {
+                    $profit += ($item->unit_price - $item->product->purchase_price) * $item->quantity;
+                }
+            }
+
+            $d = $order->created;
+            $revenueStats['all']['sales']  += $order->total_amount;
+            $revenueStats['all']['profit'] += $profit;
+            if ($d->format('Y-m-d') === $todayStr) {
+                $revenueStats['today']['sales']  += $order->total_amount;
+                $revenueStats['today']['profit'] += $profit;
+            }
+            if ($d >= $weekAgo) {
+                $revenueStats['week']['sales']  += $order->total_amount;
+                $revenueStats['week']['profit'] += $profit;
+            }
+            if ($d >= $monthStart) {
+                $revenueStats['month']['sales']  += $order->total_amount;
+                $revenueStats['month']['profit'] += $profit;
+            }
+        }
 
         $schedule     = [];
         $upcomingDays = [];
@@ -218,7 +270,7 @@ class UsersController extends AppController
             $weekRange = $upcomingDays[0]->format('j M') . ' - ' . $upcomingDays[6]->format('j M Y');
         }
 
-        $this->set(compact('totalProducts', 'totalUsers', 'totalEnquiries', 'totalOrders', 'lowStockProducts', 'schedule', 'upcomingDays', 'weekRange'));
+        $this->set(compact('totalProducts', 'totalUsers', 'totalEnquiries', 'revenueStats', 'lowStockProducts', 'schedule', 'upcomingDays', 'weekRange'));
         $this->set('authUser', $identity);
 
         return null;

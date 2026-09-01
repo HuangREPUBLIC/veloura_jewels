@@ -18,6 +18,8 @@ class CmsController extends AppController
             $this->Flash->error('Only admins can manage site content.');
             return $this->redirect('/');
         }
+
+        $this->viewBuilder()->setLayout('admin');
     }
 
     public function index(?string $pageSlug = null)

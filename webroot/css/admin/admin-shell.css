@@ -1,0 +1,442 @@
+/* Admin shell chrome: sidebar + topbar, wrapping templates/layout/admin.php,
+   now used by the dashboard plus Products/Orders/Users/ContactSubmissions/
+   Cms/Schedule. Stat-card dashboard tiles live here too. The flatten-old-
+   wrapper block near the end adapts the pre-shell .admin-wrapper card system
+   from admin-layout.css so it reads as one panel instead of a card nested
+   inside the shell's own content padding. Colours reuse the existing
+   --emerald/--admin-* palette, not new ones. */
+
+.admin-body {
+    background: var(--admin-bg);
+}
+
+.admin-shell {
+    display: flex;
+    min-height: 100vh;
+}
+
+.admin-sidebar {
+    width: 260px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    background: var(--admin-surface);
+    border-right: 1px solid var(--admin-border);
+    color: var(--admin-text);
+    padding: 20px 16px;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+}
+
+.admin-sidebar__profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px;
+    border-radius: 10px;
+    margin-bottom: 18px;
+    color: inherit;
+    text-decoration: none;
+    transition: background 0.15s ease;
+}
+.admin-sidebar__profile:hover { background: var(--admin-bg); }
+
+.admin-sidebar__avatar {
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--emerald-gold);
+    color: var(--emerald-dark);
+    font-family: var(--font-display);
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+
+.admin-sidebar__profile-info {
+    min-width: 0;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    line-height: 1.25;
+}
+.admin-sidebar__profile-name {
+    font-size: 0.86rem;
+    font-weight: 700;
+    color: var(--admin-text-dark);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.admin-sidebar__profile-role { font-size: 0.74rem; color: var(--color-lightgray); }
+.admin-sidebar__profile-chevron { flex-shrink: 0; width: 16px; height: 16px; color: var(--color-lightgray); }
+
+.admin-sidebar__brand {
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--admin-border);
+}
+.admin-sidebar__brand > a {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding-left: 8px;
+    text-decoration: none;
+}
+.admin-sidebar__logo {
+    height: 28px;
+    width: auto;
+    object-fit: contain;
+}
+.admin-sidebar__brand-text {
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+    color: var(--admin-text-dark);
+}
+
+.admin-sidebar__nav { flex: 1; }
+.admin-sidebar__group { margin-bottom: 24px; }
+
+.admin-sidebar__group-label {
+    display: block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-lightgray);
+    margin-bottom: 8px;
+    padding: 0 10px;
+}
+
+.admin-sidebar__link,
+.admin-sidebar__link:visited {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 10px 8px 9px;
+    border-radius: 10px;
+    color: var(--admin-text);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-bottom: 2px;
+    border-left: 2px solid transparent;
+    transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.admin-sidebar__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    border-radius: 999px;
+    color: var(--color-lightgray);
+    transition: background 0.15s ease, color 0.15s ease;
+}
+.admin-sidebar__icon svg { width: 16px; height: 16px; }
+
+.admin-sidebar__link:hover,
+.admin-sidebar__link:focus-visible {
+    background: var(--admin-bg);
+    color: var(--admin-text-dark);
+}
+
+.admin-sidebar__link.active,
+.admin-sidebar__link.active:visited {
+    background: var(--admin-bg);
+    border-left-color: var(--emerald);
+    color: var(--admin-text-dark);
+    font-weight: 600;
+}
+
+.admin-sidebar__link.active .admin-sidebar__icon {
+    background: var(--emerald);
+    color: #fff;
+}
+
+.admin-sidebar__link:hover .admin-sidebar__icon { color: var(--admin-text-dark); }
+
+.admin-shell__main {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.admin-topbar {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 14px 32px;
+    background: var(--admin-surface);
+    border-bottom: 1px solid var(--admin-border);
+}
+
+.admin-topbar__actions {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.admin-topbar__divider {
+    width: 1px;
+    height: 20px;
+    background: var(--admin-border);
+}
+
+.admin-topbar__view-site {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--emerald-dark);
+    text-decoration: none;
+    font-size: 0.86rem;
+    font-weight: 700;
+}
+.admin-topbar__view-site svg { width: 16px; height: 16px; }
+.admin-topbar__view-site:hover { color: var(--emerald); }
+
+.admin-topbar__signout {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    color: var(--admin-text);
+    transition: background 0.2s ease, color 0.2s ease;
+}
+.admin-topbar__signout svg { width: 16px; height: 16px; }
+.admin-topbar__signout:hover { background: var(--admin-bg); color: var(--admin-text-dark); }
+
+.admin-shell__main-content {
+    padding: 30px 36px 56px;
+    max-width: 1320px;
+}
+
+.admin-shell__menu-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: none;
+    border: none;
+    color: var(--admin-text);
+    cursor: pointer;
+    transition: background 0.15s ease;
+}
+.admin-shell__menu-toggle:hover { background: var(--admin-bg); }
+
+.admin-shell__menu-icon--burger { display: none; }
+
+/* Desktop: sidebar shown by default, this class collapses it to nothing. */
+@media (min-width: 901px) {
+    .admin-sidebar {
+        transition: width 0.2s ease, padding 0.2s ease;
+    }
+    .admin-shell--nav-toggled .admin-sidebar {
+        width: 0;
+        padding-left: 0;
+        padding-right: 0;
+        border-right-color: transparent;
+        overflow: hidden;
+    }
+}
+
+/* Mobile: burger icon instead of the panel icon (drawer, not collapse). */
+@media (max-width: 900px) {
+    .admin-shell__menu-icon--panel { display: none; }
+    .admin-shell__menu-icon--burger { display: block; }
+}
+
+.admin-shell__scrim {
+    display: none;
+}
+
+.admin-shell__flash { margin-bottom: 22px; }
+
+/* Dashboard sections + stat-card tiles */
+
+.dash-section { margin-bottom: 34px; }
+.dash-section:last-child { margin-bottom: 0; }
+
+.dash-subhead {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+.dash-subhead h3 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--admin-text-dark);
+    white-space: nowrap;
+    margin: 0;
+}
+.dash-subhead::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--admin-border);
+}
+
+.tile-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 14px;
+}
+
+.stat-card {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    background: var(--admin-surface);
+    border: 1px solid var(--admin-border);
+    border-radius: 16px;
+    padding: 20px;
+    color: inherit;
+    text-decoration: none;
+    transition: box-shadow 0.2s ease, transform 0.15s ease, border-color 0.2s ease;
+}
+
+.stat-card:hover {
+    box-shadow: 0 4px 16px rgba(var(--emerald-rgb), 0.09);
+    border-color: rgba(var(--emerald-rgb), 0.3);
+    transform: translateY(-1px);
+    color: inherit;
+    text-decoration: none;
+}
+
+.stat-card__top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.stat-card__label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--color-lightgray);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding-top: 4px;
+}
+
+.stat-card__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 38px;
+    height: 38px;
+    border-radius: 11px;
+    background: rgba(var(--emerald-rgb), 0.1);
+    color: var(--emerald);
+}
+.stat-card__icon svg { width: 18px; height: 18px; }
+
+.stat-card__icon--gold {
+    background: rgba(183, 151, 90, 0.16);
+    color: var(--emerald-gold);
+}
+
+.stat-card__value {
+    font-size: 1.9rem;
+    font-weight: 700;
+    color: var(--admin-text-dark);
+    line-height: 1.1;
+}
+
+.stat-card__footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding-top: 12px;
+    margin-top: auto;
+    border-top: 1px solid var(--admin-border);
+    font-size: 0.84rem;
+    font-weight: 600;
+    color: var(--emerald-dark);
+}
+.stat-card__footer svg { width: 15px; height: 15px; transition: transform 0.15s ease; }
+.stat-card:hover .stat-card__footer svg { transform: translateX(3px); }
+
+@media (max-width: 900px) {
+    .admin-sidebar {
+        position: fixed;
+        inset: 0 auto 0 0;
+        transform: translateX(-100%);
+        transition: transform 0.25s ease;
+        z-index: 40;
+        box-shadow: 0 16px 40px rgba(0, 0, 0, 0.2);
+    }
+    .admin-shell--nav-toggled .admin-sidebar { transform: translateX(0); }
+
+    .admin-shell__scrim {
+        display: block;
+        position: fixed;
+        inset: 0;
+        background: rgba(20, 30, 25, 0.45);
+        z-index: 30;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.25s ease;
+    }
+    .admin-shell--nav-toggled .admin-shell__scrim {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    .admin-topbar { padding: 12px 18px; }
+    .admin-shell__main-content { padding: 20px; }
+}
+
+@media (max-width: 640px) {
+    .admin-shell__main-content { padding: 16px; }
+}
+
+/* Flatten the pre-shell .admin-wrapper card system (admin-layout.css) so
+   Products/Orders/Users/ContactSubmissions/Cms read as one panel inside the
+   shell instead of a card nested inside the shell's own padded background —
+   the "form-template pasted into a frame" look. Scoped to .admin-shell__content
+   only, so pages still on the old default.php layout keep the original
+   boxed-card treatment untouched. */
+.admin-shell__content .admin-wrapper {
+    padding: 0;
+    background: transparent;
+    border-radius: 0;
+    min-height: auto;
+}
+
+.admin-shell__content .products.index.content,
+.admin-shell__content .products.view.content,
+.admin-shell__content .orders.index.content,
+.admin-shell__content .orders.view.content,
+.admin-shell__content .users.index.content,
+.admin-shell__content .users.view.content,
+.admin-shell__content .contactSubmissions.index.content,
+.admin-shell__content .contactSubmissions.view.content,
+.admin-shell__content .siteSettings.index.content {
+    background: var(--admin-surface);
+    border: 1px solid var(--admin-border);
+    border-radius: 16px;
+    box-shadow: none;
+    padding: 28px 32px;
+}

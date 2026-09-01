@@ -31,6 +31,8 @@ class ContactSubmissionsController extends AppController
      */
     public function index()
     {
+        $this->viewBuilder()->setLayout('admin');
+
         $contactSubmissions = $this->ContactSubmissions->find()->where(['archived' => false])->orderBy(['created' => 'DESC'])->all();
 
         $this->set(compact('contactSubmissions'));
@@ -51,6 +53,8 @@ class ContactSubmissionsController extends AppController
      */
     public function view($id = null)
     {
+        $this->viewBuilder()->setLayout('admin');
+
         $contactSubmission = $this->ContactSubmissions->get($id, contain: ['ContactReplies']);
 
         if ($contactSubmission->archived) {
@@ -225,6 +229,7 @@ class ContactSubmissionsController extends AppController
      */
     public function archived()
     {
+        $this->viewBuilder()->setLayout('admin');
 
         $contactSubmissions = $this->ContactSubmissions->find()
             ->where(['archived' => true])
