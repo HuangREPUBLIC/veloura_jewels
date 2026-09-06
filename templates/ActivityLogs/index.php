@@ -75,7 +75,23 @@ $this->assign('title', 'Activity Logs');
                             <span class="al-badge al-badge--<?= h($log->action) ?>"><?= h($log->action) ?></span>
                         </td>
                         <td><?= h($log->model) ?></td>
-                        <td><?= h($log->model_label ?: ('#' . $log->model_id)) ?></td>
+                        <?php $recordLabel = $log->model_label ?: ('#' . $log->model_id); ?>
+                        <?php if ($log->model === 'Product'): ?>
+                            <td class="product-cell">
+                                <div class="product-media">
+                                    <?php if (!empty($productImages[$log->model_id])): ?>
+                                        <img class="admin-thumb"
+                                             src="<?= $this->Url->image('products/' . h($productImages[$log->model_id])) ?>"
+                                             alt="">
+                                    <?php else: ?>
+                                        <span class="admin-thumb admin-thumb--empty"></span>
+                                    <?php endif; ?>
+                                    <span class="product-name"><?= h($recordLabel) ?></span>
+                                </div>
+                            </td>
+                        <?php else: ?>
+                            <td><?= h($recordLabel) ?></td>
+                        <?php endif; ?>
                         <td class="al-td-changes">
                             <?php if (!empty($log->changes)): ?>
                                 <?php foreach ($log->changes as $field => $diff): ?>

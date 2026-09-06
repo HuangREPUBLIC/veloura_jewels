@@ -19,7 +19,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <?= $this->Html->css(['normalize.min', 'fonts', 'tokens', 'base', 'components', 'admincontact']) ?>
+    <?= $this->Html->css([
+        'normalize.min', 'fonts', 'tokens', 'base', 'components',
+        'admin/admin-layout', 'admin/admin-tables', 'admin/admin-modals',
+        'admin/admin-shell', 'admin/admin-product-form',
+    ]) ?>
 
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>

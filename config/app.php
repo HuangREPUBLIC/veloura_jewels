@@ -91,7 +91,9 @@ return [
      * enable timestamping regardless of debug value.
      */
     'Asset' => [
-        //'timestamp' => true,
+        // 'force' rather than true: the deployed hosts run with debug off, and
+        // that is exactly where stale CSS was being served.
+        'timestamp' => 'force',
         // 'cacheTime' => '+1 year'
     ],
 

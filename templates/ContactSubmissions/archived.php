@@ -7,7 +7,6 @@
 $this->assign('title', 'Contact Submissions');
 $this->assign('crumbRecord', 'Archived');
 ?>
-<?php $this->Html->css('admincontact', ['block' => true]); ?>
 <?php $role = $this->request->getAttribute('identity')->get('role'); ?>
 
 <div class="page-header-row">

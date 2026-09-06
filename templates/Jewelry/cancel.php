@@ -6,7 +6,7 @@
  */
 $this->assign('title', 'Payment Paused');
 ?>
-<?php $this->Html->css('jewelry', ['block' => true]); ?>
+<?= $this->element('jewelry_css') ?>
 
 <div class="cc-page">
 

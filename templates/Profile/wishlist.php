@@ -5,7 +5,8 @@
  * @var bool $isGuest
  */
 $this->assign('title', 'My Wishlist');
-$this->Html->css(['profile', 'jewelry'], ['block' => true]);
+$this->Html->css('profile', ['block' => true]);
+echo $this->element('jewelry_css');
 ?>
 
 <div class="profile-page wishlist-page">

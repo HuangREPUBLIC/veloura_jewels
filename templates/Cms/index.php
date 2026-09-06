@@ -10,7 +10,6 @@
 
 $this->assign('title', 'Content Management');
 $this->assign('crumbRecord', h($currentPage->title));
-$this->Html->css('admincontact', ['block' => true]);
 
 $saveUrl    = ['action' => 'index', $pageSlug];
 $faqSaveUrl = ['action' => 'faqItemSave'];

@@ -280,6 +280,20 @@ table.dataTable thead .sorting_desc:after {
 
 .admin-view-table-spaced { margin-bottom: 1.5rem; }
 
+/* view-table carrying real columns rather than key/value rows: the 200px
+   th width above is meant for labels and would squeeze every column here */
+.view-table--list th {
+    width: auto;
+    white-space: nowrap;
+}
+
+.view-table--list th:first-child,
+.view-table--list td:first-child {
+    min-width: 250px;
+}
+
+.view-table--list td { vertical-align: middle; }
+
 .admin-view-section-title {
     margin: 1.5rem 0 0.8rem;
     font-size: 0.95rem;
@@ -355,10 +369,53 @@ table.dataTable thead .sorting_desc:after {
 
 /* Product cell */
 
+.product-cell .product-media {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+}
+
 .product-cell .product-text {
     display: flex;
     flex-direction: column;
     gap: 6px;
+}
+
+/* shared product thumbnail for admin tables */
+
+.admin-thumb {
+    flex: none;
+    width: 44px;
+    height: 44px;
+    object-fit: cover;
+    display: block;
+    border-radius: 8px;
+    border: 1px solid var(--admin-border);
+    background: var(--admin-surface-alt);
+}
+
+.admin-thumb--empty {
+    background: repeating-linear-gradient(
+        45deg,
+        var(--admin-surface-alt),
+        var(--admin-surface-alt) 5px,
+        var(--admin-bg) 5px,
+        var(--admin-bg) 10px
+    );
+}
+
+/* long machine identifiers (Stripe session, payment intent) */
+
+.admin-mono {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.78rem;
+    letter-spacing: -0.01em;
+    color: var(--color-lightgray);
+    word-break: break-all;
+}
+
+.admin-stat-main--date {
+    font-size: 1.15rem;
 }
 
 .product-name {

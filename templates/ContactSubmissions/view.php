@@ -6,7 +6,6 @@
 $this->assign('title', 'View Submission');
 $this->assign('crumbRecord', h($contactSubmission->first_name . ' ' . $contactSubmission->last_name));
 ?>
-<?php $this->Html->css('admincontact', ['block' => true]); ?>
 
         <div class="page-header-row">
             <div>

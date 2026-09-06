@@ -31,12 +31,10 @@ $role = $this->Identity->get('role');
         <thead>
             <tr>
                 <th>Featured</th>
-                <th><?= $this->Paginator->sort('name') ?></th>
-                <th><?= $this->Paginator->sort('purchase_price', 'Purchase Price') ?></th>
+                <th><?= $this->Paginator->sort('name', 'Product') ?></th>
                 <th><?= $this->Paginator->sort('sale_price', 'Sale Price') ?></th>
-                <th>Size & Stock</th>
+                <th>Size &amp; Stock</th>
                 <th>Category</th>
-                <th>Supplier Email</th>
                 <th class="actions"><?= __('Actions') ?></th>
             </tr>
         </thead>
@@ -55,9 +53,17 @@ $role = $this->Identity->get('role');
                         <?php endif; ?>
                     </td>
                     <td class="product-cell">
-                        <span class="product-name"><?= h($product->name) ?></span>
+                        <div class="product-media">
+                            <?php if (!empty($product->product_images)): ?>
+                                <img class="admin-thumb"
+                                     src="<?= $this->Url->image('products/' . h($product->product_images[0]->filename)) ?>"
+                                     alt="">
+                            <?php else: ?>
+                                <span class="admin-thumb admin-thumb--empty"></span>
+                            <?php endif; ?>
+                            <span class="product-name"><?= h($product->name) ?></span>
+                        </div>
                     </td>
-                    <td><?= $this->Number->format($product->purchase_price) ?></td>
                     <td><?= $this->Number->format($product->sale_price) ?></td>
                     <td>
                         <?php
@@ -77,7 +83,6 @@ $role = $this->Identity->get('role');
                             -
                         <?php endif; ?>
                     </td>
-                    <td><?= h($product->supplier_email) ?></td>
                     <td class="actions">
                         <?= $this->Html->link(
                             $this->iconSvg('eye'),

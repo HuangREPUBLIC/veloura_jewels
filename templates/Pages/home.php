@@ -1,6 +1,7 @@
 <?php
 $this->assign('title', 'Home');
-$this->Html->css(['home', 'jewelry'], ['block' => true]);
+$this->Html->css('home', ['block' => true]);
+echo $this->element('jewelry_css');
 
 $identity    = $this->request->getAttribute('identity');
 $wishlistIds = $wishlistIds ?? [];

@@ -6,7 +6,7 @@
  */
 
 $this->assign('title', $product->name);
-$this->Html->css('jewelry', ['block' => true]);
+echo $this->element('jewelry_css');
 
 $totalStock = 0;
 $hasStock = false;

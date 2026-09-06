@@ -10,7 +10,7 @@
  */
 
 $this->assign('title', 'Home Decor');
-$this->Html->css('jewelry', ['block' => true]);
+echo $this->element('jewelry_css');
 ?>
 
 <div class="jewelry-page">

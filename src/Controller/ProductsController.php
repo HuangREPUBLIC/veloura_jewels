@@ -30,7 +30,7 @@ class ProductsController extends AppController
     {
         $q = (string)$this->request->getQuery('q', '');
 
-        $query = $this->Products->find()->contain(['Category', 'ProductVariants']);
+        $query = $this->Products->find()->contain(['Category', 'ProductVariants', 'ProductImages']);
         if ($q !== '') {
             $query->where(['Products.name LIKE' => '%' . $q . '%']);
         }

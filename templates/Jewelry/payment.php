@@ -17,7 +17,8 @@
     <?= $this->Html->meta('icon', '/img/icon.png') ?>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <?= $this->Html->css(['normalize.min', 'fonts', 'default-styles', 'jewelry']) ?>
+    <?= $this->Html->css(['normalize.min', 'fonts', 'default-styles']) ?>
+    <?= $this->element('jewelry_css', ['block' => false]) ?>
 </head>
 <body>
 <?php $this->Flash->render() ?>

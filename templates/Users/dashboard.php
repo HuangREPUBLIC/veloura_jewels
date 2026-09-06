@@ -10,7 +10,6 @@
  */
 
 $this->assign('title', 'Admin Dashboard');
-$this->Html->css('admincontact', ['block' => true]);
 $this->Html->css('schedule', ['block' => true]);
 
 $role = $authUser->get('role');

@@ -8,7 +8,6 @@ $this->assign('crumbRecord', h($product->name));
 
 $productType = $product->category->type ?? '';
 ?>
-<?php $this->Html->css('admincontact', ['block' => true]); ?>
 
         <div class="page-header-row">
             <div>

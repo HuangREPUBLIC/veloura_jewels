@@ -87,7 +87,7 @@ class OrdersController extends AppController
 
         $this->viewBuilder()->setLayout('admin');
 
-        $order = $this->Orders->get($id, contain: ['OrderItems' => ['Products']]);
+        $order = $this->Orders->get($id, contain: ['OrderItems' => ['Products' => ['ProductImages']]]);
 
         $this->set(compact('order'));
     }
