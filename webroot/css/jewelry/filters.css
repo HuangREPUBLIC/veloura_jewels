@@ -524,8 +524,10 @@
         grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 0.75rem;
     }
-    .product-image-wrapper { height: 200px; }
-    .product-card-body { padding: 0.6rem 0.75rem 0.8rem; }
+    /* set the variable, not the height — the quick add button is placed
+       from it too (base.css .quick-add-btn) */
+    .product-card-wrap { --card-img-h: 200px; }
+    .product-card-body { padding: 0.7rem 0 0; }
     .product-name { font-size: 0.82rem; }
     .product-price { font-size: 0.85rem; }
 }
