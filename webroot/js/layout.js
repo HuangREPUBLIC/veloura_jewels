@@ -153,6 +153,9 @@
             var wishlistBtn = '<button class="wishlist-btn' + (wishlistEnabled && r.wishlisted ? ' wishlisted' : '') + '" data-product-id="' + escapeHtml(r.id) + '" type="button" aria-label="Save to wishlist">'
                 + '<svg width="20" height="20" viewBox="0 0 64 64" fill="currentColor"><path d="M32,57C31,56.5 5,42 5,23.5C5,13.8 12.2,6.5 21,6.5C26,6.5 30.4,9 32,11.2C33.6,9 38,6.5 43,6.5C51.8,6.5 59,13.8 59,23.5C59,42 33,56.5 32,57Z"/></svg>'
                 + '</button>';
+            var quickAddBtn = '<button class="quick-add-btn" type="button" data-product-id="' + escapeHtml(r.id) + '" data-product-url="' + url + '" aria-label="Add ' + name + ' to cart">'
+                + '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>'
+                + '</button>';
 
             return '<div class="product-card-wrap">'
                 + '<a href="' + url + '?back=' + encodeURIComponent(config.currentPagePath) + '" class="search-suggest-item">'
@@ -163,6 +166,7 @@
                 + '</div>'
                 + '</a>'
                 + wishlistBtn
+                + quickAddBtn
                 + '</div>';
         }).join('');
 

@@ -901,22 +901,21 @@
     font-family: var(--font-body);
     font-size: 0.78rem;
     font-weight: 600;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
     text-align: center;
     text-decoration: none;
-    color: var(--emerald);
-    background: none;
-    border: 1.5px solid rgba(var(--emerald-rgb), 0.35);
-    border-radius: 6px;
+    color: var(--color-white);
+    background: var(--emerald);
+    border: 1px solid var(--emerald);
+    border-radius: 0;
     cursor: pointer;
-    transition: all 0.18s ease;
+    transition: background 0.32s cubic-bezier(0.32, 0.72, 0, 1), color 0.24s ease;
     white-space: nowrap;
 }
 .wishlist-add-to-bag-btn:hover {
-    background: var(--emerald);
-    border-color: var(--emerald);
-    color: var(--color-white);
+    background: var(--color-white);
+    color: var(--emerald);
     text-decoration: none;
 }
 .wishlist-add-to-bag-btn--sold-out {
@@ -924,9 +923,8 @@
     cursor: not-allowed;
 }
 .wishlist-add-to-bag-btn--sold-out:hover {
-    background: none;
-    border-color: rgba(var(--emerald-rgb), 0.35);
-    color: var(--emerald);
+    background: var(--emerald);
+    color: var(--color-white);
 }
 
 .wishlist-guest-hint {

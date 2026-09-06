@@ -250,6 +250,7 @@ input[type='color'] {
 
 .product-card-wrap {
     position: relative;
+    --card-img-h: 300px;
 }
 
 .wishlist-btn {
@@ -290,3 +291,55 @@ input[type='color'] {
     stroke: var(--emerald);
     filter: drop-shadow(0 1px 2px rgba(var(--emerald-rgb), 0.3));
 }
+
+/* quick add — sits over the bottom-right of the image on hover */
+
+.quick-add-btn {
+    position: absolute;
+    top: calc(var(--card-img-h) - 3.35rem);
+    right: 0.7rem;
+    z-index: 4;
+    width: 2.65rem;
+    height: 2.65rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border: none;
+    border-radius: 0;
+    background: var(--color-white);
+    color: var(--color-headings);
+    cursor: pointer;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.24s ease, transform 0.24s ease, background 0.18s ease, color 0.18s ease;
+}
+
+.quick-add-btn svg {
+    width: 15px;
+    height: 15px;
+}
+
+.product-card-wrap:hover .quick-add-btn,
+.quick-add-btn:focus-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.quick-add-btn:hover {
+    background: var(--emerald);
+    color: var(--color-white);
+}
+
+.quick-add-btn:disabled {
+    opacity: 0.5;
+    cursor: default;
+}
+
+/* touch devices have no hover, so the button stays visible */
+@media (hover: none) {
+    .quick-add-btn {
+        opacity: 1;
+        transform: translateY(0);
+    }
+

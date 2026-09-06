@@ -1,0 +1,311 @@
+/* quick view — size picker shown when a card's quick add needs a choice */
+
+.quick-view-root {
+    position: fixed;
+    inset: 0;
+    z-index: 1250;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    pointer-events: none;
+    visibility: hidden;
+}
+
+.quick-view-root.is-open {
+    pointer-events: auto;
+    visibility: visible;
+}
+
+.quick-view-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(28, 28, 26, 0.42);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.quick-view-root.is-open .quick-view-backdrop {
+    opacity: 1;
+}
+
+.quick-view-panel {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: min(940px, 100%);
+    max-height: 86vh;
+    background: var(--color-white);
+    box-shadow: 0 30px 70px rgba(28, 28, 26, 0.24);
+    opacity: 0;
+    transform: translateY(14px) scale(0.985);
+    transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.32, 0.72, 0, 1);
+    font-family: var(--font-body);
+}
+
+.quick-view-root.is-open .quick-view-panel {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+.quick-view-close {
+    position: absolute;
+    top: 0.85rem;
+    right: 0.85rem;
+    z-index: 2;
+    width: 2.4rem;
+    height: 2.4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    background: transparent;
+    color: var(--color-headings);
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.quick-view-close:hover {
+    border-color: var(--color-headings);
+}
+
+.quick-view-close svg {
+    width: 20px;
+    height: 20px;
+}
+
+.quick-view-body {
+    display: contents;
+}
+
+/* image switching mirrors the detail page: scroll-snap slides plus dots */
+.quick-view-media {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    background: rgba(var(--beige-light-rgb), 0.65);
+    overflow: hidden;
+}
+
+.quick-view-stack {
+    display: flex;
+    height: 100%;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+}
+
+.quick-view-stack::-webkit-scrollbar {
+    display: none;
+}
+
+.quick-view-slide {
+    flex: 0 0 100%;
+    scroll-snap-align: start;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.75rem;
+}
+
+.quick-view-slide img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    display: block;
+}
+
+.quick-view-dots {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 1rem;
+    display: flex;
+    justify-content: center;
+    gap: 0.4rem;
+}
+
+.quick-view-dot {
+    width: 7px;
+    height: 7px;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background: rgba(28, 28, 26, 0.22);
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.quick-view-dot.active {
+    background: var(--emerald);
+}
+
+.quick-view-detail {
+    padding: 3.25rem 3rem 2.5rem;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.quick-view-brand {
+    font-size: 0.7rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    margin: 0 0 0.7rem;
+}
+
+.quick-view-name {
+    font-family: var(--font-serif);
+    font-size: 1.65rem;
+    font-weight: 500;
+    line-height: 1.25;
+    color: var(--color-headings);
+    margin: 0 0 0.6rem;
+}
+
+.quick-view-price {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-price);
+    margin: 0 0 2rem;
+}
+
+.quick-view-form {
+    margin: 0;
+}
+
+.quick-view-row {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    margin-bottom: 1.6rem;
+}
+
+.quick-view-label {
+    font-size: 0.72rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-headings);
+    margin: 0;
+}
+
+.quick-view-select-wrap {
+    position: relative;
+    flex: 1;
+    max-width: 190px;
+}
+
+.quick-view-select {
+    width: 100%;
+    appearance: none;
+    padding: 0.75rem 2.4rem 0.75rem 1rem;
+    border: 1px solid rgba(28, 28, 26, 0.18);
+    border-radius: 0;
+    background: var(--color-white);
+    font-family: inherit;
+    font-size: 0.85rem;
+    color: var(--color-headings);
+    cursor: pointer;
+}
+
+.quick-view-select:focus {
+    outline: none;
+    border-color: var(--emerald);
+}
+
+.quick-view-select-wrap svg {
+    position: absolute;
+    top: 50%;
+    right: 0.85rem;
+    width: 16px;
+    height: 16px;
+    transform: translateY(-50%);
+    pointer-events: none;
+    color: var(--color-headings);
+}
+
+/* the fill drops away on hover, leaving an outlined button */
+.quick-view-add {
+    width: 100%;
+    padding: 1.05rem 1rem;
+    border: 1px solid var(--emerald);
+    border-radius: 0;
+    background: var(--emerald);
+    color: var(--color-white);
+    font-family: inherit;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.32s cubic-bezier(0.32, 0.72, 0, 1), color 0.24s ease;
+}
+
+.quick-view-add:hover {
+    background: var(--color-white);
+    color: var(--emerald);
+}
+
+.quick-view-add:disabled {
+    opacity: 0.55;
+    cursor: default;
+}
+
+.quick-view-more {
+    margin-top: 1.75rem;
+    align-self: flex-start;
+    font-size: 0.76rem;
+    letter-spacing: 0.05em;
+    color: var(--color-headings);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+}
+
+.quick-view-more:hover {
+    color: var(--emerald);
+}
+
+@media (max-width: 760px) {
+    .quick-view-root {
+        padding: 0;
+        align-items: flex-end;
+    }
+
+    .quick-view-panel {
+        grid-template-columns: 1fr;
+        width: 100%;
+        max-height: 92vh;
+        overflow-y: auto;
+    }
+
+    .quick-view-media {
+        aspect-ratio: 4 / 3;
+    }
+
+    .quick-view-slide {
+        padding: 1rem;
+    }
+
+    .quick-view-detail {
+        padding: 1.75rem 1.35rem 2rem;
+    }
+
+    .quick-view-name {
+        font-size: 1.35rem;
+    }
+
+    .quick-view-close {
+        background: var(--color-white);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .quick-view-panel,
+    .quick-view-backdrop {
+        transition-duration: 0.01ms;
+    }
+}

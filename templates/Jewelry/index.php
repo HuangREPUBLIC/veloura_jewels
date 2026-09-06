@@ -243,6 +243,7 @@ $this->Html->css('jewelry', ['block' => true]);
                         aria-label="Save to wishlist">
                     <?= $this->element('wishlist_heart') ?>
                 </button>
+                <?= $this->element('quick_add_button', ['product' => $product]) ?>
                 </div>
             <?php endforeach; ?>
         </div>

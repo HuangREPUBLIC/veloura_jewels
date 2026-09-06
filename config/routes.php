@@ -65,9 +65,10 @@ return function (RouteBuilder $routes): void {
         $builder->connect('/home-decor/view/{id}', ['controller' => 'Jewelry', 'action' => 'view'])
             ->setPass(['id']);
         $builder->connect('/jewellery/add-to-cart', ['controller' => 'Jewelry', 'action' => 'addToCart']);
+        $builder->connect('/jewellery/quick-add', ['controller' => 'Jewelry', 'action' => 'quickAdd']);
         $builder->connect('/cart', ['controller' => 'Jewelry', 'action' => 'cart']);
+        $builder->connect('/cart/drawer', ['controller' => 'Jewelry', 'action' => 'cartDrawer']);
         $builder->connect('/cart/remove', ['controller' => 'Jewelry', 'action' => 'removeFromCart']);
-        $builder->connect('/checkout', ['controller' => 'Jewelry', 'action' => 'checkout']);
         $builder->connect('/checkout/create-session', ['controller' => 'Jewelry', 'action' => 'createCheckoutSession']);
         $builder->connect('/checkout/success', ['controller' => 'Jewelry', 'action' => 'success']);
         $builder->connect('/checkout/cancel', ['controller' => 'Jewelry', 'action' => 'cancel']);

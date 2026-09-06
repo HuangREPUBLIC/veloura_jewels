@@ -180,7 +180,7 @@ $this->assign('title', 'Payment Paused');
             </div>
         </div>
         <div class="cc-actions">
-            <a href="<?= $this->Url->build(['action' => 'cart']) ?>" class="cc-btn cc-btn--primary">Return to Cart</a>
+            <a href="<?= $this->Url->build(['action' => 'index', '?' => ['cart' => 'open']]) ?>" class="cc-btn cc-btn--primary">Return to Cart</a>
         </div>
     </div>
 

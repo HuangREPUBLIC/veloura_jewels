@@ -276,6 +276,56 @@
     color: var(--color-headings);
 }
 
+/* on phones the modal sits on the bottom edge and scrolls inside itself,
+   with the close button pinned so it is always reachable */
+@media (max-width: 600px) {
+    .collection-modal {
+        align-items: flex-end;
+    }
+
+    .collection-modal-content {
+        width: 100%;
+        max-height: 86vh;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+        border-radius: 20px 20px 0 0;
+        padding: 1rem 1.15rem 1.5rem;
+    }
+
+    .collection-modal-close {
+        position: sticky;
+        top: 0;
+        display: block;
+        margin: 0 -0.35rem 0 auto;
+        width: 44px;
+        height: 44px;
+        z-index: 2;
+        background: var(--color-white);
+        border-radius: 50%;
+    }
+
+    .collection-modal-content .collection-modal-title {
+        font-size: 1.5rem;
+    }
+
+    .collection-modal-sub {
+        margin-bottom: 1.25rem;
+    }
+
+    .collection-modal-cards {
+        grid-template-columns: 1fr;
+        gap: 0.85rem;
+    }
+
+    .collection-modal-card-img {
+        aspect-ratio: 16 / 9;
+    }
+
+    .collection-modal-card-body {
+        padding: 0.85rem 1rem 1rem;
+    }
+}
+
 .collection-modal-content .collection-modal-title {
     font-family: var(--font-serif);
     font-size: 2rem;

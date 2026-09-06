@@ -138,6 +138,18 @@
     overflow: hidden;
 }
 
+/* the image is sized by ratio here, so the quick add button is measured up
+   from the fixed-height info block instead of down from the image */
+.search-suggest-info {
+    height: 4.4rem;
+    box-sizing: border-box;
+}
+
+.search-suggest-grid .quick-add-btn {
+    top: auto;
+    bottom: 5.1rem;
+}
+
 .search-suggest-img {
     width: 100%;
     height: 100%;
@@ -266,6 +278,10 @@
         -webkit-overflow-scrolling: touch;
         padding-bottom: 0.5rem;
         gap: 0.5rem;
+    }
+
+    .search-suggest-grid .quick-add-btn {
+        bottom: 4.9rem;
     }
 
     .search-suggest-grid .product-card-link {

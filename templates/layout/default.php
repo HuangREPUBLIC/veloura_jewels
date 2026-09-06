@@ -26,7 +26,7 @@ $cakeDescription = 'Veloura Jewels';
     <!-- Editorial accent serif (--font-serif) for hero/brand-voice moments only; Raleway remains self-hosted for everything else -->
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
 
-    <?= $this->Html->css(['normalize.min', 'fonts', 'tokens', 'base', 'navbar', 'components', 'search']) ?>
+    <?= $this->Html->css(['normalize.min', 'fonts', 'tokens', 'base', 'navbar', 'components', 'search', 'cart-drawer', 'quick-view']) ?>
 
 
     <?= $this->fetch('meta') ?>
@@ -47,6 +47,10 @@ $currentPagePath = $this->request->getPath() . ($this->request->getUri()->getQue
     data-login-url="<?= h($this->Url->build(['controller' => 'Auth', 'action' => 'login'])) ?>"
     data-register-url="<?= h($this->Url->build(['controller' => 'Auth', 'action' => 'register'])) ?>"
     data-wishlist-enabled="<?= $identity ? '1' : '0' ?>"
+    data-cart-drawer-url="<?= h($this->Url->build(['controller' => 'Jewelry', 'action' => 'cartDrawer'])) ?>"
+    data-cart-update-url="<?= h($this->Url->build(['controller' => 'Jewelry', 'action' => 'cart'])) ?>"
+    data-cart-remove-url="<?= h($this->Url->build(['controller' => 'Jewelry', 'action' => 'removeFromCart'])) ?>"
+    data-cart-quick-add-url="<?= h($this->Url->build(['controller' => 'Jewelry', 'action' => 'quickAdd'])) ?>"
     data-csrf-token="<?= h($this->request->getAttribute('csrfToken')) ?>"
     data-current-page-path="<?= h($currentPagePath) ?>"
 >
@@ -114,7 +118,7 @@ $currentPagePath = $this->request->getPath() . ($this->request->getUri()->getQue
             '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="7" width="16" height="13" rx="1.5"/><path d="M8.5 7V5a3.5 3.5 0 0 1 7 0V7"/></svg>'
             . ($count > 0 ? '<span class="nav-cart-badge">' . $count . '</span>' : ''),
             ['controller' => 'Jewelry', 'action' => 'cart'],
-            ['class' => 'nav-icon-btn nav-cart-wrap', 'escape' => false, 'title' => 'Cart']
+            ['class' => 'nav-icon-btn nav-cart-wrap', 'escape' => false, 'title' => 'Cart', 'id' => 'cartDrawerToggle']
         ) ?>
 
         <!-- Wishlist icon -->
@@ -317,6 +321,10 @@ $currentPagePath = $this->request->getPath() . ($this->request->getUri()->getQue
     </div>
 </footer>
 
+<?= $this->element('cart_drawer') ?>
+<?= $this->element('quick_view_modal') ?>
+
 <?= $this->Html->script('layout') ?>
+<?= $this->Html->script('cart-drawer') ?>
 </body>
 </html>

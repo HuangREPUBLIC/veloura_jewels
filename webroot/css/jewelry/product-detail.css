@@ -327,31 +327,140 @@
     align-items: center;
     justify-content: center;
     width: 100%;
+    max-width: 360px;
     min-width: 0;
     min-height: 50px;
     padding: 0.95rem 1.6rem;
     background: var(--emerald);
     color: var(--color-white);
-    border: none;
-    border-radius: 999px;
+    border: 1px solid var(--emerald);
+    border-radius: 0;
     font-family: var(--font-body);
     font-size: 0.8rem;
-    font-weight: 700;
-    letter-spacing: 0.12em;
+    font-weight: 600;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
     cursor: pointer;
     box-shadow: none;
-    transition: all 0.2s ease;
+    transition: background 0.32s cubic-bezier(0.32, 0.72, 0, 1), color 0.24s ease;
 }
 
 .jewelry-page .jewelry-add-to-cart-btn:hover {
-    background: var(--emerald-dark);
-    color: var(--color-white);
+    background: var(--color-white);
+    color: var(--emerald);
     box-shadow: none;
 }
 
 .jewelry-page .jewelry-add-to-cart-btn:active {
     transform: translateY(1px);
+}
+
+/* back link */
+
+.jewelry-page .jewelry-back-link {
+    display: inline-flex;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding: 0.52rem 0.85rem;
+    font-family: var(--font-body);
+    color: var(--emerald);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.88rem;
+    letter-spacing: 0.04em;
+    border-radius: 999px;
+    background: rgba(var(--beige-light-rgb), 0.62);
+    border: 1px solid rgba(var(--emerald-rgb), 0.12);
+    transition: background 0.18s ease, border-color 0.18s ease, color 0.18s ease;
+}
+
+.jewelry-page .jewelry-back-link:hover {
+    background: var(--color-white);
+    border-color: rgba(var(--emerald-rgb), 0.28);
+    color: var(--emerald-dark);
+    text-decoration: none;
+}
+
+/* stock warning shown next to the quantity stepper */
+
+.qty-toast {
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--emerald);
+    background: rgba(40, 77, 64, 0.1);
+    border: 1px solid rgba(40, 77, 64, 0.25);
+    border-radius: 999px;
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: 0;
+    padding: 0.3rem 0;
+    opacity: 0;
+    pointer-events: none;
+    transition: max-width 0.25s ease, opacity 0.2s ease, padding 0.25s ease;
+}
+
+.qty-toast--show {
+    max-width: 260px;
+    padding: 0.3rem 0.85rem;
+    opacity: 1;
+}
+
+/* responsive */
+
+@media (max-width: 900px) {
+    .jewelry-page .product-detail {
+        grid-template-columns: 1fr;
+        gap: 1.6rem;
+    }
+    .jewelry-page .product-detail-image { min-height: auto; }
+    .jewelry-page .product-detail-info {
+        position: static;
+        max-height: none;
+        overflow-y: visible;
+        padding: 0.4rem 0 0;
+    }
+
+    .jewelry-page .detail-placeholder { height: 440px; }
+
+    /* the image grid turns into a swipeable carousel */
+    .jewelry-page .detail-image-stack {
+        display: flex;
+        flex-direction: row;
+        overflow-x: scroll;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        gap: 0;
+    }
+    .jewelry-page .detail-image-stack::-webkit-scrollbar { display: none; }
+    .jewelry-page .detail-stack-item {
+        flex: 0 0 100%;
+        scroll-snap-align: start;
+        border-radius: 0;
+    }
+    .detail-carousel-dots {
+        display: flex;
+        gap: 4px;
+        padding: 10px 0 0;
+    }
+    .detail-carousel-dot {
+        flex: 1;
+        height: 2px;
+        border-radius: 1px;
+        background: rgba(0, 0, 0, 0.18);
+        cursor: pointer;
+        transition: background 0.25s ease;
+    }
+    .detail-carousel-dot.active {
+        background: #111;
+    }
+}
+
+@media (max-width: 520px) {
+    .jewelry-page .detail-placeholder { height: 340px; }
+    .jewelry-page .product-detail-info { padding: 1.2rem; }
+    .jewelry-page .detail-name { font-size: 1.3rem; }
 }
 
 

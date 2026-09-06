@@ -6,6 +6,8 @@ namespace App\Controller;
 use Cake\Event\EventInterface;
 use Cake\Core\Configure;
 use Cake\Http\Exception\BadRequestException;
+use Cake\Http\Response;
+use Cake\Routing\Router;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Log\Log;
 use Cake\Mailer\Mailer;
@@ -28,8 +30,9 @@ class JewelryController extends AppController
             'view',
             'cart',
             'addToCart',
+            'quickAdd',
+            'cartDrawer',
             'removeFromCart',
-            'checkout',
             'createCheckoutSession',
             'success',
             'cancel',
@@ -77,7 +80,7 @@ class JewelryController extends AppController
         if ($sortBy === 'bestsales') {
             $products = $this->Products
                 ->find('bestSales', productType: $productType, limit: 4)
-                ->contain(['ProductImages'])
+                ->contain(['ProductImages', 'ProductVariants'])
                 ->all();
             foreach ($products as $product) {
                 $product->is_bestsales = true;
@@ -99,7 +102,7 @@ class JewelryController extends AppController
         ];
 
         $query = $this->Products->find()
-            ->contain(['ProductImages'])
+            ->contain(['ProductImages', 'ProductVariants'])
             ->orderBy($sortOptions[$sortBy] ?? $sortOptions['newest']);
 
         if ($categoryId > 0) {
@@ -162,7 +165,7 @@ class JewelryController extends AppController
         if ($sortBy === 'bestsales') {
             $products = $this->Products
                 ->find('bestSales', productType: $productType, limit: 4)
-                ->contain(['ProductImages'])
+                ->contain(['ProductImages', 'ProductVariants'])
                 ->all();
             foreach ($products as $product) {
                 $product->is_bestsales = true;
@@ -184,7 +187,7 @@ class JewelryController extends AppController
         ];
 
         $query = $this->Products->find()
-            ->contain(['ProductImages'])
+            ->contain(['ProductImages', 'ProductVariants'])
             ->orderBy($sortOptions[$sortBy] ?? $sortOptions['newest']);
 
         if ($categoryId > 0) {
@@ -237,6 +240,9 @@ class JewelryController extends AppController
         $variant = $variantsTable->get($variantId);
 
         if ($variant->product_id !== $productId) {
+            if ($this->request->is('ajax')) {
+                throw new BadRequestException('Invalid size selection.');
+            }
             $this->Flash->error('Invalid size selection.');
             return $this->redirect(['action' => 'view', $productId]);
         }
@@ -265,16 +271,68 @@ class JewelryController extends AppController
 
         $session->write('Cart', $cart);
 
+        if ($this->request->is('ajax')) {
+            return $this->cartDrawerResponse();
+        }
+
         $this->Flash->success('Product added to cart.');
-        return $this->redirect(['action' => 'cart']);
+        return $this->redirect(['action' => 'view', $productId]);
     }
 
+    /**
+     * Adds a listing card's product straight to the cart. Only products with a
+     * single in-stock variant go in unattended; anything with a real size
+     * choice comes back as a quick view so the customer picks one.
+     */
+    public function quickAdd()
+    {
+        $this->request->allowMethod(['post']);
+
+        $productId = (int)$this->request->getData('product_id');
+        $product   = $this->Products->get($productId, contain: ['ProductImages', 'ProductVariants']);
+
+        $available = array_values(array_filter(
+            $product->product_variants,
+            fn($variant) => $variant->stock > 0
+        ));
+
+        if (empty($available)) {
+            return $this->jsonResponse(['redirect' => Router::url(['action' => 'view', $productId])]);
+        }
+
+        if (count($available) > 1) {
+            return $this->jsonResponse([
+                'quickView' => $this->createView()->element('quick_view', ['product' => $product]),
+            ]);
+        }
+
+        $variant = $available[0];
+        $session = $this->request->getSession();
+        $cart    = $session->read('Cart') ?? [];
+        $key     = $productId . '_' . $variant->id;
+        $current = (int)($cart[$key]['quantity'] ?? 0);
+
+        if ($current < $variant->stock) {
+            $cart[$key] = [
+                'product_id' => $productId,
+                'variant_id' => $variant->id,
+                'quantity'   => $current + 1,
+            ];
+            $session->write('Cart', $cart);
+        }
+
+        return $this->cartDrawerResponse();
+    }
+
+    /**
+     * Cart quantity updates. The cart lives in the drawer only, so a plain GET
+     * has nothing to render and goes back to the listing.
+     */
     public function cart()
     {
-        $session = $this->request->getSession();
-        $cart = $session->read('Cart') ?? [];
-
         if ($this->request->is('post')) {
+            $session = $this->request->getSession();
+            $cart    = $session->read('Cart') ?? [];
             $key      = $this->request->getData('cart_key');
             $quantity = (int)$this->request->getData('quantity');
 
@@ -289,11 +347,22 @@ class JewelryController extends AppController
                 $session->write('Cart', $cart);
             }
 
-            return $this->redirect(['action' => 'cart']);
+            if ($this->request->is('ajax')) {
+                return $this->cartDrawerResponse();
+            }
         }
 
-        [$products, $total] = $this->buildCartProductsAndTotal();
-        $this->set(compact('products', 'total'));
+        return $this->redirect(['action' => 'index', '?' => ['cart' => 'open']]);
+    }
+
+    /**
+     * Contents of the slide-out cart, fetched by webroot/js/cart-drawer.js.
+     */
+    public function cartDrawer()
+    {
+        $this->request->allowMethod(['get']);
+
+        return $this->cartDrawerResponse();
     }
 
     public function removeFromCart()
@@ -307,19 +376,11 @@ class JewelryController extends AppController
         unset($cart[$key]);
         $session->write('Cart', $cart);
 
-        return $this->redirect(['action' => 'cart']);
-    }
-
-    public function checkout()
-    {
-        [$products, $total] = $this->buildCartProductsAndTotal();
-
-        if (empty($products)) {
-            $this->Flash->error('Your cart is empty.');
-            return $this->redirect(['action' => 'cart']);
+        if ($this->request->is('ajax')) {
+            return $this->cartDrawerResponse();
         }
 
-        $this->set(compact('products', 'total'));
+        return $this->redirect(['action' => 'index', '?' => ['cart' => 'open']]);
     }
 
     public function createCheckoutSession()
@@ -473,7 +534,7 @@ class JewelryController extends AppController
         $sessionId = (string)$this->request->getQuery('session_id');
 
         if (!$sessionId) {
-            return $this->redirect(['action' => 'checkout']);
+            return $this->redirect(['action' => 'index', '?' => ['cart' => 'open']]);
         }
 
         $order = $this->Orders->find()
@@ -489,7 +550,7 @@ class JewelryController extends AppController
         try {
             $session = $stripe->checkout->sessions->retrieve($sessionId);
         } catch (\Exception $e) {
-            return $this->redirect(['action' => 'checkout']);
+            return $this->redirect(['action' => 'index', '?' => ['cart' => 'open']]);
         }
 
         if ($session->status !== 'open') {
@@ -608,6 +669,31 @@ class JewelryController extends AppController
             ->all()
             ->extract('product_id')
             ->toList();
+    }
+
+    private function jsonResponse(array $payload): Response
+    {
+        return $this->response
+            ->withType('application/json')
+            ->withStringBody((string)json_encode($payload));
+    }
+
+    /**
+     * The cart drawer's contents, rendered server-side so the markup stays in
+     * one template whether it arrives with the page or over fetch.
+     */
+    private function cartDrawerResponse(): Response
+    {
+        [$products, $total] = $this->buildCartProductsAndTotal();
+
+        return $this->jsonResponse([
+            'html'  => $this->createView()->element('cart_drawer_items', [
+                'products' => $products,
+                'total'    => $total,
+            ]),
+            'count' => count($products),
+            'total' => '$' . number_format((float)$total, 2),
+        ]);
     }
 
     private function buildCartProductsAndTotal(): array

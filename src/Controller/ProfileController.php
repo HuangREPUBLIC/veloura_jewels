@@ -217,7 +217,7 @@ class ProfileController extends AppController
         } else {
             $this->Flash->error('No wishlist items could be added automatically. Please choose a size for each item.');
         }
-        return $this->redirect('/jewelry/cart');
+        return $this->redirect(['action' => 'wishlist', '?' => ['cart' => 'open']]);
     }
 
     public function changePassword()

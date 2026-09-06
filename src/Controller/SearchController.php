@@ -28,7 +28,7 @@ class SearchController extends AppController
             ));
 
             $products = $productsTable->find()
-                ->contain(['ProductImages', 'Category'])
+                ->contain(['ProductImages', 'ProductVariants', 'Category'])
                 ->where(['Products.name LIKE' => '%' . $q . '%'])
                 ->orderBy(['Products.name' => 'ASC'])
                 ->all();
@@ -68,7 +68,7 @@ class SearchController extends AppController
                 collection($productsTable->find('bestSales', productType: 'home_decor', limit: 4)->all())->extract('id')->toList()
             ));
             $products = $productsTable->find()
-                ->contain(['ProductImages', 'Category'])
+                ->contain(['ProductImages', 'ProductVariants', 'Category'])
                 ->where(['Products.name LIKE' => '%' . $q . '%'])
                 ->orderBy(['Products.name' => 'ASC'])
                 ->limit(4)

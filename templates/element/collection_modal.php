@@ -1,7 +1,7 @@
 <?php
 /**
  * Shared "Explore Our Collections" modal.
- * Used on the home page (Pages/home.php) and the cart page (Jewelry/cart.php).
+ * Used on the home page (Pages/home.php).
  *
  * @var \App\View\AppView $this
  */
