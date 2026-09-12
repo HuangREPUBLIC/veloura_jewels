@@ -1,10 +1,15 @@
-Welcome to Veloura Jewels
-==========================
+<?php
+/**
+ * @var \App\View\AppView $this
+ * @var string $first_name
+ */
 
-Hi <?= h($first_name) ?>,
-
-Your account is ready. Browse our collection at:
-
-<?= $this->Url->build('/jewelry', ['fullBase' => true]) ?>
-
-— Veloura Jewels
+echo implode("\n", [
+    'WELCOME TO VELOURA JEWELS',
+    '',
+    'Hi ' . $first_name . ',',
+    '',
+    'Your account is ready. Browse the collection here:',
+    '',
+    $this->Url->build('/jewelry', ['fullBase' => true]),
+]);

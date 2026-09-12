@@ -1,167 +1,60 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="x-apple-disable-message-reformatting">
-<title><?= $this->fetch('title', 'Veloura Jewels') ?></title>
-<!--[if mso]>
-<noscript><xml><o:OfficeDocumentSettings><o:PixelsPerInch>96</o:PixelsPerInch></o:OfficeDocumentSettings></xml></noscript>
-<style type="text/css">
-  table { border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
-  td    { border-collapse: collapse; }
-</style>
-<![endif]-->
-</head>
+<?php
+/**
+ * Generic email body: a person's message wrapped in the Veloura shell.
+ *
+ * This is the template CakePHP falls back to when nothing calls setTemplate(),
+ * and it is what ContactSubmissionsController::reply() uses to answer a
+ * customer enquiry. It used to be a standalone 167-line HTML document on a
+ * #4a3728 brown field, so it bypassed the layout and read as a different brand.
+ *
+ * Renderer::render() injects the body as the $content view var; $this->fetch()
+ * only reaches it from a layout, so read the var first and keep the block as a
+ * fallback.
+ *
+ * @var \App\View\AppView $this
+ * @var string|null $content
+ * @var string|null $subjectLine Optional, used for the <title> and the heading.
+ */
 
-<body style="margin:0;padding:0;background-color:#4a3728;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;">
+use App\View\EmailTheme as T;
 
-<!-- Outer background wrapper -->
-<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"
-       bgcolor="#4a3728" style="width:100%;background-color:#4a3728;">
-  <tr>
-    <td align="center" style="padding:44px 16px 52px;">
+$body = trim((string)($content ?? ''));
+if ($body === '') {
+    $body = trim((string)$this->fetch('content'));
+}
 
-      <!-- Main card — 600px wide -->
-      <table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0"
-             bgcolor="#f9f4ee"
-             style="width:100%;max-width:600px;background-color:#f9f4ee;
-                    border-radius:10px;overflow:hidden;
-                    box-shadow:0 8px 32px rgba(0,0,0,0.32),0 2px 8px rgba(0,0,0,0.16);
-                    border:1px solid rgba(201,168,76,0.3);">
+$heading = trim((string)($subjectLine ?? ''));
 
-        <!-- ═══ HEADER ═══ -->
-        <tr>
-          <td align="center" bgcolor="#3d1f5e"
-              style="background-color:#3d1f5e;padding:32px 40px 26px;">
-            <p style="margin:0 0 6px;font-family:Georgia,'Times New Roman',serif;
-                      font-size:20px;font-weight:400;letter-spacing:0.24em;
-                      color:#c9a84c;text-transform:uppercase;line-height:1;">
-              Veloura Jewels
-            </p>
-            <p style="margin:0;font-family:Arial,Helvetica,sans-serif;font-size:10px;
-                      letter-spacing:0.16em;color:rgba(201,168,76,0.5);
-                      text-transform:uppercase;">
-              Fine Jewellery &amp; Home D&eacute;cor
-            </p>
-          </td>
-        </tr>
+/**
+ * The inbox preview line: the opening of what was actually written beats a
+ * canned sentence, and a greeting on its own tells the reader nothing.
+ */
+$preheader = '';
+foreach (preg_split('/\R/', $body) ?: [] as $line) {
+    $line = trim($line);
+    if ($line !== '' && !preg_match('/^(hi|hello|hey|dear)\b/i', $line)) {
+        $preheader = mb_strimwidth($line, 0, 120, '…');
+        break;
+    }
+}
 
-        <!-- Gold line -->
-        <tr>
-          <td bgcolor="#c9a84c" height="2"
-              style="background-color:#c9a84c;height:2px;font-size:0;line-height:0;">
-            &nbsp;
-          </td>
-        </tr>
+$this->assign('title', $heading !== '' ? $heading : 'A message from Veloura Jewels');
+$this->assign('preheader', $preheader);
+$this->assign('footnote', 'You received this email because you contacted Veloura Jewels.');
+?>
+<?php if ($heading !== '') : ?>
+<p class="t-accent" style="margin:0 0 10px;font-family:<?= T::FONT_BODY ?>;font-size:10px;font-weight:700;
+          letter-spacing:0.2em;text-transform:uppercase;color:<?= T::GOLD_DEEP ?>;">
+  A Reply From Our Team
+</p>
 
-        <!-- ═══ CONTENT AREA ═══ -->
-        <tr>
-          <td bgcolor="#f9f4ee" style="background-color:#f9f4ee;padding:28px 28px 24px;">
+<h1 class="h1 t-ink" style="margin:0 0 22px;font-family:<?= T::FONT_DISPLAY ?>;font-size:26px;
+           font-weight:400;line-height:1.25;color:<?= T::EMERALD ?>;">
+  <?= h($heading) ?>
+</h1>
+<?php endif; ?>
 
-            <!-- Inner white content card -->
-            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"
-                   bgcolor="#ffffff"
-                   style="width:100%;background-color:#ffffff;
-                          border-radius:6px;overflow:hidden;
-                          border:1px solid #e2d8cc;
-                          box-shadow:0 2px 8px rgba(74,55,40,0.1);">
-              <tr>
-                <td bgcolor="#ffffff"
-                    style="background-color:#ffffff;padding:36px 36px 32px;
-                           font-family:Arial,Helvetica,sans-serif;font-size:15px;
-                           color:#3a2e25;line-height:1.7;">
-                  <?= $this->fetch('content') ?>
-                </td>
-              </tr>
-            </table>
-
-          </td>
-        </tr>
-
-        <!-- ═══ TRUST BAR ═══ -->
-        <tr>
-          <td bgcolor="#f9f4ee" style="background-color:#f9f4ee;padding:0 28px 24px;">
-            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"
-                   bgcolor="#ffffff"
-                   style="width:100%;background-color:#ffffff;
-                          border:1px solid #e2d8cc;border-radius:6px;overflow:hidden;">
-              <tr>
-                <td align="center" width="33%" bgcolor="#ffffff"
-                    style="background-color:#ffffff;padding:11px 6px;
-                           font-family:Arial,Helvetica,sans-serif;font-size:10px;
-                           letter-spacing:0.1em;text-transform:uppercase;color:#9b8878;
-                           border-right:1px solid #e2d8cc;">
-                  30-Day Returns
-                </td>
-                <td align="center" width="34%" bgcolor="#ffffff"
-                    style="background-color:#ffffff;padding:11px 6px;
-                           font-family:Arial,Helvetica,sans-serif;font-size:10px;
-                           letter-spacing:0.1em;text-transform:uppercase;color:#9b8878;
-                           border-right:1px solid #e2d8cc;">
-                  Free Shipping
-                </td>
-                <td align="center" width="33%" bgcolor="#ffffff"
-                    style="background-color:#ffffff;padding:11px 6px;
-                           font-family:Arial,Helvetica,sans-serif;font-size:10px;
-                           letter-spacing:0.1em;text-transform:uppercase;color:#9b8878;">
-                  3-Year Warranty
-                </td>
-              </tr>
-            </table>
-          </td>
-        </tr>
-
-        <!-- ═══ FOOTER ═══ -->
-        <tr>
-          <td align="center" bgcolor="#3d1f5e"
-              style="background-color:#3d1f5e;padding:26px 40px 24px;">
-            <p style="margin:0 0 12px;font-family:Georgia,'Times New Roman',serif;
-                      font-size:12px;letter-spacing:0.2em;color:#c9a84c;
-                      text-transform:uppercase;">
-              Veloura Jewels
-            </p>
-            <p style="margin:0 0 12px;font-size:0;line-height:0;">
-              <a href="#" style="font-family:Arial,Helvetica,sans-serif;font-size:10px;
-                                  letter-spacing:0.1em;color:rgba(201,168,76,0.75);
-                                  text-decoration:none;text-transform:uppercase;margin:0 8px;">
-                Instagram
-              </a>
-              <span style="font-family:Arial,sans-serif;font-size:10px;
-                           color:rgba(201,168,76,0.25);">&#124;</span>
-              <a href="#" style="font-family:Arial,Helvetica,sans-serif;font-size:10px;
-                                  letter-spacing:0.1em;color:rgba(201,168,76,0.75);
-                                  text-decoration:none;text-transform:uppercase;margin:0 8px;">
-                Facebook
-              </a>
-              <span style="font-family:Arial,sans-serif;font-size:10px;
-                           color:rgba(201,168,76,0.25);">&#124;</span>
-              <a href="#" style="font-family:Arial,Helvetica,sans-serif;font-size:10px;
-                                  letter-spacing:0.1em;color:rgba(201,168,76,0.75);
-                                  text-decoration:none;text-transform:uppercase;margin:0 8px;">
-                TikTok
-              </a>
-            </p>
-            <p style="margin:0;font-family:Arial,Helvetica,sans-serif;font-size:10px;
-                      color:rgba(255,255,255,0.28);letter-spacing:0.04em;line-height:1.8;">
-              &copy; <?= date('Y') ?> Veloura Jewels. All rights reserved.<br>
-              <?php if (!empty($unsubscribeUrl)): ?>
-              <a href="<?= h($unsubscribeUrl) ?>"
-                 style="color:rgba(255,255,255,0.28);text-decoration:underline;">
-                Unsubscribe
-              </a>
-              <?php endif; ?>
-            </p>
-          </td>
-        </tr>
-
-      </table>
-      <!-- /Main card -->
-
-    </td>
-  </tr>
-</table>
-
-</body>
-</html>
+<p class="t-mid" style="margin:0;font-family:<?= T::FONT_BODY ?>;font-size:15px;
+          line-height:1.75;color:<?= T::BODY ?>;">
+  <?= nl2br(h($body)) ?>
+</p>

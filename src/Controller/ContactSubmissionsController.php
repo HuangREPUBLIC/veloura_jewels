@@ -184,7 +184,13 @@ class ContactSubmissionsController extends AppController
                 $mailer
                     ->setTo($contactSubmission->email)
                     ->setSubject($subject)
-                    ->deliver($message);
+                    ->setEmailFormat('both')
+                    ->setViewVars(['subjectLine' => $subject]);
+                // Without a template name the renderer returns the raw text and
+                // the customer gets an unbranded reply; email/*/default.php wrap
+                // it in the same shell as every other Veloura email.
+                $mailer->viewBuilder()->setTemplate('default');
+                $mailer->deliver($message);
 
                 $contactRepliesTable = $this->fetchTable('ContactReplies');
                 $reply = $contactRepliesTable->newEntity([
