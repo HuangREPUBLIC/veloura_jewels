@@ -45,13 +45,13 @@
 }
 
 .profile-hero-email {
-    color: var(--gray-600);
+    color: var(--color-body);
     font-size: 0.9rem;
     margin-bottom: 0.2rem;
 }
 
 .profile-hero-since {
-    color: var(--gray-400);
+    color: var(--color-text-muted);
     font-size: 0.82rem;
     margin: 0;
 }
@@ -59,7 +59,7 @@
 /* Body grid */
 .profile-body {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 1.8rem;
 }
 
@@ -108,10 +108,10 @@
 
 .profile-info-label {
     display: block;
-    font-size: 0.72rem;
+    font-size: 0.75rem;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: var(--gray-400);
+    color: var(--color-text-muted);
     margin-bottom: 0.3rem;
     font-family: var(--font-body);
 }
@@ -124,7 +124,7 @@
 }
 
 .profile-empty {
-    color: var(--gray-300);
+    color: var(--color-text-muted);
     font-style: italic;
 }
 
@@ -141,16 +141,19 @@
 
 /* Buttons & links */
 .profile-link-btn {
+    display: inline-flex;
+    align-items: center;
+    min-height: 40px;
     font-family: var(--font-display);
-    font-size: 0.72rem;
+    font-size: 0.75rem;
     font-weight: 600;
     letter-spacing: 0.1em;
     text-transform: uppercase;
     color: var(--emerald);
     text-decoration: none;
     padding: 0.4rem 1rem;
-    border: 1.5px solid var(--emerald);
-    border-radius: 5px;
+    border: 1px solid var(--emerald);
+    border-radius: 0;
     transition: all 0.2s ease;
     white-space: nowrap;
 }
@@ -179,7 +182,7 @@
 .profile-empty-orders {
     text-align: center;
     padding: 2.5rem 1rem;
-    color: var(--gray-500);
+    color: var(--color-text-muted);
 }
 
 /* Orders table */
@@ -196,10 +199,10 @@
 
 .profile-orders-table th {
     font-family: var(--font-display);
-    font-size: 0.68rem;
+    font-size: 0.75rem;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: var(--gray-400);
+    color: var(--color-text-muted);
     padding: 0.7rem 1rem;
     border-bottom: 1px solid rgba(var(--emerald-rgb), 0.14);
     text-align: left;
@@ -240,7 +243,7 @@
 
 .order-ref {
     font-size: 0.78rem;
-    color: var(--gray-500);
+    color: var(--color-text-muted);
     word-break: break-all;
 }
 
@@ -249,16 +252,16 @@
     display: inline-block;
     padding: 0.25rem 0.75rem;
     border-radius: 20px;
-    font-size: 0.72rem;
+    font-size: 0.75rem;
     font-weight: 600;
     letter-spacing: 0.06em;
     text-transform: uppercase;
     font-family: var(--font-body);
 }
 
-.order-status--pending   { background: var(--color-message-warning-bg); color: var(--color-message-warning-text); }
-.order-status--paid      { background: var(--color-message-success-bg); color: var(--color-message-success-text); }
-.order-status--shipped   { background: var(--color-message-info-bg); color: var(--color-message-info-text); }
+.order-status--pending   { background: var(--color-message-warning-bg); color: #6b5d00; }
+.order-status--paid      { background: var(--color-message-success-bg); color: var(--emerald); }
+.order-status--shipped   { background: var(--color-message-info-bg); color: #1c5f96; }
 .order-status--completed { background: var(--beige-light); color: var(--emerald); }
 .order-status--cancelled { background: var(--color-message-error-bg); color: var(--color-message-error-text); }
 
@@ -380,7 +383,7 @@
 
 .od-title {
     font-family: var(--font-display);
-    font-size: 0.72rem;
+    font-size: 0.75rem;
     font-weight: 700;
     letter-spacing: 0.14em;
     text-transform: uppercase;
@@ -508,14 +511,17 @@
 }
 
 .profile-form-header h1 {
-    font-family: var(--font-display);
-    font-size: 1.8rem;
-    font-weight: 400;
+    font-family: var(--font-serif);
+    font-size: clamp(2.2rem, 4vw, 2.8rem);
+    font-weight: 500;
     margin: 0.5rem 0 0;
     color: var(--color-headings);
 }
 
 .profile-back-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
     font-size: 0.82rem;
     color: var(--emerald);
     text-decoration: none;
@@ -534,7 +540,8 @@
     margin-bottom: 2rem;
 }
 
-.profile-form-group {
+.profile-form-group,
+.profile-form-group .input {
     display: flex;
     flex-direction: column;
     gap: 0.4rem;
@@ -545,10 +552,10 @@
 }
 
 .profile-form-label {
-    font-size: 0.72rem;
+    font-size: 0.75rem;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: var(--gray-500);
+    color: var(--color-text-muted);
     font-family: var(--font-body);
 }
 
@@ -559,7 +566,7 @@
     width: 100%;
     padding: 0.65rem 1rem;
     border: 1px solid #d1d1d1;
-    border-radius: 5px;
+    border-radius: 4px;
     font-family: var(--font-body);
     font-size: 0.95rem;
     color: var(--color-body);
@@ -589,11 +596,12 @@
     font-weight: 600;
     letter-spacing: 0.1em;
     text-transform: uppercase;
+    min-height: 48px;
     padding: 0.65rem 2rem;
     background: var(--emerald);
     color: var(--color-white);
     border: none;
-    border-radius: 5px;
+    border-radius: 0;
     cursor: pointer;
     transition: background 0.2s ease;
 }
@@ -603,9 +611,12 @@
 }
 
 .profile-cancel-btn {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
     font-family: var(--font-body);
     font-size: 0.88rem;
-    color: var(--gray-500);
+    color: var(--color-text-muted);
     text-decoration: none;
     transition: color 0.2s ease;
 }
@@ -625,14 +636,14 @@
 
 .profile-status-tab {
     font-family: var(--font-display);
-    font-size: 0.72rem;
+    font-size: 0.75rem;
     font-weight: 600;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    padding: 0.4rem 1rem;
+    padding: 0.55rem 1rem;
     border-radius: 20px;
-    border: 1.5px solid rgba(var(--emerald-rgb), 0.25);
-    color: var(--gray-500);
+    border: 1px solid rgba(var(--emerald-rgb), 0.25);
+    color: var(--color-text-muted);
     text-decoration: none;
     transition: all 0.2s ease;
 }
@@ -735,8 +746,8 @@
 @media (max-width: 768px) {
     .profile-page { padding: 1.25rem 1rem 3rem; }
     .profile-hero { flex-direction: column; text-align: center; padding: 1.5rem 1.25rem; gap: 1rem; margin-bottom: 1.25rem; }
-    .profile-hero-info h1 { font-size: 1.4rem; }
-    .profile-body { grid-template-columns: 1fr; gap: 1rem; }
+    .profile-hero-info h1 { font-size: 1.9rem; }
+    .profile-body { grid-template-columns: minmax(0, 1fr); gap: 1rem; }
     .profile-card { padding: 1.25rem 1.25rem; }
     .profile-card--full { grid-column: 1; }
     .profile-card-header { margin-bottom: 1rem; flex-wrap: wrap; gap: 0.5rem; }
@@ -760,6 +771,7 @@
 .wishlist-back-link {
     display: inline-flex;
     align-items: center;
+    min-height: 44px;
     font-size: 0.86rem;
     font-weight: 600;
     color: var(--emerald);
@@ -780,9 +792,9 @@
 }
 
 .wishlist-title {
-    font-family: var(--font-display);
-    font-size: 2.2rem;
-    font-weight: 400;
+    font-family: var(--font-serif);
+    font-size: clamp(2.4rem, 4.6vw, 3.2rem);
+    font-weight: 500;
     color: var(--color-headings);
     margin: 0 0 1rem;
     line-height: 1.15;
@@ -929,7 +941,7 @@
 
 .wishlist-guest-hint {
     font-size: 0.9rem;
-    color: var(--color-muted, #888);
+    color: var(--color-text-muted);
     margin: 0.5rem 0 1.5rem;
 }
 .wishlist-guest-hint a {

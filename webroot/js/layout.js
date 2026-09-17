@@ -30,31 +30,56 @@
         onScroll();
     }
 
+    function setNavDropdown(open) {
+        var dropdown = getById('navDropdown');
+        var userBtn = getById('navUserBtn');
+        if (dropdown) dropdown.classList.toggle('open', open);
+        if (userBtn) userBtn.setAttribute('aria-expanded', String(open));
+    }
+
+    function setMobileMenu(open) {
+        var links = getById('navLinks');
+        var hamburger = getById('navHamburger');
+        if (links) links.classList.toggle('open', open);
+        if (hamburger) {
+            hamburger.classList.toggle('open', open);
+            hamburger.setAttribute('aria-expanded', String(open));
+        }
+    }
+
     function toggleNavDropdown() {
         var dropdown = getById('navDropdown');
-        if (dropdown) dropdown.classList.toggle('open');
+        setNavDropdown(!(dropdown && dropdown.classList.contains('open')));
     }
 
     function toggleMobileMenu() {
         var links = getById('navLinks');
-        var hamburger = getById('navHamburger');
-        if (links) links.classList.toggle('open');
-        if (hamburger) hamburger.classList.toggle('open');
+        setMobileMenu(!(links && links.classList.contains('open')));
     }
 
     function closeNavMenus(e) {
         var wrap = document.querySelector('.nav-dropdown-wrap');
-        var dropdown = getById('navDropdown');
-        if (wrap && dropdown && !wrap.contains(e.target)) {
-            dropdown.classList.remove('open');
+        if (wrap && !wrap.contains(e.target)) {
+            setNavDropdown(false);
         }
 
         var navbar = document.querySelector('.navbar');
-        var links = getById('navLinks');
-        var hamburger = getById('navHamburger');
         if (navbar && !navbar.contains(e.target)) {
-            if (links) links.classList.remove('open');
-            if (hamburger) hamburger.classList.remove('open');
+            setMobileMenu(false);
+        }
+    }
+
+    function closeNavMenusOnEscape(e) {
+        if (e.key !== 'Escape') return;
+        var links = getById('navLinks');
+        if (links && links.classList.contains('open')) {
+            setMobileMenu(false);
+            getById('navHamburger').focus();
+        }
+        var dropdown = getById('navDropdown');
+        if (dropdown && dropdown.classList.contains('open')) {
+            setNavDropdown(false);
+            getById('navUserBtn').focus();
         }
     }
 
@@ -158,7 +183,7 @@
                 + '</button>';
 
             return '<div class="product-card-wrap">'
-                + '<a href="' + url + '?back=' + encodeURIComponent(config.currentPagePath) + '" class="search-suggest-item">'
+                + '<a href="' + url + '" class="search-suggest-item">'
                 + imgWrap
                 + '<div class="search-suggest-info">'
                 + '<span class="search-suggest-name">' + name + '</span>'
@@ -299,6 +324,7 @@
         initNewsletter();
 
         document.addEventListener('click', closeNavMenus);
+        document.addEventListener('keydown', closeNavMenusOnEscape);
 
         var userBtn = getById('navUserBtn');
         var hamburger = getById('navHamburger');

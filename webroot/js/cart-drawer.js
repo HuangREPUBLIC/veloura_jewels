@@ -30,6 +30,7 @@
 
     var loaded = false;
     var lastFocused = null;
+    var quickViewReturnFocus = null;
 
     function open() {
         lastFocused = document.activeElement;
@@ -56,11 +57,15 @@
     function openQuickView(html) {
         if (!quickView || !quickViewBody) return;
 
+        quickViewReturnFocus = document.activeElement;
         quickViewBody.innerHTML = html;
         quickView.classList.add('is-open');
         quickView.setAttribute('aria-hidden', 'false');
         body.classList.add('cart-drawer-open');
         initQuickViewGallery();
+
+        var quickViewClose = document.getElementById('quickViewClose');
+        if (quickViewClose) quickViewClose.focus({ preventScroll: true });
     }
 
     // Same slide-and-dots switching the detail page uses for its images.
@@ -89,6 +94,9 @@
 
         if (!root.classList.contains('is-open')) {
             body.classList.remove('cart-drawer-open');
+            if (quickViewReturnFocus && document.contains(quickViewReturnFocus)) {
+                quickViewReturnFocus.focus({ preventScroll: true });
+            }
         }
     }
 

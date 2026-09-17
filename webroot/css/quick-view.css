@@ -54,8 +54,8 @@
     top: 0.85rem;
     right: 0.85rem;
     z-index: 2;
-    width: 2.4rem;
-    height: 2.4rem;
+    width: 44px;
+    height: 44px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -101,19 +101,16 @@
     display: none;
 }
 
+/* Photos fill the frame like product cards */
 .quick-view-slide {
     flex: 0 0 100%;
     scroll-snap-align: start;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 1.75rem;
 }
 
 .quick-view-slide img {
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: contain;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
     display: block;
 }
 
@@ -151,7 +148,7 @@
 }
 
 .quick-view-brand {
-    font-size: 0.7rem;
+    font-size: 0.75rem;
     letter-spacing: 0.22em;
     text-transform: uppercase;
     color: var(--color-text-muted);
@@ -186,7 +183,7 @@
 }
 
 .quick-view-label {
-    font-size: 0.72rem;
+    font-size: 0.75rem;
     letter-spacing: 0.16em;
     text-transform: uppercase;
     color: var(--color-headings);
@@ -280,14 +277,11 @@
         width: 100%;
         max-height: 92vh;
         overflow-y: auto;
+        border-radius: 20px 20px 0 0;
     }
 
     .quick-view-media {
         aspect-ratio: 4 / 3;
-    }
-
-    .quick-view-slide {
-        padding: 1rem;
     }
 
     .quick-view-detail {

@@ -48,7 +48,7 @@ $wishlistIds = $wishlistIds ?? [];
                                 $imgSrc = $img
                                     ? $this->Url->build('/img/products/' . rawurlencode($img))
                                     : $this->Url->build('/img/homepage.png');
-                                $productUrl = $this->Url->build(['controller' => 'Jewelry', 'action' => 'view', $product->id]) . '?back=/';
+                                $productUrl = $this->Url->build(['controller' => 'Jewelry', 'action' => 'view', $product->id]);
                                 ?>
                                 <div class="product-card-wrap">
                                     <a href="<?= $productUrl ?>" class="product-card-link">
@@ -120,7 +120,7 @@ $wishlistIds = $wishlistIds ?? [];
                                 $imgSrc = $img
                                     ? $this->Url->build('/img/products/' . rawurlencode($img))
                                     : $this->Url->build('/img/homepage.png');
-                                $productUrl = $this->Url->build('/home-decor/view/' . $product->id) . '?back=/';
+                                $productUrl = $this->Url->build('/home-decor/view/' . $product->id);
                                 ?>
                                 <div class="product-card-wrap">
                                     <a href="<?= $productUrl ?>" class="product-card-link">

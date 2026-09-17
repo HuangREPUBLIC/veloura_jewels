@@ -67,7 +67,7 @@
 .jewelry-page .jewelry-hero p {
     font-family: var(--font-body);
     color: var(--color-text-muted);
-    font-size: 0.88rem;
+    font-size: 0.92rem;
     font-weight: 400;
     letter-spacing: 0.06em;
     margin: 0;
@@ -78,15 +78,17 @@
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 0.45rem;
+    gap: 0 0.45rem;
     font-family: var(--font-body);
-    font-size: 0.76rem;
+    font-size: 0.8rem;
     letter-spacing: 0.03em;
     color: var(--color-text-muted);
     margin-bottom: 1.6rem;
 }
 
 .jewelry-page .crumb-link {
+    display: inline-block;
+    padding: 0.5rem 0;
     color: var(--color-text-muted);
     text-decoration: none;
     transition: color 0.18s ease;
@@ -229,11 +231,11 @@
 .product-badge {
     display: block;
     text-align: center;
-    font-size: 0.5rem;
+    font-size: 0.66rem;
     font-weight: 600;
-    letter-spacing: 0.18em;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
-    padding: 0.18rem 0.5rem;
+    padding: 0.28rem 0.6rem;
     border-radius: 0;
     background: rgba(250, 248, 245, 0.96);
 }
@@ -243,7 +245,13 @@
 }
 
 .product-badge--bestsales {
-    color: var(--emerald-gold);
+    color: var(--color-price);
+}
+
+/* One badge per card */
+.product-card-badges:has(.product-badge--bestsales) .product-badge--featured,
+.detail-badges:has(.product-badge--bestsales) .product-badge--featured {
+    display: none;
 }
 
 .product-price {

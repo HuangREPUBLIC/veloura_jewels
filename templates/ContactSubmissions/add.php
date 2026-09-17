@@ -7,7 +7,10 @@
 use Cake\Core\Configure;
 ?>
 
-<?php $this->Html->css('contact', ['block' => true]); ?>
+<?php
+$this->Html->css('contact', ['block' => true]);
+$this->assign('title', 'Contact');
+?>
 
 <?php
 $identity = $this->request->getAttribute('identity');
@@ -29,7 +32,7 @@ $this->Html->meta([
 
 <div class="contact-page">
     <div class="contact-header">
-        <h2><?= h($pageContent['contact_heading'] ?? 'Contact Veloura Jewels') ?></h2>
+        <h1><?= h($pageContent['contact_heading'] ?? 'Contact Veloura Jewels') ?></h1>
         <p><?= h($pageContent['contact_subtext'] ?? "We'd love to hear from you! Whether you have questions about our handcrafted jewellery, want to discuss a custom piece, or simply want to learn more about our story, feel free to reach out.") ?></p>
     </div>
 
@@ -44,6 +47,7 @@ $this->Html->meta([
                         'escape' => false,
                     ],
                     'placeholder' => 'Your first name',
+                    'autocomplete' => 'given-name',
                     'required' => true,
                     'value' => $identity ? $identity->get('first_name') : null,
                 ]) ?>
@@ -54,6 +58,7 @@ $this->Html->meta([
                         'escape' => false,
                     ],
                     'placeholder' => 'Your last name',
+                    'autocomplete' => 'family-name',
                     'required' => true,
                     'value' => $identity ? $identity->get('last_name') : null,
                 ]) ?>
@@ -65,6 +70,7 @@ $this->Html->meta([
                     'escape' => false,
                 ],
                 'placeholder' => 'Your email address',
+                'autocomplete' => 'email',
                 'required' => true,
                 'value' => $identity ? $identity->get('email') : null,
             ]) ?>
@@ -104,11 +110,6 @@ $this->Html->meta([
         <?= $this->Form->button(__('Send Message'), [
             'class' => 'contact-submit-btn',
             'disabled' => true
-        ]) ?>
-
-        <?= $this->Form->button(__('Reset'), [
-            'type' => 'reset',
-            'class' => 'contact-reset-btn'
         ]) ?>
 
         <?= $this->Form->end() ?>

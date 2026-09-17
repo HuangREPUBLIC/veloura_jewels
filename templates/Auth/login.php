@@ -3,7 +3,7 @@
  * @var \App\View\AppView $this
  */
 use Cake\Core\Configure;
-$this->assign('title', 'Login');
+$this->assign('title', 'Sign In');
 $this->Html->css('login', ['block' => true]);
 ?>
 
@@ -27,7 +27,7 @@ $this->Html->meta([
         <p class="login-kicker">Welcome back</p>
         <?= $this->Form->create() ?>
         <fieldset>
-            <legend>Login</legend>
+            <legend><h1 class="login-title">Sign In</h1></legend>
             <?= $this->Flash->render() ?>
 
             <?php
@@ -35,11 +35,13 @@ $this->Html->meta([
                 'type' => 'email',
                 'required' => true,
                 'autofocus' => true,
+                'autocomplete' => 'email',
             ]);
 
             echo $this->Form->control('password', [
                 'type' => 'password',
                 'required' => true,
+                'autocomplete' => 'current-password',
             ]);
             ?>
 

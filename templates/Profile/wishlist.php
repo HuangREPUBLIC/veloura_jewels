@@ -22,7 +22,7 @@ echo $this->element('jewelry_css');
     <div class="wishlist-hero">
         <h1 class="wishlist-title">Wishlist</h1>
         <?php if ($isGuest): ?>
-            <p class="wishlist-guest-hint">To save your wishlist please <?= $this->Html->link('login', ['controller' => 'Auth', 'action' => 'login']) ?> or <?= $this->Html->link('sign up', ['controller' => 'Auth', 'action' => 'register']) ?>.</p>
+            <p class="wishlist-guest-hint">To save your wishlist please <?= $this->Html->link('sign in', ['controller' => 'Auth', 'action' => 'login']) ?> or <?= $this->Html->link('sign up', ['controller' => 'Auth', 'action' => 'register']) ?>.</p>
         <?php endif; ?>
         <?php if (!empty($items)): ?>
         <div class="wishlist-actions-row">
@@ -42,7 +42,7 @@ echo $this->element('jewelry_css');
 
     <?php if (empty($items)): ?>
         <div class="profile-card">
-            <p class="profile-info-value">You have no saved items yet. Browse <?= $this->Html->link('Jewelry', '/jewelry') ?> or <?= $this->Html->link('Home Decor', '/home-decor') ?> to add some.</p>
+            <p class="profile-info-value">You have no saved items yet. Browse <?= $this->Html->link('Jewellery', '/jewellery') ?> or <?= $this->Html->link('Home Décor', '/home-decor') ?> to add some.</p>
         </div>
     <?php else: ?>
         <div class="product-grid">
@@ -51,8 +51,8 @@ echo $this->element('jewelry_css');
                 $product       = $item->product;
                 $isHomeDecor   = ($product->category->type ?? '') === 'home_decor';
                 $productUrl    = $isHomeDecor
-                    ? $this->Url->build('/home-decor/view/' . $product->id) . '?back=/profile/wishlist'
-                    : $this->Url->build('/jewelry/view/' . $product->id) . '?back=/profile/wishlist';
+                    ? $this->Url->build('/home-decor/view/' . $product->id)
+                    : $this->Url->build('/jewelry/view/' . $product->id);
                 $hasHover   = !empty($product->product_images[1]);
                 $variants   = $product->product_variants ?? [];
                 $isOneSize  = count($variants) === 1;
@@ -103,7 +103,7 @@ echo $this->element('jewelry_css');
                         <?php endif; ?>
                         <?php if (!$isOneSize): ?>
                         <div class="wishlist-size-row">
-                            <select name="variant_id" class="wishlist-size-select"
+                            <select name="variant_id" class="wishlist-size-select" aria-label="Size"
                                     data-atb-btn="wl-atb-<?= $product->id ?>">
                                 <option value="">Select Size</option>
                                 <?php foreach ($variants as $v): ?>

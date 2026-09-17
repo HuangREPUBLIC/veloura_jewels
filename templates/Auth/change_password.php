@@ -22,9 +22,9 @@ $this->Html->css('profile', ['block' => true]);
             <div class="profile-form-grid" style="grid-template-columns: 1fr;">
 
                 <div class="profile-form-group">
-                    <label class="profile-form-label">Current Password</label>
                     <?= $this->Form->control('current_password', [
-                        'label'       => false,
+                        'label'       => ['text' => 'Current Password', 'class' => 'profile-form-label'],
+                        'autocomplete' => 'current-password',
                         'type'        => 'password',
                         'value'       => '',
                         'required'    => true,
@@ -34,9 +34,9 @@ $this->Html->css('profile', ['block' => true]);
                 </div>
 
                 <div class="profile-form-group">
-                    <label class="profile-form-label">New Password</label>
                     <?= $this->Form->control('password', [
-                        'label'       => false,
+                        'label'       => ['text' => 'New Password', 'class' => 'profile-form-label'],
+                        'autocomplete' => 'new-password',
                         'type'        => 'password',
                         'value'       => '',
                         'required'    => true,
@@ -45,9 +45,9 @@ $this->Html->css('profile', ['block' => true]);
                 </div>
 
                 <div class="profile-form-group">
-                    <label class="profile-form-label">Confirm New Password</label>
                     <?= $this->Form->control('confirm_password', [
-                        'label'       => false,
+                        'label'       => ['text' => 'Confirm New Password', 'class' => 'profile-form-label'],
+                        'autocomplete' => 'new-password',
                         'type'        => 'password',
                         'value'       => '',
                         'required'    => true,

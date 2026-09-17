@@ -1,20 +1,23 @@
-<?php $this->Html->css('faq', ['block' => true]); ?>
+<?php
+$this->Html->css('faq', ['block' => true]);
+$this->assign('title', 'FAQ');
+?>
 
 <div class="faq-page">
     <div class="faq-header">
-        <h2><?= h($pageContent['faq_heading'] ?? 'Frequently Asked Questions') ?></h2>
+        <h1><?= h($pageContent['faq_heading'] ?? 'Frequently Asked Questions') ?></h1>
         <p><?= h($pageContent['faq_subtext'] ?? '') ?></p>
     </div>
 
     <div class="faq-container">
         <?php foreach ($faqs as $index => $faq): ?>
             <div class="faq-item">
-                <button class="faq-question" type="button" onclick="toggleFaq(<?= $index ?>)">
+                <button class="faq-question" type="button" id="question-<?= $index ?>" aria-expanded="false" aria-controls="answer-<?= $index ?>">
                     <span><?= h($faq->question) ?></span>
-                    <span class="faq-icon" id="icon-<?= $index ?>">+</span>
+                    <span class="faq-icon" aria-hidden="true">+</span>
                 </button>
 
-                <div class="faq-answer" id="answer-<?= $index ?>" style="display: none;">
+                <div class="faq-answer" id="answer-<?= $index ?>" role="region" aria-labelledby="question-<?= $index ?>" hidden>
                     <p><?= h($faq->answer) ?></p>
                 </div>
             </div>
@@ -23,16 +26,11 @@
 </div>
 
 <script>
-    function toggleFaq(index) {
-        const answer = document.getElementById('answer-' + index);
-        const icon = document.getElementById('icon-' + index);
-
-        if (answer.style.display === 'block') {
-            answer.style.display = 'none';
-            icon.textContent = '+';
-        } else {
-            answer.style.display = 'block';
-            icon.textContent = '−';
-        }
-    }
+    document.querySelectorAll('.faq-question').forEach(function (button) {
+        button.addEventListener('click', function () {
+            const expanded = button.getAttribute('aria-expanded') === 'true';
+            button.setAttribute('aria-expanded', String(!expanded));
+            document.getElementById(button.getAttribute('aria-controls')).hidden = expanded;
+        });
+    });
 </script>

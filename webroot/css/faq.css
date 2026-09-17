@@ -13,7 +13,7 @@
     background: transparent;
 }
 
-.faq-header h2 {
+.faq-header h1 {
     font-family: var(--font-serif);
     font-size: clamp(2.4rem, 4.6vw, 3.6rem);
     font-weight: 500;
@@ -82,6 +82,9 @@
     color: var(--color-text-muted);
     font-size: 0.92rem;
     line-height: 1.9;
+}
+
+.faq-answer[hidden] {
     display: none;
 }
 
@@ -100,6 +103,10 @@
     align-items: center;
     justify-content: center;
     transition: background 0.18s, transform 0.2s;
+}
+
+.faq-question[aria-expanded="true"] .faq-icon {
+    transform: rotate(45deg);
 }
 
 .faq-question:hover .faq-icon {
@@ -149,7 +156,7 @@
 }
 
 .story-label {
-    font-size: 0.7rem;
+    font-size: 0.75rem;
     font-weight: 700;
     letter-spacing: 0.22em;
     text-transform: uppercase;
@@ -222,10 +229,10 @@
 }
 
 .story-values-title {
-    font-family: var(--font-display);
-    font-size: clamp(1.7rem, 3vw, 2.5rem);
-    font-weight: 300;
-    letter-spacing: 0.04em;
+    font-family: var(--font-serif);
+    font-size: clamp(2.2rem, 3.6vw, 3rem);
+    font-weight: 500;
+    letter-spacing: 0.005em;
     margin: 0;
 }
 
@@ -257,12 +264,12 @@
 }
 
 .story-value-title {
-    font-family: var(--font-display);
-    font-size: 0.9rem;
-    font-weight: 700;
-    letter-spacing: 0.04em;
+    font-family: var(--font-serif);
+    font-size: 1.4rem;
+    font-weight: 500;
+    letter-spacing: 0.005em;
     color: var(--color-headings);
-    margin: 0 0 0.65rem;
+    margin: 0 0 0.6rem;
 }
 
 .story-value-card p {
@@ -330,8 +337,8 @@
     bottom: 0;
     left: 0;
     right: 0;
-    padding: 3rem 2rem 2.5rem;
-    background: linear-gradient(to top, rgba(0,0,0,0.45) 0%, transparent 100%);
+    padding: 7rem 2rem 2.5rem;
+    background: linear-gradient(to top, rgba(18, 28, 24, 0.72) 0%, rgba(18, 28, 24, 0.35) 55%, transparent 100%);
     text-align: center;
 }
 
@@ -418,8 +425,22 @@
     white-space: pre-line;
 }
 
+.location-card-link {
+    display: inline-block;
+    text-decoration: underline;
+    text-decoration-color: rgba(var(--emerald-rgb), 0.3);
+    text-underline-offset: 4px;
+    transition: color 0.2s ease, text-decoration-color 0.2s ease;
+}
+
+.location-card-link:hover {
+    color: var(--emerald);
+    text-decoration-color: currentColor;
+}
+
 @media (max-width: 800px) {
     .location-banner { height: 260px; }
+    .location-banner-img { height: 260px; }
     .location-main { grid-template-columns: 1fr; gap: 2rem; }
     .location-image-wrap { position: static; }
     .location-content { padding: 2.5rem 1.5rem 4rem; }

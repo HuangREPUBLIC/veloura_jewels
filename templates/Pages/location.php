@@ -25,7 +25,9 @@
                     </div>
                     <div>
                         <h3 class="location-card-title">Address</h3>
-                        <p class="location-card-text"><?= h($pageContent['address'] ?? '') ?></p>
+                        <?php if (!empty($pageContent['address'])): ?>
+                            <a class="location-card-text location-card-link" href="https://www.google.com/maps/search/?api=1&amp;query=<?= rawurlencode($pageContent['address']) ?>" target="_blank" rel="noopener"><?= h($pageContent['address']) ?></a>
+                        <?php endif; ?>
                     </div>
                 </div>
 
@@ -37,7 +39,9 @@
                     </div>
                     <div>
                         <h3 class="location-card-title">Phone</h3>
-                        <p class="location-card-text"><?= h($pageContent['phone'] ?? '') ?></p>
+                        <?php if (!empty($pageContent['phone'])): ?>
+                            <a class="location-card-text location-card-link" href="tel:<?= h(preg_replace('/[^\d+]/', '', $pageContent['phone'])) ?>"><?= h($pageContent['phone']) ?></a>
+                        <?php endif; ?>
                     </div>
                 </div>
 

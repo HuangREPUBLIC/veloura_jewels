@@ -75,16 +75,17 @@ img {
     max-width: 100%;
 }
 
-:not(.admin-wrapper) h1,
-:not(.admin-wrapper) h2,
-:not(.admin-wrapper) h3,
-:not(.admin-wrapper) h4,
-:not(.admin-wrapper) h5,
-:not(.admin-wrapper) h6 {
+/* Low specificity on public pages so component classes can restyle headings */
+:where(body:not(.admin-body)) :is(h1, h2, h3, h4, h5, h6),
+.admin-body :is(h1, h2, h3, h4, h5, h6) {
     font-family: var(--font-display);
     font-weight: 400;
     color: var(--color-headings);
     letter-spacing: 0.01em;
+}
+
+:where(body:not(.admin-body)) :is(h1, h2, h3, h4, h5, h6) {
+    line-height: 1.2;
 }
 
 a {
@@ -224,7 +225,7 @@ input[type='color'] {
 
 .error-page-message {
     font-size: 0.95rem;
-    color: #7a7a72;
+    color: var(--color-text-muted);
     max-width: 420px;
     line-height: 1.8;
     margin: 0 0 2.5rem;
@@ -343,3 +344,4 @@ input[type='color'] {
         transform: translateY(0);
     }
 
+}

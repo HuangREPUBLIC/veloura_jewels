@@ -1,4 +1,7 @@
-<?php $this->Html->css('faq', ['block' => true]); ?>
+<?php
+$this->Html->css('faq', ['block' => true]);
+$this->assign('title', 'Our Story');
+?>
 
 <div class="story-page">
 

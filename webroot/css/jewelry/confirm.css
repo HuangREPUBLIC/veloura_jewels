@@ -1,8 +1,10 @@
 
 
+/* Cancel page, matches the success page card */
+
 .cc-page {
-    min-height: 100vh;
-    background: var(--beige-light);
+    min-height: 72vh;
+    background: var(--color-main-bg);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -11,11 +13,11 @@
 
 .cc-card {
     width: 100%;
-    max-width: 480px;
+    max-width: 540px;
     background: var(--color-white);
-    border-radius: 20px;
+    border-radius: 0;
     overflow: hidden;
-    box-shadow: 0 12px 40px rgba(0,0,0,0.08);
+    box-shadow: 0 4px 32px rgba(0, 0, 0, 0.07);
 }
 
 .cc-card--warning {
@@ -28,16 +30,11 @@
 
 .cc-card-top {
     display: flex;
-    align-items: flex-start;
-    gap: 1rem;
-    padding: 1.8rem 1.8rem 0;
-}
-
-.cc-card-top--center {
     flex-direction: column;
     align-items: center;
     text-align: center;
-    padding-bottom: 0.5rem;
+    gap: 1.1rem;
+    padding: 2.75rem 2.25rem 0;
 }
 
 .cc-icon {
@@ -71,37 +68,37 @@
 }
 
 .cc-heading {
-    font-family: var(--font-display);
-    font-size: 1.45rem;
-    font-weight: 400;
+    font-family: var(--font-serif);
+    font-size: clamp(1.9rem, 4vw, 2.5rem);
+    font-weight: 500;
     color: var(--color-headings);
-    margin: 0 0 0.3rem;
-    letter-spacing: 0.02em;
+    margin: 0 0 0.5rem;
+    letter-spacing: 0.005em;
 }
 
 .cc-sub {
-    font-size: 0.88rem;
+    font-size: 0.92rem;
     color: var(--color-text-muted);
     margin: 0;
-    line-height: 1.5;
+    line-height: 1.6;
 }
 
 .cc-timer-section {
-    margin: 1.6rem 1.8rem 0;
-    background: rgba(var(--beige-light-rgb), 0.6);
-    border: 1px solid rgba(var(--emerald-rgb), 0.1);
-    border-radius: 14px;
+    margin: 1.75rem 2.25rem 0;
+    background: var(--beige-light);
+    border: none;
+    border-radius: 0;
     padding: 1.1rem 1.3rem 1rem;
     transition: opacity 0.4s;
 }
 
 .cc-timer-label {
     display: block;
-    font-size: 0.68rem;
+    font-size: 0.75rem;
     font-weight: 700;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: var(--color-text-muted);
+    color: var(--color-body);
     margin-bottom: 0.4rem;
 }
 
@@ -113,10 +110,11 @@
     letter-spacing: 0.06em;
     line-height: 1;
     margin-bottom: 0.85rem;
+    font-variant-numeric: tabular-nums;
     transition: color 0.4s;
 }
 
-.cc-timer--warn   { color: #c47a1a; }
+.cc-timer--warn   { color: #a8660f; }
 .cc-timer--urgent { color: #b93333; }
 
 .cc-timer-track {
@@ -134,27 +132,27 @@
 }
 
 .cc-timer--warn   ~ .cc-timer-track .cc-timer-bar,
-.cc-timer-bar.warn   { background: #c47a1a; }
+.cc-timer-bar.warn   { background: #a8660f; }
 .cc-timer--urgent ~ .cc-timer-track .cc-timer-bar,
 .cc-timer-bar.urgent { background: #b93333; }
 
 .cc-expired-notice {
-    margin: 1rem 1.8rem 0;
+    margin: 1rem 2.25rem 0;
     padding: 0.7rem 1rem;
     background: rgba(185, 51, 51, 0.06);
     border: 1px solid rgba(185, 51, 51, 0.18);
-    border-radius: 10px;
+    border-radius: 0;
     font-size: 0.82rem;
     color: #b93333;
     text-align: center;
 }
 
 .cc-summary {
-    margin: 1.5rem 1.8rem 0;
-    border: 1px solid rgba(var(--emerald-rgb), 0.1);
-    border-radius: 14px;
+    margin: 1.5rem 2.25rem 0;
+    border: 1px solid var(--beige-mid, #e8e0d4);
+    border-radius: 0;
     padding: 1rem 1.1rem;
-    background: rgba(var(--beige-light-rgb), 0.4);
+    background: var(--color-white);
 }
 
 .cc-summary--muted {
@@ -162,7 +160,7 @@
 }
 
 .cc-summary-label {
-    font-size: 0.66rem;
+    font-size: 0.75rem;
     font-weight: 700;
     letter-spacing: 0.14em;
     text-transform: uppercase;
@@ -198,7 +196,7 @@
 }
 
 .cc-item-meta {
-    font-size: 0.76rem;
+    font-size: 0.8rem;
     color: var(--color-text-muted);
 }
 
@@ -224,14 +222,14 @@
 }
 
 .cc-currency {
-    font-size: 0.72rem;
+    font-size: 0.75rem;
     font-weight: 400;
     color: var(--color-text-muted);
     letter-spacing: 0.06em;
 }
 
 .cc-actions {
-    padding: 1.4rem 1.8rem 1.8rem;
+    padding: 1.5rem 2.25rem 2.25rem;
     display: flex;
     flex-direction: column;
     gap: 0.65rem;
@@ -242,12 +240,13 @@
     align-items: center;
     justify-content: center;
     width: 100%;
+    min-height: 50px;
     padding: 0.92rem 1.2rem;
-    border-radius: 12px;
+    border-radius: 0;
     font-family: var(--font-display);
-    font-size: 0.82rem;
+    font-size: 0.78rem;
     font-weight: 600;
-    letter-spacing: 0.12em;
+    letter-spacing: 0.16em;
     text-transform: uppercase;
     text-decoration: none;
     cursor: pointer;
@@ -263,14 +262,14 @@
 }
 
 .cc-btn--primary:hover {
-    background: rgba(var(--emerald-rgb), 0.85);
+    background: var(--emerald-dark);
     color: #fff;
 }
 
 .cc-btn--danger {
     background: transparent;
     color: #b93333;
-    border: 1.5px solid rgba(185, 51, 51, 0.35);
+    border: 1px solid rgba(185, 51, 51, 0.35);
 }
 
 .cc-btn--danger:hover {

@@ -11,6 +11,7 @@ use Cake\Routing\Router;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Log\Log;
 use Cake\Mailer\Mailer;
+use Stripe\Exception\ApiErrorException;
 use Stripe\StripeClient;
 use Stripe\Webhook;
 
@@ -438,7 +439,7 @@ class JewelryController extends AppController
         $baseUrl = $this->request->scheme() . '://' . $this->request->host() . $this->request->getAttribute('base');
 
         $sessionParams = [
-            'ui_mode' => 'embedded_page',
+            'ui_mode' => 'form',
             'mode' => 'payment',
             'line_items' => $lineItems,
             'return_url' => $baseUrl . '/checkout/success?session_id={CHECKOUT_SESSION_ID}',
@@ -461,26 +462,63 @@ class JewelryController extends AppController
 
         $clientSecret = $session->client_secret;
         $sessionId = $session->id;
+        $uiMode = $session->ui_mode;
         $publishableKey = Configure::read('Stripe.publishableKey');
-        $this->set(compact('clientSecret', 'publishableKey', 'products', 'total', 'sessionId'));
+        $this->set(compact('clientSecret', 'publishableKey', 'products', 'total', 'sessionId', 'uiMode'));
         $this->viewBuilder()->disableAutoLayout();
         $this->render('payment');
     }
 
-    public function success()
+    /**
+     * Stripe return page, shown only for paid sessions.
+     *
+     * @return \Cake\Http\Response|null
+     */
+    public function success(): ?Response
     {
         $sessionId = (string)$this->request->getQuery('session_id');
-        $order = null;
+        if ($sessionId === '') {
+            return $this->redirect(['action' => 'index']);
+        }
 
-        if ($sessionId !== '') {
-            $order = $this->Orders->find()
-                ->contain(['OrderItems' => ['Products' => ['ProductImages']]])
-                ->where(['stripe_session_id' => $sessionId])
-                ->first();
+        $order = $this->Orders->find()
+            ->contain(['OrderItems' => ['Products' => ['ProductImages']]])
+            ->where(['stripe_session_id' => $sessionId])
+            ->first();
+
+        if (!$order) {
+            return $this->redirect(['action' => 'index']);
+        }
+        if ($order->status === 'cancelled') {
+            return $this->redirect(['action' => 'cancel', '?' => ['session_id' => $sessionId]]);
+        }
+
+        $customerEmail = $order->customer_email;
+
+        // The webhook may not have arrived yet, so confirm payment with Stripe.
+        if ($order->status === 'pending') {
+            try {
+                $session = (new StripeClient(Configure::read('Stripe.secretKey')))
+                    ->checkout->sessions->retrieve($sessionId);
+            } catch (ApiErrorException $e) {
+                Log::error('Checkout success lookup failed: ' . $e->getMessage());
+
+                return $this->redirect(['action' => 'cancel', '?' => ['session_id' => $sessionId]]);
+            }
+
+            if ($session->payment_status === 'unpaid') {
+                return $this->redirect($session->status === 'open'
+                    ? ['action' => 'resumeCheckout', '?' => ['session_id' => $sessionId]]
+                    : ['action' => 'cancel', '?' => ['session_id' => $sessionId]]);
+            }
+
+            $customerEmail = $customerEmail ?: ($session->customer_details->email ?? null);
         }
 
         $this->request->getSession()->delete('Cart');
-        $this->set(compact('order'));
+        $this->set(compact('order', 'customerEmail'));
+
+        return null;
     }
 
     public function cancel()
@@ -576,9 +614,10 @@ class JewelryController extends AppController
         }
 
         $clientSecret   = $session->client_secret;
+        $uiMode = $session->ui_mode;
         $publishableKey = Configure::read('Stripe.publishableKey');
 
-        $this->set(compact('clientSecret', 'publishableKey', 'products', 'total', 'sessionId'));
+        $this->set(compact('clientSecret', 'publishableKey', 'products', 'total', 'sessionId', 'uiMode'));
         $this->viewBuilder()->disableAutoLayout();
         $this->render('payment');
     }

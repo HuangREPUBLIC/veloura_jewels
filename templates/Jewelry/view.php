@@ -28,11 +28,6 @@ $oneSizeVariant = $isOneSizeOnly ? $inStockVariants[0] : null;
 
 <div class="jewelry-page">
     <?php
-    $back    = $this->request->getQuery('back');
-    $backUrl = ($back && str_starts_with($back, '/'))
-        ? $back
-        : ($section === 'home_decor' ? '/home-decor' : '/jewelry');
-
     $sectionLabel = $section === 'home_decor' ? 'Home Décor' : 'Jewellery';
     $sectionSlug  = $section === 'home_decor' ? 'home-decor' : 'jewellery';
     $crumbs = [
@@ -46,7 +41,6 @@ $oneSizeVariant = $isOneSizeOnly ? $inStockVariants[0] : null;
     $crumbs[] = ['label' => $product->name];
     ?>
     <?= $this->element('breadcrumb', ['crumbs' => $crumbs]) ?>
-    <?= $this->Html->link('← Back', $backUrl, ['class' => 'jewelry-back-link']) ?>
 
     <div class="product-detail">
 
@@ -84,7 +78,7 @@ $oneSizeVariant = $isOneSizeOnly ? $inStockVariants[0] : null;
                         <span class="product-badge product-badge--featured">Featured</span>
                     <?php endif; ?>
                     <?php if (!empty($product->is_bestsales)): ?>
-                        <span class="product-badge product-badge--bestsales">Best Sales</span>
+                        <span class="product-badge product-badge--bestsales">Best Seller</span>
                     <?php endif; ?>
                 </div>
             <?php endif; ?>
@@ -138,14 +132,14 @@ $oneSizeVariant = $isOneSizeOnly ? $inStockVariants[0] : null;
                 </div>
 
                 <div class="detail-section">
-                    <div class="detail-section-label">Quantity</div>
+                    <label class="detail-section-label" for="quantity">Quantity</label>
                     <div class="qty-stepper">
-                        <button type="button" class="qty-stepper-btn" id="qty-minus"<?= !$isOneSizeOnly ? ' disabled' : '' ?>>−</button>
+                        <button type="button" class="qty-stepper-btn" id="qty-minus" aria-label="Decrease quantity"<?= !$isOneSizeOnly ? ' disabled' : '' ?>><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
                         <input type="number" name="quantity" id="quantity"
                             value="1" min="1"
                             max="<?= $isOneSizeOnly ? $oneSizeVariant->stock : 99 ?>"
                             class="qty-stepper-input">
-                        <button type="button" class="qty-stepper-btn" id="qty-plus"<?= !$isOneSizeOnly ? ' disabled' : '' ?>>+</button>
+                        <button type="button" class="qty-stepper-btn" id="qty-plus" aria-label="Increase quantity"<?= !$isOneSizeOnly ? ' disabled' : '' ?>><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
                     </div>
                     <span id="qty-toast" class="qty-toast" role="alert" aria-live="assertive"></span>
                 </div>

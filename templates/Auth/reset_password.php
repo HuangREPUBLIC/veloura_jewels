@@ -12,7 +12,7 @@ $this->Html->css('login', ['block' => true]);
         <?= $this->Form->create($user) ?>
 
         <fieldset>
-            <legend>Reset Password</legend>
+            <legend><h1 class="login-title">Reset Password</h1></legend>
 
             <?= $this->Flash->render() ?>
 
@@ -22,12 +22,14 @@ $this->Html->css('login', ['block' => true]);
                 'label'    => 'New Password',
                 'required' => true,
                 'autofocus' => true,
+                'autocomplete' => 'new-password',
                 'value'    => ''
             ]);
             echo $this->Form->control('password_confirm', [
                 'type'     => 'password',
                 'label'    => 'Confirm New Password',
                 'required' => true,
+                'autocomplete' => 'new-password',
                 'value'    => ''
             ]);
             ?>

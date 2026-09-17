@@ -1,4 +1,9 @@
 <?php
+/**
+ * @var \App\View\AppView $this
+ * @var \App\Model\Entity\Order $order
+ * @var string|null $customerEmail
+ */
 $this->assign('title', 'Payment Successful');
 ?>
 <?php $this->Html->css(['success', 'home'], ['block' => true]); ?>
@@ -7,7 +12,7 @@ $this->assign('title', 'Payment Successful');
     <div class="result-card">
 
         <div class="result-icon">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#284d40" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#284d40" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <circle cx="12" cy="12" r="10"/>
                 <polyline points="9 12 11.5 14.5 15.5 9.5"/>
             </svg>
@@ -25,7 +30,7 @@ $this->assign('title', 'Payment Successful');
                             <div class="result-item-img-wrap">
                                 <?php if (!empty($item->product->product_images)): ?>
                                     <img src="<?= $this->Url->image('products/' . h($item->product->product_images[0]->filename)) ?>"
-                                         alt="<?= h($item->product_name) ?>" class="result-item-img">
+                                         alt="" class="result-item-img">
                                 <?php else: ?>
                                     <div class="result-item-placeholder">
                                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
@@ -46,10 +51,12 @@ $this->assign('title', 'Payment Successful');
             <?php endif; ?>
 
             <div class="result-order-info">
-                <div class="result-order-row">
-                    <span class="result-order-label">Email</span>
-                    <span class="result-order-value"><?= h($order->customer_email) ?></span>
-                </div>
+                <?php if (!empty($customerEmail)): ?>
+                    <div class="result-order-row">
+                        <span class="result-order-label">Email</span>
+                        <span class="result-order-value"><?= h($customerEmail) ?></span>
+                    </div>
+                <?php endif; ?>
                 <div class="result-order-row">
                     <span class="result-order-label">Total</span>
                     <span class="result-order-value">$<?= number_format((float)$order->total_amount, 2) ?> <?= strtoupper(h($order->currency)) ?></span>

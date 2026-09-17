@@ -54,12 +54,12 @@ $this->assign('title', 'Payment Paused');
                         <span class="cc-item-name"><?= h($item->product_name) ?></span>
                         <span class="cc-item-meta"><?= h($item->selected_size) ?> &times; <?= (int)$item->quantity ?></span>
                     </div>
-                    <span class="cc-item-price">A$<?= number_format((float)$item->subtotal, 2) ?></span>
+                    <span class="cc-item-price">$<?= number_format((float)$item->subtotal, 2) ?></span>
                 </div>
             <?php endforeach; ?>
             <div class="cc-total">
                 <span>Total</span>
-                <span>A$<?= number_format((float)$order->total_amount, 2) ?> <span class="cc-currency"><?= strtoupper(h($order->currency)) ?></span></span>
+                <span>$<?= number_format((float)$order->total_amount, 2) ?> <span class="cc-currency"><?= strtoupper(h($order->currency)) ?></span></span>
             </div>
         </div>
 
@@ -146,12 +146,12 @@ $this->assign('title', 'Payment Paused');
                         <span class="cc-item-name"><?= h($item->product_name) ?></span>
                         <span class="cc-item-meta"><?= h($item->selected_size) ?> &times; <?= (int)$item->quantity ?></span>
                     </div>
-                    <span class="cc-item-price">A$<?= number_format((float)$item->subtotal, 2) ?></span>
+                    <span class="cc-item-price">$<?= number_format((float)$item->subtotal, 2) ?></span>
                 </div>
             <?php endforeach; ?>
             <div class="cc-total">
                 <span>Total</span>
-                <span>A$<?= number_format((float)$order->total_amount, 2) ?> <span class="cc-currency"><?= strtoupper(h($order->currency)) ?></span></span>
+                <span>$<?= number_format((float)$order->total_amount, 2) ?> <span class="cc-currency"><?= strtoupper(h($order->currency)) ?></span></span>
             </div>
         </div>
 
@@ -166,7 +166,7 @@ $this->assign('title', 'Payment Paused');
 <?php else: ?>
 
     <div class="cc-card">
-        <div class="cc-card-top cc-card-top--center">
+        <div class="cc-card-top">
             <div class="cc-icon cc-icon--done">
                 <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
                     <circle cx="12" cy="12" r="10"/>

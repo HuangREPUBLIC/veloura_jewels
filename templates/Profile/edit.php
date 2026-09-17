@@ -20,34 +20,34 @@ $this->Html->css('profile', ['block' => true]);
 
             <div class="profile-form-grid">
                 <div class="profile-form-group">
-                    <label class="profile-form-label">First Name</label>
                     <?= $this->Form->control('first_name', [
-                        'label' => false,
+                        'label' => ['text' => 'First Name', 'class' => 'profile-form-label'],
+                        'autocomplete' => 'given-name',
                         'class' => 'profile-form-input',
                         'placeholder' => 'First name',
                     ]) ?>
                 </div>
                 <div class="profile-form-group">
-                    <label class="profile-form-label">Last Name</label>
                     <?= $this->Form->control('last_name', [
-                        'label' => false,
+                        'label' => ['text' => 'Last Name', 'class' => 'profile-form-label'],
+                        'autocomplete' => 'family-name',
                         'class' => 'profile-form-input',
                         'placeholder' => 'Last name',
                     ]) ?>
                 </div>
                 <div class="profile-form-group profile-form-group--full">
-                    <label class="profile-form-label">Phone</label>
                     <?= $this->Form->control('phone', [
-                        'label' => false,
+                        'label' => ['text' => 'Phone', 'class' => 'profile-form-label'],
+                        'autocomplete' => 'tel',
                         'class' => 'profile-form-input',
                         'placeholder' => 'e.g. 04XX XXX XXX',
                         'type' => 'tel',
                     ]) ?>
                 </div>
                 <div class="profile-form-group profile-form-group--full">
-                    <label class="profile-form-label">Address</label>
                     <?= $this->Form->control('address', [
-                        'label' => false,
+                        'label' => ['text' => 'Address', 'class' => 'profile-form-label'],
+                        'autocomplete' => 'street-address',
                         'class' => 'profile-form-input',
                         'placeholder' => 'Your delivery address',
                         'type' => 'textarea',

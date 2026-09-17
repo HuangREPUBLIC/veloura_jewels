@@ -465,8 +465,10 @@
     .product-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
+/* Phones: filters share one row, menus overlay the grid */
 @media (max-width: 560px) {
     .jewelry-page .jewelry-filter-bar {
+        margin-bottom: 1.6rem;
         background: transparent;
         border: none;
         border-radius: 0;
@@ -474,17 +476,29 @@
     }
 
     .jewelry-page .filter-bar-inner {
-        grid-template-columns: 1fr;
-        gap: 0.6rem;
+        position: relative;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0.4rem;
         padding: 0;
+    }
+
+    .jewelry-page .filter-dropdown {
+        position: static;
+    }
+
+    .jewelry-page .filter-sort-prefix {
+        display: none;
     }
 
     .jewelry-page .filter-dropdown-btn,
     .jewelry-page .filter-clear-btn {
-        min-height: 46px;
+        min-height: 44px;
+        padding: 0.7rem 0.7rem;
+        font-size: 0.75rem;
+        letter-spacing: 0.04em;
         background: rgba(var(--beige-light-rgb), 0.56);
         border: 1px solid rgba(var(--emerald-rgb), 0.14);
-        box-shadow: 0 8px 18px rgba(var(--emerald-rgb), 0.05);
+        box-shadow: none;
     }
 
     .jewelry-page .filter-dropdown-btn.is-active {
@@ -503,9 +517,11 @@
     .jewelry-page .filter-dropdown-menu,
     .jewelry-page .filter-dropdown-menu--sort,
     .jewelry-page .filter-dropdown-menu--price {
-        position: static;
-        width: 100%;
-        margin-top: 0.45rem;
+        position: absolute;
+        top: calc(100% + 0.45rem);
+        left: 0;
+        right: 0;
+        width: auto;
         border-radius: 16px;
         transform: none;
     }

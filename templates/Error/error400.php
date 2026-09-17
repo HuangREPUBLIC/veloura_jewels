@@ -21,8 +21,8 @@ $this->assign('title', 'Page Not Found');
 ?>
 
 <div class="error-page">
-    <p class="error-page-code">404</p>
-    <p class="error-page-title">Page Not Found</p>
+    <p class="error-page-code" aria-hidden="true">404</p>
+    <h1 class="error-page-title">Page Not Found</h1>
     <div class="error-page-divider"></div>
     <p class="error-page-message">
         We could not find the page you were looking for.<br>

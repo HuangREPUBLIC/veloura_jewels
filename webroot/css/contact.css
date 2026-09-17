@@ -2,7 +2,7 @@
     min-height: 100vh;
     padding: 5rem 2rem 6rem;
     background:
-        linear-gradient(90deg, rgba(var(--beige-light-rgb), 0.92) 0%, rgba(var(--beige-light-rgb), 0.78) 42%, rgba(255, 255, 255, 0.96) 42%),
+        linear-gradient(90deg, rgba(var(--beige-light-rgb), 0.95) 0%, rgba(var(--beige-light-rgb), 0.9) 42%, rgba(255, 255, 255, 0.96) 42%),
         url("../img/storeInterior.png") left center / cover;
     display: grid;
     grid-template-columns: minmax(260px, 0.78fr) minmax(360px, 1fr);
@@ -16,7 +16,7 @@
     margin: 3rem 0 0;
 }
 
-.contact-header h2 {
+.contact-header h1 {
     font-family: var(--font-serif);
     font-size: clamp(2.4rem, 4.6vw, 3.6rem);
     font-weight: 500;
@@ -26,8 +26,8 @@
 }
 
 .contact-header p {
-    color: var(--color-text-muted);
-    font-size: 0.88rem;
+    color: var(--color-body);
+    font-size: 0.95rem;
     line-height: 1.8;
     letter-spacing: 0.04em;
 }
@@ -57,17 +57,19 @@
 
 .contact-page .contact-submit-btn {
     width: 100%;
-    padding: 0.9rem;
+    min-height: 50px;
+    padding: 0.9rem 1.5rem;
     background-color: var(--emerald);
     color: var(--color-white);
-    border: none;
-    border-radius: 10px;
-    font-size: 1rem;
+    border: 1px solid var(--emerald);
+    border-radius: 0;
+    font-family: var(--font-display);
+    font-size: 0.78rem;
     font-weight: 600;
-    text-transform: none;
-    letter-spacing: normal;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
 }
 
 .contact-page .contact-submit-btn:hover {
@@ -75,22 +77,15 @@
 }
 
 .contact-page .contact-submit-btn:disabled {
-    background-color: #ccc;
+    background-color: rgba(var(--emerald-rgb), 0.08);
+    border-color: rgba(var(--emerald-rgb), 0.18);
+    color: rgba(var(--emerald-rgb), 0.82);
     cursor: not-allowed;
 }
-.contact-page .contact-reset-btn {
-    width: 100%;
-    padding: 0.8rem;
-    background: var(--color-white);
-    color: var(--gray-800);
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    margin-top: 0.5rem;
-    cursor: pointer;
-}
 
-.contact-page .contact-reset-btn:hover {
-    background: var(--gray-50);
+.contact-page .cf-turnstile {
+    min-height: 65px;
+    margin: 0.5rem 0 1rem;
 }
 .contact-page input,
 .contact-page textarea {
@@ -98,7 +93,7 @@
     padding: 0.78rem 0.85rem;
     font-size: 0.95rem;
     border: 1px solid rgba(var(--emerald-rgb), 0.22);
-    border-radius: 8px;
+    border-radius: 4px;
     background: #fbfaf7;
     transition: border-color 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
 }

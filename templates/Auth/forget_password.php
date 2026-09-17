@@ -13,7 +13,7 @@ $this->Html->css('login', ['block' => true]);
         <?= $this->Form->create() ?>
 
         <fieldset>
-            <legend>Forgot Password</legend>
+            <legend><h1 class="login-title">Forgot Password</h1></legend>
 
             <?= $this->Flash->render() ?>
 
@@ -27,6 +27,7 @@ $this->Html->css('login', ['block' => true]);
                 'required' => true,
                 'autofocus' => true,
                 'label' => 'Email',
+                'autocomplete' => 'email',
             ]);
             ?>
 

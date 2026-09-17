@@ -26,11 +26,11 @@
 .login-page .login-kicker {
     display: block;
     text-align: center;
-    font-size: 0.68rem;
+    font-size: 0.75rem;
     font-weight: 700;
-    letter-spacing: 0.22em;
+    letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: var(--emerald-gold);
+    color: var(--color-price);
     margin: 0 0 0.6rem;
 }
 
@@ -46,6 +46,14 @@
     margin: 0 0 1.8rem 0;
     padding: 0;
     display: block;
+}
+
+.login-page .users legend .login-title {
+    font: inherit;
+    color: inherit;
+    letter-spacing: inherit;
+    line-height: inherit;
+    margin: 0;
 }
 
 .login-page .users .input {
@@ -65,7 +73,8 @@
 }
 
 .login-page .users input[type="email"],
-.login-page .users input[type="password"] {
+.login-page .users input[type="password"],
+.login-page .users input[type="text"] {
     display: block !important;
     width: 100% !important;
     height: 48px !important;
@@ -75,7 +84,7 @@
     color: var(--color-ink) !important;
     background-color: var(--color-white) !important;
     border: 1.5px solid #e0ddd8 !important;
-    border-radius: 10px !important;
+    border-radius: 4px !important;
     box-sizing: border-box !important;
     outline: none !important;
     box-shadow: none !important;
@@ -84,8 +93,10 @@
 
 .login-page .users input[type="email"]:focus,
 .login-page .users input[type="password"]:focus,
+.login-page .users input[type="text"]:focus,
 .login-page .users input[type="email"]:focus-visible,
-.login-page .users input[type="password"]:focus-visible {
+.login-page .users input[type="password"]:focus-visible,
+.login-page .users input[type="text"]:focus-visible {
     outline: none !important;
     border-color: var(--emerald) !important;
     box-shadow: 0 0 0 3px rgba(var(--emerald-rgb), 0.1) !important;
@@ -109,16 +120,16 @@
 .login-page .login-button {
     display: block;
     width: 100%;
-    height: 48px;
+    height: 50px;
     padding: 0;
     background-color: var(--emerald);
     color: var(--color-white);
-    border: 1.5px solid var(--emerald);
-    border-radius: 10px;
-    font-size: 0.82rem;
+    border: 1px solid var(--emerald);
+    border-radius: 0;
+    font-size: 0.78rem;
     font-family: var(--font-body);
     font-weight: 600;
-    letter-spacing: 0.12em;
+    letter-spacing: 0.16em;
     text-transform: uppercase;
     cursor: pointer;
     box-sizing: border-box;
@@ -136,15 +147,17 @@
 }
 
 .login-page .login-button:disabled {
-    background-color: #d8d8d8;
-    border-color: #d8d8d8;
+    background-color: rgba(var(--emerald-rgb), 0.08);
+    border-color: rgba(var(--emerald-rgb), 0.18);
+    color: rgba(var(--emerald-rgb), 0.82);
     cursor: not-allowed;
 }
 
 .login-page .login-forgot-link {
     display: block;
+    padding: 0.75rem 0;
     text-align: center;
-    margin-top: 1rem;
+    margin-top: 0.25rem;
     color: var(--color-text-muted);
     text-decoration: none;
     font-size: 0.82rem;
@@ -159,9 +172,9 @@
     display: flex;
     align-items: center;
     gap: 0.9rem;
-    margin: 1.6rem 0 1.2rem;
-    color: #c0bdb6;
-    font-size: 0.75rem;
+    margin: 1.2rem 0 1.2rem;
+    color: var(--color-text-muted);
+    font-size: 0.78rem;
     letter-spacing: 0.08em;
 }
 
@@ -183,18 +196,18 @@
 .login-page .login-register-btn {
     display: block;
     width: 100%;
-    height: 48px;
-    line-height: 45px;
+    height: 50px;
+    line-height: 48px;
     padding: 0;
     background: transparent;
     color: var(--emerald);
-    border: 1.5px solid rgba(var(--emerald-rgb), 0.35);
-    border-radius: 10px;
+    border: 1px solid rgba(var(--emerald-rgb), 0.45);
+    border-radius: 0;
     text-align: center;
     text-decoration: none;
-    font-size: 0.82rem;
+    font-size: 0.78rem;
     font-weight: 600;
-    letter-spacing: 0.12em;
+    letter-spacing: 0.16em;
     text-transform: uppercase;
     box-sizing: border-box;
     transition: border-color 0.2s ease, background 0.2s ease;

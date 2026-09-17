@@ -98,10 +98,10 @@
 }
 
 .result-order-label {
-    font-size: 0.72rem;
+    font-size: 0.75rem;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: var(--color-text-muted);
+    color: var(--color-body);
     white-space: nowrap;
     flex-shrink: 0;
 }
@@ -123,10 +123,13 @@
     display: block;
     width: 100%;
     padding: 1rem 2rem;
+    min-height: 50px;
+    border: none;
+    cursor: pointer;
     background: var(--emerald);
     color: var(--color-white);
     font-family: var(--font-body);
-    font-size: 0.72rem;
+    font-size: 0.78rem;
     font-weight: 600;
     letter-spacing: 0.2em;
     text-transform: uppercase;
@@ -222,7 +225,7 @@
 }
 
 .result-pickup-label {
-    font-size: 0.72rem;
+    font-size: 0.75rem;
     letter-spacing: 0.12em;
     text-transform: uppercase;
     color: var(--color-text-muted);

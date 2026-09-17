@@ -32,7 +32,6 @@ echo $this->element('jewelry_css');
         <?php
         $identity    = $this->request->getAttribute('identity');
         $wishlistIds = $wishlistIds ?? [];
-        $searchBack  = rawurlencode($this->request->getPath() . ($this->request->getUri()->getQuery() ? '?' . $this->request->getUri()->getQuery() : ''));
         ?>
         <div class="product-grid">
             <?php foreach ($products as $product): ?>
@@ -43,7 +42,7 @@ echo $this->element('jewelry_css');
                     : $this->Url->build('/jewelry/view/' . $product->id);
                 ?>
                 <div class="product-card-wrap">
-                <a href="<?= $productUrl ?>?back=<?= $searchBack ?>" class="product-card-link">
+                <a href="<?= $productUrl ?>" class="product-card-link">
                     <div class="product-card">
                         <div class="product-image-wrapper<?= !empty($product->product_images[1]) ? ' has-hover-image' : '' ?>">
                             <?php if (!empty($product->featured) || !empty($product->is_bestsales)): ?>

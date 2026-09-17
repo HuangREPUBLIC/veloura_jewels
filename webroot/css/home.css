@@ -17,20 +17,21 @@
    Shared
    ============================================ */
 .hp-label {
-    font-size: 0.68rem;
+    font-size: 0.75rem;
     font-weight: 700;
-    letter-spacing: 0.24em;
+    letter-spacing: 0.22em;
     text-transform: uppercase;
-    color: var(--emerald-light);
+    color: var(--emerald);
     margin-bottom: 1rem;
     display: block;
 }
 
 .hp-btn {
     display: inline-block;
-    padding: 0.9rem 2.6rem;
+    min-height: 48px;
+    padding: 0.95rem 2.6rem;
     font-family: var(--font-display);
-    font-size: 0.7rem;
+    font-size: 0.75rem;
     font-weight: 700;
     letter-spacing: 0.2em;
     text-transform: uppercase;
@@ -59,15 +60,15 @@
     margin-bottom: 3rem;
 }
 .hp-categories .hp-section-header-title {
-    font-size: clamp(1.2rem, 2vw, 1.6rem);
+    font-size: clamp(1.9rem, 3vw, 2.4rem);
 }
 .hp-section-header-title {
-    font-family: var(--font-display);
-    font-size: clamp(2rem, 4vw, 2.8rem);
-    font-weight: 300;
+    font-family: var(--font-serif);
+    font-size: clamp(2rem, 3.6vw, 2.8rem);
+    font-weight: 500;
     color: var(--color-headings);
     margin: 0;
-    letter-spacing: 0.01em;
+    letter-spacing: 0.005em;
 }
 
 /* ============================================
@@ -191,7 +192,7 @@
     position: relative;
     display: inline-block;
     padding-bottom: 3px;
-    font-size: 0.72rem;
+    font-size: 0.75rem;
     font-weight: 700;
     letter-spacing: 0.18em;
     text-transform: uppercase;
@@ -216,6 +217,10 @@
 /* ============================================
    Collection Modal
    ============================================ */
+body.collection-modal-open {
+    overflow: hidden;
+}
+
 .collection-modal {
     display: none;
     position: fixed;
@@ -223,6 +228,7 @@
     z-index: 1000;
     align-items: center;
     justify-content: center;
+    padding: 1.5rem;
 }
 
 .collection-modal.is-open {
@@ -232,161 +238,304 @@
 .collection-modal-overlay {
     position: absolute;
     inset: 0;
-    background: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(4px);
+    background: rgba(24, 32, 28, 0.45);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    animation: collectionOverlayIn 0.24s ease-out both;
 }
 
 .collection-modal-content {
     position: relative;
-    background: var(--color-white, #fff);
-    border-radius: 22px;
-    padding: 2.4rem 2.4rem 2rem;
-    max-width: 620px;
-    width: 90%;
+    width: 100%;
+    max-width: 640px;
+    max-height: calc(100dvh - 3rem);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    background: var(--color-white);
+    border-radius: 20px;
+    padding: 2.5rem 2.25rem 2.25rem;
     text-align: center;
-    animation: modalIn 0.3s ease;
-    box-shadow: 0 20px 60px rgba(var(--emerald-rgb, 40, 77, 64), 0.14);
-    border: 1px solid rgba(var(--emerald-rgb, 40, 77, 64), 0.1);
+    box-shadow: 0 24px 64px rgba(var(--emerald-rgb), 0.18);
+    animation: collectionSheetIn 0.32s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-@keyframes modalIn {
+.collection-modal-content:focus {
+    outline: none;
+}
+
+.collection-modal.is-closing .collection-modal-overlay {
+    animation: collectionOverlayOut 0.2s ease-in both;
+}
+
+.collection-modal.is-closing .collection-modal-content {
+    animation: collectionSheetOut 0.2s ease-in both;
+}
+
+.collection-modal-content.is-dragging {
+    animation: none;
+}
+
+@keyframes collectionOverlayIn {
+    from { opacity: 0; }
+}
+
+@keyframes collectionOverlayOut {
+    to { opacity: 0; }
+}
+
+@keyframes collectionSheetIn {
     from {
         opacity: 0;
-        transform: translateY(20px);
+        transform: translateY(16px) scale(0.98);
     }
+}
+
+@keyframes collectionSheetOut {
     to {
-        opacity: 1;
-        transform: translateY(0);
+        opacity: 0;
+        transform: translateY(12px) scale(0.98);
     }
+}
+
+@keyframes collectionSheetUp {
+    from { transform: translateY(calc(100% + 1rem)); }
+}
+
+@keyframes collectionSheetDown {
+    to { transform: translateY(calc(100% + 1rem)); }
+}
+
+.collection-modal-handle {
+    display: none;
 }
 
 .collection-modal-close {
     position: absolute;
-    top: 1rem;
-    right: 1rem;
-    background: none;
+    top: 0.75rem;
+    right: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
     border: none;
-    cursor: pointer;
+    border-radius: 50%;
+    background: transparent;
     color: var(--color-text-muted);
-    padding: 0.4rem;
-    transition: color 0.2s ease;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 .collection-modal-close:hover {
+    background: rgba(var(--emerald-rgb), 0.06);
     color: var(--color-headings);
+}
+
+.collection-modal-close:focus-visible,
+.collection-modal-card:focus-visible {
+    outline: 2px solid var(--emerald);
+    outline-offset: 2px;
 }
 
 .collection-modal-content .collection-modal-title {
     font-family: var(--font-serif);
-    font-size: 2rem;
+    font-size: 2.1rem;
     font-weight: 500;
+    line-height: 1.15;
+    letter-spacing: 0.005em;
     color: var(--color-headings);
-    margin-bottom: 0.4rem;
+    margin: 0 0 0.5rem;
 }
 
 .collection-modal-sub {
-    font-size: 0.85rem;
+    font-size: 0.9rem;
     color: var(--color-text-muted);
-    margin-bottom: 2rem;
+    margin: 0 0 1.75rem;
 }
 
 .collection-modal-cards {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 1.2rem;
+    gap: 1rem;
 }
 
 .collection-modal-card {
-    display: block;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    color: inherit;
     text-decoration: none;
-    border-radius: 16px;
+    border-radius: 14px;
     overflow: hidden;
-    border: 1px solid rgba(var(--emerald-rgb, 40, 77, 64), 0.14);
-    box-shadow: 0 14px 34px rgba(var(--emerald-rgb, 40, 77, 64), 0.07);
-    background: var(--color-white, #fff);
-    transition: border-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
+    background: var(--color-white);
+    border: 1px solid rgba(var(--emerald-rgb), 0.12);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
 }
 
-.collection-modal-card:hover {
-    border-color: rgba(var(--emerald-rgb, 40, 77, 64), 0.28);
-    box-shadow: 0 18px 42px rgba(var(--emerald-rgb, 40, 77, 64), 0.12);
-    transform: translateY(-2px);
+.collection-modal-card-media {
+    display: block;
+    overflow: hidden;
 }
 
 .collection-modal-card-img {
+    display: block;
     width: 100%;
     aspect-ratio: 4 / 3;
     object-fit: cover;
-    display: block;
+    transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .collection-modal-card-body {
-    padding: 1.2rem 1.1rem 1.3rem;
-    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    padding: 1rem 2.75rem 1.1rem 1.1rem;
 }
 
-.collection-modal-card-body h3 {
-    font-family: var(--font-display);
-    font-size: 1.1rem;
+.collection-modal-card-name {
+    font-family: var(--font-serif);
+    font-size: 1.35rem;
     font-weight: 500;
+    line-height: 1.2;
     color: var(--color-headings);
-    margin: 0 0 0.3rem;
-    letter-spacing: 0.02em;
 }
 
-.collection-modal-card-body p {
+.collection-modal-card-desc {
     font-size: 0.8rem;
+    line-height: 1.45;
     color: var(--color-text-muted);
-    margin: 0;
 }
 
-/* on phones the modal sits on the bottom edge and scrolls inside itself,
-   with the close button pinned so it is always reachable */
+.collection-modal-card-arrow {
+    position: absolute;
+    right: 1.1rem;
+    bottom: 1.35rem;
+    color: var(--emerald);
+    transition: transform 0.2s ease;
+}
+
+@media (hover: hover) {
+    .collection-modal-card:hover {
+        border-color: rgba(var(--emerald-rgb), 0.28);
+        box-shadow: 0 14px 34px rgba(var(--emerald-rgb), 0.1);
+        transform: translateY(-2px);
+    }
+
+    .collection-modal-card:hover .collection-modal-card-img {
+        transform: scale(1.04);
+    }
+
+    .collection-modal-card:hover .collection-modal-card-arrow {
+        transform: translateX(3px);
+    }
+}
+
+/* Phones: compact bottom sheet with row links */
 @media (max-width: 600px) {
     .collection-modal {
         align-items: flex-end;
+        padding: 0.75rem;
+        padding-bottom: calc(0.75rem + env(safe-area-inset-bottom));
     }
 
     .collection-modal-content {
-        width: 100%;
-        max-height: 86vh;
-        overflow-y: auto;
-        overscroll-behavior: contain;
-        border-radius: 20px 20px 0 0;
-        padding: 1rem 1.15rem 1.5rem;
+        max-height: calc(100dvh - 1.5rem - env(safe-area-inset-top));
+        padding: 0.5rem 0.75rem 0.75rem;
+        border-radius: 22px;
+        text-align: left;
+        animation-name: collectionSheetUp;
+    }
+
+    .collection-modal.is-closing .collection-modal-content {
+        animation-name: collectionSheetDown;
+    }
+
+    .collection-modal-header {
+        padding: 0 3rem 0.9rem 0.5rem;
+        touch-action: none;
+    }
+
+    .collection-modal-handle {
+        display: block;
+        width: 36px;
+        height: 4px;
+        margin: 0.1rem auto 0.9rem;
+        border-radius: 2px;
+        background: rgba(var(--emerald-rgb), 0.18);
+        transform: translateX(1.25rem);
     }
 
     .collection-modal-close {
-        position: sticky;
-        top: 0;
-        display: block;
-        margin: 0 -0.35rem 0 auto;
-        width: 44px;
-        height: 44px;
-        z-index: 2;
-        background: var(--color-white);
-        border-radius: 50%;
+        top: 1.1rem;
+        right: 0.4rem;
     }
 
     .collection-modal-content .collection-modal-title {
-        font-size: 1.5rem;
+        font-size: 1.6rem;
+        margin-bottom: 0.2rem;
     }
 
     .collection-modal-sub {
-        margin-bottom: 1.25rem;
+        font-size: 0.85rem;
+        margin-bottom: 0;
     }
 
     .collection-modal-cards {
         grid-template-columns: 1fr;
-        gap: 0.85rem;
+        gap: 0.5rem;
+    }
+
+    .collection-modal-card {
+        display: grid;
+        grid-template-columns: 72px 1fr auto;
+        align-items: center;
+        gap: 0.9rem;
+        min-height: 88px;
+        padding: 0.5rem 0.9rem 0.5rem 0.5rem;
+        background: var(--beige-light);
+        border-color: transparent;
+    }
+
+    .collection-modal-card:active {
+        background: rgba(var(--emerald-rgb), 0.08);
+    }
+
+    .collection-modal-card-media {
+        width: 72px;
+        height: 72px;
+        border-radius: 10px;
     }
 
     .collection-modal-card-img {
-        aspect-ratio: 16 / 9;
+        height: 100%;
+        aspect-ratio: 1;
     }
 
     .collection-modal-card-body {
-        padding: 0.7rem 1rem 0.8rem;
+        padding: 0;
+    }
+
+    .collection-modal-card-name {
+        font-size: 1.3rem;
+    }
+
+    .collection-modal-card-arrow {
+        position: static;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .collection-modal-overlay,
+    .collection-modal-content {
+        animation: none;
+    }
+
+    .collection-modal-card,
+    .collection-modal-card-img,
+    .collection-modal-card-arrow {
+        transition: none;
     }
 }
 
@@ -442,12 +591,11 @@
 }
 
 .hp-featured-title {
-    font-family: var(--font-display);
-    font-size: clamp(1.6rem, 3vw, 2.2rem);
-    font-weight: 700;
+    font-family: var(--font-serif);
+    font-size: clamp(2.1rem, 3.4vw, 2.9rem);
+    font-weight: 500;
     color: var(--color-headings);
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
+    letter-spacing: 0.005em;
     margin-bottom: 0.8rem;
 }
 
@@ -543,7 +691,7 @@
     backdrop-filter: blur(6px);
     border-radius: 2px;
     padding: 0.45rem 1.1rem;
-    font-size: 0.65rem;
+    font-size: 0.72rem;
     font-weight: 700;
     letter-spacing: 0.18em;
     text-transform: uppercase;
@@ -583,7 +731,10 @@
 }
 
 .hp-story-link {
-    font-size: 0.72rem;
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    font-size: 0.75rem;
     font-weight: 700;
     letter-spacing: 0.14em;
     text-transform: uppercase;
@@ -633,8 +784,8 @@
 }
 
 .hp-cta-sub {
-    font-size: 0.9rem;
-    color: var(--color-text-muted);
+    font-size: 0.95rem;
+    color: var(--color-body);
     line-height: 1.9;
     margin-bottom: 2.8rem;
 }
@@ -643,20 +794,13 @@
     background: var(--emerald);
     color: var(--color-white);
     border-color: var(--emerald);
-    border-radius: 999px;
-    padding: 1.1rem 3.5rem;
-    font-size: 0.72rem;
-    letter-spacing: 0.18em;
-    box-shadow: 0 4px 16px rgba(45, 106, 79, 0.3);
-    transition: all 0.3s ease;
+    padding: 1rem 3.25rem;
 }
 
 .hp-btn--cta:hover {
     background: var(--emerald-dark);
     border-color: var(--emerald-dark);
     color: var(--color-white);
-    box-shadow: 0 6px 24px rgba(45, 106, 79, 0.4);
-    transform: translateY(-2px);
 }
 /* Tablet + small laptop */
 @media (max-width: 1024px) {
@@ -689,7 +833,7 @@
     .hp-featured--reverse .hp-featured-img-decor { order: -1; }
     .hp-featured-products .product-card-body { padding: 0.4rem 0.3rem; }
     .hp-featured-products .product-name,
-    .hp-featured-products .product-price { font-size: 0.7rem; }
+    .hp-featured-products .product-price { font-size: 0.82rem; }
     .hp-featured-sub { margin-bottom: 1.8rem; }
 
     .hp-categories-grid { grid-template-columns: repeat(3, 1fr); }
@@ -704,7 +848,18 @@
 /* Phones */
 @media (max-width: 480px) {
     .hp-featured { padding: 3rem 0; }
-    .hp-featured-products { grid-template-columns: repeat(3, 1fr); gap: 0.4rem; }
+    .hp-featured-products {
+        grid-template-columns: none;
+        grid-auto-flow: column;
+        grid-auto-columns: 44%;
+        gap: 0.6rem;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        scrollbar-width: none;
+        padding-bottom: 0.25rem;
+    }
+    .hp-featured-products::-webkit-scrollbar { display: none; }
+    .hp-featured-products .product-card-wrap { scroll-snap-align: start; }
     .hp-featured-image,
     .hp-featured-img-decor { aspect-ratio: 4 / 3; max-height: 280px; }
 

@@ -37,9 +37,9 @@
 
                     <div class="cart-drawer-actions">
                         <div class="cart-drawer-qty" data-max="<?= (int)$product->variant->stock ?>">
-                            <button type="button" class="cart-drawer-qty-btn" data-dir="minus" aria-label="Decrease quantity">−</button>
+                            <button type="button" class="cart-drawer-qty-btn" data-dir="minus" aria-label="Decrease quantity"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
                             <span class="cart-drawer-qty-value"><?= (int)$product->quantity ?></span>
-                            <button type="button" class="cart-drawer-qty-btn" data-dir="plus" aria-label="Increase quantity">+</button>
+                            <button type="button" class="cart-drawer-qty-btn" data-dir="plus" aria-label="Increase quantity"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
                         </div>
                         <button type="button" class="cart-drawer-remove">Remove</button>
                     </div>

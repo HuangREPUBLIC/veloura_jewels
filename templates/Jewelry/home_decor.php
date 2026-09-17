@@ -9,7 +9,7 @@
  * @var string $sortBy
  */
 
-$this->assign('title', 'Home Decor');
+$this->assign('title', 'Home Décor');
 echo $this->element('jewelry_css');
 ?>
 
@@ -36,7 +36,7 @@ echo $this->element('jewelry_css');
     <?= $this->element('breadcrumb', ['crumbs' => $crumbs]) ?>
 
     <section class="jewelry-hero">
-        <h1><?= h($pageContent['hero_heading'] ?? 'Our Home Decor Collection') ?></h1>
+        <h1><?= h($pageContent['hero_heading'] ?? 'Our Home Décor Collection') ?></h1>
         <p><?= h($pageContent['hero_subtext'] ?? '') ?></p>
     </section>
 
@@ -110,7 +110,7 @@ echo $this->element('jewelry_css');
                 $sortLabel = $sorts[$sortBy] ?? 'Newest';
                 ?>
                 <button type="button" class="filter-dropdown-btn <?= $sortBy !== 'newest' ? 'is-active' : '' ?>" aria-expanded="false" aria-controls="filter-sort-menu">
-                    Sort by: <span class="filter-active-label"><?= $sortLabel ?></span>
+                    <span class="filter-sort-prefix">Sort by:</span> <span class="filter-active-label"><?= $sortLabel ?></span>
                     <svg class="filter-chevron" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
                 </button>
                 <div class="filter-dropdown-menu filter-dropdown-menu--sort" id="filter-sort-menu">
@@ -199,7 +199,7 @@ echo $this->element('jewelry_css');
 
             <?php foreach ($products as $product): ?>
                 <div class="product-card-wrap">
-                <a href="<?= $this->Url->build('/home-decor/view/' . $product->id) ?>?back=/home-decor" class="product-card-link">
+                <a href="<?= $this->Url->build('/home-decor/view/' . $product->id) ?>" class="product-card-link">
                     <div class="product-card">
                         <div class="product-image-wrapper<?= !empty($product->product_images[1]) ? ' has-hover-image' : '' ?>">
                             <?php if (!empty($product->featured) || !empty($product->is_bestsales)): ?>
