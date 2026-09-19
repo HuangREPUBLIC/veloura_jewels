@@ -195,7 +195,7 @@ $wishlistIds = $wishlistIds ?? [];
                 <div class="hp-story-divider"></div>
                 <p class="hp-story-body"><?= h($pageContent['brand_story_body_1'] ?? '') ?></p>
                 <p class="hp-story-body"><?= h($pageContent['brand_story_body_2'] ?? '') ?></p>
-                <?= $this->Html->link('Our full story →', ['controller' => 'OurStory', 'action' => 'index'], ['class' => 'hp-story-link']) ?>
+                <?= $this->Html->link('Read our story', ['controller' => 'OurStory', 'action' => 'index'], ['class' => 'hp-story-link']) ?>
             </div>
         </section>
 

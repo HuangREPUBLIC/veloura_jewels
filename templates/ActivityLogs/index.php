@@ -5,13 +5,13 @@
  * @var string|null $filterModel
  * @var string|null $filterAction
  */
-$this->assign('title', 'Activity Logs');
+$this->assign('title', 'Activity Log');
 ?>
 
 <div class="page-header-row">
     <div>
         <p class="cms-eyebrow">Admin</p>
-        <h2 class="page-title">Activity Logs</h2>
+        <h1 class="page-title">Activity Log</h1>
     </div>
     <div class="cms-header-right">
         <?= $this->element('per_page_select') ?>
@@ -40,9 +40,9 @@ $this->assign('title', 'Activity Logs');
     ];
     $fmtVal = function ($val) {
         if (is_bool($val)) return $val ? 'Yes' : 'No';
-        if ($val === '' || $val === null) return '—';
+        if ($val === '' || $val === null) return 'None';
         $str = (string)$val;
-        return mb_strlen($str) > 60 ? mb_substr($str, 0, 60) . '…' : $str;
+        return mb_strlen($str) > 60 ? mb_substr($str, 0, 60) . '...' : $str;
     };
     $fmtSizes = function ($arr) {
         $parts = [];
@@ -50,7 +50,7 @@ $this->assign('title', 'Activity Logs');
             $sv = (array)$sv;
             $parts[] = h($sv['size'] ?? '?') . ': ' . (int)($sv['stock'] ?? 0);
         }
-        return $parts ? implode(', ', $parts) : '—';
+        return $parts ? implode(', ', $parts) : 'None';
     };
     ?>
     <div class="table-wrap">
@@ -70,7 +70,7 @@ $this->assign('title', 'Activity Logs');
                 <?php foreach ($activityLogs as $log): ?>
                     <tr>
                         <td><?= h($log->created->format('d M Y H:i')) ?></td>
-                        <td><?= h($log->user_name ?? '—') ?></td>
+                        <td><?= h($log->user_name ?? 'System') ?></td>
                         <td>
                             <span class="al-badge al-badge--<?= h($log->action) ?>"><?= h($log->action) ?></span>
                         </td>
@@ -104,7 +104,7 @@ $this->assign('title', 'Activity Logs');
                                                     <img src="<?= $this->Url->image('products/' . h($f)) ?>" class="al-img-thumb al-img-thumb--from" title="<?= h($f) ?>">
                                                 <?php endforeach; ?>
                                             </div>
-                                            <span class="al-change-arrow">→</span>
+                                            <span class="al-change-arrow"><?= $this->iconSvg('arrow-right') ?></span>
                                             <div class="al-img-group">
                                                 <?php foreach ($diff['to'] as $f): ?>
                                                     <img src="<?= $this->Url->image('products/' . h($f)) ?>" class="al-img-thumb al-img-thumb--to" title="<?= h($f) ?>">
@@ -115,14 +115,14 @@ $this->assign('title', 'Activity Logs');
                                         <div class="al-change-row">
                                             <span class="al-change-field"><?= h($label) ?>:</span>
                                             <span class="al-change-from"><?= $fmtSizes($diff['from']) ?></span>
-                                            <span class="al-change-arrow">→</span>
+                                            <span class="al-change-arrow"><?= $this->iconSvg('arrow-right') ?></span>
                                             <span class="al-change-to"><?= $fmtSizes($diff['to']) ?></span>
                                         </div>
                                     <?php elseif (is_array($diff) && isset($diff['from'], $diff['to'])): ?>
                                         <div class="al-change-row">
                                             <span class="al-change-field"><?= h($label) ?>:</span>
                                             <span class="al-change-from"><?= h($fmtVal($diff['from'])) ?></span>
-                                            <span class="al-change-arrow">→</span>
+                                            <span class="al-change-arrow"><?= $this->iconSvg('arrow-right') ?></span>
                                             <span class="al-change-to"><?= h($fmtVal($diff['to'])) ?></span>
                                         </div>
                                     <?php else: ?>
@@ -133,7 +133,7 @@ $this->assign('title', 'Activity Logs');
                                     <?php endif; ?>
                                 <?php endforeach; ?>
                             <?php else: ?>
-                                —
+                                <span class="text-muted">None</span>
                             <?php endif; ?>
                         </td>
                         <td class="actions">
@@ -156,8 +156,6 @@ $this->assign('title', 'Activity Logs');
                                         'aria-label' => __('Archive'),
                                     ]) ?>
                                 <?php endif; ?>
-                            <?php else: ?>
-                                —
                             <?php endif; ?>
                         </td>
                     </tr>

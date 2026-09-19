@@ -9,7 +9,8 @@ $this->assign('crumbRecord', h($contactSubmission->first_name . ' ' . $contactSu
 
         <div class="page-header-row">
             <div>
-                <h3 class="page-title"><?= h($contactSubmission->first_name . ' ' . $contactSubmission->last_name) ?></h3>
+                <p class="cms-eyebrow">Contact Submissions</p>
+                <h1 class="page-title"><?= h($contactSubmission->first_name . ' ' . $contactSubmission->last_name) ?></h1>
             </div>
 
             <div class="action-buttons">
@@ -44,7 +45,6 @@ $this->assign('crumbRecord', h($contactSubmission->first_name . ' ' . $contactSu
         <div class="submission-message-block">
             <div class="submission-message-header">
                 <strong><?= __('Message') ?></strong>
-                <?= $this->Html->link(__('Reply →'), ['action' => 'reply', $contactSubmission->id]) ?>
             </div>
             <div class="message-box">
                 <?= $this->Text->autoParagraph(h($contactSubmission->message)) ?>

@@ -1,6 +1,6 @@
 /* Add / new button */
 
-.btn-new-product, .btn-archived {
+.btn-new-product {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -17,7 +17,7 @@
     transition: 0.2s ease;
 }
 
-.btn-new-product:hover, .btn-archived:hover {
+.btn-new-product:hover {
     background: var(--emerald-dark);
     border-color: var(--emerald-dark);
     color: var(--color-white) !important;

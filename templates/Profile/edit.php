@@ -11,7 +11,7 @@ $this->Html->css('profile', ['block' => true]);
     <div class="profile-form-wrap">
 
         <div class="profile-form-header">
-            <?= $this->Html->link('← Back to Profile', ['action' => 'index'], ['class' => 'profile-back-link']) ?>
+            <?= $this->Html->link('Back to Profile', ['action' => 'index'], ['class' => 'profile-back-link']) ?>
             <h1>Edit Profile</h1>
         </div>
 

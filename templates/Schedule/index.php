@@ -2,15 +2,15 @@
 /**
  * Schedule/index.php
  *
- * Shows the weekly roster as a grid — one row per staff member, one column per day.
+ * Shows the weekly roster as a grid: one row per staff member, one column per day.
  * This same template is used for two different views:
- *   - Staff view  (/schedule)        — read-only, no edit or delete buttons
- *   - Admin view  (/schedule/manage) — shows Edit/Delete on shifts, and a hoverable + to add new ones
+ *   - Staff view  (/schedule)       : read-only, no edit or delete buttons
+ *   - Admin view  (/schedule/manage): shows Edit/Delete on shifts, and a hoverable + to add new ones
  */
 
 use App\Model\Entity\Schedule;
 
-$this->assign('title', $isAdminView ? 'Manage Schedule' : 'Team Schedule');
+$this->assign('title', $isAdminView ? 'Staff Schedule' : 'Team Schedule');
 $this->Html->css('schedule', ['block' => true]);
 
 $todayStr = (new DateTime('today'))->format('Y-m-d');
@@ -18,15 +18,13 @@ $todayStr = (new DateTime('today'))->format('Y-m-d');
 
 <div class="sched-page">
 
-    <!-- ===== Page header: title on the left, week navigation on the right ===== -->
-    <div class="sched-header">
-
-        <div class="sched-header-left">
-            <p class="cms-eyebrow">Store</p>
-            <h3 class="page-title"><?= $this->fetch('title') ?></h3>
+    <div class="page-header-row">
+        <div>
+            <p class="cms-eyebrow">Team</p>
+            <h1 class="page-title"><?= $this->fetch('title') ?></h1>
         </div>
 
-        <div class="sched-header-right">
+        <div class="cms-header-right">
             <?php
             // Work out the Monday dates for the previous and next week links
             $monday   = new DateTime($weekStartStr);
@@ -100,7 +98,7 @@ $todayStr = (new DateTime('today'))->format('Y-m-d');
                             <div class="sched-day-cell <?= $isToday ? 'sched-day-cell--today' : '' ?>">
 
                                 <?php if ($shift): ?>
-                                    <!-- This person is working — show the shift card -->
+                                    <!-- This person is working: show the shift card -->
                                     <div class="sched-shift-card">
                                         <span class="sched-shift-times"><?= h($shift->time_range) ?></span>
                                         <span class="sched-shift-hours"><?= number_format($shift->hours, 1) ?>h</span>
@@ -124,7 +122,7 @@ $todayStr = (new DateTime('today'))->format('Y-m-d');
                                     </div>
 
                                 <?php else: ?>
-                                    <!-- No shift — show a hoverable + button for admins.
+                                    <!-- No shift: show a hoverable + button for admins.
                                          The + is invisible until the row is hovered (handled in CSS). -->
                                     <?php if ($isAdminView): ?>
                                         <div class="sched-day-off">

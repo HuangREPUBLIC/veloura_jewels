@@ -67,7 +67,7 @@ $this->assign('title', 'Payment Successful');
                 ?>
                 <div class="result-order-row">
                     <span class="result-order-label">Estimated Delivery</span>
-                    <span class="result-order-value"><?= $deliveryFrom->format('d M') ?> – <?= $deliveryTo->format('d M Y') ?></span>
+                    <span class="result-order-value"><?= $deliveryFrom->format('d M') ?> to <?= $deliveryTo->format('d M Y') ?></span>
                 </div>
                 <div class="result-order-row">
                     <span class="result-order-label">Status</span>
@@ -77,13 +77,14 @@ $this->assign('title', 'Payment Successful');
 
             <div class="result-pickup">
                 <p class="result-pickup-label">Prefer to collect in store?</p>
-                <p class="result-pickup-address">88 Elizabeth Road, Melbourne VIC 3000</p>
-                <p class="result-pickup-hours">Open 10:00AM – 6:00PM</p>
+                <p class="result-pickup-address"><?= h($footerLocation['address'] ?? '88 Elizabeth Road, Melbourne VIC 3000') ?></p>
+                <p class="result-pickup-hours">Open <?= h($footerLocation['hours'] ?? '10:00AM to 6:00PM') ?></p>
             </div>
 
         <?php endif; ?>
 
         <button type="button" class="result-btn" id="continueShoppingBtn">Continue Shopping</button>
+        <p class="fine-print">Questions about delivery or returns? Read our <?= $this->Html->link('Shipping Policy', '/shipping-policy') ?> and <?= $this->Html->link('Refund Policy', '/refund-policy') ?>.</p>
 
         <!-- Continue Shopping modal -->
         <?= $this->element('collection_modal', [

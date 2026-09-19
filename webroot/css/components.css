@@ -36,3 +36,384 @@
     border-color: rgba(204, 31, 26, 0.2);
     border-left-color: #dc2626;
 }
+
+/* small print under forms and orders */
+
+.fine-print {
+    margin: 1rem 0;
+    font-size: 0.8rem;
+    line-height: 1.7;
+    color: var(--color-text-muted);
+    text-align: center;
+}
+
+.fine-print a {
+    color: var(--emerald);
+    text-decoration: underline;
+    text-decoration-color: rgba(var(--emerald-rgb), 0.3);
+    text-underline-offset: 3px;
+}
+
+/* policy prose, shared by the client care pages and the policy sheet */
+
+.prose {
+    counter-reset: care;
+}
+
+.prose section {
+    counter-increment: care;
+    margin-bottom: 3rem;
+}
+
+.prose h2 {
+    font-family: var(--font-serif);
+    font-size: 1.75rem;
+    font-weight: 500;
+    line-height: 1.2;
+    color: var(--color-headings);
+    margin: 0 0 1rem;
+}
+
+.prose section h2::before {
+    content: counter(care, decimal-leading-zero);
+    display: block;
+    margin-bottom: 0.5rem;
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    color: var(--color-price);
+}
+
+.prose p,
+.prose li,
+.prose td {
+    font-size: 0.96rem;
+    line-height: 1.85;
+    color: var(--color-body);
+    text-wrap: pretty;
+}
+
+.prose p {
+    margin: 0 0 1rem;
+}
+
+.prose section :is(ul, ol) {
+    margin: 0 0 1rem;
+    padding-left: 1.25rem;
+}
+
+.prose section li {
+    padding-left: 0.35rem;
+    margin-bottom: 0.45rem;
+}
+
+.prose section li::marker {
+    color: var(--color-price);
+}
+
+.prose strong {
+    font-weight: 600;
+    color: var(--color-ink);
+}
+
+.prose a:not(.care-btn) {
+    color: var(--emerald);
+    text-decoration: underline;
+    text-decoration-color: rgba(var(--emerald-rgb), 0.3);
+    text-underline-offset: 3px;
+    transition: text-decoration-color 0.2s ease;
+}
+
+.prose a:not(.care-btn):hover {
+    text-decoration-color: currentColor;
+}
+
+.prose table {
+    margin: 0.25rem 0 1.25rem;
+    border-collapse: collapse;
+}
+
+.prose :is(th, td) {
+    padding: 0.9rem 1.25rem 0.9rem 0;
+    border-bottom: 1px solid var(--hairline);
+    text-align: left;
+    vertical-align: top;
+}
+
+.prose th {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+}
+
+.prose td:last-child {
+    color: var(--emerald);
+    font-weight: 600;
+}
+
+.care-facts {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    list-style: none;
+    margin: 0 0 3.5rem;
+    padding: 0;
+    border-block: 1px solid var(--hairline);
+}
+
+.care-facts li {
+    padding: 1.6rem 1.5rem;
+}
+
+.care-facts li:first-child {
+    padding-left: 0;
+}
+
+.care-facts li + li {
+    border-left: 1px solid var(--hairline);
+}
+
+.care-facts strong {
+    display: block;
+    margin-bottom: 0.35rem;
+    font-family: var(--font-serif);
+    font-size: 1.75rem;
+    font-weight: 500;
+    line-height: 1.1;
+    color: var(--color-headings);
+}
+
+.care-facts span {
+    display: block;
+    font-size: 0.82rem;
+    line-height: 1.5;
+    color: var(--color-text-muted);
+}
+
+@media (max-width: 768px) {
+    .prose h2 {
+        font-size: 1.55rem;
+    }
+
+    .prose :is(th, td) {
+        padding-right: 0.75rem;
+        font-size: 0.86rem;
+    }
+
+    .care-facts {
+        grid-template-columns: 1fr;
+        margin-bottom: 2.75rem;
+        border-top: 0;
+    }
+
+    .care-facts li,
+    .care-facts li:first-child {
+        display: flex;
+        align-items: baseline;
+        gap: 1rem;
+        padding: 1rem 0;
+    }
+
+    .care-facts li + li {
+        border-left: 0;
+        border-top: 1px solid var(--hairline);
+    }
+
+    .care-facts strong {
+        flex: 0 0 7.5rem;
+        margin: 0;
+        font-size: 1.4rem;
+    }
+}
+
+/* policy sheet: bottom sheet on phones, side panel on larger screens */
+
+html:has(.policy-sheet[open]) {
+    overflow: hidden;
+}
+
+.policy-sheet {
+    position: fixed;
+    inset: 0 0 0 auto;
+    width: min(560px, 100vw);
+    max-width: none;
+    height: 100dvh;
+    max-height: none;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: var(--color-main-bg);
+    color: var(--color-body);
+    box-shadow: -24px 0 60px rgba(20, 28, 24, 0.12);
+    transform: translateX(100%);
+    transition:
+        transform 0.45s cubic-bezier(0.32, 0.72, 0, 1),
+        overlay 0.45s allow-discrete,
+        display 0.45s allow-discrete;
+}
+
+.policy-sheet[open] {
+    display: flex;
+    flex-direction: column;
+    transform: none;
+}
+
+@starting-style {
+    .policy-sheet[open] {
+        transform: translateX(100%);
+    }
+}
+
+.policy-sheet::backdrop {
+    background: rgba(20, 28, 24, 0.42);
+    opacity: 0;
+    transition:
+        opacity 0.45s ease,
+        overlay 0.45s allow-discrete,
+        display 0.45s allow-discrete;
+}
+
+.policy-sheet[open]::backdrop {
+    opacity: 1;
+}
+
+@starting-style {
+    .policy-sheet[open]::backdrop {
+        opacity: 0;
+    }
+}
+
+.policy-sheet-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1.1rem 1rem 1.1rem 2rem;
+    border-bottom: 1px solid var(--hairline);
+}
+
+.policy-sheet .policy-sheet-title {
+    font-family: var(--font-serif);
+    font-size: 1.6rem;
+    font-weight: 500;
+    line-height: 1.2;
+    color: var(--color-headings);
+    margin: 0;
+}
+
+.policy-sheet-close {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: none;
+    color: var(--color-ink);
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.policy-sheet-close:hover {
+    background: rgba(var(--emerald-rgb), 0.08);
+}
+
+.policy-sheet-close svg {
+    width: 20px;
+    height: 20px;
+}
+
+.policy-sheet-body {
+    flex: 1;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: 1.75rem 2rem 1rem;
+}
+
+.policy-sheet-body:focus {
+    outline: none;
+}
+
+.policy-sheet .policy-sheet-meta,
+.policy-sheet .policy-sheet-loading {
+    margin: 0 0 2rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+}
+
+.policy-sheet-foot {
+    padding: 0.5rem 2rem calc(0.5rem + env(safe-area-inset-bottom));
+    border-top: 1px solid var(--hairline);
+}
+
+.policy-sheet-foot a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--emerald);
+}
+
+@media (max-width: 768px) {
+    .policy-sheet {
+        inset: auto 0 0;
+        width: 100%;
+        height: 88dvh;
+        border-radius: 16px 16px 0 0;
+        box-shadow: 0 -12px 40px rgba(20, 28, 24, 0.14);
+        transform: translateY(100%);
+    }
+
+    @starting-style {
+        .policy-sheet[open] {
+            transform: translateY(100%);
+        }
+    }
+
+    .policy-sheet-head {
+        position: relative;
+        padding: 1.5rem 0.75rem 0.9rem 1.25rem;
+        touch-action: none;
+    }
+
+    .policy-sheet-head::before {
+        content: '';
+        position: absolute;
+        top: 0.6rem;
+        left: 50%;
+        width: 36px;
+        height: 4px;
+        margin-left: -18px;
+        border-radius: 2px;
+        background: rgba(var(--emerald-rgb), 0.2);
+    }
+
+    .policy-sheet .policy-sheet-title {
+        font-size: 1.4rem;
+    }
+
+    .policy-sheet-body {
+        padding: 1.5rem 1.25rem 1rem;
+    }
+
+    .policy-sheet-foot {
+        padding-inline: 1.25rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .policy-sheet,
+    .policy-sheet::backdrop {
+        transition: none;
+    }
+}

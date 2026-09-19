@@ -3,16 +3,92 @@
    in admin-layout.css; this file only holds the components specific to the
    product form itself. */
 
-.price-row,
-.cms-field-row {
+/* two columns: content on the left, organisation and pricing on the right */
+.product-editor {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 320px;
+    gap: 20px;
+    align-items: start;
+}
+
+.product-editor__main,
+.product-editor__side {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    min-width: 0;
+}
+
+.product-editor__side {
+    position: sticky;
+    top: 20px;
+}
+
+.form-card {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 22px 24px;
+    background: var(--color-white);
+    border: 1px solid var(--admin-border);
+    border-radius: 16px;
+}
+
+.form-card .input {
+    margin-bottom: 0;
+}
+
+.form-card .form-card-title {
+    margin: 0;
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 0;
+    color: var(--admin-text-dark);
+}
+
+.req {
+    color: var(--color-danger);
+}
+
+.price-row {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 14px;
 }
 
+.price-margin {
+    margin: -4px 0 0;
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+}
+
+.price-margin:empty {
+    display: none;
+}
+
+/* one column: keep category above sizes, since sizes depend on it */
+@media (max-width: 1100px) {
+    .product-editor {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .product-editor__main,
+    .product-editor__side {
+        display: contents;
+    }
+
+    .form-card--details { order: 1; }
+    .form-card--organisation { order: 2; }
+    .form-card--pricing { order: 3; }
+    .form-card--images { order: 4; }
+    .form-card--stock { order: 5; }
+}
+
 @media (max-width: 520px) {
-    .price-row {
-        grid-template-columns: 1fr;
+    .form-card {
+        padding: 18px 16px;
     }
 }
 
@@ -54,12 +130,6 @@
     margin-bottom: 0.4rem;
 }
 
-.size-text-label {
-    min-width: 90px;
-    font-size: 0.88rem;
-    color: var(--gray-800);
-}
-
 .variant-row select {
     padding: 0.4rem 0.6rem;
     border: 1px solid #d1d5db;
@@ -96,6 +166,20 @@
     border-color: var(--color-danger);
     background: var(--color-danger);
     color: var(--color-white);
+}
+
+/* cross icons inside the remove buttons */
+.variant-row button svg,
+.img-delete-btn svg,
+.mgmt-pill-del svg {
+    display: block;
+    width: 12px;
+    height: 12px;
+}
+
+.img-remove-btn svg {
+    width: 10px;
+    height: 10px;
 }
 
 /* Image upload zone (Products/add, edit) */

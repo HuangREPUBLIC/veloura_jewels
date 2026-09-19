@@ -14,7 +14,7 @@ $formId = 'edit-user-form';
 <div class="page-header-row">
     <div>
         <p class="cms-eyebrow">Users</p>
-        <h2 class="page-title"><?= h($user->email) ?></h2>
+        <h1 class="page-title"><?= h($user->email) ?></h1>
     </div>
     <div class="cms-header-right">
         <button type="submit" form="<?= h($formId) ?>" class="btn-new-product"><?= __('Save') ?></button>

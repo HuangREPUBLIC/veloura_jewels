@@ -39,6 +39,7 @@ $this->Html->css('login', ['block' => true]);
 
         </fieldset>
 
+        <p class="fine-print">By creating an account, you agree to our <?= $this->Html->link('Terms & Conditions', '/terms-and-conditions') ?> and <?= $this->Html->link('Privacy Policy', '/privacy-policy') ?>.</p>
         <?= $this->Form->button('Create Account', ['class' => 'login-button']) ?>
         <?= $this->Form->end() ?>
 

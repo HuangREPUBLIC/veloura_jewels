@@ -12,7 +12,7 @@ $this->assign('crumbRecord', 'Archived');
 <div class="page-header-row">
     <div>
         <p class="cms-eyebrow">Store</p>
-        <h2 class="page-title"><?= __('Archived Contact Submissions') ?></h2>
+        <h1 class="page-title"><?= __('Archived Contact Submissions') ?></h1>
     </div>
     <div class="cms-header-right">
         <?= $this->element('per_page_select') ?>

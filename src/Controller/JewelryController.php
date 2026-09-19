@@ -51,101 +51,25 @@ class JewelryController extends AppController
         $this->OrderItems = $this->fetchTable('OrderItems');
     }
 
-    public function index(?string $categorySlug = null)
+    public function index(?string $categorySlug = null): void
     {
-        $productType = 'jewelry';
-
-        $categoriesTable = $this->fetchTable('Categories');
-        $categories = $categoriesTable->find()
-            ->where(['type' => $productType])
-            ->orderBy(['name' => 'ASC'])
-            ->all();
-
-        // Resolve slug to category ID
-        $categoryId = (int)$this->request->getQuery('category');
-        if ($categorySlug !== null && $categoryId === 0) {
-            $cat = $categoriesTable->find()
-                ->where(['type' => $productType, 'LOWER(name)' => strtolower(str_replace('-', ' ', $categorySlug))])
-                ->first();
-            if ($cat) {
-                $categoryId = $cat->id;
-            }
-        }
-
-        $minPrice   = $this->request->getQuery('min_price');
-        $maxPrice   = $this->request->getQuery('max_price');
-        $sortBy     = $this->request->getQuery('sort') ?? 'newest';
-
-        $wishlistIds = $this->getWishlistIds();
-
-        if ($sortBy === 'bestsales') {
-            $products = $this->Products
-                ->find('bestSales', productType: $productType, limit: 4)
-                ->contain(['ProductImages', 'ProductVariants'])
-                ->all();
-            foreach ($products as $product) {
-                $product->is_bestsales = true;
-            }
-            $pageContent = $this->fetchTable('PageContents')->getForPage($productType);
-            $this->set(compact('products', 'categories', 'categoryId', 'minPrice', 'maxPrice', 'sortBy', 'pageContent', 'wishlistIds'));
-            return;
-        }
-
-        $bestSalesIds = collection(
-            $this->Products->find('bestSales', productType: $productType, limit: 4)->all()
-        )->extract('id')->toList();
-
-        $sortOptions = [
-            'newest'     => ['Products.id' => 'DESC'],
-            'price_asc'  => ['Products.sale_price' => 'ASC'],
-            'price_desc' => ['Products.sale_price' => 'DESC'],
-            'featured'   => ['Products.id' => 'DESC'],
-        ];
-
-        $query = $this->Products->find()
-            ->contain(['ProductImages', 'ProductVariants'])
-            ->orderBy($sortOptions[$sortBy] ?? $sortOptions['newest']);
-
-        if ($categoryId > 0) {
-            $query->innerJoinWith('Category', function ($q) use ($categoryId, $productType) {
-                return $q->where(['Category.id' => $categoryId, 'Category.type' => $productType]);
-            });
-        } else {
-            $query->innerJoinWith('Category', function ($q) use ($productType) {
-                return $q->where(['Category.type' => $productType]);
-            });
-        }
-
-        if ($minPrice !== null && $minPrice !== '') {
-            $query->where(['Products.sale_price >=' => (float)$minPrice]);
-        }
-        if ($maxPrice !== null && $maxPrice !== '') {
-            $query->where(['Products.sale_price <=' => (float)$maxPrice]);
-        }
-        if ($sortBy === 'featured') {
-            $query->where(['Products.featured' => 1]);
-        }
-
-        $products = $query->all();
-        foreach ($products as $product) {
-            $product->is_bestsales = in_array($product->id, $bestSalesIds);
-        }
-
-        $pageContent = $this->fetchTable('PageContents')->getForPage($productType);
-        $this->set(compact('products', 'categories', 'categoryId', 'minPrice', 'maxPrice', 'sortBy', 'pageContent', 'wishlistIds'));
+        $this->listing('jewelry', $categorySlug);
     }
 
-    public function homeDecor(?string $categorySlug = null)
+    public function homeDecor(?string $categorySlug = null): void
     {
-        $productType = 'home_decor';
+        $this->listing('home_decor', $categorySlug);
+        $this->render('index');
+    }
 
+    private function listing(string $productType, ?string $categorySlug): void
+    {
         $categoriesTable = $this->fetchTable('Categories');
         $categories = $categoriesTable->find()
             ->where(['type' => $productType])
             ->orderBy(['name' => 'ASC'])
             ->all();
 
-        // Resolve slug to category ID
         $categoryId = (int)$this->request->getQuery('category');
         if ($categorySlug !== null && $categoryId === 0) {
             $cat = $categoriesTable->find()
@@ -156,59 +80,44 @@ class JewelryController extends AppController
             }
         }
 
-
         $minPrice   = $this->request->getQuery('min_price');
         $maxPrice   = $this->request->getQuery('max_price');
         $sortBy     = $this->request->getQuery('sort') ?? 'newest';
 
         $wishlistIds = $this->getWishlistIds();
 
-        if ($sortBy === 'bestsales') {
-            $products = $this->Products
-                ->find('bestSales', productType: $productType, limit: 4)
-                ->contain(['ProductImages', 'ProductVariants'])
-                ->all();
-            foreach ($products as $product) {
-                $product->is_bestsales = true;
-            }
-            $pageContent = $this->fetchTable('PageContents')->getForPage($productType);
-            $this->set(compact('products', 'categories', 'categoryId', 'minPrice', 'maxPrice', 'sortBy', 'pageContent', 'wishlistIds'));
-            return;
-        }
-
         $bestSalesIds = collection(
-            $this->Products->find('bestSales', productType: $productType, limit: 4)->all()
+            $this->Products->find('bestSales', productType: $productType, limit: 4)->all(),
         )->extract('id')->toList();
 
-        $sortOptions = [
-            'newest'     => ['Products.id' => 'DESC'],
-            'price_asc'  => ['Products.sale_price' => 'ASC'],
-            'price_desc' => ['Products.sale_price' => 'DESC'],
-            'featured'   => ['Products.id' => 'DESC'],
-        ];
-
-        $query = $this->Products->find()
-            ->contain(['ProductImages', 'ProductVariants'])
-            ->orderBy($sortOptions[$sortBy] ?? $sortOptions['newest']);
-
-        if ($categoryId > 0) {
-            $query->innerJoinWith('Category', function ($q) use ($categoryId, $productType) {
-                return $q->where(['Category.id' => $categoryId, 'Category.type' => $productType]);
-            });
+        if ($sortBy === 'bestsales') {
+            $query = $this->Products->find('bestSales', productType: $productType, limit: 4)
+                ->contain(['ProductImages', 'ProductVariants']);
         } else {
-            $query->innerJoinWith('Category', function ($q) use ($productType) {
-                return $q->where(['Category.type' => $productType]);
-            });
-        }
+            $sortOptions = [
+                'newest'     => ['Products.id' => 'DESC'],
+                'price_asc'  => ['Products.sale_price' => 'ASC'],
+                'price_desc' => ['Products.sale_price' => 'DESC'],
+                'featured'   => ['Products.id' => 'DESC'],
+            ];
 
-        if ($minPrice !== null && $minPrice !== '') {
-            $query->where(['Products.sale_price >=' => (float)$minPrice]);
-        }
-        if ($maxPrice !== null && $maxPrice !== '') {
-            $query->where(['Products.sale_price <=' => (float)$maxPrice]);
-        }
-        if ($sortBy === 'featured') {
-            $query->where(['Products.featured' => 1]);
+            $query = $this->Products->find()
+                ->contain(['ProductImages', 'ProductVariants'])
+                ->innerJoinWith('Category', fn($q) => $q->where(array_filter([
+                    'Category.type' => $productType,
+                    'Category.id' => $categoryId ?: null,
+                ])))
+                ->orderBy($sortOptions[$sortBy] ?? $sortOptions['newest']);
+
+            if ($minPrice !== null && $minPrice !== '') {
+                $query->where(['Products.sale_price >=' => (float)$minPrice]);
+            }
+            if ($maxPrice !== null && $maxPrice !== '') {
+                $query->where(['Products.sale_price <=' => (float)$maxPrice]);
+            }
+            if ($sortBy === 'featured') {
+                $query->where(['Products.featured' => 1]);
+            }
         }
 
         $products = $query->all();
@@ -217,7 +126,17 @@ class JewelryController extends AppController
         }
 
         $pageContent = $this->fetchTable('PageContents')->getForPage($productType);
-        $this->set(compact('products', 'categories', 'categoryId', 'minPrice', 'maxPrice', 'sortBy', 'pageContent', 'wishlistIds'));
+        $this->set(compact(
+            'productType',
+            'products',
+            'categories',
+            'categoryId',
+            'minPrice',
+            'maxPrice',
+            'sortBy',
+            'pageContent',
+            'wishlistIds',
+        ));
     }
 
     public function view($id = null)

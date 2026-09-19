@@ -1,7 +1,7 @@
-<?php $this->Html->css('faq', ['block' => true]); ?>
+<?php $this->Html->css('pages', ['block' => true]); ?>
 <?php $this->assign('title', $pageContent['page_heading'] ?? 'Visit Veloura'); ?>
 
-<div class="location-page">
+<div class="location">
 
     <div class="location-banner">
         <?php if (!empty($pageContent['store_image'])): ?>
@@ -12,62 +12,56 @@
         </div>
     </div>
 
-    <div class="location-content">
-        <div class="location-main">
-            <div class="location-info">
+    <div class="location-main">
+        <div class="location-info">
 
-                <div class="location-card">
-                    <div class="location-card-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="26" height="26">
-                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
-                            <circle cx="12" cy="10" r="3"/>
-                        </svg>
-                    </div>
-                    <div>
-                        <h3 class="location-card-title">Address</h3>
-                        <?php if (!empty($pageContent['address'])): ?>
-                            <a class="location-card-text location-card-link" href="https://www.google.com/maps/search/?api=1&amp;query=<?= rawurlencode($pageContent['address']) ?>" target="_blank" rel="noopener"><?= h($pageContent['address']) ?></a>
-                        <?php endif; ?>
-                    </div>
+            <div class="location-card">
+                <div class="location-card-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
+                        <circle cx="12" cy="10" r="3"/>
+                    </svg>
                 </div>
-
-                <div class="location-card">
-                    <div class="location-card-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="26" height="26">
-                            <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10a19.79 19.79 0 01-3-8.57A2 2 0 012 1.28h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 9.09a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
-                        </svg>
-                    </div>
-                    <div>
-                        <h3 class="location-card-title">Phone</h3>
-                        <?php if (!empty($pageContent['phone'])): ?>
-                            <a class="location-card-text location-card-link" href="tel:<?= h(preg_replace('/[^\d+]/', '', $pageContent['phone'])) ?>"><?= h($pageContent['phone']) ?></a>
-                        <?php endif; ?>
-                    </div>
+                <div>
+                    <h3 class="location-card-title">Address</h3>
+                    <?php if (!empty($pageContent['address'])): ?>
+                        <a class="location-card-text location-card-link" href="https://www.google.com/maps/search/?api=1&amp;query=<?= rawurlencode($pageContent['address']) ?>" target="_blank" rel="noopener"><?= h($pageContent['address']) ?></a>
+                    <?php endif; ?>
                 </div>
-
-                <div class="location-card">
-                    <div class="location-card-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="26" height="26">
-                            <circle cx="12" cy="12" r="10"/>
-                            <polyline points="12 6 12 12 16 14"/>
-                        </svg>
-                    </div>
-                    <div>
-                        <h3 class="location-card-title">Opening Hours</h3>
-                        <p class="location-card-text"><?= h($pageContent['hours'] ?? '') ?></p>
-                    </div>
-                </div>
-
             </div>
 
-            <?php if (!empty($pageContent['store_image_inside'])): ?>
-                <div class="location-image-wrap">
-                    <?= $this->Html->image(h($pageContent['store_image_inside']), ['alt' => 'Veloura Jewels Interior', 'class' => 'location-hero-img']) ?>
+            <div class="location-card">
+                <div class="location-card-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10a19.79 19.79 0 01-3-8.57A2 2 0 012 1.28h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 9.09a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
+                    </svg>
                 </div>
-            <?php endif; ?>
+                <div>
+                    <h3 class="location-card-title">Phone</h3>
+                    <?php if (!empty($pageContent['phone'])): ?>
+                        <a class="location-card-text location-card-link" href="tel:<?= h(preg_replace('/[^\d+]/', '', $pageContent['phone'])) ?>"><?= h($pageContent['phone']) ?></a>
+                    <?php endif; ?>
+                </div>
+            </div>
+
+            <div class="location-card">
+                <div class="location-card-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <circle cx="12" cy="12" r="10"/>
+                        <polyline points="12 6 12 12 16 14"/>
+                    </svg>
+                </div>
+                <div>
+                    <h3 class="location-card-title">Opening Hours</h3>
+                    <p class="location-card-text"><?= h($pageContent['hours'] ?? '') ?></p>
+                </div>
+            </div>
 
         </div>
 
+        <?php if (!empty($pageContent['store_image_inside'])): ?>
+            <?= $this->Html->image(h($pageContent['store_image_inside']), ['alt' => 'Veloura Jewels interior', 'class' => 'location-hero-img']) ?>
+        <?php endif; ?>
     </div>
 
 </div>

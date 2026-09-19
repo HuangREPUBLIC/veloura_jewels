@@ -1,6 +1,6 @@
 <?php
 /**
- * Quick view shell — mounted once per page from templates/layout/default.php.
+ * Quick view shell: mounted once per page from templates/layout/default.php.
  * Filled by webroot/js/cart-drawer.js with the markup quickAdd() returns for
  * products that still need a size.
  *

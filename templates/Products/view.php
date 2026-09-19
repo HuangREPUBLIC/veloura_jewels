@@ -11,7 +11,7 @@ $productType = $product->category->type ?? '';
 
         <div class="page-header-row">
             <div>
-                <h3 class="page-title"><?= h($product->name) ?></h3>
+                <h1 class="page-title"><?= h($product->name) ?></h1>
             </div>
 
             <?php $role = $this->request->getAttribute('identity')->get('role'); ?>

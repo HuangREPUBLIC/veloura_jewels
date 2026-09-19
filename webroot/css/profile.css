@@ -528,6 +528,16 @@
     letter-spacing: 0.04em;
 }
 
+.profile-back-link::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    margin-right: 0.6rem;
+    border-left: 1px solid currentColor;
+    border-bottom: 1px solid currentColor;
+    transform: rotate(45deg);
+}
+
 .profile-back-link:hover {
     color: var(--emerald-dark);
     text-decoration: underline;

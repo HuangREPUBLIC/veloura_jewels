@@ -15,12 +15,12 @@ $totalLabel = '$' . number_format((float)$total, 2);
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Secure Checkout — Veloura Jewels</title>
+    <title>Secure Checkout | Veloura Jewels</title>
     <?= $this->Html->meta('icon', '/img/icon.png') ?>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500&display=swap" rel="stylesheet">
-    <?= $this->Html->css(['normalize.min', 'fonts', 'default-styles']) ?>
+    <?= $this->Html->css(['normalize.min', 'fonts', 'tokens', 'base', 'components']) ?>
     <?= $this->element('jewelry_css', ['block' => false]) ?>
 </head>
 <body>
@@ -44,6 +44,13 @@ $totalLabel = '$' . number_format((float)$total, 2);
 
     <main class="vp-form">
         <div id="checkout" aria-live="polite"></div>
+        <p class="vp-legal">By placing your order, you agree to our <?= $this->Html->link('Terms & Conditions', '/terms-and-conditions', ['target' => '_blank']) ?> and <?= $this->Html->link('Privacy Policy', '/privacy-policy', ['target' => '_blank']) ?>.</p>
+        <nav class="vp-policies" aria-label="Store policies">
+            <?= $this->Html->link('Refund policy', '/refund-policy', ['target' => '_blank']) ?>
+            <?= $this->Html->link('Shipping policy', '/shipping-policy', ['target' => '_blank']) ?>
+            <?= $this->Html->link('Privacy policy', '/privacy-policy', ['target' => '_blank']) ?>
+            <?= $this->Html->link('Terms & conditions', '/terms-and-conditions', ['target' => '_blank']) ?>
+        </nav>
     </main>
 
     <aside class="vp-right" aria-labelledby="vpSummaryTitle">
@@ -93,7 +100,7 @@ $totalLabel = '$' . number_format((float)$total, 2);
                 </div>
                 <div class="vp-summary-row">
                     <span>Shipping</span>
-                    <span class="vp-muted">Calculated at next step</span>
+                    <span>Free</span>
                 </div>
                 <div class="vp-summary-row vp-summary-total">
                     <span>Total</span>
@@ -122,6 +129,7 @@ $totalLabel = '$' . number_format((float)$total, 2);
 
 </div>
 
+<?= $this->Html->script('policy-sheet') ?>
 <script src="https://js.stripe.com/dahlia/stripe.js"></script>
 <script>
 (function () {

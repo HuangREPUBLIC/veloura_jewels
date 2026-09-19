@@ -54,6 +54,10 @@ return function (RouteBuilder $routes): void {
         $builder->connect('/', ['controller' => 'Pages', 'action' => 'display', 'home']);
         $builder->connect('/story', ['controller' => 'OurStory', 'action' => 'index']);
         $builder->connect('/location', ['controller' => 'Pages', 'action' => 'location']);
+        foreach (['privacy-policy', 'terms-and-conditions', 'refund-policy', 'shipping-policy'] as $policy) {
+            $template = str_replace('-', '_', $policy);
+            $builder->connect('/' . $policy, ['controller' => 'Pages', 'action' => 'display', $template]);
+        }
 
         $builder->connect('/pages/*', 'Pages::display');
 

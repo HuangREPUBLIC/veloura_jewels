@@ -1,9 +1,9 @@
 <?php
-$this->Html->css('faq', ['block' => true]);
+$this->Html->css('pages', ['block' => true]);
 $this->assign('title', 'Our Story');
 ?>
 
-<div class="story-page">
+<div class="story">
 
     <header class="story-hero" style="background-image: linear-gradient(90deg, rgba(24,56,47,0.82), rgba(24,56,47,0.28)), url('<?= $this->Url->build('/img/' . h($pageContent['our_story_background_image'] ?? 'storeInterior.png')) ?>')">
         <p class="story-label">Est. 2024</p>
@@ -21,48 +21,21 @@ $this->assign('title', 'Our Story');
         </div>
     </section>
     <section class="story-values">
-        <div class="story-values-header">
-            <div class="story-values-ornament"></div>
-            <h2 class="story-values-title">Our Values</h2>
-        </div>
+        <h2 class="story-values-title">Our Values</h2>
         <div class="story-values-grid">
-
-            <div class="story-value-card">
-                <div class="story-value-ornament"></div>
-                <h3 class="story-value-title">Timeless Elegance</h3>
-                <p>We believe great design never goes out of style. Our collections are created to feel sophisticated, versatile, and enduring.</p>
-            </div>
-
-            <div class="story-value-card">
-                <div class="story-value-ornament"></div>
-                <h3 class="story-value-title">Quality with Purpose</h3>
-                <p>Every item is chosen with care and attention to craftsmanship so our customers can enjoy pieces that are both beautiful and lasting.</p>
-            </div>
-
-            <div class="story-value-card">
-                <div class="story-value-ornament"></div>
-                <h3 class="story-value-title">Personal Expression</h3>
-                <p>Jewellery and décor are more than accessories — they are reflections of personality, memories, and lifestyle. We encourage individuality in every collection.</p>
-            </div>
-
-            <div class="story-value-card">
-                <div class="story-value-ornament"></div>
-                <h3 class="story-value-title">Warmth &amp; Connection</h3>
-                <p>Veloura Jewels is built on creating meaningful connections with our customers through thoughtful products and genuine service.</p>
-            </div>
-
-            <div class="story-value-card">
-                <div class="story-value-ornament"></div>
-                <h3 class="story-value-title">Beauty in Everyday Moments</h3>
-                <p>We believe luxury should be accessible in daily life — in the jewellery you wear, the gifts you give, and the spaces you create at home.</p>
-            </div>
-
-            <div class="story-value-card">
-                <div class="story-value-ornament"></div>
-                <h3 class="story-value-title">Customer First</h3>
-                <p>At the heart of Veloura Jewels is a commitment to making every customer feel valued, inspired, and confident in what they choose.</p>
-            </div>
-
+            <?php foreach ([
+                'Timeless Elegance' => 'We believe great design never goes out of style. Our collections are created to feel sophisticated, versatile, and enduring.',
+                'Quality with Purpose' => 'Every item is chosen with care and attention to craftsmanship so our customers can enjoy pieces that are both beautiful and lasting.',
+                'Personal Expression' => 'Jewellery and décor are more than accessories. They reflect personality, memories, and lifestyle, and we encourage individuality in every collection.',
+                'Warmth & Connection' => 'Veloura Jewels is built on creating meaningful connections with our customers through thoughtful products and genuine service.',
+                'Beauty in Everyday Moments' => 'We believe luxury should be part of daily life, in the jewellery you wear, the gifts you give, and the spaces you create at home.',
+                'Customer First' => 'At the heart of Veloura Jewels is a commitment to making every customer feel valued, inspired, and confident in what they choose.',
+            ] as $title => $text): ?>
+                <div class="story-value">
+                    <h3 class="story-value-title"><?= h($title) ?></h3>
+                    <p><?= h($text) ?></p>
+                </div>
+            <?php endforeach; ?>
         </div>
     </section>
 

@@ -1,7 +1,7 @@
 <?php
 /**
  * "Showing N" per-page selector for admin data tables. Purely a query-param
- * control — CakePHP's paginator already reads `limit` from the query string
+ * control: CakePHP's paginator already reads `limit` from the query string
  * on every paginated action, so no controller changes are needed to support
  * it. webroot/js/admin-shell.js wires the change event.
  *

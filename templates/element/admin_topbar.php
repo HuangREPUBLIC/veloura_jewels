@@ -2,7 +2,7 @@
 /**
  * Admin shell top bar: sidebar toggle + section breadcrumb on the left,
  * "View site" + sign-out grouped on the right. The signed-in user's identity
- * lives in the sidebar's top profile block instead — no need to show it
+ * lives in the sidebar's top profile block instead: no need to show it
  * twice. The breadcrumb is deliberately secondary (small, muted) since the
  * page itself already carries its own heading below.
  *
@@ -78,9 +78,9 @@ if ($crumbItem === null) {
 
     <div class="admin-topbar__actions">
         <?= $this->Html->link(
-            $this->iconSvg('external-link') . ' View site',
+            $this->iconSvg('external-link') . '<span class="admin-topbar__view-site-label">View site</span>',
             '/',
-            ['class' => 'admin-topbar__view-site', 'escape' => false],
+            ['class' => 'admin-topbar__view-site', 'escape' => false, 'aria-label' => 'View site'],
         ) ?>
         <span class="admin-topbar__divider" aria-hidden="true"></span>
         <div class="admin-topbar__profile-menu">

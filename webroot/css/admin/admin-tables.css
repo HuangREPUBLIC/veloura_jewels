@@ -37,135 +37,6 @@ tbody td {
 
 /* DataTables overrides */
 
-.dt-layout-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 0;
-}
-
-.dt-layout-cell {
-    display: flex;
-    align-items: center;
-    color: var(--admin-text);
-}
-
-.dt-length,
-.dt-search {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    min-height: 32px;
-}
-
-.dt-length label,
-.dt-search label {
-    display: flex;
-    align-items: center;
-    margin: 0;
-    font-size: 0.8rem;
-    font-weight: 500;
-    line-height: 1;
-    color: var(--admin-text);
-}
-
-.dt-length select {
-    appearance: none;
-    -webkit-appearance: none;
-    width: 62px;
-    min-width: 62px;
-    height: 32px;
-    margin-bottom: 0;
-    padding: 4px 24px 4px 10px;
-    border: 1.5px solid var(--admin-border);
-    border-radius: 6px;
-    font-size: 0.82rem;
-    background-color: var(--color-white);
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 20 20'><path d='M5 7l5 5 5-5' stroke='%23284d40' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>");
-    background-repeat: no-repeat;
-    background-position: right 8px center;
-    background-size: 11px;
-    box-sizing: border-box;
-    color: var(--admin-text);
-    transition: border-color 0.2s ease;
-}
-
-.dt-length select:focus {
-    outline: none;
-    border-color: var(--emerald);
-}
-
-.dt-search-wrap {
-    position: relative;
-    display: inline-block;
-}
-
-.dt-search input[type="search"] {
-    width: 180px;
-    min-width: 180px;
-    height: 32px;
-    margin-bottom: 0;
-    padding: 4px 32px 4px 10px;
-    border: 1.5px solid var(--admin-border);
-    border-radius: 6px;
-    font-size: 0.82rem;
-    background: var(--color-white);
-    box-sizing: border-box;
-    color: var(--admin-text);
-    transition: border-color 0.2s ease;
-}
-
-.dt-search input[type="search"]:focus {
-    outline: none;
-    border-color: var(--emerald);
-}
-
-.dt-search-clear {
-    position: absolute;
-    right: 9px;
-    top: 50%;
-    transform: translateY(-50%);
-    display: none;
-    align-items: center;
-    justify-content: center;
-    background: none;
-    border: none;
-    padding: 0;
-    cursor: pointer;
-    color: var(--gray-400);
-    line-height: 1;
-}
-
-.dt-search-wrap.has-value .dt-search-clear { display: flex; }
-
-.dt-search-clear:hover { color: var(--gray-700); }
-
-.dt-paging .dt-paging-button {
-    width: 32px;
-    height: 32px;
-    padding: 0;
-    margin: 0 2px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.82rem;
-    border-radius: 6px;
-    box-sizing: border-box;
-    border: 1.5px solid transparent;
-    transition: all 0.2s ease;
-}
-
-.dt-paging .dt-paging-button.current {
-    background: var(--emerald);
-    color: var(--color-white) !important;
-    border-color: var(--emerald);
-}
-
-.dt-paging .dt-paging-button:not(.disabled):hover {
-    border-color: var(--emerald);
-    color: var(--emerald) !important;
-}
-
 /* Admin DataTable (all four index pages) */
 
 #productsTable,
@@ -193,23 +64,6 @@ tbody td {
     letter-spacing: 1px;
     font-size: 0.82rem;
     white-space: nowrap;
-}
-
-table.dataTable thead > tr > th.sorting,
-table.dataTable thead > tr > th.sorting_asc,
-table.dataTable thead > tr > th.sorting_desc,
-table.dataTable thead > tr > th.sorting_asc_disabled,
-table.dataTable thead > tr > th.sorting_desc_disabled {
-    padding-right: 38px !important;
-}
-
-table.dataTable thead .sorting:before,
-table.dataTable thead .sorting:after,
-table.dataTable thead .sorting_asc:before,
-table.dataTable thead .sorting_asc:after,
-table.dataTable thead .sorting_desc:before,
-table.dataTable thead .sorting_desc:after {
-    right: 14px !important;
 }
 
 #productsTable tbody td,
@@ -375,12 +229,6 @@ table.dataTable thead .sorting_desc:after {
     gap: 0.7rem;
 }
 
-.product-cell .product-text {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-}
-
 /* shared product thumbnail for admin tables */
 
 .admin-thumb {
@@ -425,63 +273,12 @@ table.dataTable thead .sorting_desc:after {
     line-height: 1.45;
 }
 
-.supplier-email { color: var(--admin-text); }
-
+.data-table td.stock-cell { white-space: normal; min-width: 150px; max-width: 200px; line-height: 1.5; }
 .stock-low { color: var(--color-message-error-text); font-weight: 600; }
+.stock-ok { color: var(--color-text-muted); }
 .text-muted { color: #9ca3af; }
 
 /* Activity log table */
-
-.al-table-card {
-    background: var(--admin-surface);
-    border: 1px solid var(--admin-border);
-    border-radius: 16px;
-    padding: 1.4rem 1.6rem;
-    box-shadow: var(--admin-shadow);
-    overflow-x: auto;
-}
-
-.al-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 0.88rem;
-}
-
-.al-table thead tr {
-    border-bottom: 2px solid var(--admin-border);
-}
-
-.al-table th {
-    text-align: left;
-    padding: 0.6rem 0.8rem;
-    font-size: 0.72rem;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--admin-ink-mid);
-    white-space: nowrap;
-}
-
-.al-table td {
-    padding: 0.55rem 0.8rem;
-    border-bottom: 1px solid var(--admin-surface-alt);
-    color: var(--admin-text);
-    vertical-align: middle;
-}
-
-.al-table tbody tr:last-child td {
-    border-bottom: none;
-}
-
-.al-td-date {
-    white-space: nowrap;
-    color: var(--admin-ink-mid) !important;
-}
-
-.al-td-ip {
-    color: var(--admin-ink-mid) !important;
-    font-size: 0.82rem !important;
-}
 
 .al-badge {
     display: inline-block;
@@ -509,9 +306,10 @@ table.dataTable thead .sorting_desc:after {
 .al-change-row--images { align-items: flex-start; }
 
 .al-change-field { font-weight: 600; color: var(--admin-ink-mid); white-space: nowrap; }
-.al-change-from  { color: #b91c1c; text-decoration: line-through; word-break: break-all; }
-.al-change-arrow { color: var(--admin-ink-mid); }
-.al-change-to    { color: #15803d; word-break: break-all; }
+.al-change-from { color: #b91c1c; text-decoration: line-through; word-break: break-all; }
+.al-change-arrow { display: inline-flex; color: var(--admin-ink-mid); }
+.al-change-arrow svg { width: 14px; height: 14px; }
+.al-change-to { color: #15803d; word-break: break-all; }
 
 .al-img-group {
     display: flex;
@@ -528,4 +326,4 @@ table.dataTable thead .sorting_desc:after {
 }
 
 .al-img-thumb--from { border-color: #fca5a5; opacity: 0.7; }
-.al-img-thumb--to   { border-color: #86efac; }
+.al-img-thumb--to { border-color: #86efac; }

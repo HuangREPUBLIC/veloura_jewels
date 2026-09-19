@@ -10,7 +10,7 @@ $this->assign('crumbRecord', h($user->email));
 
         <div class="page-header-row">
             <div>
-                <h3 class="page-title"><?= h($user->email) ?></h3>
+                <h1 class="page-title"><?= h($user->email) ?></h1>
             </div>
 
             <?php
@@ -42,19 +42,19 @@ $this->assign('crumbRecord', h($user->email));
             </tr>
             <tr>
                 <th><?= __('First Name') ?></th>
-                <td><?= h($user->first_name) ?: '—' ?></td>
+                <td><?= h($user->first_name) ?: '<span class="text-muted">Not provided</span>' ?></td>
             </tr>
             <tr>
                 <th><?= __('Last Name') ?></th>
-                <td><?= h($user->last_name) ?: '—' ?></td>
+                <td><?= h($user->last_name) ?: '<span class="text-muted">Not provided</span>' ?></td>
             </tr>
             <tr>
                 <th><?= __('Phone') ?></th>
-                <td><?= h($user->phone) ?: '—' ?></td>
+                <td><?= h($user->phone) ?: '<span class="text-muted">Not provided</span>' ?></td>
             </tr>
             <tr>
                 <th><?= __('Address') ?></th>
-                <td><?= h($user->address) ?: '—' ?></td>
+                <td><?= h($user->address) ?: '<span class="text-muted">Not provided</span>' ?></td>
             </tr>
             <tr>
                 <th><?= __('Role') ?></th>

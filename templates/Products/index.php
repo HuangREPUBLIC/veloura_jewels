@@ -11,7 +11,7 @@ $role = $this->Identity->get('role');
 <div class="page-header-row">
     <div>
         <p class="cms-eyebrow">Store</p>
-        <h2 class="page-title">Products</h2>
+        <h1 class="page-title">Products</h1>
     </div>
     <div class="cms-header-right">
         <?= $this->element('per_page_select') ?>
@@ -64,8 +64,8 @@ $role = $this->Identity->get('role');
                             <span class="product-name"><?= h($product->name) ?></span>
                         </div>
                     </td>
-                    <td><?= $this->Number->format($product->sale_price) ?></td>
-                    <td>
+                    <td>$<?= number_format((float)$product->sale_price, 2) ?></td>
+                    <td class="stock-cell">
                         <?php
                         $lowVariants = [];
                         foreach ($product->product_variants ?? [] as $v) {
@@ -73,8 +73,12 @@ $role = $this->Identity->get('role');
                                 $lowVariants[] = h($v->size) . ': ' . $v->stock;
                             }
                         }
-                        echo $lowVariants ? '<span class="stock-low">' . implode(', ', $lowVariants) . '</span>' : '✓';
                         ?>
+                        <?php if ($lowVariants): ?>
+                            <span class="stock-low"><?= implode(', ', $lowVariants) ?></span>
+                        <?php else: ?>
+                            <span class="stock-ok">In stock</span>
+                        <?php endif; ?>
                     </td>
                     <td>
                         <?php if ($product->category): ?>

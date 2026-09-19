@@ -23,7 +23,6 @@ $cakeDescription = 'Veloura Jewels';
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <!-- Editorial accent serif (--font-serif) for hero/brand-voice moments only; Raleway remains self-hosted for everything else -->
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
 
     <?= $this->Html->css(['normalize.min', 'fonts', 'tokens', 'base', 'navbar', 'components', 'search', 'cart-drawer', 'quick-view']) ?>
@@ -270,9 +269,11 @@ $role = $identity ? $identity->get('role') : null;
         </div>
 
         <div class="footer-col">
-            <h6 class="footer-heading">Services</h6>
+            <h6 class="footer-heading">Client Care</h6>
             <ul class="footer-nav">
                 <li><?= $this->Html->link('FAQ', ['controller' => 'Faq', 'action' => 'index']) ?></li>
+                <li><?= $this->Html->link('Shipping', '/shipping-policy') ?></li>
+                <li><?= $this->Html->link('Returns', '/refund-policy') ?></li>
                 <li><?= $this->Html->link('Contact Us', ['controller' => 'ContactSubmissions', 'action' => 'add']) ?></li>
             </ul>
         </div>
@@ -285,10 +286,10 @@ $role = $identity ? $identity->get('role') : null;
                 <button type="submit" class="footer-newsletter-btn">Subscribe</button>
             </form>
             <p class="footer-contact-detail" id="newsletterThanks" style="display:none">Thanks for subscribing!</p>
-            <p class="footer-newsletter-disclaimer">No spam. Unsubscribe anytime.</p>
+            <p class="footer-newsletter-disclaimer">No spam. Unsubscribe anytime. Read our <?= $this->Html->link('Privacy Policy', '/privacy-policy') ?>.</p>
             <p class="footer-contact-detail">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                <?= h($footerLocation['hours'] ?? '10:00AM – 6:00PM') ?>
+                <?= h($footerLocation['hours'] ?? '10:00AM to 6:00PM') ?>
             </p>
             <p class="footer-contact-detail">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10a19.79 19.79 0 01-3-8.57A2 2 0 012 1.28h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 9.09a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
@@ -306,11 +307,10 @@ $role = $identity ? $identity->get('role') : null;
         <div class="footer-bottom-inner">
             <div class="footer-bottom-left">
                 <span class="footer-copyright">© <?= date('Y') ?> Veloura Jewels</span>
-                <nav class="footer-legal">
-                    <a href="#">Privacy Policy</a>
-                    <a href="#">Terms &amp; Conditions</a>
-                    <a href="#">Refund Policy</a>
-                    <a href="#">Shipping Policy</a>
+                <nav class="footer-legal" aria-label="Legal">
+                    <?php foreach (['/privacy-policy' => 'Privacy Policy', '/terms-and-conditions' => 'Terms & Conditions', '/refund-policy' => 'Refund Policy', '/shipping-policy' => 'Shipping Policy'] as $url => $label): ?>
+                        <?= $this->Html->link($label, $url, ['aria-current' => $currentPath === $url ? 'page' : null]) ?>
+                    <?php endforeach; ?>
                 </nav>
             </div>
             <div class="footer-payments">
@@ -327,7 +327,6 @@ $role = $identity ? $identity->get('role') : null;
 <?= $this->element('cart_drawer') ?>
 <?= $this->element('quick_view_modal') ?>
 
-<?= $this->Html->script('layout') ?>
-<?= $this->Html->script('cart-drawer') ?>
+<?= $this->Html->script(['layout', 'cart-drawer', 'policy-sheet']) ?>
 </body>
 </html>

@@ -177,6 +177,14 @@ $oneSizeVariant = $isOneSizeOnly ? $inStockVariants[0] : null;
                 </details>
             <?php endif; ?>
 
+            <details class="detail-accordion">
+                <summary class="detail-accordion-summary">Shipping &amp; Returns</summary>
+                <div class="detail-accordion-body">
+                    <p>Free tracked shipping on every order, dispatched from our Melbourne studio within 1 to 2 business days. Unworn pieces can be returned or exchanged within 30 days.</p>
+                    <p><?= $this->Html->link('Shipping Policy', '/shipping-policy') ?><?= $this->Html->link('Refund Policy', '/refund-policy') ?></p>
+                </div>
+            </details>
+
         </div>
     </div>
 </div>
@@ -255,7 +263,7 @@ $oneSizeVariant = $isOneSizeOnly ? $inStockVariants[0] : null;
                 qtyInput.value     = 1;
 
                 var label = document.getElementById('selected-size-name');
-                if (label) label.textContent = '— ' + name;
+                if (label) label.textContent = name;
 
                 if (addBtn) addBtn.disabled = false;
                 if (minusBtn) minusBtn.disabled = false;

@@ -22,7 +22,7 @@ $faqSaveUrl = ['action' => 'faqItemSave'];
         <div class="page-header-row">
             <div>
                 <p class="cms-eyebrow">Admin</p>
-                <h3 class="page-title">Content Management: <?= h($currentPage->title) ?></h3>
+                <h1 class="page-title">Content Management: <?= h($currentPage->title) ?></h1>
             </div>
             <div class="cms-header-right">
                 <select class="cms-page-select" onchange="window.location=this.value">
@@ -172,7 +172,7 @@ $faqSaveUrl = ['action' => 'faqItemSave'];
         input.addEventListener('change', function() {
             var label = this.closest('.cms-field').querySelector('.cms-label');
             if (this.files[0]) {
-                label.setAttribute('data-file', '→ ' + this.files[0].name);
+                label.setAttribute('data-file', 'Selected: ' + this.files[0].name);
             }
         });
     });

@@ -11,7 +11,7 @@ $this->Html->css('profile', ['block' => true]);
     <div class="profile-form-wrap profile-form-wrap--wide">
 
         <div class="profile-form-header">
-            <?= $this->Html->link('← Back to Orders', ['action' => 'orders'], ['class' => 'profile-back-link']) ?>
+            <?= $this->Html->link('Back to Orders', ['action' => 'orders'], ['class' => 'profile-back-link']) ?>
             <h1>Order #<?= h($order->id) ?></h1>
         </div>
 
@@ -126,6 +126,8 @@ $this->Html->css('profile', ['block' => true]);
                 <span class="od-total-value">$<?= number_format((float)$order->total_amount, 2) ?> AUD</span>
             </div>
         </div>
+
+        <p class="fine-print">Need help with this order? See our <?= $this->Html->link('Shipping Policy', '/shipping-policy') ?> and <?= $this->Html->link('Refund Policy', '/refund-policy') ?>, or <?= $this->Html->link('contact us', ['controller' => 'ContactSubmissions', 'action' => 'add']) ?>.</p>
 
     </div>
 </div>

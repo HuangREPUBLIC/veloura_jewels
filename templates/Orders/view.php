@@ -26,7 +26,7 @@ $currency = strtoupper(h($order->currency));
 <div class="page-header-row">
     <div>
         <p class="cms-eyebrow">Orders</p>
-        <h2 class="page-title">Order #<?= h($order->id) ?></h2>
+        <h1 class="page-title">Order #<?= h($order->id) ?></h1>
     </div>
     <div class="cms-header-right">
         <span class="<?= $statusClass[$order->status] ?? 'status-pill' ?>"><?= h(ucfirst($order->status)) ?></span>

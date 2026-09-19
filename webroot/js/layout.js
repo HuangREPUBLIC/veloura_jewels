@@ -202,36 +202,6 @@
         box.innerHTML = '<div class="search-suggest-grid">' + items + '</div>' + viewAll;
     }
 
-    function initDataTableSearchClear() {
-        document.querySelectorAll('.dt-search input[type="search"]').forEach(function (input) {
-            var wrap = document.createElement('div');
-            wrap.className = 'dt-search-wrap';
-            input.parentNode.insertBefore(wrap, input);
-            wrap.appendChild(input);
-
-            var btn = document.createElement('button');
-            btn.type = 'button';
-            btn.className = 'dt-search-clear';
-            btn.setAttribute('aria-label', 'Clear search');
-            btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>';
-            wrap.appendChild(btn);
-
-            function update() {
-                wrap.classList.toggle('has-value', input.value.length > 0);
-            }
-
-            input.addEventListener('input', update);
-            btn.addEventListener('click', function () {
-                input.value = '';
-                input.dispatchEvent(new Event('input', { bubbles: true }));
-                update();
-                input.focus();
-            });
-
-            update();
-        });
-    }
-
     function initWishlistButtons() {
         document.addEventListener('click', function (e) {
             var btn = e.target.closest('.wishlist-btn');
@@ -319,7 +289,6 @@
     function init() {
         initNavbarScroll();
         initSearch();
-        initDataTableSearchClear();
         initWishlistButtons();
         initNewsletter();
 

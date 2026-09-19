@@ -111,6 +111,7 @@ $this->Html->meta([
             'class' => 'contact-submit-btn',
             'disabled' => true
         ]) ?>
+        <p class="fine-print">We only use your details to reply to you. See our <?= $this->Html->link('Privacy Policy', '/privacy-policy') ?>.</p>
 
         <?= $this->Form->end() ?>
     </div>

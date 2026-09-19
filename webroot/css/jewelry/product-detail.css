@@ -78,14 +78,12 @@
 
 
 .jewelry-page .detail-accordion {
-    border-top: 1px solid rgba(var(--emerald-rgb), 0.1);
     margin-top: 1.5rem;
-    margin-bottom: 0;
+    border-block: 1px solid rgba(var(--emerald-rgb), 0.1);
 }
 
-.jewelry-page .detail-accordion:last-of-type {
-    border-bottom: 1px solid rgba(var(--emerald-rgb), 0.1);
-    margin-bottom: 1.4rem;
+.jewelry-page .detail-accordion + .detail-accordion {
+    margin-top: -1px;
 }
 
 .jewelry-page .detail-accordion-summary {
@@ -109,16 +107,17 @@
 }
 
 .jewelry-page .detail-accordion-summary::after {
-    content: '+';
-    font-size: 1.1rem;
-    font-weight: 300;
-    color: var(--emerald);
-    transition: transform 0.2s ease;
-    line-height: 1;
+    content: '';
+    width: 11px;
+    height: 11px;
+    background:
+        linear-gradient(currentColor, currentColor) center / 100% 1px no-repeat,
+        linear-gradient(currentColor, currentColor) center / 1px 100% no-repeat;
+    transition: background-size 0.3s ease;
 }
 
 .jewelry-page .detail-accordion[open] .detail-accordion-summary::after {
-    content: '−';
+    background-size: 100% 1px, 1px 0;
 }
 
 .jewelry-page .detail-accordion-body {
@@ -126,10 +125,25 @@
 }
 
 .jewelry-page .detail-accordion-body p {
-    margin: 0;
-    color: var(--gray-600);
+    margin: 0 0 0.6rem;
+    color: var(--color-text-muted);
     line-height: 1.82;
     font-size: 0.95rem;
+}
+
+.jewelry-page .detail-accordion-body p:last-child {
+    margin-bottom: 0;
+}
+
+.jewelry-page .detail-accordion-body a {
+    color: var(--emerald);
+    text-decoration: underline;
+    text-decoration-color: rgba(var(--emerald-rgb), 0.3);
+    text-underline-offset: 3px;
+}
+
+.jewelry-page .detail-accordion-body a + a {
+    margin-left: 1.25rem;
 }
 
 

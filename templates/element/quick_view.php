@@ -1,6 +1,6 @@
 <?php
 /**
- * Quick view contents — shown when a listing card's quick add needs a size.
+ * Quick view contents: shown when a listing card's quick add needs a size.
  * Rendered by JewelryController::quickAdd() and dropped into the shell in
  * templates/element/quick_view_modal.php.
  *

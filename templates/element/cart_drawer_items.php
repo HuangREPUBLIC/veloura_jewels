@@ -1,6 +1,6 @@
 <?php
 /**
- * Cart drawer contents — re-rendered on its own whenever the cart changes.
+ * Cart drawer contents: re-rendered on its own whenever the cart changes.
  *
  * @var \App\View\AppView $this
  * @var array<\App\Model\Entity\Product> $products

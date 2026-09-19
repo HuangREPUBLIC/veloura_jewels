@@ -293,7 +293,7 @@ input[type='color'] {
     filter: drop-shadow(0 1px 2px rgba(var(--emerald-rgb), 0.3));
 }
 
-/* quick add — sits over the bottom-right of the image on hover */
+/* quick add: sits over the bottom-right of the image on hover */
 
 .quick-add-btn {
     position: absolute;

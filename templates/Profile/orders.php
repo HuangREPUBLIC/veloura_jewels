@@ -14,7 +14,7 @@ $statuses = ['pending', 'paid', 'shipped', 'completed', 'cancelled'];
     <div class="profile-form-wrap profile-form-wrap--wide">
 
         <div class="profile-form-header">
-            <?= $this->Html->link('← Back to Profile', ['action' => 'index'], ['class' => 'profile-back-link']) ?>
+            <?= $this->Html->link('Back to Profile', ['action' => 'index'], ['class' => 'profile-back-link']) ?>
             <h1>Order History</h1>
         </div>
 
@@ -73,9 +73,9 @@ $statuses = ['pending', 'paid', 'shipped', 'completed', 'cancelled'];
 
                 <!-- Pagination -->
                 <ul class="profile-pagination">
-                    <?= $this->Paginator->prev('← Previous') ?>
+                    <?= $this->Paginator->prev('Previous') ?>
                     <?= $this->Paginator->numbers() ?>
-                    <?= $this->Paginator->next('Next →') ?>
+                    <?= $this->Paginator->next('Next') ?>
                 </ul>
             <?php endif; ?>
         </div>

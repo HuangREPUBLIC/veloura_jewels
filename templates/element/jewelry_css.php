@@ -17,5 +17,4 @@
     'jewelry/confirm',
     'jewelry/filters',
     'jewelry/payment',
-    'jewelry/wishlist-btn',
 ], ['block' => $block ?? true]) ?>

@@ -1,4 +1,4 @@
-/* cart drawer — slide-out mini cart, opened from the header bag button */
+/* cart drawer: slide-out mini cart opened from the header bag button */
 
 .cart-drawer-root {
     position: fixed;
@@ -319,14 +319,23 @@
 
 .cart-drawer-assurances li {
     flex: 1;
+}
+
+.cart-drawer-assurances a {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 0.4rem;
-    font-size: 0.64rem;
+    padding: 0.25rem 0;
+    font-size: 0.7rem;
     letter-spacing: 0.05em;
     text-align: center;
     color: var(--color-text-muted);
+    transition: color 0.2s ease;
+}
+
+.cart-drawer-assurances a:hover {
+    color: var(--emerald);
 }
 
 .cart-drawer-assurances svg {

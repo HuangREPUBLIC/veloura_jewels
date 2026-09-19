@@ -18,7 +18,7 @@ $todayStr = (new DateTime('today'))->format('Y-m-d');
 
 <div class="page-header-row">
     <div>
-        <h2 class="page-title">Hi, <?= h($authUser->first_name) ?></h2>
+        <h1 class="page-title">Hi, <?= h($authUser->first_name) ?></h1>
         <p class="page-subtitle">Here's how Veloura Jewels is doing today.</p>
     </div>
     <div class="dash-date-chip">

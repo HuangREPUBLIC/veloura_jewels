@@ -8,6 +8,8 @@
  *   variantIndex    - integer, next index for new variant rows
  */
 (function () {
+    var X_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>';
+
     function init() {
         var form = document.getElementById('product-form');
         if (!form) return;
@@ -22,6 +24,26 @@
 
         var fileList = [];
         var dragSrcIndex = null;
+
+        // Live profit and margin under the pricing fields.
+        var cost = form.querySelector('[name="purchase_price"]');
+        var price = form.querySelector('[name="sale_price"]');
+        var margin = document.getElementById('price-margin');
+        function updateMargin() {
+            var c = parseFloat(cost.value);
+            var p = parseFloat(price.value);
+            if (!(p > 0) || isNaN(c)) {
+                margin.textContent = '';
+                return;
+            }
+            var profit = p - c;
+            margin.textContent = 'Profit $' + profit.toFixed(2) + ' per item, ' + Math.round(profit / p * 100) + '% margin';
+        }
+        if (cost && price && margin) {
+            cost.addEventListener('input', updateMargin);
+            price.addEventListener('input', updateMargin);
+            updateMargin();
+        }
 
         // Image upload + drag-to-reorder
         realInput.addEventListener('change', function () {
@@ -60,7 +82,7 @@
                 div.draggable = true;
                 div.dataset.index = i;
                 div.innerHTML = '<img src="' + url + '" alt="">'
-                    + '<button type="button" class="img-remove-btn" data-i="' + i + '">×</button>';
+                    + '<button type="button" class="img-remove-btn" data-i="' + i + '" aria-label="Remove image">' + X_ICON + '</button>';
 
                 div.querySelector('.img-remove-btn').addEventListener('click', function () {
                     fileList.splice(parseInt(this.dataset.i), 1);
@@ -205,7 +227,7 @@
                 + ' placeholder="New size name"></div>'
                 + '<input type="number" name="product_variants[' + window.variantIndex + '][stock]"'
                 + ' placeholder="Qty" min="0">'
-                + '<button type="button" onclick="removeVariantRow(this)">✕</button>';
+                + '<button type="button" onclick="removeVariantRow(this)" aria-label="Remove size">' + X_ICON + '</button>';
             document.getElementById('variants-container').appendChild(row);
             window.variantIndex++;
         };
@@ -288,7 +310,7 @@
                 var pill = document.createElement('span');
                 pill.className = 'mgmt-pill';
                 pill.innerHTML = '<span>' + escHtml(cat.name) + '</span>'
-                    + '<button type="button" class="mgmt-pill-del" data-id="' + cat.id + '">✕</button>';
+                    + '<button type="button" class="mgmt-pill-del" data-id="' + cat.id + '" aria-label="Delete category">' + X_ICON + '</button>';
                 pill.querySelector('.mgmt-pill-del').addEventListener('click', function () {
                     deleteCategory(cat.id);
                 });
@@ -310,7 +332,7 @@
                 var pill = document.createElement('span');
                 pill.className = 'mgmt-pill';
                 pill.innerHTML = '<span>' + escHtml(size) + '</span>'
-                    + '<button type="button" class="mgmt-pill-del">✕</button>';
+                    + '<button type="button" class="mgmt-pill-del" aria-label="Remove size">' + X_ICON + '</button>';
                 pill.querySelector('.mgmt-pill-del').addEventListener('click', function () {
                     removeSize(cat.id, size);
                 });

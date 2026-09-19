@@ -176,7 +176,7 @@
         setTimeout(function () { note.classList.remove('is-shown'); }, 2600);
     }
 
-    // Header bag icon — intercept the link to /cart.
+    // Header bag icon: intercept the link to /cart.
     var toggle = document.getElementById('cartDrawerToggle');
     if (toggle) {
         toggle.addEventListener('click', function (e) {
@@ -204,7 +204,7 @@
         }
     });
 
-    // Quick view's own add to cart — same endpoint as the detail page.
+    // Quick view's own add to cart: same endpoint as the detail page.
     document.addEventListener('submit', function (e) {
         var form = e.target.closest('.quick-view-form');
         if (!form) return;
@@ -274,7 +274,7 @@
         }
     });
 
-    // Product detail page — add to cart without leaving the page.
+    // Product detail page: add to cart without leaving the page.
     var addForm = document.querySelector('.add-to-cart-form');
     if (addForm) {
         addForm.addEventListener('submit', function (e) {
@@ -298,7 +298,7 @@
         });
     }
 
-    // Listing cards — quick add. Products with more than one size in stock are
+    // Listing cards: quick add. Products with more than one size in stock are
     // sent to their detail page instead, so the size is always chosen.
     document.addEventListener('click', function (e) {
         var btn = e.target.closest('.quick-add-btn');

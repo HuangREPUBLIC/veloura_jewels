@@ -55,6 +55,7 @@
 }
 
 .jewelry-page .filter-dropdown-btn:hover,
+.jewelry-page .filter-dropdown-btn.is-active:hover,
 .jewelry-page .filter-dropdown.open .filter-dropdown-btn {
     background: var(--emerald);
     color: var(--color-white);
@@ -83,8 +84,9 @@
     text-overflow: ellipsis;
 }
 
+.jewelry-page .filter-dropdown-btn:hover .filter-active-label,
 .jewelry-page .filter-dropdown.open .filter-active-label {
-    color: var(--color-white);
+    color: inherit;
 }
 
 .jewelry-page .filter-chevron {
@@ -508,6 +510,7 @@
     }
 
     .jewelry-page .filter-dropdown-btn:hover,
+    .jewelry-page .filter-dropdown-btn.is-active:hover,
     .jewelry-page .filter-dropdown.open .filter-dropdown-btn {
         background: var(--emerald);
         border-color: var(--emerald);
@@ -540,7 +543,7 @@
         grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 0.75rem;
     }
-    /* set the variable, not the height — the quick add button is placed
+    /* set the variable, not the height: the quick add button is placed
        from it too (base.css .quick-add-btn) */
     .product-card-wrap { --card-img-h: 200px; }
     .product-card-body { padding: 0.7rem 0 0; }

@@ -114,6 +114,36 @@ body:has(.vp-checkout) {
     min-height: 520px;
 }
 
+.vp-legal {
+    margin: 1.5rem 0 0;
+    font-size: 0.8rem;
+    line-height: 1.7;
+    color: var(--color-text-muted);
+}
+
+.vp-legal a,
+.vp-policies a {
+    color: inherit;
+    text-decoration: underline;
+    text-decoration-color: rgba(var(--emerald-rgb), 0.3);
+    text-underline-offset: 3px;
+}
+
+.vp-policies {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 1.5rem;
+    margin-top: 1.75rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid rgba(var(--emerald-rgb), 0.12);
+}
+
+.vp-policies a {
+    padding: 0.35rem 0;
+    font-size: 0.78rem;
+    color: var(--emerald);
+}
+
 .vp-checkout-error {
     padding: 1.1rem 1.25rem;
     border: 1px solid rgba(179, 38, 30, 0.22);
@@ -280,12 +310,6 @@ body:has(.vp-checkout) {
     font-size: 0.92rem;
     color: var(--vp-on-panel);
     font-variant-numeric: tabular-nums;
-}
-
-.vp-muted {
-    font-size: 0.85rem;
-    color: var(--vp-on-panel-muted);
-    text-align: right;
 }
 
 .vp-summary-total {

@@ -1,6 +1,9 @@
 <?php
 /**
+ * Shared listing for the jewellery and home decor collections.
+ *
  * @var \App\View\AppView $this
+ * @var string $productType
  * @var iterable<\App\Model\Entity\Product> $products
  * @var iterable<\App\Model\Entity\Category> $categories
  * @var int $categoryId
@@ -9,13 +12,16 @@
  * @var string $sortBy
  */
 
-$this->assign('title', 'Jewellery');
+$isDecor = $productType === 'home_decor';
+$sectionLabel = $isDecor ? 'Home Décor' : 'Jewellery';
+$sectionPath = $isDecor ? '/home-decor' : '/jewellery';
+
+$this->assign('title', $sectionLabel);
 echo $this->element('jewelry_css');
 ?>
 
 <div class="jewelry-page">
     <?php
-    // Materialize categories so we can iterate it more than once safely.
     $categoriesArr = is_array($categories) ? $categories : iterator_to_array($categories);
     $activeCategory = null;
     foreach ($categoriesArr as $cat) {
@@ -27,8 +33,8 @@ echo $this->element('jewelry_css');
 
     $crumbs = [['label' => 'Home', 'url' => '/']];
     $crumbs[] = $activeCategory
-        ? ['label' => 'Jewellery', 'url' => ['controller' => 'Jewelry', 'action' => 'index']]
-        : ['label' => 'Jewellery'];
+        ? ['label' => $sectionLabel, 'url' => $sectionPath]
+        : ['label' => $sectionLabel];
     if ($activeCategory) {
         $crumbs[] = ['label' => $activeCategory->name];
     }
@@ -36,20 +42,18 @@ echo $this->element('jewelry_css');
     <?= $this->element('breadcrumb', ['crumbs' => $crumbs]) ?>
 
     <section class="jewelry-hero">
-        <h1><?= h($pageContent['hero_heading'] ?? 'Our Jewellery Collection') ?></h1>
+        <h1><?= h($pageContent['hero_heading'] ?? 'Our ' . $sectionLabel . ' Collection') ?></h1>
         <p><?= h($pageContent['hero_subtext'] ?? '') ?></p>
     </section>
 
-    <!-- Filter Bar -->
     <div class="jewelry-filter-bar">
         <?= $this->Form->create(null, [
             'type' => 'get',
-            'url' => ['controller' => 'Jewelry', 'action' => 'index'],
+            'url' => $sectionPath,
         ]) ?>
 
         <div class="filter-bar-inner">
 
-            <!-- Category Dropdown -->
             <div class="filter-dropdown" id="filter-category">
                 <button type="button" class="filter-dropdown-btn <?= $categoryId > 0 ? 'is-active' : '' ?>" aria-expanded="false" aria-controls="filter-category-menu">
                     Category
@@ -59,10 +63,10 @@ echo $this->element('jewelry_css');
                     <svg class="filter-chevron" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
                 </button>
                 <div class="filter-dropdown-menu" id="filter-category-menu">
-                    <a href="<?= $this->Url->build('/jewellery') ?>"
+                    <a href="<?= $this->Url->build($sectionPath) ?>"
                        class="filter-dropdown-item <?= $categoryId === 0 ? 'active' : '' ?>">All</a>
                     <?php foreach ($categoriesArr as $cat): ?>
-                        <a href="<?= $this->Url->build('/jewellery/' . strtolower(str_replace(' ', '-', $cat->name))) ?>"
+                        <a href="<?= $this->Url->build($sectionPath . '/' . strtolower(str_replace(' ', '-', $cat->name))) ?>"
                            class="filter-dropdown-item <?= $categoryId === $cat->id ? 'active' : '' ?>">
                             <?= h($cat->name) ?>
                         </a>
@@ -70,12 +74,11 @@ echo $this->element('jewelry_css');
                 </div>
             </div>
 
-            <!-- Price Dropdown -->
             <div class="filter-dropdown" id="filter-price">
                 <button type="button" class="filter-dropdown-btn <?= ($minPrice || $maxPrice) ? 'is-active' : '' ?>" aria-expanded="false" aria-controls="filter-price-menu">
                     Price
                     <?php if ($minPrice || $maxPrice): ?>
-                        <span class="filter-active-label">: $<?= $minPrice ?: '0' ?> — $<?= $maxPrice ?: '∞' ?></span>
+                        <span class="filter-active-label">: <?= h($maxPrice ? '$' . ($minPrice ?: 0) . ' to $' . $maxPrice : '$' . $minPrice . '+') ?></span>
                     <?php endif; ?>
                     <svg class="filter-chevron" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
                 </button>
@@ -103,7 +106,6 @@ echo $this->element('jewelry_css');
                 </div>
             </div>
 
-            <!-- Sort Dropdown -->
             <div class="filter-dropdown filter-dropdown--right" id="filter-sort">
                 <?php
                 $sorts = ['newest' => 'Newest', 'price_asc' => 'Price: Low to High', 'price_desc' => 'Price: High to Low', 'featured' => 'Featured', 'bestsales' => 'Best Seller'];
@@ -125,10 +127,8 @@ echo $this->element('jewelry_css');
                 </div>
             </div>
 
-            <!-- Clear -->
             <?php if ($minPrice || $maxPrice || $categoryId || ($sortBy && $sortBy !== 'newest')): ?>
-                <a href="<?= $this->Url->build(['controller' => 'Jewelry', 'action' => 'index']) ?>"
-                   class="filter-clear-btn">Clear</a>
+                <a href="<?= $this->Url->build($sectionPath) ?>" class="filter-clear-btn">Clear</a>
             <?php endif; ?>
 
         </div>
@@ -182,15 +182,14 @@ echo $this->element('jewelry_css');
 
     <?php if ($products->isEmpty()): ?>
         <div class="empty-state">
-            <p>No products found. <a href="<?= $this->Url->build(['controller' => 'Jewelry', 'action' => 'index']) ?>">Clear filters</a></p>
+            <p>No products found. <a href="<?= $this->Url->build($sectionPath) ?>">Clear filters</a></p>
         </div>
     <?php else: ?>
 
         <div class="product-grid">
 
-            <!-- Quick-add tile — only visible to admins -->
             <?php if ($isAdmin): ?>
-                <a href="<?= $this->Url->build(['controller' => 'Products', 'action' => 'add', '?' => ['type' => 'jewelry']]) ?>" class="product-card-link">
+                <a href="<?= $this->Url->build(['controller' => 'Products', 'action' => 'add', '?' => ['type' => $productType]]) ?>" class="product-card-link">
                     <div class="product-card product-card--add">
                         <div class="product-card-add-icon">+</div>
                         <p class="product-card-add-label">Add Product</p>
@@ -199,7 +198,7 @@ echo $this->element('jewelry_css');
             <?php endif; ?>
             <?php foreach ($products as $product): ?>
                 <div class="product-card-wrap">
-                <a href="<?= $this->Url->build('/jewelry/view/' . $product->id) ?>" class="product-card-link">
+                <a href="<?= $this->Url->build($sectionPath . '/view/' . $product->id) ?>" class="product-card-link">
                     <div class="product-card">
                         <div class="product-image-wrapper<?= !empty($product->product_images[1]) ? ' has-hover-image' : '' ?>">
                             <?php if (!empty($product->featured) || !empty($product->is_bestsales)): ?>
@@ -221,7 +220,7 @@ echo $this->element('jewelry_css');
                                 <?php if (!empty($product->product_images[1])): ?>
                                     <img
                                         src="<?= $this->Url->image('products/' . h($product->product_images[1]->filename)) ?>"
-                                        alt="<?= h($product->name) ?>"
+                                        alt=""
                                         class="product-image product-image--hover"
                                     >
                                 <?php endif; ?>

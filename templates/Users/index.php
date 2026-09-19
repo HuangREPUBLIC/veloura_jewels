@@ -12,7 +12,7 @@ $role = $identity->get('role');
 <div class="page-header-row">
     <div>
         <p class="cms-eyebrow">Admin</p>
-        <h2 class="page-title">Users</h2>
+        <h1 class="page-title">Users</h1>
     </div>
     <div class="cms-header-right">
         <?= $this->element('per_page_select') ?>
@@ -42,7 +42,7 @@ $role = $identity->get('role');
             <?php foreach ($users as $user): ?>
                 <tr>
                     <td><?= h($user->email) ?></td>
-                    <td><?= h(trim($user->first_name . ' ' . $user->last_name)) ?: '—' ?></td>
+                    <td><?= h(trim($user->first_name . ' ' . $user->last_name)) ?: '<span class="text-muted">Not provided</span>' ?></td>
                     <td><span class="status-badge <?= $user->role === 'admin' ? 'status-badge--info' : 'status-badge--neutral' ?>"><?= h(ucfirst($user->role)) ?></span></td>
                     <td><?= h($user->created->format('d M Y')) ?></td>
                     <td class="actions">

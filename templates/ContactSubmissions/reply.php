@@ -11,7 +11,7 @@ $formId = 'reply-form';
 <div class="page-header-row">
     <div>
         <p class="cms-eyebrow">Contact Submissions</p>
-        <h2 class="page-title"><?= h($contactSubmission->first_name . ' ' . $contactSubmission->last_name) ?></h2>
+        <h1 class="page-title"><?= h($contactSubmission->first_name . ' ' . $contactSubmission->last_name) ?></h1>
     </div>
     <div class="cms-header-right">
         <button type="submit" form="<?= h($formId) ?>" class="btn-new-product"><?= __('Send Reply') ?></button>

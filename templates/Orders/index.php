@@ -20,7 +20,7 @@ $filterLink = function (array $params, string $label, bool $active) {
 <div class="page-header-row">
     <div>
         <p class="cms-eyebrow">Store</p>
-        <h2 class="page-title">Orders</h2>
+        <h1 class="page-title">Orders</h1>
     </div>
     <div class="cms-header-right">
         <?= $this->element('per_page_select') ?>
@@ -105,10 +105,14 @@ $filterLink = function (array $params, string $label, bool $active) {
                     $cls = $statusClass[$order->status] ?? 'status-badge--pending';
                     ?>
                     <tr>
-                        <td><?= h($order->customer_email) ?></td>
+                        <td><?= $order->customer_email ? h($order->customer_email) : '<span class="text-muted">Guest</span>' ?></td>
                         <td><span class="status-badge <?= $cls ?>"><?= h(ucfirst($order->status)) ?></span></td>
                         <td>$<?= number_format((float)$order->total_amount, 2) ?> <?= strtoupper(h($order->currency)) ?></td>
-                        <td class="<?= $orderProfit >= 0 ? 'admin-profit-positive' : 'admin-profit-negative' ?>">$<?= number_format($orderProfit, 2) ?></td>
+                        <?php if ($order->status === 'cancelled'): ?>
+                            <td class="text-muted">$0.00</td>
+                        <?php else: ?>
+                            <td class="<?= $orderProfit >= 0 ? 'admin-profit-positive' : 'admin-profit-negative' ?>">$<?= number_format($orderProfit, 2) ?></td>
+                        <?php endif; ?>
                         <td><?= h($order->created->format('d M Y H:i')) ?></td>
                         <td class="actions">
                             <?= $this->Html->link(

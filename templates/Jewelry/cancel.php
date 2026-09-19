@@ -28,7 +28,7 @@ $this->assign('title', 'Payment Paused');
             </div>
             <div class="cc-card-titles">
                 <h1 class="cc-heading">Payment Paused</h1>
-                <p class="cc-sub">Your order is reserved — complete payment or cancel below.</p>
+                <p class="cc-sub">Your order is reserved. Complete payment or cancel below.</p>
             </div>
         </div>
 
@@ -43,7 +43,7 @@ $this->assign('title', 'Payment Paused');
         <?php endif; ?>
 
         <div id="cc-expired-notice" class="cc-expired-notice" style="display:none">
-            The cancellation window has closed — this order is being cancelled now.
+            The cancellation window has closed, so this order is being cancelled now.
         </div>
 
         <div class="cc-summary">

@@ -9,7 +9,7 @@ namespace App\View;
  * Mail clients strip CSS custom properties, so webroot/css/tokens.css cannot be
  * reused directly. This class mirrors those tokens as literal values so the
  * layout, the shared email elements and each individual email stay in step
- * instead of drifting apart one hardcoded hex at a time — which is exactly what
+ * instead of drifting apart one hardcoded hex at a time, which is exactly what
  * had happened: the templates carried #c9a84c and #e1a95e, neither of which
  * exists in tokens.css.
  *

@@ -36,6 +36,7 @@
     --emerald-dark: #18382f;
     --emerald-rgb: 40, 77, 64;
     --emerald-gold: #b7975a;
+    --hairline: rgba(var(--emerald-rgb), 0.12);
 
     --font-display: 'Raleway', 'Helvetica Neue', sans-serif;
     --font-body: 'Raleway', 'Helvetica Neue', sans-serif;
