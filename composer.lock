@@ -318,16 +318,16 @@
         },
         {
             "name": "cakephp/plugin-installer",
-            "version": "2.0.1",
+            "version": "2.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/plugin-installer.git",
-                "reference": "5420701fd47d82fe81805ebee34fbbcef34c52ba"
+                "reference": "b50925d28e3301d9108562a899e3f68cc4cc18bd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/plugin-installer/zipball/5420701fd47d82fe81805ebee34fbbcef34c52ba",
-                "reference": "5420701fd47d82fe81805ebee34fbbcef34c52ba",
+                "url": "https://api.github.com/repos/cakephp/plugin-installer/zipball/b50925d28e3301d9108562a899e3f68cc4cc18bd",
+                "reference": "b50925d28e3301d9108562a899e3f68cc4cc18bd",
                 "shasum": ""
             },
             "require": {
@@ -337,7 +337,7 @@
             "require-dev": {
                 "cakephp/cakephp-codesniffer": "^5.0",
                 "composer/composer": "^2.0",
-                "phpunit/phpunit": "^10.1.0"
+                "phpunit/phpunit": "^10.1.0 || ^11.1.3 || ^12.0 || ^13.0"
             },
             "type": "composer-plugin",
             "extra": {
@@ -358,12 +358,18 @@
                     "homepage": "https://cakephp.org"
                 }
             ],
-            "description": "A composer installer for CakePHP 3.0+ plugins.",
+            "description": "A composer installer for CakePHP plugins.",
+            "keywords": [
+                "cakephp",
+                "composer-plugin",
+                "installer",
+                "plugin"
+            ],
             "support": {
                 "issues": "https://github.com/cakephp/plugin-installer/issues",
-                "source": "https://github.com/cakephp/plugin-installer/tree/2.0.1"
+                "source": "https://github.com/cakephp/plugin-installer"
             },
-            "time": "2023-09-10T10:02:44+00:00"
+            "time": "2026-10-10T14:35:32+00:00"
         },
         {
             "name": "composer/ca-bundle",
